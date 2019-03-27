@@ -12,7 +12,7 @@ public class RisikoClientCUI {
 		
 	}
 	
-	private void run() {//gegebenenfalls löschen
+	private void run() {//gegebenenfalls lï¿½schen
 		spielerRegistrierung();
 		
 	}
@@ -62,6 +62,7 @@ public class RisikoClientCUI {
 	}
 	
 	public static void main(String[] args) {
+		//Hi hier ist Tabea
 		RisikoClientCUI cui;
 		//try-catch exception
 		cui = new RisikoClientCUI();
