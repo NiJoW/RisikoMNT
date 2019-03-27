@@ -63,6 +63,7 @@ public class RisikoClientCUI {
 	
 	public static void main(String[] args) {
 		//Hi hier ist Tabea
+		//Und Niels natürlich auch
 		RisikoClientCUI cui;
 		//try-catch exception
 		cui = new RisikoClientCUI();
