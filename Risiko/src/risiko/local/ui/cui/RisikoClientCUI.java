@@ -30,6 +30,15 @@ public class RisikoClientCUI {
 	}
 	
 	public void gibSpielerRegistrierungAus() {
+		int anzahl = 0;
+		
+		System.out.println("Gib die Anzahl der Spieler an:");
+		anzahl = 2; //Eingabe einlesen
+		//spielerliste
+		for(int i = 0; i < anzahl; i++) {
+			
+			risiko.spielerHinzufuegen("name");
+		}
 		
 	}
 	
@@ -62,8 +71,6 @@ public class RisikoClientCUI {
 	}
 	
 	public static void main(String[] args) {
-		//Hi hier ist Tabea
-		//Und Niels natürlich auch
 		RisikoClientCUI cui;
 		//try-catch exception
 		cui = new RisikoClientCUI();
