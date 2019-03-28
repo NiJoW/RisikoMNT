@@ -1,15 +1,18 @@
 package risiko.local.ui.cui;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import risiko.local.domain.Risiko;
 
 public class RisikoClientCUI {
 	private Risiko risiko;
+	private BufferedReader in;
 	
 	public RisikoClientCUI() {
 		risiko = new Risiko();
-		
-		//bufferedReader()
-		
+		in = new BufferedReader(new InputStreamReader(System.in));		
 	}
 	
 	private void run() {//gegebenenfalls l�schen
@@ -22,8 +25,8 @@ public class RisikoClientCUI {
 		do {
 			gibSpielerRegistrierungAus();
 			//try-catch
-			input = liesEingabe();
-			verarbeiteSpielerRegistrierung(input);
+			//input = liesEingabe();
+			//verarbeiteSpielerRegistrierung(input);
 	
 		}while(!input.equals("q"));
 		spielMenueAufrufen();
@@ -34,10 +37,22 @@ public class RisikoClientCUI {
 		
 		System.out.println("Gib die Anzahl der Spieler an:");
 		anzahl = 2; //Eingabe einlesen
-		//spielerliste
+		try {
+			anzahl = Integer.parseInt(liesEingabe());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for(int i = 0; i < anzahl; i++) {
-			
-			risiko.spielerHinzufuegen("name");
+		    System.out.println("Geben sie ihren Namen ein:");
+		    try {
+		    	String name = liesEingabe();
+				risiko.spielerHinzufuegen(name);
+		    } catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		    }
+		   
 		}
 		
 	}
@@ -45,14 +60,20 @@ public class RisikoClientCUI {
 	private void spielMenueAufrufen() {
 		String input = "";
 		do {
-			//try-catch
-			input = liesEingabe();
+
+			try {
+				input = liesEingabe();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			verarbeiteSpielmenue(input);
 		}while(!input.equals("q"));
 	}
 	
-	private String liesEingabe() {
-		return "input";
+	private String liesEingabe()  throws IOException{
+		// einlesen von Konsole
+		return in.readLine();
 	}
 	
 	/*private void verarbeiteSpielerRegistrierung(input) {
@@ -66,7 +87,7 @@ public class RisikoClientCUI {
 	
 	private void verarbeiteSpielmenue(String input) {
 		switch(input) {
-		case 
+		//case 
 		}
 	}
 	
