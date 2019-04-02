@@ -72,6 +72,7 @@ public class RisikoClientCUI {
 	private void spielMenueAusgeben() {
 		System.out.println("Neues Spiel starten:        'n'");
 		System.out.println("Spiel laden:        'l'");
+		System.out.println("Spiel beitreten:           'b'");
 		System.out.println("---------------------");
 		System.out.println("Beenden:        'q'");
 		System.out.print("> "); // Prompt
@@ -86,8 +87,14 @@ public class RisikoClientCUI {
 	
 	private void verarbeiteSpielmenue(String input) {
 		switch(input) {
-		//case 
+		case "n":
+			spielStarten();
+			break;
 		}
+	}
+	
+	private void spielStarten() {
+		risiko.spielStarten();
 	}
 	
 	public static void main(String[] args) {

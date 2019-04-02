@@ -1,13 +1,14 @@
 package risiko.local.domain;
 
-import risiko.local.valueobjects.Spielerliste;
+import java.util.List;
+import java.util.Vector;
 import risiko.local.valueobjects.Spieler;
 
 public class SpielerVerwaltung {
-	private Spielerliste spielerliste;
+	private List<Spieler> spielerliste;
 	
 	public SpielerVerwaltung() {
-		spielerliste = new Spielerliste();
+		spielerliste = new Vector<Spieler>();
 	}
 
 	public void spielerHinzufuegen(String name) {
@@ -16,7 +17,7 @@ public class SpielerVerwaltung {
 	
 	public void gibSpielerlisteAus() {
 		for(int j=0; j<spielerliste.size(); j++) {
-			System.out.println(j + ":  " + spielerliste.elementAt(j));
+			System.out.println(j + ":  " + ((Vector<Spieler>) spielerliste).elementAt(j));
 		}
 		
 	}
