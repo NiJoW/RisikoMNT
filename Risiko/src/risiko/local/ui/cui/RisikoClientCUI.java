@@ -17,22 +17,11 @@ public class RisikoClientCUI {
 	
 	private void run() {//gegebenenfalls l�schen
 		spielerRegistrierung();
-		
+		spielMenue();
 	}
+	
 	
 	private void spielerRegistrierung() {
-		String input = "";
-		do {
-			gibSpielerRegistrierungAus();
-			//try-catch
-			//input = liesEingabe();
-			//verarbeiteSpielerRegistrierung(input);
-	
-		}while(!input.equals("q"));
-		spielMenueAufrufen();
-	}
-	
-	public void gibSpielerRegistrierungAus() {
 		int anzahl = erfrageSpielerAnzahl();
 		for(int i = 0; i < anzahl; i++) {
 		    System.out.println("Geben Sie bitte den Namen für Spieler "+(i+1)+" ein:");
@@ -66,10 +55,10 @@ public class RisikoClientCUI {
 		
 	}
 	
-	private void spielMenueAufrufen() {
+	private void spielMenue() {
 		String input = "";
 		do {
-
+			spielMenueAusgeben();
 			try {
 				input = liesEingabe();
 			} catch (IOException e) {
@@ -80,19 +69,20 @@ public class RisikoClientCUI {
 		}while(!input.equals("q"));
 	}
 	
+	private void spielMenueAusgeben() {
+		System.out.println("Neues Spiel starten:        'n'");
+		System.out.println("Spiel laden:        'l'");
+		System.out.println("---------------------");
+		System.out.println("Beenden:        'q'");
+		System.out.print("> "); // Prompt
+		System.out.flush(); // ohne NL ausgeben
+	}
+	
 	private String liesEingabe()  throws IOException{
 		// einlesen von Konsole
 		return in.readLine();
 	}
 	
-	/*private void verarbeiteSpielerRegistrierung(input) {
-		//Abfrage nach Spieleranzahl
-		int anzahl;
-		for()
-		Spieler s1 = new Spieler() {
-			
-		}
-	}*/
 	
 	private void verarbeiteSpielmenue(String input) {
 		switch(input) {
