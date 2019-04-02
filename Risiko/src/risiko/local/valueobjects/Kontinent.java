@@ -5,13 +5,25 @@ import java.util.List;
 public class Kontinent {
 	
 	private List<Provinz> provinzen;
+	private String name;
 	
 	public Kontinent(String name) {
-		
+		this.name = name;
 	}
 	
-	public void setProvinzenListe(List<Provinz> provinzen) {
+	public String getName() {
+		return name;
+	}
+
+	public List<Provinz> getProvinzen() {
+		return provinzen;
+	}
+
+	public void setProvinzen(List<Provinz> provinzen) {
 		this.provinzen = provinzen;
 	}
+	
+	
+	
 }
 

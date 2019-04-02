@@ -20,6 +20,10 @@ public class Welt {
 		
 	}
 	
+	public Vector<Provinz> getProvinzListe() {
+		return provinzListe;
+	}
+	
 	private void erstelleKontinente() {
 		kontinentListe.add(new Kontinent("Afrika"));
 		kontinentListe.add(new Kontinent("Asien"));
@@ -30,37 +34,26 @@ public class Welt {
 	}
 	
 	private void erstelleProvinzen() {
-		provinzListe.add(new Provinz("Ägypten",kontinentListe.get(0)));
-		provinzListe.add(new Provinz("Kongo",kontinentListe.get(0)));
-		provinzListe.add(new Provinz("Madagaskar",kontinentListe.get(0)));
-		provinzListe.add(new Provinz("Nordwestafrika",kontinentListe.get(0)));
-		provinzListe.add(new Provinz("Ostafrika",kontinentListe.get(0)));
-		provinzListe.add(new Provinz("Südafrika",kontinentListe.get(0)));
+		provinzListe.add(new Provinz("Ägypten"));
+		provinzListe.add(new Provinz("Kongo"));
+		provinzListe.add(new Provinz("Madagaskar"));
+		provinzListe.add(new Provinz("Nordwestafrika"));
+		provinzListe.add(new Provinz("Ostafrika"));
+		provinzListe.add(new Provinz("Südafrika"));
 		
-		provinzListe.add(new Provinz("Afghanistan",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("China",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("Indien",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("Irkutsk",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("Jakutien",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("Japan",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("Kamtschatka",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("Mittlerer Osten",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("Monglei",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("Siam",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("Sibirien",kontinentListe.get(1)));
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(1)));
+		provinzListe.add(new Provinz("Afghanistan"));
+		provinzListe.add(new Provinz("China"));
+		provinzListe.add(new Provinz("Indien"));
+		provinzListe.add(new Provinz("Irkutsk"));
+		provinzListe.add(new Provinz("Jakutien"));
+		provinzListe.add(new Provinz("Japan"));
+		provinzListe.add(new Provinz("Kamtschatka"));
+		provinzListe.add(new Provinz("Mittlerer Osten"));
+		provinzListe.add(new Provinz("Monglei"));
+		provinzListe.add(new Provinz("Siam"));
+		provinzListe.add(new Provinz("Sibirien"));
+		provinzListe.add(new Provinz("Ural"));
 		
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(2)));
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(2)));
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(2)));
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(2)));
-		
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(3)));
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(3)));
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(3)));
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(3)));
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(3)));
-		provinzListe.add(new Provinz("Ural",kontinentListe.get(3)));
 		//>ToDo  Weitere Provinzen
 		//>ToDo   Kontinente weg
 	}

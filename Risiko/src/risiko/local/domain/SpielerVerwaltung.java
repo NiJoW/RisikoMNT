@@ -15,10 +15,16 @@ public class SpielerVerwaltung {
 		spielerliste.add(new Spieler(name));
 	}
 	
-	public void gibSpielerlisteAus() {
-		for(int j=0; j<spielerliste.size(); j++) {
-			System.out.println(j + ":  " + ((Vector<Spieler>) spielerliste).elementAt(j));
-		}
-		
+//	public void gibSpielerlisteAus() {
+//		for(int j=0; j<spielerliste.size(); j++) {
+//			System.out.println(j + ":  " + ((Vector<Spieler>) spielerliste).elementAt(j));
+//		}
+
+	public int getSpielerAnzahl() {
+		return spielerliste.size();
+	}
+
+	public Vector<Spieler> getSpielerListe() {
+		return (Vector<Spieler>) spielerliste;
 	}
 }
