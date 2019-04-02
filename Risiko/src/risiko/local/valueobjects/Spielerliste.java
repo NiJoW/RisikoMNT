@@ -7,4 +7,6 @@ public class Spielerliste extends Vector<Spieler> { //Vector
 	public Spielerliste() {
 	
 	}
+	
+
 }

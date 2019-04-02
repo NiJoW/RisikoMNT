@@ -13,4 +13,11 @@ public class SpielerVerwaltung {
 	public void spielerHinzufuegen(String name) {
 		spielerliste.add(new Spieler(name));
 	}
+	
+	public void gibSpielerlisteAus() {
+		for(int j=0; j<spielerliste.size(); j++) {
+			System.out.println(j + ":  " + spielerliste.elementAt(j));
+		}
+		
+	}
 }

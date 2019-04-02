@@ -15,4 +15,8 @@ public class Risiko {
 	public void spielerHinzufuegen(String name) {
 		spielerVW.spielerHinzufuegen(name);
 	}
+	
+	public void gibSpielerlisteAus() {
+		spielerVW.gibSpielerlisteAus();
+	}
 }
