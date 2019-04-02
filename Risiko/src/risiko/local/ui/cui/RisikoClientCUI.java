@@ -33,27 +33,36 @@ public class RisikoClientCUI {
 	}
 	
 	public void gibSpielerRegistrierungAus() {
-		int anzahl = 0;
-		
-		System.out.println("Gib die Anzahl der Spieler an:");
-		anzahl = 2; //Eingabe einlesen
-		try {
-			anzahl = Integer.parseInt(liesEingabe());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		int anzahl = erfrageSpielerAnzahl();
 		for(int i = 0; i < anzahl; i++) {
-		    System.out.println("Geben sie ihren Namen ein:");
+		    System.out.println("Geben Sie bitte den Namen für Spieler "+(i+1)+" ein:");
 		    try {
 		    	String name = liesEingabe();
 				risiko.spielerHinzufuegen(name);
 		    } catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-		    }
-		   
+		    } 
 		}
+		risiko.gibSpielerlisteAus();
+		
+	}
+	
+	private int erfrageSpielerAnzahl() {
+		int anzahl = 0;
+		
+		System.out.println("Gib die Anzahl der Spieler an (zwischen 2 und 6):");
+		//Eingabe einlesen
+		try {
+			anzahl = Integer.parseInt(liesEingabe());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(anzahl<2 || anzahl>6) {
+			anzahl = erfrageSpielerAnzahl();
+		}
+		return anzahl;
 		
 	}
 	

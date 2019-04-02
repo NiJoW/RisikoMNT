@@ -11,5 +11,8 @@ public class Spieler {
 		return this.name;
 	}
 	
+	public String toString() {
+		return this.name;
+	}
 }
 
