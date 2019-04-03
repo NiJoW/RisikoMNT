@@ -9,6 +9,7 @@ public class Provinz {
 	
 	public Provinz(String name) {
 		this.name = name;
+		armee = new Armee(this); 
 	}
 	
 	public void setBesitzer(Spieler besitzer) {

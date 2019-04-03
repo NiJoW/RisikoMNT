@@ -24,7 +24,7 @@ public class Risiko {
 	}
 	
 	public void gibSpielerlisteAus() {
-		spielerVW.gibSpielerlisteAus();
+		//spielerVW.gibSpielerlisteAus();
 	}
 	
 	public void spielStarten() {

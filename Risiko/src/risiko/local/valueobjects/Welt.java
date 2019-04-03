@@ -21,7 +21,7 @@ public class Welt {
 	}
 	
 	public Vector<Provinz> getProvinzListe() {
-		return provinzListe;
+		return (Vector<Provinz>) provinzListe;
 	}
 	
 	private void erstelleKontinente() {
@@ -54,43 +54,68 @@ public class Welt {
 		provinzListe.add(new Provinz("Sibirien"));
 		provinzListe.add(new Provinz("Ural"));
 		
-		//>ToDo  Weitere Provinzen
-		//>ToDo   Kontinente weg
+		provinzListe.add(new Provinz("Indonesien"));
+		provinzListe.add(new Provinz("Neu Guinera"));
+		provinzListe.add(new Provinz("Ost-Australien"));
+		provinzListe.add(new Provinz("West-Australien"));
+		
+		provinzListe.add(new Provinz("Großbritannien"));
+		provinzListe.add(new Provinz("Island"));
+		provinzListe.add(new Provinz("Mitteleuropa"));
+		provinzListe.add(new Provinz("Skandinavien"));
+		provinzListe.add(new Provinz("Süd-Europa"));
+		provinzListe.add(new Provinz("Ukraine"));
+		provinzListe.add(new Provinz("West-Europa"));
+		
+		provinzListe.add(new Provinz("Alaska"));
+		provinzListe.add(new Provinz("Alberta"));
+		provinzListe.add(new Provinz("Grönland"));
+		provinzListe.add(new Provinz("Mittel-Amerika"));
+		provinzListe.add(new Provinz("Nordwest-Territorium"));
+		provinzListe.add(new Provinz("Ontario"));
+		provinzListe.add(new Provinz("Oststaaten"));
+		provinzListe.add(new Provinz("Quebeck"));
+		provinzListe.add(new Provinz("Weststaaten"));
+		
+		provinzListe.add(new Provinz("Argentinien"));
+		provinzListe.add(new Provinz("Brasilien"));
+		provinzListe.add(new Provinz("Peru"));
+		provinzListe.add(new Provinz("Venezuela"));
 	}
 	
 	private void kontinentiereProvinzen() {
 		
-		List<Provinz> afrikasProvinzListe = null;
-		List<Provinz> asiensProvinzListe = null;
-		List<Provinz> australiensProvinzListe = null;
-		List<Provinz> europasProvinzListe = null;
-		List<Provinz> nordamerikasProvinzListe = null;
-		List<Provinz> südamerikasProvinzListe = null;
+		Vector<Provinz> afrikasProvinzListe = new Vector<Provinz>();
+		Vector<Provinz> asiensProvinzListe = new Vector<Provinz>();
+		Vector<Provinz> australiensProvinzListe = new Vector<Provinz>();
+		Vector<Provinz> europasProvinzListe = new Vector<Provinz>();
+		Vector<Provinz> nordamerikasProvinzListe = new Vector<Provinz>();
+		Vector<Provinz> südamerikasProvinzListe = new Vector<Provinz>();
 		
 		for(int i = 0; i <=5; i++) {
 			afrikasProvinzListe.add(provinzListe.get(i));
 		}
-		kontinentListe.get(0).setProvinzenListe(afrikasProvinzListe);
+		kontinentListe.get(0).setProvinzen(afrikasProvinzListe);
 		for(int i = 6; i <=17; i++) {
 			asiensProvinzListe.add(provinzListe.get(i));
 		}
-		kontinentListe.get(1).setProvinzenListe(asiensProvinzListe);
+		kontinentListe.get(1).setProvinzen(asiensProvinzListe);
 		for(int i = 18; i <=21; i++) {
 			australiensProvinzListe.add(provinzListe.get(i));
 		}
-		kontinentListe.get(2).setProvinzenListe(australiensProvinzListe);
+		kontinentListe.get(2).setProvinzen(australiensProvinzListe);
 		for(int i = 22; i <=28; i++) {
 			europasProvinzListe.add(provinzListe.get(i));
 		}
-		kontinentListe.get(3).setProvinzenListe(europasProvinzListe);
+		kontinentListe.get(3).setProvinzen(europasProvinzListe);
 		for(int i = 29; i <=37; i++) {
 			nordamerikasProvinzListe.add(provinzListe.get(i));
 		}
-		kontinentListe.get(4).setProvinzenListe(nordamerikasProvinzListe);
+		kontinentListe.get(4).setProvinzen(nordamerikasProvinzListe);
 		for(int i = 38; i <=41; i++) {
 			südamerikasProvinzListe.add(provinzListe.get(i));
 		}
-		kontinentListe.get(5).setProvinzenListe(südamerikasProvinzListe);
+		kontinentListe.get(5).setProvinzen(südamerikasProvinzListe);
 	}
 	
 }
