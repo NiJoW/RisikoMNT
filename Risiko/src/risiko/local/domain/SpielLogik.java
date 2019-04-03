@@ -25,31 +25,33 @@ public class SpielLogik {
 		Vector<Provinz> hilfsVector = (Vector<Provinz>)provinzListe.clone();
 		Provinz zufallsProvinz;
 		int zufall;
+		int zaehler = 0;
 		for(int i = 0; i < anzahlSpieler; i++) {
 			for(int j = 0; j < provinzenProSpieler; j++) {
-				zufall = rand.nextInt(41-i);
+				zufall = rand.nextInt(42-zaehler);
 				zufallsProvinz = hilfsVector.get(zufall);
 				zufallsProvinz.setBesitzer(spielerListe.get(i));
 				hilfsVector.remove(zufall);
+				zaehler++;
 			}
 		}
 		
 		int i = 0;
 		while(!hilfsVector.isEmpty()) {
-			zufall = rand.nextInt(hilfsVector.size()-1);
+			zufall = rand.nextInt(hilfsVector.size());
 			zufallsProvinz = hilfsVector.get(zufall);
 			zufallsProvinz.setBesitzer(spielerListe.get(i));
 			hilfsVector.remove(zufall);
 			i++;
 		}
 		
-		
-		
+		//if(anzahlSpieler - restProvinzen != 0) {
+			//TODO: Bonus Einheiten verteilen
+		//}
 		
 	}
 	
 	private void spielBeginnen() {
-		
 		
 	}
 
