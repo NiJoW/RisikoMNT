@@ -70,8 +70,15 @@ public class Risiko {
 		return spielerVW.getSpieler(id);
 	}
 
+
 	public void berechneVerteilbareEinheiten(int aenderungsWert, int spielerID) {
 		spielerVW.berechneVerteilbareEinheiten(aenderungsWert, spielerID);
+
+	public void kannVerschieben() {
+		weltVW.getBeziehungsMatrix();
+		spiellogik.kannVerschieben(weltVW.getBeziehungsMatrix());
+		
+
 	}
 	
 	

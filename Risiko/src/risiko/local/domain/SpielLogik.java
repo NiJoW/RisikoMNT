@@ -32,5 +32,10 @@ public class SpielLogik {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+	public void kannVerschieben(boolean[][] beziehungsMatrix) {
+		welt.getBeziehungen(0,0);
+	}
 	
 }
