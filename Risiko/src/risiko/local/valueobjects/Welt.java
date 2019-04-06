@@ -189,6 +189,10 @@ public class Welt {
 		pBeziehungen[41][39] = true;
 		pBeziehungen[41][40] = true;
 		pBeziehungen[41][32] = true;	
+	}
+
+	public boolean[][] getBeziehungsMatrix() {
+		
 	} 
 	
 	

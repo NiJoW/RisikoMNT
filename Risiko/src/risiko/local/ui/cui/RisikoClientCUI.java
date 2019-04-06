@@ -175,6 +175,7 @@ public class RisikoClientCUI {
 		//Einheiten setzen
 		//angreiefen
 		//verschieben
+		risiko.kannVerschieben();
 	}
 	
 	

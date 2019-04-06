@@ -69,6 +69,12 @@ public class Risiko {
 	public Spieler getSpieler(int id) {
 		return spielerVW.getSpieler(id);
 	}
+
+	public void kannVerschieben() {
+		weltVW.getBeziehungsMatrix();
+		spiellogik.kannVerschieben(weltVW.getBeziehungsMatrix());
+		
+	}
 	
 	
 }
