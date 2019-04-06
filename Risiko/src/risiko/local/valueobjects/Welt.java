@@ -192,8 +192,8 @@ public class Welt {
 	}
 
 	public boolean[][] getBeziehungsMatrix() {
-		
-	} 
-	
+		return pBeziehungen;
+	}
+
 	
 }
