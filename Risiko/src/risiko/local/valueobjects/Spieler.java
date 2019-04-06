@@ -33,6 +33,10 @@ public class Spieler {
 	public void setAktuelleLaender(int aktuelleLaender) {
 		this.aktuelleLaender = aktuelleLaender;
 	}
+
+	public void berechneVerteilbareEinheiten(int aenderungsWert) {
+		verteilbareEinheiten += aenderungsWert;
+	}
 	
 }
 
