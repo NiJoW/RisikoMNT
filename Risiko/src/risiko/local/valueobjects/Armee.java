@@ -34,16 +34,10 @@ public class Armee {
 		//else Exception
 	}
 	
-	public void vergroessereArmee(int anzahl) {
+	public void berechneArmeeGroesse(int anzahl) {
 		armeeGroesse += anzahl;
 	}
-	
-	public void verkleinereArmee(int anzahl) {
-		if(anzahl < armeeGroesse) {
-			armeeGroesse -= anzahl;
-		}
-		//else Exception
-	}
+
 	
 }
 

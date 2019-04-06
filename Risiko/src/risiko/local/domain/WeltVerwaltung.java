@@ -139,5 +139,9 @@ public class WeltVerwaltung {
 		kontinentListe.get(5).setProvinzen(südamerikasProvinzListe);
 	}
 
+	public Welt getWelt() {
+		return welt;
+	}
+
 	
 }
