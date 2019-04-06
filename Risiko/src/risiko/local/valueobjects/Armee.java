@@ -8,6 +8,7 @@ public class Armee {
 	
 	public Armee(Provinz provinz) {
 		this.provinz = provinz;
+		armeeGroesse = 1;
 	}
 	
 	public Spieler getBesitzer() {

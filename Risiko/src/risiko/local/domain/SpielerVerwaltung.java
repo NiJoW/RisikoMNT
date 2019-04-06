@@ -27,4 +27,26 @@ public class SpielerVerwaltung {
 	public Vector<Spieler> getSpielerListe() {
 		return (Vector<Spieler>) spielerliste;
 	}
+	
+	public String getSpielerName(int id) {
+		return spielerliste.get(id).getName();
+	}
+
+	public int getVerteilbareEinheiten(int id) {
+		return spielerliste.get(id).getVerteilbareEinheiten();
+	}
+
+	public void weiseEinheitenZu(int bonusAbSpieler) {
+		for(int s = 0; s < spielerliste.size(); s++) {
+			if(s >= bonusAbSpieler) {
+				spielerliste.get(s).setVerteilbareEinheiten(11);
+			} else {
+				spielerliste.get(s).setVerteilbareEinheiten(10);
+			}
+		}
+	}
+
+	public Spieler getSpieler(int id) {
+		return spielerliste.get(id);
+	}
 }

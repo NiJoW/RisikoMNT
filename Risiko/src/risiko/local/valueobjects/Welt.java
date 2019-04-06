@@ -1,10 +1,5 @@
 package risiko.local.valueobjects;
 
-import java.util.List;
-import java.util.Vector;
-import java.lang.Object;
-import java.util.AbstractCollection;
-
 public class Welt {
 		
 	boolean [][] pBeziehungen;
@@ -13,6 +8,10 @@ public class Welt {
 			erstellePBeziehungen();	
 	}
 
+	public boolean getBeziehungen(int from, int to) {
+		return pBeziehungen[from][to];		
+	}
+	
 	private void erstellePBeziehungen() {
 		pBeziehungen = new boolean [42][42];
 		for(int i = 0; i < pBeziehungen.length; i++) {

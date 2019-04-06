@@ -4,11 +4,12 @@ public class Provinz {
 
 	private String name;
 	private Armee armee;
-	//Kürzel?
+	private int id;
 	
 	
-	public Provinz(String name) {
+	public Provinz(String name, int id) {
 		this.name = name;
+		this.id = id;
 		armee = new Armee(this); 
 	}
 	
@@ -16,4 +17,11 @@ public class Provinz {
 		armee.setBesitzer(besitzer);
 	}
 	
+	public Spieler getBesitzer() {
+		return armee.getBesitzer();
+	}
+	
+	public String toString() {
+		return id+") "+name+ " -> Einheiten: "+armee.getArmeeGroesse();
+	}
 }
