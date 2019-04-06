@@ -49,4 +49,8 @@ public class SpielerVerwaltung {
 	public Spieler getSpieler(int id) {
 		return spielerliste.get(id);
 	}
+
+	public void berechneVerteilbareEinheiten(int aenderungsWert, int id) {
+		spielerliste.get(id).berechneVerteilbareEinheiten(aenderungsWert);
+	}
 }

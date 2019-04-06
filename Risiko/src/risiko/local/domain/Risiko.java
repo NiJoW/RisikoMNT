@@ -69,6 +69,10 @@ public class Risiko {
 	public Spieler getSpieler(int id) {
 		return spielerVW.getSpieler(id);
 	}
+
+	public void berechneVerteilbareEinheiten(int aenderungsWert, int spielerID) {
+		spielerVW.berechneVerteilbareEinheiten(aenderungsWert, spielerID);
+	}
 	
 	
 }

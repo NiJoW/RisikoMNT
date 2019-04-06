@@ -104,8 +104,10 @@ public class RisikoClientCUI {
 	private void einheitenVerteilen() {
 		weltkarteAusgeben();
 		for(int j = 0; j < risiko.getSpielerAnzahl(); j++) {
-			System.out.println(risiko.getSpielerName(j) + " ist an der Reihe und darf " + risiko.getVerteilbareEinheiten(j) + " Einheiten setzen!");
-			einheitenwahlVerarbeiten(j, 42, 0);
+			while(risiko.getVerteilbareEinheiten(j) > 0) {
+				System.out.println(risiko.getSpielerName(j) + " ist an der Reihe und darf " + risiko.getVerteilbareEinheiten(j) + " Einheiten setzen!");
+				einheitenwahlVerarbeiten(j, 42, 0);
+			}
 		}
 	}
 	
@@ -133,6 +135,7 @@ public class RisikoClientCUI {
 			e.printStackTrace();
 		}
 		if(validiereProvinzID(provinzID, spielerID) && validiereAnzahlEinheiten(anzahlEinheiten, spielerID)) {
+			risiko.berechneVerteilbareEinheiten(-anzahlEinheiten, spielerID);
 			risiko.einheitenVerteilen(provinzID, anzahlEinheiten);
 		}	else {
 			einheitenwahlVerarbeiten(spielerID, 42, 0);
