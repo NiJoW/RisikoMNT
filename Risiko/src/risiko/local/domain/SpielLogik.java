@@ -4,6 +4,8 @@ import java.util.Vector;
 
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
+import risiko.local.valueobjects.Welt;
+
 
 public class SpielLogik {
 	
@@ -24,18 +26,30 @@ public class SpielLogik {
 		return false;
 	}
 	
-	//private boolean kannVerschieben(Provinz proFrom, Provinz proTo) {
-		
-	//}
-	
 	public void angreifen() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	
-	public void kannVerschieben(boolean[][] beziehungsMatrix) {
-		welt.getBeziehungen(0,0);
+	public boolean kannVerschieben(int from, int to, Vector<Provinz> pListe, Welt welt) {
+		//kann nicht verschieben wenn Besitzer der Provinzen verschieden
+		if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer()))) {
+			return false;
+		} else if(welt.getBeziehung(from, to)) {
+			//wenn direkte Nachbarn und gleiche Besitzer -> kann verschieben 
+			return true;
+		}
+		for(int dTo = 0; dTo < welt.getBeziehungsMatrix().length; dTo++) {
+			if(welt.getBeziehung(from, dTo) && kannVerschieben(dTo, to, pListe, welt) {
+				return true;
+			}
+		}
+	}
+
+	public void verschiebe(int anzahlEinheiten, Provinz fromProvinz, Provinz toProvinz) {
+		fromProvinz.berechneArmeeGroesse(-anzahlEinheiten);
+		toProvinz.berechneArmeeGroesse(anzahlEinheiten);
 	}
 	
 }

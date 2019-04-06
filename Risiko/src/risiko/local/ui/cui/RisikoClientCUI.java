@@ -33,9 +33,7 @@ public class RisikoClientCUI {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 		    } 
-		}
-		risiko.gibSpielerlisteAus();
-		
+		}		
 	}
 	
 	private int erfrageSpielerAnzahl() {
@@ -142,6 +140,8 @@ public class RisikoClientCUI {
 		}
 	}
 	
+	//TODO: Validierungen in SpielLogik!
+	
 	private boolean validiereProvinzID(int provinzID, int spielerID) {
 		if(provinzID > 41 || provinzID < 0) {
 			System.out.println("Provinz ID muss eine Zahl zwischen 0 und 41 sein! Bitte erneut eingeben: ");
@@ -153,7 +153,7 @@ public class RisikoClientCUI {
 		return true;
 	}
 	
-	
+	//TODO: Validierungen in SpielLogik!
 	
 	private boolean validiereAnzahlEinheiten(int anzahl, int spielerID) {
 		if((anzahl > 0) && risiko.getVerteilbareEinheiten(spielerID) >= anzahl) {
@@ -178,15 +178,55 @@ public class RisikoClientCUI {
 		//Einheiten setzen
 		//angreiefen
 		//verschieben
-		System.out.println("AKTUELLE WELTKARTE:");
-		for(int i = 0; i < risiko.getSpielerAnzahl(); i++) {
+		einheitenVerschieben();
+		
+	}
+	
+	private void einheitenVerschieben() {
+		System.out.println("Phase: Einheiten Verschieben");
+		String input = "";
+		int fromProvinz = 42;
+		int toProvinz = 42;
+		int anzahlEinheiten = 0;
+		
+		while(true) {
 			System.out.println("-------------Länder von Spieler " + risiko.getSpielerName(i) + "--------------");
 			laenderInfoAusgeben(i);
 			
-		}
-		risiko.kannVerschieben();
+			System.out.println("Einheiten verschieben:        'v'");
+			System.out.println("Phase beenden:        'q'");
+			
+			try {
+				input = liesEingabe();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(input.equals("q")) {
+				return;
+			}
+			
+			try {
+				System.out.print("Von Provinz (ID): ");
+				fromProvinz = Integer.parseInt(liesEingabe());
+				System.out.print("> ");
+				
+				System.out.print("Nach Provinz (ID): ");
+				toProvinz = Integer.parseInt(liesEingabe());
+				System.out.print("> ");
+				
+				System.out.print("Anzahl der Einheiten: ");
+				anzahlEinheiten = Integer.parseInt(liesEingabe());
+				System.out.print("> ");
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//TODO: Validierung Eingaben -> in Risiko
+			risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
+			}
 	}
-	
 	
 	public static void main(String[] args) {
 		RisikoClientCUI cui;

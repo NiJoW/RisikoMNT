@@ -23,10 +23,6 @@ public class Risiko {
 		spielerVW.spielerHinzufuegen(name);
 	}
 	
-	public void gibSpielerlisteAus() {
-		//spielerVW.gibSpielerlisteAus();
-	}
-	
 	public void spielVorbereiten() {
 		spielVW.erstelleNeuesSpiel();
 		weltVW.erstelleWelt();
@@ -39,7 +35,6 @@ public class Risiko {
 	public void spielStarten() {
 		spiellogik.spielStarten(); //provinzenListe, spielerListe
 		spiellogik.angreifen();
-		
 	}
 
 	public void einheitenVerteilen(int id, int anzahl) {
@@ -70,15 +65,15 @@ public class Risiko {
 		return spielerVW.getSpieler(id);
 	}
 
-
 	public void berechneVerteilbareEinheiten(int aenderungsWert, int spielerID) {
 		spielerVW.berechneVerteilbareEinheiten(aenderungsWert, spielerID);
+	}
 
-	public void kannVerschieben() {
-		weltVW.getBeziehungsMatrix();
-		spiellogik.kannVerschieben(weltVW.getBeziehungsMatrix());
-		
-
+	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) {
+		Vector<Provinz> provinzenListe = weltVW.getProvinzListe();
+		if(spiellogik.kannVerschieben(fromProvinz, toProvinz, provinzenListe, weltVW.getWelt())) {
+			spiellogik.verschiebe(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
+		}
 	}
 	
 	

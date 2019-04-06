@@ -24,4 +24,9 @@ public class Provinz {
 	public String toString() {
 		return id+") "+name+ " -> Einheiten: "+armee.getArmeeGroesse();
 	}
+
+	public void berechneArmeeGroesse(int anzahl) {
+		armee.berechneArmeeGroesse(anzahl);
+		
+	}
 }
