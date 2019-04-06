@@ -32,5 +32,9 @@ public class SpielLogik {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void kannVerschieben(boolean[][] beziehungsMatrix) {
+				
+	}
 	
 }

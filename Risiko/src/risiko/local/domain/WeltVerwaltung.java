@@ -138,5 +138,9 @@ public class WeltVerwaltung {
 		}
 		kontinentListe.get(5).setProvinzen(südamerikasProvinzListe);
 	}
+
+	public boolean[][] getBeziehungsMatrix() {
+		welt.getBeziehungsMatrix();
+	}
 	
 }
