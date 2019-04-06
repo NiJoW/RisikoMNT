@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
+import risiko.local.valueobjects.Spieler;
 import risiko.local.valueobjects.Welt;
 
 public class WeltVerwaltung {
@@ -18,6 +19,17 @@ public class WeltVerwaltung {
 	public WeltVerwaltung() {
 		
 	}
+	
+	public Vector<Provinz> getProvinzenVonSpieler(Spieler spieler) {
+		Vector<Provinz> eigeneProvinzen = new Vector<Provinz>();
+		for(Provinz provinz : provinzListe) {
+			if(provinz.getBesitzer().equals(spieler)) {
+				eigeneProvinzen.add(provinz);
+			}
+		}
+		return eigeneProvinzen;
+	}
+	
 	
 	public void erstelleWelt() {
 		welt = new Welt();
@@ -43,53 +55,53 @@ public class WeltVerwaltung {
 	}
 	
 	private void erstelleProvinzen() {
-		provinzListe.add(new Provinz("Ägypten"));
-		provinzListe.add(new Provinz("Kongo"));
-		provinzListe.add(new Provinz("Madagaskar"));
-		provinzListe.add(new Provinz("Nordwestafrika"));
-		provinzListe.add(new Provinz("Ostafrika"));
-		provinzListe.add(new Provinz("Südafrika"));
+		provinzListe.add(new Provinz("Ägypten",0));
+		provinzListe.add(new Provinz("Kongo", 1));
+		provinzListe.add(new Provinz("Madagaskar", 2));
+		provinzListe.add(new Provinz("Nordwestafrika", 3));
+		provinzListe.add(new Provinz("Ostafrika", 4));
+		provinzListe.add(new Provinz("Südafrika", 5));
 		
-		provinzListe.add(new Provinz("Afghanistan"));
-		provinzListe.add(new Provinz("China"));
-		provinzListe.add(new Provinz("Indien"));
-		provinzListe.add(new Provinz("Irkutsk"));
-		provinzListe.add(new Provinz("Jakutien"));
-		provinzListe.add(new Provinz("Japan"));
-		provinzListe.add(new Provinz("Kamtschatka"));
-		provinzListe.add(new Provinz("Mittlerer Osten"));
-		provinzListe.add(new Provinz("Monglei"));
-		provinzListe.add(new Provinz("Siam"));
-		provinzListe.add(new Provinz("Sibirien"));
-		provinzListe.add(new Provinz("Ural"));
+		provinzListe.add(new Provinz("Afghanistan", 6));
+		provinzListe.add(new Provinz("China", 7));
+		provinzListe.add(new Provinz("Indien", 8));
+		provinzListe.add(new Provinz("Irkutsk", 9));
+		provinzListe.add(new Provinz("Jakutien", 10));
+		provinzListe.add(new Provinz("Japan", 11));
+		provinzListe.add(new Provinz("Kamtschatka", 12));
+		provinzListe.add(new Provinz("Mittlerer Osten", 13));
+		provinzListe.add(new Provinz("Monglei", 14));
+		provinzListe.add(new Provinz("Siam", 15));
+		provinzListe.add(new Provinz("Sibirien", 16));
+		provinzListe.add(new Provinz("Ural", 17));
 		
-		provinzListe.add(new Provinz("Indonesien"));
-		provinzListe.add(new Provinz("Neu Guinera"));
-		provinzListe.add(new Provinz("Ost-Australien"));
-		provinzListe.add(new Provinz("West-Australien"));
+		provinzListe.add(new Provinz("Indonesien", 18));
+		provinzListe.add(new Provinz("Neu Guinera", 19));
+		provinzListe.add(new Provinz("Ost-Australien", 20));
+		provinzListe.add(new Provinz("West-Australien", 21));
 		
-		provinzListe.add(new Provinz("Großbritannien"));
-		provinzListe.add(new Provinz("Island"));
-		provinzListe.add(new Provinz("Mitteleuropa"));
-		provinzListe.add(new Provinz("Skandinavien"));
-		provinzListe.add(new Provinz("Süd-Europa"));
-		provinzListe.add(new Provinz("Ukraine"));
-		provinzListe.add(new Provinz("West-Europa"));
+		provinzListe.add(new Provinz("Großbritannien", 22));
+		provinzListe.add(new Provinz("Island", 23));
+		provinzListe.add(new Provinz("Mitteleuropa", 24));
+		provinzListe.add(new Provinz("Skandinavien", 25));
+		provinzListe.add(new Provinz("Süd-Europa", 26));
+		provinzListe.add(new Provinz("Ukraine", 27));
+		provinzListe.add(new Provinz("West-Europa", 28));
 		
-		provinzListe.add(new Provinz("Alaska"));
-		provinzListe.add(new Provinz("Alberta"));
-		provinzListe.add(new Provinz("Grönland"));
-		provinzListe.add(new Provinz("Mittel-Amerika"));
-		provinzListe.add(new Provinz("Nordwest-Territorium"));
-		provinzListe.add(new Provinz("Ontario"));
-		provinzListe.add(new Provinz("Oststaaten"));
-		provinzListe.add(new Provinz("Quebeck"));
-		provinzListe.add(new Provinz("Weststaaten"));
+		provinzListe.add(new Provinz("Alaska", 29));
+		provinzListe.add(new Provinz("Alberta", 30));
+		provinzListe.add(new Provinz("Grönland", 31));
+		provinzListe.add(new Provinz("Mittel-Amerika", 32));
+		provinzListe.add(new Provinz("Nordwest-Territorium", 33));
+		provinzListe.add(new Provinz("Ontario", 34));
+		provinzListe.add(new Provinz("Oststaaten", 35));
+		provinzListe.add(new Provinz("Quebeck", 36));
+		provinzListe.add(new Provinz("Weststaaten", 37));
 		
-		provinzListe.add(new Provinz("Argentinien"));
-		provinzListe.add(new Provinz("Brasilien"));
-		provinzListe.add(new Provinz("Peru"));
-		provinzListe.add(new Provinz("Venezuela"));
+		provinzListe.add(new Provinz("Argentinien", 38));
+		provinzListe.add(new Provinz("Brasilien", 39));
+		provinzListe.add(new Provinz("Peru", 40));
+		provinzListe.add(new Provinz("Venezuela", 41));
 	}
 	
 	private void kontinentiereProvinzen() {

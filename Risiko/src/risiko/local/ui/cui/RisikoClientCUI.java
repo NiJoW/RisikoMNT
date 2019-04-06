@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import risiko.local.domain.Risiko;
+import risiko.local.valueobjects.Provinz;
 
 public class RisikoClientCUI {
 	private Risiko risiko;
@@ -94,8 +95,88 @@ public class RisikoClientCUI {
 	}
 	
 	private void spielStarten() {
-		risiko.spielStarten();
+		risiko.spielVorbereiten(); // TODO: Einheiten verteilen
+		einheitenVerteilen();
+		gameMenuAusgeben();
+		//risiko.spielStarten();
 	}
+	
+	private void einheitenVerteilen() {
+		weltkarteAusgeben();
+		for(int j = 0; j < risiko.getSpielerAnzahl(); j++) {
+			System.out.println(risiko.getSpielerName(j) + " ist an der Reihe und darf " + risiko.getVerteilbareEinheiten(j) + " Einheiten setzen!");
+			einheitenwahlVerarbeiten(j, 42, 0);
+		}
+	}
+	
+	private void weltkarteAusgeben() {
+		System.out.println("AKTUELLE WELTKARTE:");
+		for(int i = 0; i < risiko.getSpielerAnzahl(); i++) {
+			System.out.println("-------------Länder von Spieler " + risiko.getSpielerName(i) + "--------------");
+			laenderInfoAusgeben(i);
+			
+		}
+	}
+	
+	private void einheitenwahlVerarbeiten(int spielerID, int provinzID, int anzahlEinheiten) {
+		try {
+			System.out.print("Provinz ID: ");
+			provinzID = Integer.parseInt(liesEingabe());
+			System.out.print("> ");
+			
+			System.out.print("Anzahl Einheiten: ");
+			anzahlEinheiten = Integer.parseInt(liesEingabe());
+			System.out.print("> ");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(validiereProvinzID(provinzID, spielerID) && validiereAnzahlEinheiten(anzahlEinheiten, spielerID)) {
+			risiko.einheitenVerteilen(provinzID, anzahlEinheiten);
+		}	else {
+			einheitenwahlVerarbeiten(spielerID, 42, 0);
+		}
+	}
+	
+	private boolean validiereProvinzID(int provinzID, int spielerID) {
+		if(provinzID > 41 || provinzID < 0) {
+			System.out.println("Provinz ID muss eine Zahl zwischen 0 und 41 sein! Bitte erneut eingeben: ");
+			return false;
+		}else if(!(risiko.getProvinz(provinzID).getBesitzer().equals(risiko.getSpieler(spielerID)))){
+			System.out.println("Diese Provinz gehört dir nicht! Bitte eine Provinz von dir angeben: ");
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
+	private boolean validiereAnzahlEinheiten(int anzahl, int spielerID) {
+		if((anzahl > 0) && risiko.getVerteilbareEinheiten(spielerID) >= anzahl) {
+			return true;
+		}
+		System.out.println("Anzahl der Einheiten ist nicht korrekt, bitte neu eingeben!");
+		return false;
+	}
+
+
+	private void laenderInfoAusgeben(int i) {
+		for(Provinz provinz : risiko.getProvinzenVonSpieler(i)) {
+			System.out.println(provinz);
+		}
+			
+	}
+	
+	
+	
+	private void gameMenuAusgeben() {
+		//Einheiten bekommen / berechnen
+		//Einheiten setzen
+		//angreiefen
+		//verschieben
+	}
+	
 	
 	public static void main(String[] args) {
 		RisikoClientCUI cui;
@@ -103,4 +184,5 @@ public class RisikoClientCUI {
 		cui = new RisikoClientCUI();
 		cui.run();
 	}
+	
 }

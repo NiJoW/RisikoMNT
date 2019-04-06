@@ -27,13 +27,49 @@ public class Risiko {
 		//spielerVW.gibSpielerlisteAus();
 	}
 	
-	public void spielStarten() {
+	public void spielVorbereiten() {
 		spielVW.erstelleNeuesSpiel();
 		weltVW.erstelleWelt();
 		Vector<Provinz> provinzenListe = weltVW.getProvinzListe();
 		Vector<Spieler> spielerListe = spielerVW.getSpielerListe();
-		spiellogik.spielStarten(provinzenListe, spielerListe );
+		int bonusAbSpieler = spielVW.spielVorbereiten(provinzenListe, spielerListe);
+		spielerVW.weiseEinheitenZu(bonusAbSpieler);
 	}
+	
+	public void spielStarten() {
+		spiellogik.spielStarten(); //provinzenListe, spielerListe
+		spiellogik.angreifen();
+		
+	}
+
+	public void einheitenVerteilen(int id, int anzahl) {
+		spielVW.einheitenVerteilen();
+	}
+	
+	public int getSpielerAnzahl() {
+		return spielerVW.getSpielerAnzahl();
+	}
+
+	public String getSpielerName(int id) {
+		return spielerVW.getSpielerName(id);
+	}
+
+	public int getVerteilbareEinheiten(int id) {
+		return spielerVW.getVerteilbareEinheiten(id);
+	}
+	
+	public Vector<Provinz> getProvinzenVonSpieler(int id){
+		return weltVW.getProvinzenVonSpieler(spielerVW.getSpielerListe().get(id));
+	}
+
+	public Provinz getProvinz(int provinzID) {
+		return weltVW.getProvinzListe().get(provinzID);
+	}
+
+	public Spieler getSpieler(int id) {
+		return spielerVW.getSpieler(id);
+	}
+	
 	
 }
 
