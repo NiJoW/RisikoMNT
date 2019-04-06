@@ -33,8 +33,9 @@ public class SpielLogik {
 		
 	}
 
+	
 	public void kannVerschieben(boolean[][] beziehungsMatrix) {
-				
+		welt.getBeziehungen(0,0);
 	}
 	
 }

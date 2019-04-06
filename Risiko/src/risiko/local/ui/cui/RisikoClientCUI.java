@@ -175,6 +175,12 @@ public class RisikoClientCUI {
 		//Einheiten setzen
 		//angreiefen
 		//verschieben
+		System.out.println("AKTUELLE WELTKARTE:");
+		for(int i = 0; i < risiko.getSpielerAnzahl(); i++) {
+			System.out.println("-------------Länder von Spieler " + risiko.getSpielerName(i) + "--------------");
+			laenderInfoAusgeben(i);
+			
+		}
 		risiko.kannVerschieben();
 	}
 	
