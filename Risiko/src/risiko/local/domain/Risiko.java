@@ -33,12 +33,11 @@ public class Risiko {
 	}
 	
 	public void spielStarten() {
-		spiellogik.spielStarten(); //provinzenListe, spielerListe
-		spiellogik.angreifen();
+		spiellogik.spielStarten(); //provinzenListe, spielerList
 	}
 
 	public void einheitenVerteilen(int id, int anzahl) {
-		spielVW.einheitenVerteilen();
+		spielVW.einheitenVerteilen(getProvinz(id), anzahl);
 	}
 	
 	public int getSpielerAnzahl() {
@@ -68,6 +67,20 @@ public class Risiko {
 	public void berechneVerteilbareEinheiten(int aenderungsWert, int spielerID) {
 		spielerVW.berechneVerteilbareEinheiten(aenderungsWert, spielerID);
 	}
+
+	public int[] wuerfeln(int anzahlEinheiten, int fromProvinz, int toProvinz) {
+		int[] wuerfelErgebnisse = spiellogik.wuerfeln(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
+		return wuerfelErgebnisse;
+	}
+	
+	public void angreifen(int fromProvinz, int toProvinz, int anzahlEinheiten, int[] wuerfelErgebnisse) {
+		Vector<Provinz> provinzenListe = weltVW.getProvinzListe();
+		if(spiellogik.kannAngreifen(fromProvinz, toProvinz, provinzenListe, weltVW.getWelt())) {
+//			Vector<Provinz> verlierer = spiellogik.angreifen(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
+			spiellogik.angriffAuswerten(wuerfelErgebnisse, getProvinz(fromProvinz), getProvinz(toProvinz), anzahlEinheiten);
+		}
+	}
+	
 
 	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) {
 		Vector<Provinz> provinzenListe = weltVW.getProvinzListe();

@@ -27,6 +27,9 @@ public class Provinz {
 
 	public void berechneArmeeGroesse(int anzahl) {
 		armee.berechneArmeeGroesse(anzahl);
-		
+	}
+	
+	public int getArmeeGroesse() {
+		return armee.getArmeeGroesse();
 	}
 }

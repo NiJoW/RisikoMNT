@@ -49,8 +49,8 @@ public class SpielVerwaltung {
 		return resteProvinzen;
 	}
 
-	public void einheitenVerteilen() {
-		
+	public void einheitenVerteilen(Provinz provinz, int anzahlEinheiten) {
+		provinz.berechneArmeeGroesse(anzahlEinheiten);
 	}
 	
 }

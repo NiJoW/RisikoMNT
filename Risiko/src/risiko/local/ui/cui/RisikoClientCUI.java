@@ -3,6 +3,7 @@ package risiko.local.ui.cui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 import risiko.local.domain.Risiko;
 import risiko.local.valueobjects.Provinz;
@@ -95,7 +96,7 @@ public class RisikoClientCUI {
 	private void spielStarten() {
 		risiko.spielVorbereiten(); // TODO: Einheiten verteilen
 		einheitenVerteilen();
-		gameMenuAusgeben();
+		spielen();
 		//risiko.spielStarten();
 	}
 	
@@ -173,25 +174,100 @@ public class RisikoClientCUI {
 	
 	
 	
-	private void gameMenuAusgeben() {
-		//Einheiten bekommen / berechnen
-		//Einheiten setzen
-		//angreiefen
-		//verschieben
-		einheitenVerschieben();
-		
+	private void spielen() {
+		//Runden (=jeder Spieler durchläuft jede Phase ein mal)
+		while(!einerHatGewonnen()) {
+			//einzelnen Phasen Spielzüge mit jeweiligen Phasen
+			for(int o = 0; o < risiko.getSpielerAnzahl(); o++) {
+				//Einheiten bekommen / berechnen
+				//Einheiten setzen
+				angreifen(o);
+				//verschieben
+				einheitenVerschieben(o);
+			}
+		}	
+	}
+	//Prüfen, ob jemand gewonnen hat
+	private boolean einerHatGewonnen() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
-	private void einheitenVerschieben() {
-		System.out.println("Phase: Einheiten Verschieben");
+	private void angreifen(int spielerIndex) {
+		System.out.println("------------Phase: Angreifen--------------");
 		String input = "";
 		int fromProvinz = 42;
 		int toProvinz = 42;
 		int anzahlEinheiten = 0;
 		
 		while(true) {
-			System.out.println("-------------Länder von Spieler " + risiko.getSpielerName(i) + "--------------");
-			laenderInfoAusgeben(i);
+			System.out.println("-------------Länder von Spieler " + risiko.getSpielerName(spielerIndex) + "--------------");
+			laenderInfoAusgeben(spielerIndex);
+			
+			System.out.println("Angreifen:        'a'");
+			System.out.println("Phase beenden:        'q'");
+			
+			try {
+				input = liesEingabe();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(input.equals("q")) {
+				return;
+			}
+			
+			try {
+				System.out.print("Von Provinz (ID): ");
+				fromProvinz = Integer.parseInt(liesEingabe());
+				System.out.print("> ");
+				
+				System.out.print("Nach Provinz (ID): ");
+				toProvinz = Integer.parseInt(liesEingabe());
+				System.out.print("> ");
+				
+				System.out.print("Mit wie vielen Einheiten möchtest du angreifen? (max 3) ");
+				anzahlEinheiten = Integer.parseInt(liesEingabe());
+				System.out.print("> ");
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//TODO: Validierung Eingaben -> in Risiko
+			
+			int[] wuerfelErgebnisse = risiko.wuerfeln(anzahlEinheiten, fromProvinz, toProvinz);
+			
+			String verteidiger = risiko.getProvinz(toProvinz).getBesitzer().getName();
+			
+			risiko.angreifen(fromProvinz, toProvinz, anzahlEinheiten, wuerfelErgebnisse);
+			
+			for(int t = 0; t < anzahlEinheiten; t++) {
+				System.out.println("Spieler " + risiko.getSpielerName(spielerIndex) + " hat eine " + wuerfelErgebnisse[t] + " gewürfelt!");
+			}
+			
+			for(int k = anzahlEinheiten; k < wuerfelErgebnisse.length; k++) {
+				System.out.println("Der verteidigende Spieler " + verteidiger + " hat eine " + wuerfelErgebnisse[k] + "gewürfelt!");
+			}
+			
+			if(risiko.getProvinz(toProvinz).getBesitzer().getName().equals(risiko.getSpielerName(spielerIndex))) {
+				System.out.println(risiko.getSpielerName(spielerIndex) + " hat die Provinz " + risiko.getProvinz(toProvinz) + " von " + verteidiger + " erobert!");
+			}
+		}
+	}
+	
+	
+
+	private void einheitenVerschieben(int spielerIndex) {
+		System.out.println("----------Phase: Einheiten Verschieben-----------");
+		String input = "";
+		int fromProvinz = 42;
+		int toProvinz = 42;
+		int anzahlEinheiten = 0;
+		
+		while(true) {
+			System.out.println("-------------Länder von Spieler " + risiko.getSpielerName(spielerIndex) + "--------------");
+			laenderInfoAusgeben(spielerIndex);
 			
 			System.out.println("Einheiten verschieben:        'v'");
 			System.out.println("Phase beenden:        'q'");
@@ -224,6 +300,8 @@ public class RisikoClientCUI {
 				e.printStackTrace();
 			}
 			//TODO: Validierung Eingaben -> in Risiko
+			
+			//NACHSCHAUEN: verschieben über mehrere Länder (Matrix?)git
 			risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
 			}
 	}
