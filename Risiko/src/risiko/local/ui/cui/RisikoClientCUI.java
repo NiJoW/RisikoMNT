@@ -123,56 +123,40 @@ public class RisikoClientCUI {
 		try {
 			System.out.print("Provinz ID: ");
 			provinzID = Integer.parseInt(liesEingabe());
-			System.out.print("> ");
 			
 			System.out.print("Anzahl Einheiten: ");
 			anzahlEinheiten = Integer.parseInt(liesEingabe());
-			System.out.print("> ");
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(validiereProvinzID(provinzID, spielerID) && validiereAnzahlEinheiten(anzahlEinheiten, spielerID)) {
+		
+//		if(!validiereProvinzID(provinzID, spielerID) ) {
+//			System.out.println("Die angegebene Prvinz ID gibt es nicht oder die Provinz gehört dir nicht! Bitte erneut eingeben: ");
+//		} else if(!validiereAnzahlEinheiten(anzahlEinheiten, spielerID))
+//			System.out.println("Anzahl der Einheiten ist nicht korrekt, bitte neu eingeben!");
+//		}
+		
+		
+		if(risiko.validiereProvinzID(provinzID, spielerID) && risiko.validiereAnzahlEinheiten(anzahlEinheiten, spielerID)) {
 			risiko.berechneVerteilbareEinheiten(-anzahlEinheiten, spielerID);
 			risiko.einheitenVerteilen(provinzID, anzahlEinheiten);
-		}	else {
+		} else if(!risiko.validiereProvinzID(provinzID, spielerID)){
+			System.out.println("Die angegebene Prvinz ID gibt es nicht oder die Provinz gehört dir nicht! Bitte erneut eingeben: ");
+			einheitenwahlVerarbeiten(spielerID, 42, 0);
+		} else if(!risiko.validiereAnzahlEinheiten(anzahlEinheiten, spielerID)) {
+			System.out.println("Anzahl der Einheiten ist nicht korrekt, bitte neu eingeben!");
 			einheitenwahlVerarbeiten(spielerID, 42, 0);
 		}
 	}
 	
-	//TODO: Validierungen in SpielLogik!
-	
-	private boolean validiereProvinzID(int provinzID, int spielerID) {
-		if(provinzID > 41 || provinzID < 0) {
-			System.out.println("Provinz ID muss eine Zahl zwischen 0 und 41 sein! Bitte erneut eingeben: ");
-			return false;
-		}else if(!(risiko.getProvinz(provinzID).getBesitzer().equals(risiko.getSpieler(spielerID)))){
-			System.out.println("Diese Provinz gehört dir nicht! Bitte eine Provinz von dir angeben: ");
-			return false;
-		}
-		return true;
-	}
-	
-	//TODO: Validierungen in SpielLogik!
-	
-	private boolean validiereAnzahlEinheiten(int anzahl, int spielerID) {
-		if((anzahl > 0) && risiko.getVerteilbareEinheiten(spielerID) >= anzahl) {
-			return true;
-		}
-		System.out.println("Anzahl der Einheiten ist nicht korrekt, bitte neu eingeben!");
-		return false;
-	}
-
-
 	private void laenderInfoAusgeben(int i) {
 		for(Provinz provinz : risiko.getProvinzenVonSpieler(i)) {
 			System.out.println(provinz);
 		}
 			
 	}
-	
-	
 	
 	private void spielen() {
 		//Runden (=jeder Spieler durchläuft jede Phase ein mal)
@@ -193,7 +177,7 @@ public class RisikoClientCUI {
 		return false;
 	}
 	
-	private void angreifen(int spielerIndex) {
+	private void angreifen(int spielerID) {
 		System.out.println("------------Phase: Angreifen--------------");
 		String input = "";
 		int fromProvinz = 42;
@@ -201,8 +185,8 @@ public class RisikoClientCUI {
 		int anzahlEinheiten = 0;
 		
 		while(true) {
-			System.out.println("-------------Länder von Spieler " + risiko.getSpielerName(spielerIndex) + "--------------");
-			laenderInfoAusgeben(spielerIndex);
+			System.out.println("-------------Länder von Spieler " + risiko.getSpielerName(spielerID) + "--------------");
+			laenderInfoAusgeben(spielerID);
 			
 			System.out.println("Angreifen:        'a'");
 			System.out.println("Phase beenden:        'q'");
@@ -220,21 +204,17 @@ public class RisikoClientCUI {
 			try {
 				System.out.print("Von Provinz (ID): ");
 				fromProvinz = Integer.parseInt(liesEingabe());
-				System.out.print("> ");
 				
 				System.out.print("Nach Provinz (ID): ");
 				toProvinz = Integer.parseInt(liesEingabe());
-				System.out.print("> ");
 				
 				System.out.print("Mit wie vielen Einheiten möchtest du angreifen? (max 3) ");
-				anzahlEinheiten = Integer.parseInt(liesEingabe());
-				System.out.print("> ");
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//TODO: Validierung Eingaben -> in Risiko
+			
 			
 			int[] wuerfelErgebnisse = risiko.wuerfeln(anzahlEinheiten, fromProvinz, toProvinz);
 			
@@ -243,15 +223,15 @@ public class RisikoClientCUI {
 			risiko.angreifen(fromProvinz, toProvinz, anzahlEinheiten, wuerfelErgebnisse);
 			
 			for(int t = 0; t < anzahlEinheiten; t++) {
-				System.out.println("Spieler " + risiko.getSpielerName(spielerIndex) + " hat eine " + wuerfelErgebnisse[t] + " gewürfelt!");
+				System.out.println("Spieler " + risiko.getSpielerName(spielerID) + " hat eine " + wuerfelErgebnisse[t] + " gewürfelt!");
 			}
 			
 			for(int k = anzahlEinheiten; k < wuerfelErgebnisse.length; k++) {
 				System.out.println("Der verteidigende Spieler " + verteidiger + " hat eine " + wuerfelErgebnisse[k] + "gewürfelt!");
 			}
 			
-			if(risiko.getProvinz(toProvinz).getBesitzer().getName().equals(risiko.getSpielerName(spielerIndex))) {
-				System.out.println(risiko.getSpielerName(spielerIndex) + " hat die Provinz " + risiko.getProvinz(toProvinz) + " von " + verteidiger + " erobert!");
+			if(risiko.getProvinz(toProvinz).getBesitzer().getName().equals(risiko.getSpielerName(spielerID))) {
+				System.out.println(risiko.getSpielerName(spielerID) + " hat die Provinz " + risiko.getProvinz(toProvinz) + " von " + verteidiger + " erobert!");
 			}
 		}
 	}
@@ -285,20 +265,18 @@ public class RisikoClientCUI {
 			try {
 				System.out.print("Von Provinz (ID): ");
 				fromProvinz = Integer.parseInt(liesEingabe());
-				System.out.print("> ");
 				
 				System.out.print("Nach Provinz (ID): ");
 				toProvinz = Integer.parseInt(liesEingabe());
-				System.out.print("> ");
 				
 				System.out.print("Anzahl der Einheiten: ");
 				anzahlEinheiten = Integer.parseInt(liesEingabe());
-				System.out.print("> ");
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			//TODO: Validierung Eingaben -> in Risiko
 			
 			//NACHSCHAUEN: verschieben über mehrere Länder (Matrix?)git

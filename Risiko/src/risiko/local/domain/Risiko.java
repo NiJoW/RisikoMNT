@@ -63,7 +63,15 @@ public class Risiko {
 	public Spieler getSpieler(int id) {
 		return spielerVW.getSpieler(id);
 	}
+	
+	public boolean validiereProvinzID(int provinzID, int spielerID) {
+		return spiellogik.validiereProvinzID(provinzID, spielerID, getProvinz(provinzID), getSpieler(spielerID));
+	}
 
+	public boolean validiereAnzahlEinheiten(int anzahlEinheiten, int spielerID) {
+		return spiellogik.validiereAnzahlEinheiten(anzahlEinheiten, spielerID, getVerteilbareEinheiten(spielerID));
+	}
+	
 	public void berechneVerteilbareEinheiten(int aenderungsWert, int spielerID) {
 		spielerVW.berechneVerteilbareEinheiten(aenderungsWert, spielerID);
 	}
@@ -88,7 +96,6 @@ public class Risiko {
 			spiellogik.verschiebe(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
 		}
 	}
-	
 	
 }
 
