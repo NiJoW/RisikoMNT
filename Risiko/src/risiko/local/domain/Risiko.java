@@ -37,7 +37,7 @@ public class Risiko {
 	}
 
 	public void einheitenVerteilen(int id, int anzahl) {
-		spielVW.einheitenVerteilen(getProvinz(id), anzahl);
+		spielVW.neueEinheitenSetzen(getProvinz(id), anzahl);
 	}
 	
 	public int getSpielerAnzahl() {

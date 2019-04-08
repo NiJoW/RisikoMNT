@@ -51,9 +51,9 @@ public class SpielVerwaltung {
 		return resteProvinzen;
 	}
 
-	public void einheitenVerteilen(Provinz provinz, int anzahlEinheiten) {
+	public void neueEinheitenSetzen(Provinz provinz, int anzahlEinheiten) {
 		for(int i = 0; i < anzahlEinheiten; i++) {
-		provinz.erstelleEinheit(provinz.getBesitzer());
+			provinz.erstelleEinheit(provinz.getBesitzer());
 		}
 	}
 	
