@@ -17,11 +17,17 @@ public class RisikoClientCUI {
 		in = new BufferedReader(new InputStreamReader(System.in));		
 	}
 	
+	public static void main(String[] args) {
+		RisikoClientCUI cui;
+		//try-catch exception
+		cui = new RisikoClientCUI();
+		cui.run();
+	}
+	
 	private void run() {//gegebenenfalls lï¿½schen
 		spielerRegistrierung();
 		spielMenue();
 	}
-	
 	
 	private void spielerRegistrierung() {
 		int anzahl = erfrageSpielerAnzahl();
@@ -161,9 +167,10 @@ public class RisikoClientCUI {
 	private void spielen() {
 		//Runden (=jeder Spieler durchläuft jede Phase ein mal)
 		while(!einerHatGewonnen()) {
-			//einzelnen Phasen Spielzüge mit jeweiligen Phasen
+			//einzelnen Spielzüge mit jeweiligen Phasen
 			for(int o = 0; o < risiko.getSpielerAnzahl(); o++) {
 				//Einheiten bekommen / berechnen
+				neueEinheiten(o);
 				//Einheiten setzen
 				angreifen(o);
 				//verschieben
@@ -171,6 +178,34 @@ public class RisikoClientCUI {
 			}
 		}	
 	}
+	private void neueEinheiten(int spielerID) {
+		System.out.println("------------Phase: Einheiten setzen--------------");
+		weltkarteAusgeben();
+		int anzahlMoeglich = risiko.berechneNeueEinheiten(spielerID); //auch Kontinente prüfen
+		
+		int toProvinz = 42;
+		int anzahlEinheitenWollen = 0;
+		
+		while(anzahlMoeglich>0) {
+			toProvinz = 42;
+			anzahlEinheitenWollen = 0;
+			System.out.println("So viele einheiten: " + anzahlMoeglich);
+			try {			
+				System.out.print("Auf welche Provinz (ID) möchtest du deine Einheit(en) setzen? : ");
+				toProvinz = Integer.parseInt(liesEingabe());
+			
+				System.out.print("Wie viele Einheiten möchtest du setzen? : ");
+				anzahlEinheitenWollen = Integer.parseInt(liesEingabe());
+			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			risiko.setzeNeueEinheiten(to, anzahlEinheitenWollen);
+			anzahlMoeglich -= anzahlEinheitenWollen;
+		}
+	}
+
 	//Prüfen, ob jemand gewonnen hat
 	private boolean einerHatGewonnen() {
 		// TODO Auto-generated method stub
@@ -209,6 +244,7 @@ public class RisikoClientCUI {
 				toProvinz = Integer.parseInt(liesEingabe());
 				
 				System.out.print("Mit wie vielen Einheiten möchtest du angreifen? (max 3) ");
+				anzahlEinheiten = Integer.parseInt(liesEingabe());
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -287,17 +323,8 @@ public class RisikoClientCUI {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 			//TODO: Validierung Eingaben -> in Risiko
-						
+			risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);	
 		}
-	}
-	
-	public static void main(String[] args) {
-		RisikoClientCUI cui;
-		//try-catch exception
-		cui = new RisikoClientCUI();
-		cui.run();
-	}
-	
+	}	
 }

@@ -33,6 +33,7 @@ public class SpielVerwaltung {
 				zufall = rand.nextInt(42-zaehler);
 				zufallsProvinz = hilfsVector.get(zufall);
 				zufallsProvinz.erstelleEinheit(spielerListe.get(i));
+				spielerListe.get(i).berechneAktuelleLaender(1);
 				hilfsVector.remove(zufall);
 				zaehler++;
 			}
@@ -43,6 +44,7 @@ public class SpielVerwaltung {
 			zufall = rand.nextInt(hilfsVector.size());
 			zufallsProvinz = hilfsVector.get(zufall);
 			zufallsProvinz.erstelleEinheit(spielerListe.get(i));
+			spielerListe.get(i).berechneAktuelleLaender(1);
 			hilfsVector.remove(zufall);
 			i++;
 		}

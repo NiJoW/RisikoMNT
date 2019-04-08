@@ -100,9 +100,13 @@ public class Risiko {
 
 	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) {
 		Vector<Provinz> provinzenListe = weltVW.getProvinzListe();
-		if(spiellogik.kannVerschieben(fromProvinz, toProvinz, provinzenListe, weltVW.getWelt())) {
+		if(spiellogik.kannVerschieben(fromProvinz, toProvinz, provinzenListe, weltVW.getWelt(), anzahlEinheiten)) {
 			spiellogik.verschiebe(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
 		}
+	}
+
+	public int berechneNeueEinheiten(int spielerID) {
+		return spiellogik.berechneNeueEinheiten(spielerVW.getSpieler(spielerID), weltVW.getKontinentListe());
 	}	
 	
 }

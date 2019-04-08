@@ -143,5 +143,8 @@ public class WeltVerwaltung {
 		return welt;
 	}
 
+	public Vector <Kontinent> getKontinentListe(){
+		return (Vector<Kontinent>) kontinentListe;
+	}
 	
 }
