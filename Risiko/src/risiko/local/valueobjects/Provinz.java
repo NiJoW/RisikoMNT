@@ -31,6 +31,16 @@ public class Provinz {
 		return armee.size();
 	}
 	
+	public int getAnzahlVerschiebbareEinheiten() {
+		int anzahl = 0;
+		for(Einheit einheit : armee) {
+			if(!einheit.isInvolviert()) {
+				anzahl++;
+			}
+		}
+		return anzahl;
+	}
+	
 	public String toString() {
 		return id+") "+name+ " -> Einheiten: "+armee.size();
 	}
@@ -43,6 +53,7 @@ public class Provinz {
 		Einheit einheit;
 		for(int a = 0; a < anzahl; a++) {
 			einheit = armee.get(a);
+			einheit.setInvolviert(true);
 			to.addEinheit(einheit);
 			armee.remove(einheit);
 		}

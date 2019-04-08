@@ -8,7 +8,7 @@ public class Welt {
 			erstellePBeziehungen();	
 	}
 
-	public boolean getBeziehung(int from, int to) {
+	public boolean isNachbar(int from, int to) {
 		return pBeziehungen[from][to];		
 	}
 	

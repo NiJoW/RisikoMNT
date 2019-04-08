@@ -2,8 +2,9 @@ package risiko.local.valueobjects;
 
 public class Spieler {
 	private String name;
-	private int aktuelleLaender;
+	private int anzahlAktuelleLaender;
 	private int verteilbareEinheiten;
+	private Mission mission;
 
 	
 	public Spieler(String name) {
@@ -26,12 +27,12 @@ public class Spieler {
 		this.verteilbareEinheiten = verteilbareEinheiten;
 	}
 
-	public int getAktuelleLaender() {
-		return aktuelleLaender;
+	public int getAnzahlAktuelleLaender() {
+		return anzahlAktuelleLaender;
 	}
 
-	public void setAktuelleLaender(int aktuelleLaender) {
-		this.aktuelleLaender = aktuelleLaender;
+	public void berechneAktuelleLaender(int aktuelleLaender) {
+		this.anzahlAktuelleLaender += aktuelleLaender;
 	}
 
 	public void berechneVerteilbareEinheiten(int aenderungsWert) {

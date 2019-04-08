@@ -2,6 +2,7 @@ package risiko.local.domain;
 import java.util.Random;
 import java.util.Vector;
 
+import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
 import risiko.local.valueobjects.Welt;
@@ -37,7 +38,7 @@ public class SpielLogik {
 	
 	
 	public boolean kannAngreifen(int from, int to, Vector<Provinz> pListe, Welt welt) {		
-			if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer())) && welt.getBeziehung(from, to)) {
+			if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer())) && welt.isNachbar(from, to)) {
 			return true;
 		}
 		return false;
@@ -126,9 +127,14 @@ public class SpielLogik {
 	
 	private void aendereEinheiten(Provinz from, Provinz to, int angreiferGewonnen, int verteidigerGewonnen, int anzahl) {
 		while(angreiferGewonnen > 0) {
+			if((to.getArmeeGroesse()-1 == 0)) {
+				to.getBesitzer().berechneAktuelleLaender(-1);
+				from.getBesitzer().berechneAktuelleLaender(1);
+			}
 			to.verkleinereArmee(1);
 			if(to.getArmeeGroesse() == 0) {
 				einruecken(from, to, anzahl-verteidigerGewonnen);
+				//Länderkarte verteilen
 			}
 			angreiferGewonnen--;
 		}
@@ -159,22 +165,30 @@ public class SpielLogik {
 	}
 	
 	
-	public boolean kannVerschieben(int from, int to, Vector<Provinz> pListe, Welt welt) {
+	public boolean kannVerschieben(int from, int to, Vector<Provinz> pListe, Welt welt, int anzahlEinheiten) {
+		if(anzahlEinheiten > pListe.get(from).getAnzahlVerschiebbareEinheiten()) {
+			//throw excep
+			return false;
+		}
+			
+		
 		//kann nicht verschieben wenn Besitzer der Provinzen verschieden
+		
 		if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer()))) {
 			return false;
-		} else if(welt.getBeziehung(from, to)) {
+		} else if(welt.isNachbar(from, to)) {
 			//wenn direkte Nachbarn und gleiche Besitzer -> kann verschieben 
 			return true;
-		} else {
-			for(int dTo = 0; dTo < welt.getBeziehungsMatrix().length; dTo++) {
-				if(welt.getBeziehung(from, dTo) && kannVerschieben(dTo, to, pListe, welt)) {
-					return true;
-				} else {
-					return false;
-				}
-			}
 		}
+//			else {
+//			for(int dTo = 0; dTo < welt.getBeziehungsMatrix().length; dTo++) {
+//				if(welt.getBeziehung(from, dTo) && kannVerschieben(dTo, to, pListe, welt)) {
+//					return true;
+//				} else {
+//					return false;
+//				}
+//			}
+//		}
 		return false;
 	}
 	
@@ -182,5 +196,45 @@ public class SpielLogik {
 	public void verschiebe(int anzahlEinheiten, Provinz fromProvinz, Provinz toProvinz) {
 		fromProvinz.verschiebeEinheitenNach(anzahlEinheiten, toProvinz);
 	}
+
+	public int berechneNeueEinheiten(Spieler spieler, Vector<Kontinent> kontinentListe) {
+		int anzahl = spieler.getAnzahlAktuelleLaender()/3;
+		if(anzahl < 3) {
+			anzahl = 3;
+		}
+		anzahl += getKontinentBonus(spieler, kontinentListe);
+			
+		return anzahl;
+	}
+
+	private int getKontinentBonus(Spieler spieler, Vector<Kontinent> kontinentListe) {
+		int bonus = 0;
+		for(int i = 0; i < kontinentListe.size() ; i++) {
+			if(kontinentListe.get(i).isHerrscher(spieler)) {
+				switch(kontinentListe.get(i).getName()) {
+					case "Asien":
+						bonus += 7;
+						break;
+					case "Afrika":
+						bonus += 3;	
+						break;
+					case "Europa": 
+					case "Nord-Amerika": 	
+						bonus += 5;
+						break;
+					case "Süd-Amerika": 
+					case "Australien": 	
+						bonus += 2;
+						break;	
+				}
+				
+			}
+			
+		}
+			
+		return bonus;
+	}
+	
+	
 	
 }
