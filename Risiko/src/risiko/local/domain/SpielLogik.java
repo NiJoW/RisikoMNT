@@ -17,6 +17,23 @@ public class SpielLogik {
 		
 	}
 
+	public boolean validiereProvinzID(int provinzID, int spielerID, Provinz provinz, Spieler spieler) {
+		if(provinzID > 41 || provinzID < 0) {
+			return false;
+		}else if(!(provinz).getBesitzer().equals((spieler))){
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean validiereAnzahlEinheiten(int anzahl, int spielerID, int verteilbareEinheiten) {
+		if((anzahl > 0) && verteilbareEinheiten >= anzahl) {
+			return true;
+		}
+		return false;
+	}
+	
+	
 	
 	
 	public boolean kannAngreifen(int from, int to, Vector<Provinz> pListe, Welt welt) {		
@@ -95,11 +112,6 @@ public class SpielLogik {
 	}
 	
 	private void aendereEinheiten(Provinz from, Provinz to, int angreiferGewonnen, int verteidigerGewonnen, int anzahl) {
-		while(verteidigerGewonnen > 0) {
-			from.berechneArmeeGroesse(-1);
-			verteidigerGewonnen--;
-		}
-		
 		while(angreiferGewonnen > 0) {
 			to.berechneArmeeGroesse(-1);
 			if(to.getArmeeGroesse() == 0) {
@@ -108,6 +120,11 @@ public class SpielLogik {
 				from.berechneArmeeGroesse(-(anzahl-verteidigerGewonnen));
 			}
 			angreiferGewonnen--;
+		}
+		
+		while(verteidigerGewonnen > 0) {
+			from.berechneArmeeGroesse(-1);
+			verteidigerGewonnen--;
 		}
 		
 	}
