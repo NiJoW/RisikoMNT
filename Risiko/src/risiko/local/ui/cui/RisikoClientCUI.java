@@ -220,6 +220,17 @@ public class RisikoClientCUI {
 			
 			String verteidiger = risiko.getProvinz(toProvinz).getBesitzer().getName();
 			
+			if(!risiko.validiereProvinzID(fromProvinz, spielerID)) {
+				System.out.println("Die angegebene Prvinz ID gibt es nicht oder die Provinz gehört dir nicht! Bitte erneut eingeben: ");
+				//NACHSCHAUEN: verschieben über mehrere Länder (Matrix?)git
+				risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
+			} else if(!risiko.validiereZielProvinz(fromProvinz, toProvinz, spielerID)) {
+				System.out.println("Die angegebene Prvinz ID gibt es nicht, gehört dir oder grenzt nicht an die angreifende Provinz an! Bitte erneut eingeben: ");
+			} else if(!risiko.validiereAnzahlAngreifendeEinheiten(fromProvinz, spielerID, anzahlEinheiten)) {
+				System.out.println("Sie haben entweder nicht genug Einheiten ");
+			}
+			
+			
 			risiko.angreifen(fromProvinz, toProvinz, anzahlEinheiten, wuerfelErgebnisse);
 			
 			for(int t = 0; t < anzahlEinheiten; t++) {
@@ -278,10 +289,8 @@ public class RisikoClientCUI {
 			}
 			
 			//TODO: Validierung Eingaben -> in Risiko
-			
-			//NACHSCHAUEN: verschieben über mehrere Länder (Matrix?)git
-			risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
-			}
+						
+		}
 	}
 	
 	public static void main(String[] args) {

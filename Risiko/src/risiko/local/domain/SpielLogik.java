@@ -74,6 +74,19 @@ public class SpielLogik {
 		return wuerfelErgebnisse;
 	}
 	
+	public boolean validiereZielProvinz(Provinz proFrom, Provinz proTo, Spieler spieler) {
+		if(!spieler.equals(proTo.getBesitzer())) {
+			
+		}
+		
+		
+		return false;
+	}
+	
+	public boolean validiereAnzahlAngreifendeEinheiten(Provinz provinz, Spieler spieler, int anzahlEinheiten) {
+		return false;
+	}
+	
 	public void angriffAuswerten(int[] wuerfelErgebnisse, Provinz from, Provinz to, int anzahlEinheiten) {
 		int angreiferArray[] = new int[anzahlEinheiten];
 		int verteidigerArray[] = new int[wuerfelErgebnisse.length - anzahlEinheiten];
@@ -113,20 +126,22 @@ public class SpielLogik {
 	
 	private void aendereEinheiten(Provinz from, Provinz to, int angreiferGewonnen, int verteidigerGewonnen, int anzahl) {
 		while(angreiferGewonnen > 0) {
-			to.berechneArmeeGroesse(-1);
+			to.verkleinereArmee(1);
 			if(to.getArmeeGroesse() == 0) {
-				to.setBesitzer(from.getBesitzer());
-				to.berechneArmeeGroesse(anzahl-verteidigerGewonnen);
-				from.berechneArmeeGroesse(-(anzahl-verteidigerGewonnen));
+				einruecken(from, to, anzahl-verteidigerGewonnen);
 			}
 			angreiferGewonnen--;
 		}
 		
 		while(verteidigerGewonnen > 0) {
-			from.berechneArmeeGroesse(-1);
+			from.verkleinereArmee(1);
 			verteidigerGewonnen--;
 		}
 		
+	}
+	
+	private void einruecken(Provinz from, Provinz to, int anzahlEinheiten) {
+		from.verschiebeEinheitenNach(anzahlEinheiten, to);
 	}
 
 	private int[] sortiereArray (int[] array) {
@@ -165,8 +180,7 @@ public class SpielLogik {
 	
 
 	public void verschiebe(int anzahlEinheiten, Provinz fromProvinz, Provinz toProvinz) {
-		fromProvinz.berechneArmeeGroesse(-anzahlEinheiten);
-		toProvinz.berechneArmeeGroesse(anzahlEinheiten);
+		fromProvinz.verschiebeEinheitenNach(anzahlEinheiten, toProvinz);
 	}
 	
 }

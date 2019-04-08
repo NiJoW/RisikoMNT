@@ -27,20 +27,22 @@ public class SpielVerwaltung {
 		Provinz zufallsProvinz;
 		int zufall;
 		int zaehler = 0;
+		//verteilen der Karten/Provinzen, die ohne Rest verteilbar sind
 		for(int i = 0; i < anzahlSpieler; i++) {
 			for(int j = 0; j < provinzenProSpieler; j++) {
 				zufall = rand.nextInt(42-zaehler);
 				zufallsProvinz = hilfsVector.get(zufall);
-				zufallsProvinz.setBesitzer(spielerListe.get(i));
+				zufallsProvinz.erstelleEinheit(spielerListe.get(i));
 				hilfsVector.remove(zufall);
 				zaehler++;
 			}
 		}
+		//verteilen der restlichen Karten/Provinze
 		int i = 0;
 		while(!hilfsVector.isEmpty()) {
 			zufall = rand.nextInt(hilfsVector.size());
 			zufallsProvinz = hilfsVector.get(zufall);
-			zufallsProvinz.setBesitzer(spielerListe.get(i));
+			zufallsProvinz.erstelleEinheit(spielerListe.get(i));
 			hilfsVector.remove(zufall);
 			i++;
 		}
@@ -50,7 +52,9 @@ public class SpielVerwaltung {
 	}
 
 	public void einheitenVerteilen(Provinz provinz, int anzahlEinheiten) {
-		provinz.berechneArmeeGroesse(anzahlEinheiten);
+		for(int i = 0; i < anzahlEinheiten; i++) {
+		provinz.erstelleEinheit(provinz.getBesitzer());
+		}
 	}
 	
 }

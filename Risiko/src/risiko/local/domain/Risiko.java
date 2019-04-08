@@ -81,6 +81,14 @@ public class Risiko {
 		return wuerfelErgebnisse;
 	}
 	
+	public boolean validiereZielProvinz(int fromProvinz, int toProvinz, int spielerIndex) {
+		return spiellogik.validiereZielProvinz(getProvinz(fromProvinz), getProvinz(toProvinz), getSpieler(spielerIndex));
+	}
+	
+	public boolean validiereAnzahlAngreifendeEinheiten(int fromProvinz, int spielerIndex, int anzahlEinheiten) {
+		return spiellogik.validiereAnzahlAngreifendeEinheiten(getProvinz(fromProvinz), getSpieler(spielerIndex), anzahlEinheiten);
+	}
+	
 	public void angreifen(int fromProvinz, int toProvinz, int anzahlEinheiten, int[] wuerfelErgebnisse) {
 		Vector<Provinz> provinzenListe = weltVW.getProvinzListe();
 		if(spiellogik.kannAngreifen(fromProvinz, toProvinz, provinzenListe, weltVW.getWelt())) {
@@ -95,7 +103,7 @@ public class Risiko {
 		if(spiellogik.kannVerschieben(fromProvinz, toProvinz, provinzenListe, weltVW.getWelt())) {
 			spiellogik.verschiebe(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
 		}
-	}
+	}	
 	
 }
 
