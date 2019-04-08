@@ -18,11 +18,6 @@ public class Kontinent {
 	public List<Provinz> getProvinzen() {
 		return provinzen;
 	}
-
-	public void setProvinzen(List<Provinz> provinzen) {
-		this.provinzen = provinzen;
-	}
-	
 	
 	
 }
