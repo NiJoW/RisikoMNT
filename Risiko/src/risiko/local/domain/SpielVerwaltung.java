@@ -21,7 +21,8 @@ public class SpielVerwaltung {
 		Random rand = new Random();
 		int anzahlSpieler = spielerListe.size();
 		int provinzenProSpieler = 42 / anzahlSpieler;
-		int resteProvinzen = 42 % anzahlSpieler;
+		int bonus;
+		
 		
 		Vector<Provinz> hilfsVector = (Vector<Provinz>)provinzListe.clone();
 		Provinz zufallsProvinz;
@@ -49,8 +50,12 @@ public class SpielVerwaltung {
 			i++;
 		}
 		
-		//Index der Spielerliste, ab dem Spieler Bonuseinheiten bekommen(anderen haben 1 Provinz mehr)
-		return resteProvinzen;
+		//Index der Spielerliste, ab dem Spieler Bonuseinheiten bekommen(anderen haben 1 Provinz mehr)	
+		bonus = 42 % anzahlSpieler;
+		if(bonus == 0) {
+			bonus = spielerListe.size();
+		}
+		return bonus;
 	}
 
 	public void neueEinheitenSetzen(Provinz provinz, int anzahlEinheiten) {

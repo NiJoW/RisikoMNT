@@ -37,7 +37,7 @@ public class WeltVerwaltung {
 		erstelleKontinente();
 		provinzListe = new Vector<Provinz>(42);
 		erstelleProvinzen();
-		//kontinentiere = Verteilung der Provinzen auf die zugehörigen Kontinente
+		//kontinentiere = Verteilung der Provinzen auf die zugehï¿½rigen Kontinente
 		kontinentiereProvinzen();
 	}
 	
@@ -51,16 +51,16 @@ public class WeltVerwaltung {
 		kontinentListe.add(new Kontinent("Australien"));
 		kontinentListe.add(new Kontinent("Europa"));
 		kontinentListe.add(new Kontinent("Nord-Amerika"));
-		kontinentListe.add(new Kontinent("Süd-Amerika"));
+		kontinentListe.add(new Kontinent("Sued-Amerika"));
 	}
 	
 	private void erstelleProvinzen() {
-		provinzListe.add(new Provinz("Ägypten",0));
+		provinzListe.add(new Provinz("Aegypten",0));
 		provinzListe.add(new Provinz("Kongo", 1));
 		provinzListe.add(new Provinz("Madagaskar", 2));
 		provinzListe.add(new Provinz("Nordwestafrika", 3));
 		provinzListe.add(new Provinz("Ostafrika", 4));
-		provinzListe.add(new Provinz("Südafrika", 5));
+		provinzListe.add(new Provinz("Suedafrika", 5));
 		
 		provinzListe.add(new Provinz("Afghanistan", 6));
 		provinzListe.add(new Provinz("China", 7));
@@ -80,17 +80,17 @@ public class WeltVerwaltung {
 		provinzListe.add(new Provinz("Ost-Australien", 20));
 		provinzListe.add(new Provinz("West-Australien", 21));
 		
-		provinzListe.add(new Provinz("Großbritannien", 22));
+		provinzListe.add(new Provinz("Grossbritannien", 22));
 		provinzListe.add(new Provinz("Island", 23));
 		provinzListe.add(new Provinz("Mitteleuropa", 24));
 		provinzListe.add(new Provinz("Skandinavien", 25));
-		provinzListe.add(new Provinz("Süd-Europa", 26));
+		provinzListe.add(new Provinz("Sued-Europa", 26));
 		provinzListe.add(new Provinz("Ukraine", 27));
 		provinzListe.add(new Provinz("West-Europa", 28));
 		
 		provinzListe.add(new Provinz("Alaska", 29));
 		provinzListe.add(new Provinz("Alberta", 30));
-		provinzListe.add(new Provinz("Grönland", 31));
+		provinzListe.add(new Provinz("Groenland", 31));
 		provinzListe.add(new Provinz("Mittel-Amerika", 32));
 		provinzListe.add(new Provinz("Nordwest-Territorium", 33));
 		provinzListe.add(new Provinz("Ontario", 34));
@@ -111,7 +111,7 @@ public class WeltVerwaltung {
 		Vector<Provinz> australiensProvinzListe = new Vector<Provinz>();
 		Vector<Provinz> europasProvinzListe = new Vector<Provinz>();
 		Vector<Provinz> nordamerikasProvinzListe = new Vector<Provinz>();
-		Vector<Provinz> südamerikasProvinzListe = new Vector<Provinz>();
+		Vector<Provinz> suedamerikasProvinzListe = new Vector<Provinz>();
 		
 		for(int i = 0; i <=5; i++) {
 			afrikasProvinzListe.add(provinzListe.get(i));
@@ -134,9 +134,9 @@ public class WeltVerwaltung {
 		}
 		kontinentListe.get(4).setProvinzen(nordamerikasProvinzListe);
 		for(int i = 38; i <=41; i++) {
-			südamerikasProvinzListe.add(provinzListe.get(i));
+			suedamerikasProvinzListe.add(provinzListe.get(i));
 		}
-		kontinentListe.get(5).setProvinzen(südamerikasProvinzListe);
+		kontinentListe.get(5).setProvinzen(suedamerikasProvinzListe);
 	}
 
 	public Welt getWelt() {

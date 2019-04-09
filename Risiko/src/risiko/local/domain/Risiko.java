@@ -70,8 +70,8 @@ public class Risiko {
 		return spiellogik.berechneNeueEinheiten(spielerVW.getSpieler(spielerID), weltVW.getKontinentListe());
 	}
 	
-	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheitenWollen) {
-		
+	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten) {
+		spielVW.neueEinheitenSetzen(getProvinz(toProvinz), anzahlEinheiten);
 	}	
 	
 	public int[] wuerfeln(int anzahlEinheiten, int fromProvinz, int toProvinz) {
@@ -79,12 +79,15 @@ public class Risiko {
 		return wuerfelErgebnisse;
 	}
 	
-	public void angreifen(int fromProvinz, int toProvinz, int anzahlEinheiten, int[] wuerfelErgebnisse) {
+	public String[][] angreifen(int fromProvinz, int toProvinz, int anzahlEinheiten, int[] wuerfelErgebnisse) {
+		String[][] ergebnis = null;
 		Vector<Provinz> provinzenListe = weltVW.getProvinzListe();
 		if(spiellogik.kannAngreifen(fromProvinz, toProvinz, provinzenListe, weltVW.getWelt())) {
 //			Vector<Provinz> verlierer = spiellogik.angreifen(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
-			spiellogik.angriffAuswerten(wuerfelErgebnisse, getProvinz(fromProvinz), getProvinz(toProvinz), anzahlEinheiten);
+			ergebnis = spiellogik.angriffAuswerten(wuerfelErgebnisse, getProvinz(fromProvinz), getProvinz(toProvinz), anzahlEinheiten);
+		
 		}
+		return ergebnis;
 	}
 	
 	public Provinz getProvinz(int provinzID) {
