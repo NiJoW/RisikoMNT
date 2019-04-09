@@ -29,6 +29,10 @@ public class RisikoClientCUI {
 		spielMenue();
 	}
 	
+	
+	//-----------------------------SPIELERREGISTRIERUNG----------------------------------
+	
+	
 	private void spielerRegistrierung() {
 		int anzahl = erfrageSpielerAnzahl();
 		for(int i = 0; i < anzahl; i++) {
@@ -61,6 +65,11 @@ public class RisikoClientCUI {
 		
 	}
 	
+	
+	//-----------------------------SPIELMENÜ----------------------------------
+	
+	
+	
 	private void spielMenue() {
 		String input = "";
 		do {
@@ -85,11 +94,6 @@ public class RisikoClientCUI {
 		System.out.flush(); // ohne NL ausgeben
 	}
 	
-	private String liesEingabe()  throws IOException{
-		// einlesen von Konsole
-		return in.readLine();
-	}
-	
 	
 	private void verarbeiteSpielmenue(String input) {
 		switch(input) {
@@ -103,8 +107,12 @@ public class RisikoClientCUI {
 		risiko.spielVorbereiten(); // TODO: Einheiten verteilen
 		einheitenVerteilen();
 		spielen();
-		//risiko.spielStarten();
 	}
+	
+	
+	//---------------------------EINHEITEN VERTEILEN--------------------------------
+	
+	
 	
 	private void einheitenVerteilen() {
 		weltkarteAusgeben();
@@ -116,13 +124,11 @@ public class RisikoClientCUI {
 		}
 	}
 	
-	private void weltkarteAusgeben() {
-		System.out.println("AKTUELLE WELTKARTE:");
-		for(int i = 0; i < risiko.getSpielerAnzahl(); i++) {
-			System.out.println("-------------Länder von Spieler " + risiko.getSpielerName(i) + "--------------");
-			laenderInfoAusgeben(i);
-			
+	private void laenderInfoAusgeben(int i) {
+		for(Provinz provinz : risiko.getProvinzenVonSpieler(i)) {
+			System.out.println(provinz);
 		}
+			
 	}
 	
 	private void einheitenwahlVerarbeiten(int spielerID, int provinzID, int anzahlEinheiten) {
@@ -157,12 +163,10 @@ public class RisikoClientCUI {
 		}
 	}
 	
-	private void laenderInfoAusgeben(int i) {
-		for(Provinz provinz : risiko.getProvinzenVonSpieler(i)) {
-			System.out.println(provinz);
-		}
-			
-	}
+	
+	//--------------------------------SPIELEN-----------------------------------------
+	
+	
 	
 	private void spielen() {
 		//Runden (=jeder Spieler durchläuft jede Phase ein mal)
@@ -178,6 +182,18 @@ public class RisikoClientCUI {
 			}
 		}	
 	}
+	
+	//Prüfen, ob jemand gewonnen hat
+		private boolean einerHatGewonnen() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+	
+		
+		
+		//----------------------------------NEUE EINHEITEN---------------------------------
+		
+		
 	private void neueEinheiten(int spielerID) {
 		System.out.println("------------Phase: Einheiten setzen--------------");
 		weltkarteAusgeben();
@@ -201,16 +217,14 @@ public class RisikoClientCUI {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			risiko.setzeNeueEinheiten(to, anzahlEinheitenWollen);
+			risiko.setzeNeueEinheiten(toProvinz, anzahlEinheitenWollen);
 			anzahlMoeglich -= anzahlEinheitenWollen;
 		}
 	}
-
-	//Prüfen, ob jemand gewonnen hat
-	private boolean einerHatGewonnen() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
+	
+	//-------------------------------ANGRIFF--------------------------------------
+	
 	
 	private void angreifen(int spielerID) {
 		System.out.println("------------Phase: Angreifen--------------");
@@ -284,6 +298,10 @@ public class RisikoClientCUI {
 	}
 	
 	
+	
+	//------------------------------------VERSCHIEBEN--------------------------------------
+	
+	
 
 	private void einheitenVerschieben(int spielerIndex) {
 		System.out.println("----------Phase: Einheiten Verschieben-----------");
@@ -327,4 +345,23 @@ public class RisikoClientCUI {
 			risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);	
 		}
 	}	
+	
+	
+	//----------------------------MEHRFACH GEBRAUCHT-------------------------
+	
+	
+	
+	private void weltkarteAusgeben() {
+		System.out.println("AKTUELLE WELTKARTE:");
+		for(int i = 0; i < risiko.getSpielerAnzahl(); i++) {
+			System.out.println("-------------Länder von Spieler " + risiko.getSpielerName(i) + "--------------");
+			laenderInfoAusgeben(i);
+			
+		}
+	}
+	
+	private String liesEingabe()  throws IOException{
+		// einlesen von Konsole
+		return in.readLine();
+	}
 }
