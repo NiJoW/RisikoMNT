@@ -84,9 +84,12 @@ public class SpielLogik {
 		return false;
 	}
 	
-	public void angriffAuswerten(int[] wuerfelErgebnisse, Provinz from, Provinz to, int anzahlEinheiten) {
+	public String[][] angriffAuswerten(int[] wuerfelErgebnisse, Provinz from, Provinz to, int anzahlEinheiten) {
 		int angreiferArray[] = new int[anzahlEinheiten];
 		int verteidigerArray[] = new int[wuerfelErgebnisse.length - anzahlEinheiten];
+		String [][] ergebnis = new String[2][3]; 
+		
+		
 		//Arrays trennen
 		for(int i = 0; i < anzahlEinheiten; i++) {
 			angreiferArray[i]  =  wuerfelErgebnisse[i];
@@ -102,23 +105,32 @@ public class SpielLogik {
 		
 		int angreiferGewonnen = 0;
 		int verteidigerGewonnen = 0;
+		ergebnis[0][0] = angreiferArray[0]+"";
+		ergebnis[0][1] = verteidigerArray[0]+"";
 		//Arrays auswerten
 		if(angreiferArray[0] > verteidigerArray[0]) {
 			//Bei gleichem Ergebniss gewinnt der Verteidiger
 			angreiferGewonnen++;
+			ergebnis[0][2] = to.getBesitzer().getName(); //Verlierer
 		} else {
 			verteidigerGewonnen++;
+			ergebnis[0][2] = from.getBesitzer().getName();
 		}
 		
 		if(anzahlEinheiten > 1 && verteidigerArray.length > 1) {
-			//2 Würfel überprüfen
+			//2 Wï¿½rfel ï¿½berprï¿½fen
+			ergebnis[1][0] = angreiferArray[0]+"";
+			ergebnis[1][1] = verteidigerArray[0]+"";
 			if(angreiferArray[1] > verteidigerArray[1]) {
 				angreiferGewonnen++;
+				ergebnis[1][2] = to.getBesitzer().getName();
 			} else {
 				verteidigerGewonnen++;
+				ergebnis[1][2] = from.getBesitzer().getName();
 			} 	
 		}
 		aendereEinheiten(from, to, angreiferGewonnen, verteidigerGewonnen, anzahlEinheiten );
+		return ergebnis;
 	}
 	
 	private void aendereEinheiten(Provinz from, Provinz to, int angreiferGewonnen, int verteidigerGewonnen, int anzahl) {
@@ -130,7 +142,7 @@ public class SpielLogik {
 			to.verkleinereArmee(1);
 			if(to.getArmeeGroesse() == 0) {
 				einruecken(from, to, anzahl-verteidigerGewonnen);
-				//Länderkarte verteilen
+				//Lï¿½nderkarte verteilen
 			}
 			angreiferGewonnen--;
 		}
@@ -218,7 +230,7 @@ public class SpielLogik {
 					case "Nord-Amerika": 	
 						bonus += 5;
 						break;
-					case "Süd-Amerika": 
+					case "Sued-Amerika": 
 					case "Australien": 	
 						bonus += 2;
 						break;	
