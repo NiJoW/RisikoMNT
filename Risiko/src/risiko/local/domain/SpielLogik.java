@@ -14,10 +14,6 @@ public class SpielLogik {
 	public SpielLogik() {
 	}
 
-	public void spielStarten() { //Vector<Provinz> provinzListe, Vector<Spieler> spielerListe
-		
-	}
-
 	public boolean validiereProvinzID(int provinzID, int spielerID, Provinz provinz, Spieler spieler) {
 		if(provinzID > 41 || provinzID < 0) {
 			return false;
