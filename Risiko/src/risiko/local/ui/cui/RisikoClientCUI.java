@@ -275,39 +275,41 @@ public class RisikoClientCUI {
 			if(!risiko.validiereProvinzID(fromProvinz, spielerID)) {
 				System.out.println("Die angegebene Prvinz ID gibt es nicht oder die Provinz geh�rt dir nicht! Bitte erneut eingeben: ");
 				//NACHSCHAUEN: verschieben �ber mehrere L�nder (Matrix?)git
-				risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
+//				risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
 			} else if(!risiko.validiereZielProvinz(fromProvinz, toProvinz, spielerID)) {
 				System.out.println("Die angegebene Prvinz ID gibt es nicht, geh�rt dir oder grenzt nicht an die angreifende Provinz an! Bitte erneut eingeben: ");
 			} else if(!risiko.validiereAnzahlAngreifendeEinheiten(fromProvinz, spielerID, anzahlEinheiten)) {
 				System.out.println("Sie haben entweder nicht genug Einheiten ");
-			}
-			
-			
-			String[][] ergebnis = risiko.angreifen(fromProvinz, toProvinz, anzahlEinheiten, wuerfelErgebnisse);
-			//ToDo Try Catch + Exception statt if ergebnis == null
-			if(ergebnis!=null) {
-				for(int t = 0; t < anzahlEinheiten; t++) {
-					System.out.println("Spieler " + risiko.getSpielerName(spielerID) + " hat eine " + wuerfelErgebnisse[t] + " gew�rfelt!");
-				}
-				
-				for(int k = anzahlEinheiten; k < wuerfelErgebnisse.length; k++) {
-					System.out.println("Der verteidigende Spieler " + verteidiger + " hat eine " + wuerfelErgebnisse[k] + "gew�rfelt!");
-				}
-				//Ergebnisse der einzelnen Wurf-Vergleiche
-				System.out.println("Vergleich der Würfel:");
-				System.out.println("Angreifer: "+ ergebnis[0][0] + ", Verteidiger: "+ ergebnis[0][1] + " -> " + ergebnis[0][2] + " verlieht eine Einheit.");
-				if( ergebnis[1][0]!=null) {
-					System.out.println("Angreifer: "+ ergebnis[1][0] + ", Verteidiger: "+ ergebnis[1][1] + " -> " + ergebnis[1][2] + " verlieht eine Einheit.");
-				}
-				
-				if(risiko.getProvinz(toProvinz).getBesitzer().getName().equals(risiko.getSpielerName(spielerID))) {
-					System.out.println(risiko.getSpielerName(spielerID) + " hat die Provinz " + risiko.getProvinz(toProvinz) + " von " + verteidiger + " erobert!");
+			} else {
+				String[][] ergebnis = risiko.angreifen(fromProvinz, toProvinz, anzahlEinheiten, wuerfelErgebnisse);
+				//ToDo Try Catch + Exception statt if ergebnis == null
+				if(ergebnis!=null) {
+					for(int t = 0; t < anzahlEinheiten; t++) {
+						System.out.println("Spieler " + risiko.getSpielerName(spielerID) + " hat eine " + wuerfelErgebnisse[t] + " gew�rfelt!");
+					}
+					
+					for(int k = anzahlEinheiten; k < wuerfelErgebnisse.length; k++) {
+						System.out.println("Der verteidigende Spieler " + verteidiger + " hat eine " + wuerfelErgebnisse[k] + "gew�rfelt!");
+					}
+					//Ergebnisse der einzelnen Wurf-Vergleiche
+					System.out.println("Vergleich der Würfel:");
+					System.out.println("Angreifer: "+ ergebnis[0][0] + ", Verteidiger: "+ ergebnis[0][1] + " -> " + ergebnis[0][2] + " verlieht eine Einheit.");
+					if( ergebnis[1][0]!=null) {
+						System.out.println("Angreifer: "+ ergebnis[1][0] + ", Verteidiger: "+ ergebnis[1][1] + " -> " + ergebnis[1][2] + " verlieht eine Einheit.");
+					}
+					
+					if(risiko.getProvinz(toProvinz).getBesitzer().getName().equals(risiko.getSpielerName(spielerID))) {
+						System.out.println(risiko.getSpielerName(spielerID) + " hat die Provinz " + risiko.getProvinz(toProvinz) + " von " + verteidiger + " erobert!");
+					}else {
+						System.out.println("Der Verteidiger " + verteidiger + " hat seine Pronvinz erfolgreich verteidigt.");
+					}
 				}else {
-					System.out.println("Der Verteidiger " + verteidiger + " hat seine Pronvinz erfolgreich verteidigt.");
+					System.out.println("Du kannst leider nicht angreifen. Bitte prüfe deine Eingabe.");
 				}
-			}else {
-				System.out.println("Du kannst leider nicht angreifen. Bitte prüfe deine Eingabe.");
 			}
+			
+			
+			
 			
 			
 

@@ -2,6 +2,7 @@ package risiko.local.domain;
 import java.util.Random;
 import java.util.Vector;
 
+import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
@@ -21,6 +22,18 @@ public class SpielLogik {
 			return false;
 		}
 		return true;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	public boolean validiereAnzahlEinheiten(int anzahl, int spielerID, int verteilbareEinheiten) {
@@ -119,8 +132,8 @@ public class SpielLogik {
 		
 		if(anzahlEinheiten > 1 && verteidigerArray.length > 1) {
 			//2 W�rfel �berpr�fen
-			ergebnis[1][0] = angreiferArray[0]+"";
-			ergebnis[1][1] = verteidigerArray[0]+"";
+			ergebnis[1][0] = angreiferArray[1]+"";
+			ergebnis[1][1] = verteidigerArray[1]+"";
 			if(angreiferArray[1] > verteidigerArray[1]) {
 				angreiferGewonnen++;
 				ergebnis[1][2] = to.getBesitzer().getName();

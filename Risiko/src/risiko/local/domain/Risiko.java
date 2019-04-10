@@ -85,7 +85,6 @@ public class Risiko {
 		if(spiellogik.kannAngreifen(fromProvinz, toProvinz, provinzenListe, weltVW.getWelt())) {
 //			Vector<Provinz> verlierer = spiellogik.angreifen(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
 			ergebnis = spiellogik.angriffAuswerten(wuerfelErgebnisse, getProvinz(fromProvinz), getProvinz(toProvinz), anzahlEinheiten);
-		
 		}
 		return ergebnis;
 	}
