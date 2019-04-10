@@ -9,8 +9,10 @@ import risiko.local.valueobjects.Spieler;
 
 public class SpielVerwaltung {
 	
-	public SpielVerwaltung() {
-		
+	private WeltVerwaltung weltVW;
+	
+	public SpielVerwaltung(WeltVerwaltung weltVW) {
+		this.weltVW = weltVW;
 	}
 		
 	public void erstelleNeuesSpiel() {
@@ -58,10 +60,10 @@ public class SpielVerwaltung {
 		return bonus;
 	}
 
-	public void neueEinheitenSetzen(Provinz provinz, int anzahlEinheiten) {
+	public void neueEinheitenSetzen(int toProvinz, int anzahlEinheiten) {
+		Provinz provinz = weltVW.getProvinz(toProvinz);
 		for(int i = 0; i < anzahlEinheiten; i++) {
 			provinz.erstelleEinheit(provinz.getBesitzer());
 		}
-	}
-	
+	}	
 }

@@ -54,6 +54,7 @@ public class Provinz {
 		for(int a = 0; a < anzahl; a++) {
 			einheit = armee.get(a);
 			einheit.setInvolviert(true);
+			einheit.setProvinz(to);
 			to.addEinheit(einheit);
 			armee.remove(einheit);
 		}

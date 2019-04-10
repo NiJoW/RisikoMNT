@@ -268,7 +268,7 @@ public class RisikoClientCUI {
 			}
 			
 			
-			int[] wuerfelErgebnisse = risiko.wuerfeln(anzahlEinheiten, fromProvinz, toProvinz);
+			int[] wuerfelErgebnisse = risiko.wuerfeln(anzahlEinheiten, toProvinz);
 			
 			String verteidiger = risiko.getProvinz(toProvinz).getBesitzer().getName();
 			
