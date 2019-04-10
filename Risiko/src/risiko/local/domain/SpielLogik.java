@@ -11,29 +11,24 @@ import risiko.local.valueobjects.Welt;
 
 public class SpielLogik {
 	
+	private SpielerVerwaltung spielerVW;
+	private WeltVerwaltung weltVW;
 	
-	public SpielLogik() {
+	public SpielLogik(SpielerVerwaltung spielerVW, WeltVerwaltung weltVW) {
+		this.spielerVW = spielerVW;
+		this.weltVW = weltVW;
 	}
 
-	public boolean validiereProvinzID(int provinzID, int spielerID, Provinz provinz, Spieler spieler) {
+	public boolean validiereProvinzID(int provinzID, int spielerID) {
+		Provinz provinz = weltVW.getProvinz(provinzID);
+		Spieler spieler = spielerVW.getSpieler(spielerID);
+		
 		if(provinzID > 41 || provinzID < 0) {
 			return false;
 		}else if(!(provinz).getBesitzer().equals((spieler))){
 			return false;
 		}
-		return true;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		return true;		
 	}
 	
 	public boolean validiereAnzahlEinheiten(int anzahl, int spielerID, int verteilbareEinheiten) {
@@ -55,10 +50,11 @@ public class SpielLogik {
 	
 	
 	
-	public int[] wuerfeln(int anzahlEinheiten, Provinz from, Provinz to) {
+	public int[] wuerfeln(int anzahlEinheiten, int toProvinzID) {
+		Provinz toProvinz = weltVW.getProvinz(toProvinzID);
 		Random rand = new Random();
 		int verteidigendeEinheiten = 1;
-		if(to.getArmeeGroesse() >= 2) {
+		if(toProvinz.getArmeeGroesse() >= 2) {
 			verteidigendeEinheiten = 2;
 		}
 		int [] wuerfelErgebnisse = new int[anzahlEinheiten + verteidigendeEinheiten];

@@ -28,6 +28,8 @@ public class Einheit {
 		this.involviert = involviert;
 	}
 
-	
+	public void setProvinz(Provinz provinz) {
+		this.provinz = provinz;
+	}
 }
 //Verbindung Spieler - Provinz

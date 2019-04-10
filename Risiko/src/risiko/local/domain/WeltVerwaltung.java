@@ -142,6 +142,10 @@ public class WeltVerwaltung {
 	public Welt getWelt() {
 		return welt;
 	}
+	
+	public Provinz getProvinz (int provinzID) {
+		return provinzListe.get(provinzID);
+	}
 
 	public Vector <Kontinent> getKontinentListe(){
 		return (Vector<Kontinent>) kontinentListe;

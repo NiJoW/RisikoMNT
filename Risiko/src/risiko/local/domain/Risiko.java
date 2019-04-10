@@ -15,8 +15,8 @@ public class Risiko {
 	public Risiko() {
 		spielerVW = new SpielerVerwaltung();
 		weltVW = new WeltVerwaltung();
-		spiellogik = new SpielLogik();
-		spielVW = new SpielVerwaltung();
+		spielVW = new SpielVerwaltung(weltVW);
+		spiellogik = new SpielLogik(spielerVW, weltVW);
 	}
 	
 	public void spielerHinzufuegen(String name) {
@@ -51,7 +51,7 @@ public class Risiko {
 	}
 
 	public boolean validiereProvinzID(int provinzID, int spielerID) {
-		return spiellogik.validiereProvinzID(provinzID, spielerID, getProvinz(provinzID), getSpieler(spielerID));
+		return spiellogik.validiereProvinzID(provinzID, spielerID);
 	}
 	
 	public Spieler getSpieler(int id) {
@@ -71,11 +71,11 @@ public class Risiko {
 	}
 	
 	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten) {
-		spielVW.neueEinheitenSetzen(getProvinz(toProvinz), anzahlEinheiten);
+		spielVW.neueEinheitenSetzen(toProvinz, anzahlEinheiten);
 	}	
 	
-	public int[] wuerfeln(int anzahlEinheiten, int fromProvinz, int toProvinz) {
-		int[] wuerfelErgebnisse = spiellogik.wuerfeln(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
+	public int[] wuerfeln(int anzahlEinheiten, int toProvinz) {
+		int[] wuerfelErgebnisse = spiellogik.wuerfeln(anzahlEinheiten, toProvinz);
 		return wuerfelErgebnisse;
 	}
 	
@@ -101,8 +101,8 @@ public class Risiko {
 		return spiellogik.validiereAnzahlAngreifendeEinheiten(getProvinz(fromProvinz), getSpieler(spielerIndex), anzahlEinheiten);
 	}
 
-	public void einheitenVerteilen(int id, int anzahl) {
-		spielVW.neueEinheitenSetzen(getProvinz(id), anzahl);
+	public void einheitenVerteilen(int provinzID, int anzahl) {
+		spielVW.neueEinheitenSetzen(provinzID, anzahl);
 	}
 
 	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) {
