@@ -19,7 +19,8 @@ public class SpielVerwaltung {
 		Spiel spiel = new Spiel();
 	}
 	
-	public int spielVorbereiten(Vector<Provinz> provinzListe, Vector<Spieler> spielerListe) {
+	public int spielVorbereiten( Vector<Spieler> spielerListe) {
+		Vector<Provinz> provinzListe = weltVW.getProvinzListe();
 		Random rand = new Random();
 		int anzahlSpieler = spielerListe.size();
 		int provinzenProSpieler = 42 / anzahlSpieler;

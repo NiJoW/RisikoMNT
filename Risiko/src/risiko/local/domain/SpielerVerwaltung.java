@@ -2,6 +2,8 @@ package risiko.local.domain;
 
 import java.util.List;
 import java.util.Vector;
+
+import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
 import risiko.local.valueobjects.Spieler;
 
 public class SpielerVerwaltung {
@@ -52,5 +54,15 @@ public class SpielerVerwaltung {
 
 	public void berechneVerteilbareEinheiten(int aenderungsWert, int id) {
 		spielerliste.get(id).berechneVerteilbareEinheiten(aenderungsWert);
+	}
+
+	public boolean spielerBereitsVorhanden(String name) throws SpielerBereitsVorhandenException {
+		for (Spieler spieler : spielerliste) {
+			if(spieler.getName().equals(name)) {
+				throw new SpielerBereitsVorhandenException("Es gibt bereits einen Spieler mit diesem Namen.");
+			}
+				
+		}
+		return false;
 	}
 }
