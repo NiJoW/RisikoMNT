@@ -31,7 +31,9 @@ public class SpielLogik {
 		return true;		
 	}
 	
-	public boolean validiereAnzahlEinheiten(int anzahl, int spielerID, int verteilbareEinheiten) {
+	public boolean validiereAnzahlEinheiten(int anzahl, int spielerID) {
+		int verteilbareEinheiten = spielerVW.getVerteilbareEinheiten(spielerID);
+		
 		if((anzahl > 0) && verteilbareEinheiten >= anzahl) {
 			return true;
 		}
@@ -41,8 +43,11 @@ public class SpielLogik {
 	
 	
 	
-	public boolean kannAngreifen(int from, int to, Vector<Provinz> pListe, Welt welt) {		
-			if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer())) && welt.isNachbar(from, to)) {
+	public boolean kannAngreifen(int from, int to) {		
+		Vector<Provinz> pListe = weltVW.getProvinzListe();
+		Welt welt = weltVW.getWelt();
+		
+		if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer())) && welt.isNachbar(from, to)) {
 			return true;
 		}
 		return false;
@@ -80,8 +85,11 @@ public class SpielLogik {
 		return wuerfelErgebnisse;
 	}
 	
-	public boolean validiereZielProvinz(Provinz proFrom, Provinz proTo, Spieler spieler) {
-		if(!spieler.equals(proTo.getBesitzer())) {
+	public boolean validiereZielProvinz(int from, int to, int spielerID) {
+		Provinz fromProvinz = weltVW.getProvinz(from);
+		Provinz toProvinz = weltVW.getProvinz(to);
+		Spieler spieler = spielerVW.getSpieler(spielerID);
+		if(!spieler.equals(toProvinz.getBesitzer())) {
 			
 		}
 		
@@ -89,11 +97,18 @@ public class SpielLogik {
 		return false;
 	}
 	
-	public boolean validiereAnzahlAngreifendeEinheiten(Provinz provinz, Spieler spieler, int anzahlEinheiten) {
+	
+	public boolean validiereAnzahlAngreifendeEinheiten(int provinzFrom, int spielerID, int anzahlEinheiten) {
+		Provinz from = weltVW.getProvinz(provinzFrom);
+		Spieler spieler = spielerVW.getSpieler(spielerID);
+		
+		
 		return false;
 	}
 	
-	public String[][] angriffAuswerten(int[] wuerfelErgebnisse, Provinz from, Provinz to, int anzahlEinheiten) {
+	public String[][] angriffAuswerten(int[] wuerfelErgebnisse, int fromProvinz, int toPrvinz, int anzahlEinheiten) {
+		Provinz from = weltVW.getProvinz(fromProvinz);
+		Provinz to = weltVW.getProvinz(toPrvinz);
 		int angreiferArray[] = new int[anzahlEinheiten];
 		int verteidigerArray[] = new int[wuerfelErgebnisse.length - anzahlEinheiten];
 		String [][] ergebnis = new String[2][3]; 
@@ -182,7 +197,9 @@ public class SpielLogik {
 	}
 	
 	
-	public boolean kannVerschieben(int from, int to, Vector<Provinz> pListe, Welt welt, int anzahlEinheiten) {
+	public boolean kannVerschieben(int from, int to, int anzahlEinheiten) {
+		Vector<Provinz> pListe = weltVW.getProvinzListe();
+		Welt welt = weltVW.getWelt();
 		if(anzahlEinheiten > pListe.get(from).getAnzahlVerschiebbareEinheiten()) {
 			//throw excep
 			return false;
@@ -210,11 +227,16 @@ public class SpielLogik {
 	}
 	
 
-	public void verschiebe(int anzahlEinheiten, Provinz fromProvinz, Provinz toProvinz) {
-		fromProvinz.verschiebeEinheitenNach(anzahlEinheiten, toProvinz);
+	public void verschiebe(int anzahlEinheiten, int fromProvinz, int toProvinz) {
+		Provinz from = weltVW.getProvinz(fromProvinz);
+		Provinz to = weltVW.getProvinz(toProvinz);
+		
+		from.verschiebeEinheitenNach(anzahlEinheiten, to);
 	}
 
-	public int berechneNeueEinheiten(Spieler spieler, Vector<Kontinent> kontinentListe) {
+	public int berechneNeueEinheiten(int spielerID) {
+		Vector<Kontinent> kontinentListe = weltVW.getKontinentListe();
+		Spieler spieler = spielerVW.getSpieler(spielerID);
 		int anzahl = spieler.getAnzahlAktuelleLaender()/3;
 		if(anzahl < 3) {
 			anzahl = 3;
@@ -251,7 +273,7 @@ public class SpielLogik {
 			
 		return bonus;
 	}
-	
+
 	
 	
 }

@@ -2,6 +2,7 @@ package risiko.local.domain;
 
 import java.util.Vector;
 
+import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
 
@@ -19,6 +20,10 @@ public class Risiko {
 		spiellogik = new SpielLogik(spielerVW, weltVW);
 	}
 	
+	public boolean spielerNameVorhanden(String name) throws SpielerBereitsVorhandenException {
+		return spielerVW.spielerBereitsVorhanden(name);
+	}
+
 	public void spielerHinzufuegen(String name) {
 		spielerVW.spielerHinzufuegen(name);
 	}
@@ -27,12 +32,17 @@ public class Risiko {
 	public void spielVorbereiten() {
 		spielVW.erstelleNeuesSpiel();
 		weltVW.erstelleWelt();
-		Vector<Provinz> provinzenListe = weltVW.getProvinzListe();
 		Vector<Spieler> spielerListe = spielerVW.getSpielerListe();
-		int bonusAbSpieler = spielVW.spielVorbereiten(provinzenListe, spielerListe);
+		int bonusAbSpieler = spielVW.spielVorbereiten(spielerListe);
 		spielerVW.weiseEinheitenZu(bonusAbSpieler);
 	}
 	
+	
+	
+	
+	
+	
+//	-------------GETTER---------------------
 
 	public int getSpielerAnzahl() {
 		return spielerVW.getSpielerAnzahl();
@@ -50,29 +60,67 @@ public class Risiko {
 		return weltVW.getProvinzenVonSpieler(spielerVW.getSpielerListe().get(id));
 	}
 
+	public Provinz getProvinz(int provinzID) {
+		return weltVW.getProvinzListe().get(provinzID);
+	}
+	
+	
+	
+	
+	
+	
+//	-----------------------VALIDIERE------------------------
+	
+	
+	
 	public boolean validiereProvinzID(int provinzID, int spielerID) {
 		return spiellogik.validiereProvinzID(provinzID, spielerID);
 	}
 	
-	public Spieler getSpieler(int id) {
-		return spielerVW.getSpieler(id);
+	public boolean validiereAnzahlEinheiten(int anzahlEinheiten, int spielerID) {
+		return spiellogik.validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
 	}
 	
-	public boolean validiereAnzahlEinheiten(int anzahlEinheiten, int spielerID) {
-		return spiellogik.validiereAnzahlEinheiten(anzahlEinheiten, spielerID, getVerteilbareEinheiten(spielerID));
+	public boolean validiereAnzahlAngreifendeEinheiten(int fromProvinz, int spielerIndex, int anzahlEinheiten) {
+		return spiellogik.validiereAnzahlAngreifendeEinheiten(fromProvinz, spielerIndex, anzahlEinheiten);
 	}
+	
+
+	public boolean validiereZielProvinz(int fromProvinz, int toProvinz, int spielerIndex) {
+		return spiellogik.validiereZielProvinz(fromProvinz, toProvinz, spielerIndex);
+	}
+	
+	
+	
+	
+//	----------------------VERTEILEN----------------------
+	
 	
 	public void berechneVerteilbareEinheiten(int aenderungsWert, int spielerID) {
+		//Ändern der Variable verteilbareEinheiten
 		spielerVW.berechneVerteilbareEinheiten(aenderungsWert, spielerID);
 	}
 
 	public int berechneNeueEinheiten(int spielerID) {
-		return spiellogik.berechneNeueEinheiten(spielerVW.getSpieler(spielerID), weltVW.getKontinentListe());
+		//Beginn jeder Runde (anz. Provinzen/3)
+		return spiellogik.berechneNeueEinheiten(spielerID);
 	}
 	
 	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten) {
+		//Erstellt neue Einheiten (Spielbeginn)
 		spielVW.neueEinheitenSetzen(toProvinz, anzahlEinheiten);
 	}	
+	
+	
+	
+	
+	
+	
+	
+	
+//	-------------------ANGRIFF-----------------------
+	
+	
 	
 	public int[] wuerfeln(int anzahlEinheiten, int toProvinz) {
 		int[] wuerfelErgebnisse = spiellogik.wuerfeln(anzahlEinheiten, toProvinz);
@@ -81,37 +129,30 @@ public class Risiko {
 	
 	public String[][] angreifen(int fromProvinz, int toProvinz, int anzahlEinheiten, int[] wuerfelErgebnisse) {
 		String[][] ergebnis = null;
-		Vector<Provinz> provinzenListe = weltVW.getProvinzListe();
-		if(spiellogik.kannAngreifen(fromProvinz, toProvinz, provinzenListe, weltVW.getWelt())) {
+		if(spiellogik.kannAngreifen(fromProvinz, toProvinz)) {
 //			Vector<Provinz> verlierer = spiellogik.angreifen(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
-			ergebnis = spiellogik.angriffAuswerten(wuerfelErgebnisse, getProvinz(fromProvinz), getProvinz(toProvinz), anzahlEinheiten);
+			ergebnis = spiellogik.angriffAuswerten(wuerfelErgebnisse, fromProvinz, toProvinz, anzahlEinheiten);
 		}
 		return ergebnis;
 	}
 	
-	public Provinz getProvinz(int provinzID) {
-		return weltVW.getProvinzListe().get(provinzID);
-	}
 	
-	public boolean validiereZielProvinz(int fromProvinz, int toProvinz, int spielerIndex) {
-		return spiellogik.validiereZielProvinz(getProvinz(fromProvinz), getProvinz(toProvinz), getSpieler(spielerIndex));
-	}
 	
-	public boolean validiereAnzahlAngreifendeEinheiten(int fromProvinz, int spielerIndex, int anzahlEinheiten) {
-		return spiellogik.validiereAnzahlAngreifendeEinheiten(getProvinz(fromProvinz), getSpieler(spielerIndex), anzahlEinheiten);
-	}
+	
+	
+	
+	
+//----------------------VERSCHIEBEN------------------------	
 
-	public void einheitenVerteilen(int provinzID, int anzahl) {
-		spielVW.neueEinheitenSetzen(provinzID, anzahl);
-	}
+	
 
 	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) {
-		Vector<Provinz> provinzenListe = weltVW.getProvinzListe();
-		if(spiellogik.kannVerschieben(fromProvinz, toProvinz, provinzenListe, weltVW.getWelt(), anzahlEinheiten)) {
-			spiellogik.verschiebe(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
+		if(spiellogik.kannVerschieben(fromProvinz, toProvinz, anzahlEinheiten)) {
+			spiellogik.verschiebe(anzahlEinheiten, fromProvinz, toProvinz);
 		}
 	}
 
+	
 	
 
 	
