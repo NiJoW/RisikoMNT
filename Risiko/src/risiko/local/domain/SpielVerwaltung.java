@@ -3,6 +3,8 @@ package risiko.local.domain;
 import java.util.Random;
 import java.util.Vector;
 
+import risiko.local.domain.exceptions.NichtProvinzDesSpielersExceptions;
+import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spiel;
 import risiko.local.valueobjects.Spieler;
@@ -10,8 +12,10 @@ import risiko.local.valueobjects.Spieler;
 public class SpielVerwaltung {
 	
 	private WeltVerwaltung weltVW;
+	private SpielerVerwaltung spielerVW;
 	
-	public SpielVerwaltung(WeltVerwaltung weltVW) {
+	public SpielVerwaltung(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW) {
+		this.spielerVW = spielerVW;
 		this.weltVW = weltVW;
 	}
 		
@@ -61,10 +65,29 @@ public class SpielVerwaltung {
 		return bonus;
 	}
 
-	public void neueEinheitenSetzen(int toProvinz, int anzahlEinheiten) {
+	public void neueEinheitenSetzen(int toProvinz, int anzahlEinheiten, int spielerID) throws ProvinzIDExistiertNichtException, NichtProvinzDesSpielersExceptions {
 		Provinz provinz = weltVW.getProvinz(toProvinz);
+		validiereProvinzBesitzer(provinz, spielerID);
 		for(int i = 0; i < anzahlEinheiten; i++) {
 			provinz.erstelleEinheit(provinz.getBesitzer());
 		}
 	}	
+	
+	public boolean validiereProvinzBesitzer(Provinz provinz, int spielerID) throws NichtProvinzDesSpielersExceptions {
+		Spieler spieler = spielerVW.getSpieler(spielerID);
+		
+		 if(!(provinz).getBesitzer().equals((spieler))){
+			throw new NichtProvinzDesSpielersExceptions();
+		}
+		return true;		
+	}
+	
+	public boolean validiereAnzahlEinheiten(int anzahl, int spielerID) {
+		int verteilbareEinheiten = spielerVW.getVerteilbareEinheiten(spielerID);
+		
+		if((anzahl > 0) && verteilbareEinheiten >= anzahl) {
+			return true;
+		}
+		return false;
+	}
 }

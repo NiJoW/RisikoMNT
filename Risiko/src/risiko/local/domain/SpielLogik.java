@@ -11,37 +11,13 @@ import risiko.local.valueobjects.Welt;
 
 public class SpielLogik {
 	
-	private SpielerVerwaltung spielerVW;
 	private WeltVerwaltung weltVW;
+	private SpielerVerwaltung spielerVW;
 	
-	public SpielLogik(SpielerVerwaltung spielerVW, WeltVerwaltung weltVW) {
-		this.spielerVW = spielerVW;
+	public SpielLogik(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW) {
 		this.weltVW = weltVW;
+		this.spielerVW = spielerVW;
 	}
-
-	public boolean validiereProvinzID(int provinzID, int spielerID) {
-		Provinz provinz = weltVW.getProvinz(provinzID);
-		Spieler spieler = spielerVW.getSpieler(spielerID);
-		
-		if(provinzID > 41 || provinzID < 0) {
-			return false;
-		}else if(!(provinz).getBesitzer().equals((spieler))){
-			return false;
-		}
-		return true;		
-	}
-	
-	public boolean validiereAnzahlEinheiten(int anzahl, int spielerID) {
-		int verteilbareEinheiten = spielerVW.getVerteilbareEinheiten(spielerID);
-		
-		if((anzahl > 0) && verteilbareEinheiten >= anzahl) {
-			return true;
-		}
-		return false;
-	}
-	
-	
-	
 	
 	public boolean kannAngreifen(int from, int to) {		
 		Vector<Provinz> pListe = weltVW.getProvinzListe();
@@ -55,7 +31,7 @@ public class SpielLogik {
 	
 	
 	
-	public int[] wuerfeln(int anzahlEinheiten, int toProvinzID) {
+	public int[] wuerfeln(int anzahlEinheiten, int toProvinzID) throws ProvinzIDExistiertNichtException {
 		Provinz toProvinz = weltVW.getProvinz(toProvinzID);
 		Random rand = new Random();
 		int verteidigendeEinheiten = 1;
@@ -85,12 +61,13 @@ public class SpielLogik {
 		return wuerfelErgebnisse;
 	}
 	
-	public boolean validiereZielProvinz(int from, int to, int spielerID) {
+	//TODO: noch gebraucht? Umschreiben?
+	public boolean validiereZielProvinz(int from, int to, int spielerID) throws ProvinzIDExistiertNichtException { 
 		Provinz fromProvinz = weltVW.getProvinz(from);
 		Provinz toProvinz = weltVW.getProvinz(to);
 		Spieler spieler = spielerVW.getSpieler(spielerID);
 		if(!spieler.equals(toProvinz.getBesitzer())) {
-			
+			return true;
 		}
 		
 		
@@ -101,7 +78,7 @@ public class SpielLogik {
 	public boolean validiereAnzahlAngreifendeEinheiten(int provinzFrom, int spielerID, int anzahlEinheiten) {
 		Provinz from = weltVW.getProvinz(provinzFrom);
 		Spieler spieler = spielerVW.getSpieler(spielerID);
-		
+		// TODO true übergeben
 		
 		return false;
 	}

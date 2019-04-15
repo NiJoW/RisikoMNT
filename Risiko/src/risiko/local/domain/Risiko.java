@@ -2,6 +2,8 @@ package risiko.local.domain;
 
 import java.util.Vector;
 
+import risiko.local.domain.exceptions.NichtProvinzDesSpielersExceptions;
+import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
@@ -16,8 +18,8 @@ public class Risiko {
 	public Risiko() {
 		spielerVW = new SpielerVerwaltung();
 		weltVW = new WeltVerwaltung();
-		spielVW = new SpielVerwaltung(weltVW);
-		spiellogik = new SpielLogik(spielerVW, weltVW);
+		spielVW = new SpielVerwaltung(weltVW, spielerVW);
+		spiellogik = new SpielLogik(weltVW, spielerVW);
 	}
 	
 	public boolean spielerNameVorhanden(String name) throws SpielerBereitsVorhandenException {
@@ -71,14 +73,8 @@ public class Risiko {
 	
 //	-----------------------VALIDIERE------------------------
 	
-	
-	
-	public boolean validiereProvinzID(int provinzID, int spielerID) {
-		return spiellogik.validiereProvinzID(provinzID, spielerID);
-	}
-	
 	public boolean validiereAnzahlEinheiten(int anzahlEinheiten, int spielerID) {
-		return spiellogik.validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
+		return spielVW.validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
 	}
 	
 	public boolean validiereAnzahlAngreifendeEinheiten(int fromProvinz, int spielerIndex, int anzahlEinheiten) {
@@ -97,7 +93,7 @@ public class Risiko {
 	
 	
 	public void berechneVerteilbareEinheiten(int aenderungsWert, int spielerID) {
-		//Ändern der Variable verteilbareEinheiten
+		//ï¿½ndern der Variable verteilbareEinheiten
 		spielerVW.berechneVerteilbareEinheiten(aenderungsWert, spielerID);
 	}
 
@@ -106,9 +102,9 @@ public class Risiko {
 		return spiellogik.berechneNeueEinheiten(spielerID);
 	}
 	
-	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten) {
+	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten, int spielerID) throws ProvinzIDExistiertNichtException, NichtProvinzDesSpielersExceptions {
 		//Erstellt neue Einheiten (Spielbeginn)
-		spielVW.neueEinheitenSetzen(toProvinz, anzahlEinheiten);
+		spielVW.neueEinheitenSetzen(toProvinz, anzahlEinheiten, spielerID);
 	}	
 	
 	
