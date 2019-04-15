@@ -2,6 +2,7 @@ package risiko.local.domain;
 import java.util.Random;
 import java.util.Vector;
 
+import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
@@ -18,14 +19,12 @@ public class SpielLogik {
 		this.spielerVW = spielerVW;
 	}
 	
-	public boolean kannAngreifen(int from, int to) {		
-		Vector<Provinz> pListe = weltVW.getProvinzListe();
+	public void kannAngreifen(int from, int to) throws ProvinzNichtNachbarException {	
 		Welt welt = weltVW.getWelt();
 		
-		if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer())) && welt.isNachbar(from, to)) {
-			return true;
+		if(!welt.isNachbar(from, to)) {
+			throw new ProvinzNichtNachbarException("Du kannst nur benachbarte Provinzen angreifen.");
 		}
-		return false;
 	}
 	
 	
@@ -59,28 +58,6 @@ public class SpielLogik {
 		}
 		return wuerfelErgebnisse;
 	}
-	
-	//TODO: noch gebraucht? Umschreiben?
-	public boolean validiereZielProvinz(int from, int to, int spielerID) { 
-		Provinz fromProvinz = weltVW.getProvinz(from);
-		Provinz toProvinz = weltVW.getProvinz(to);
-		Spieler spieler = spielerVW.getSpieler(spielerID);
-		if(!spieler.equals(toProvinz.getBesitzer())) {
-			return true;
-		}
-		
-		
-		return false;
-	}
-	
-	
-//	public boolean validiereAnzahlAngreifendeEinheiten(int provinzFrom, int spielerID, int anzahlEinheiten) {
-//		Provinz from = weltVW.getProvinz(provinzFrom);
-//		Spieler spieler = spielerVW.getSpieler(spielerID);
-//		// TODO true übergeben
-//		
-//		return false;
-//	}
 	
 	public String[][] angriffAuswerten(int[] wuerfelErgebnisse, int fromProvinz, int toPrvinz, int anzahlEinheiten) {
 		Provinz from = weltVW.getProvinz(fromProvinz);
@@ -160,7 +137,7 @@ public class SpielLogik {
 
 	private int[] sortiereArray (int[] array) {
 		//Bubble-Sort
-		for (int k = array.length-1; k > 1; k--){
+		for (int k = array.length-1; k > 0; k--){
             for(int m = 0; m < k; m++){
                 if(array[m] < array[m + 1]){
                     int temp = array[m];
@@ -190,7 +167,8 @@ public class SpielLogik {
 			//wenn direkte Nachbarn und gleiche Besitzer -> kann verschieben 
 			return true;
 		}
-//			else {
+// verschieben über mehrere eigene Länder:  prüft transitive Beziehung
+//		else {
 //			for(int dTo = 0; dTo < welt.getBeziehungsMatrix().length; dTo++) {
 //				if(welt.getBeziehung(from, dTo) && kannVerschieben(dTo, to, pListe, welt)) {
 //					return true;
