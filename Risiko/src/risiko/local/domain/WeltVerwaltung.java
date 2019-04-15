@@ -144,10 +144,7 @@ public class WeltVerwaltung {
 		return welt;
 	}
 	
-	public Provinz getProvinz (int provinzID) throws ProvinzIDExistiertNichtException {
-		if(provinzID > 41 || provinzID < 0) {
-			throw new ProvinzIDExistiertNichtException();
-		}
+	public Provinz getProvinz (int provinzID) {
 		return provinzListe.get(provinzID);
 	}
 

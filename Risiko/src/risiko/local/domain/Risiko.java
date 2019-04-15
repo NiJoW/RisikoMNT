@@ -2,9 +2,11 @@ package risiko.local.domain;
 
 import java.util.Vector;
 
+import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersExceptions;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
+import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
 
@@ -73,14 +75,10 @@ public class Risiko {
 	
 //	-----------------------VALIDIERE------------------------
 	
-	public boolean validiereAnzahlEinheiten(int anzahlEinheiten, int spielerID) {
-		return spielVW.validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
+	public void validiereAngriffEingaben(int fromProvinz, int toProvinz, int spielerID, int anzahlEinheiten) throws EigeneProvinzAngreifenException, NichtProvinzDesSpielersExceptions, AnzahlEinheitenFalschException, ProvinzIDExistiertNichtException {
+		spielVW.validiereAngriffEingaben(fromProvinz, toProvinz, spielerID, anzahlEinheiten);
+			
 	}
-	
-	public boolean validiereAnzahlAngreifendeEinheiten(int fromProvinz, int spielerIndex, int anzahlEinheiten) {
-		return spiellogik.validiereAnzahlAngreifendeEinheiten(fromProvinz, spielerIndex, anzahlEinheiten);
-	}
-	
 
 	public boolean validiereZielProvinz(int fromProvinz, int toProvinz, int spielerIndex) {
 		return spiellogik.validiereZielProvinz(fromProvinz, toProvinz, spielerIndex);
@@ -102,7 +100,7 @@ public class Risiko {
 		return spiellogik.berechneNeueEinheiten(spielerID);
 	}
 	
-	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten, int spielerID) throws ProvinzIDExistiertNichtException, NichtProvinzDesSpielersExceptions {
+	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten, int spielerID) throws NichtProvinzDesSpielersExceptions, ProvinzIDExistiertNichtException, AnzahlEinheitenFalschException {
 		//Erstellt neue Einheiten (Spielbeginn)
 		spielVW.neueEinheitenSetzen(toProvinz, anzahlEinheiten, spielerID);
 	}	
@@ -148,6 +146,7 @@ public class Risiko {
 		}
 	}
 
+	
 	
 	
 

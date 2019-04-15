@@ -2,7 +2,6 @@ package risiko.local.domain;
 import java.util.Random;
 import java.util.Vector;
 
-import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
@@ -31,7 +30,7 @@ public class SpielLogik {
 	
 	
 	
-	public int[] wuerfeln(int anzahlEinheiten, int toProvinzID) throws ProvinzIDExistiertNichtException {
+	public int[] wuerfeln(int anzahlEinheiten, int toProvinzID) {
 		Provinz toProvinz = weltVW.getProvinz(toProvinzID);
 		Random rand = new Random();
 		int verteidigendeEinheiten = 1;
@@ -62,7 +61,7 @@ public class SpielLogik {
 	}
 	
 	//TODO: noch gebraucht? Umschreiben?
-	public boolean validiereZielProvinz(int from, int to, int spielerID) throws ProvinzIDExistiertNichtException { 
+	public boolean validiereZielProvinz(int from, int to, int spielerID) { 
 		Provinz fromProvinz = weltVW.getProvinz(from);
 		Provinz toProvinz = weltVW.getProvinz(to);
 		Spieler spieler = spielerVW.getSpieler(spielerID);
@@ -75,13 +74,13 @@ public class SpielLogik {
 	}
 	
 	
-	public boolean validiereAnzahlAngreifendeEinheiten(int provinzFrom, int spielerID, int anzahlEinheiten) {
-		Provinz from = weltVW.getProvinz(provinzFrom);
-		Spieler spieler = spielerVW.getSpieler(spielerID);
-		// TODO true übergeben
-		
-		return false;
-	}
+//	public boolean validiereAnzahlAngreifendeEinheiten(int provinzFrom, int spielerID, int anzahlEinheiten) {
+//		Provinz from = weltVW.getProvinz(provinzFrom);
+//		Spieler spieler = spielerVW.getSpieler(spielerID);
+//		// TODO true übergeben
+//		
+//		return false;
+//	}
 	
 	public String[][] angriffAuswerten(int[] wuerfelErgebnisse, int fromProvinz, int toPrvinz, int anzahlEinheiten) {
 		Provinz from = weltVW.getProvinz(fromProvinz);
