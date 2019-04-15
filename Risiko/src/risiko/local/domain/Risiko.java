@@ -5,6 +5,7 @@ import java.util.Vector;
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersExceptions;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
+import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
 import risiko.local.valueobjects.Provinz;
@@ -79,14 +80,6 @@ public class Risiko {
 		spielVW.validiereAngriffEingaben(fromProvinz, toProvinz, spielerID, anzahlEinheiten);
 			
 	}
-
-	public boolean validiereZielProvinz(int fromProvinz, int toProvinz, int spielerIndex) {
-		return spiellogik.validiereZielProvinz(fromProvinz, toProvinz, spielerIndex);
-	}
-	
-	
-	
-	
 //	----------------------VERTEILEN----------------------
 	
 	
@@ -121,12 +114,11 @@ public class Risiko {
 		return wuerfelErgebnisse;
 	}
 	
-	public String[][] angreifen(int fromProvinz, int toProvinz, int anzahlEinheiten, int[] wuerfelErgebnisse) {
+	public String[][] angreifen(int fromProvinz, int toProvinz, int anzahlEinheiten, int[] wuerfelErgebnisse) throws ProvinzNichtNachbarException {
 		String[][] ergebnis = null;
-		if(spiellogik.kannAngreifen(fromProvinz, toProvinz)) {
-//			Vector<Provinz> verlierer = spiellogik.angreifen(anzahlEinheiten, getProvinz(fromProvinz), getProvinz(toProvinz));
-			ergebnis = spiellogik.angriffAuswerten(wuerfelErgebnisse, fromProvinz, toProvinz, anzahlEinheiten);
-		}
+		spiellogik.kannAngreifen(fromProvinz, toProvinz);
+		ergebnis = spiellogik.angriffAuswerten(wuerfelErgebnisse, fromProvinz, toProvinz, anzahlEinheiten);
+		
 		return ergebnis;
 	}
 	
