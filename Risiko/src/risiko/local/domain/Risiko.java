@@ -132,10 +132,10 @@ public class Risiko {
 
 	
 
-	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) {
-		if(spiellogik.kannVerschieben(fromProvinz, toProvinz, anzahlEinheiten)) {
-			spiellogik.verschiebe(anzahlEinheiten, fromProvinz, toProvinz);
-		}
+	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersExceptions, ProvinzNichtNachbarException {
+		spiellogik.kannVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
+		spiellogik.verschiebe(anzahlEinheiten, fromProvinz, toProvinz);
+		
 	}
 
 	

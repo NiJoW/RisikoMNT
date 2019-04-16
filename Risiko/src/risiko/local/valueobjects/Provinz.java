@@ -6,7 +6,7 @@ public class Provinz {
 
 	private String name;
 	private Vector<Einheit> armee;
-	private int id; //ID statt Kürzel gewählt
+	private int id; //ID statt Kï¿½rzel gewï¿½hlt
 	
 	
 	public Provinz(String name, int id) {
@@ -33,10 +33,16 @@ public class Provinz {
 	
 	public int getAnzahlVerschiebbareEinheiten() {
 		int anzahl = 0;
-		for(Einheit einheit : armee) {
+		if(armee.size()==1) { //eine Einheit muss stehen bleiben
+			return 0;
+		}
+		for(Einheit einheit : armee) { // involvierte Einheiten nicht verschiebbar
 			if(!einheit.isInvolviert()) {
 				anzahl++;
 			}
+		}
+		if(armee.size()==anzahl) { //eine Einheit muss stehen bleiben
+			anzahl--;
 		}
 		return anzahl;
 	}
