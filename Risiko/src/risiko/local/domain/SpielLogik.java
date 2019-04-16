@@ -2,6 +2,8 @@ package risiko.local.domain;
 import java.util.Random;
 import java.util.Vector;
 
+import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
+import risiko.local.domain.exceptions.NichtProvinzDesSpielersExceptions;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
@@ -150,34 +152,38 @@ public class SpielLogik {
 	}
 	
 	
-	public boolean kannVerschieben(int from, int to, int anzahlEinheiten) {
+	public void kannVerschieben(int from, int to, int anzahlEinheiten) throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersExceptions, ProvinzNichtNachbarException {
 		Vector<Provinz> pListe = weltVW.getProvinzListe();
 		Welt welt = weltVW.getWelt();
-		if(anzahlEinheiten > pListe.get(from).getAnzahlVerschiebbareEinheiten()) {
-			//throw excep
-			return false;
+		
+		
+		
+		int verschiebbareEinheiten = pListe.get(from).getAnzahlVerschiebbareEinheiten();
+		if(anzahlEinheiten > verschiebbareEinheiten) {
+			throw new AnzahlEinheitenFalschException("Du kannst maximal "+verschiebbareEinheiten+" Einheiten aus dieser Provinz verschieben. \nBereits in den Kampf involvierte Einheiten können nicht mehr verschoben werden.");
 		}
 			
 		
-		//kann nicht verschieben wenn Besitzer der Provinzen verschieden
-		
+		//kann nur in eigene Provinzen Einheiten verschieden
 		if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer()))) {
-			return false;
-		} else if(welt.isNachbar(from, to)) {
-			//wenn direkte Nachbarn und gleiche Besitzer -> kann verschieben 
-			return true;
+			throw new NichtProvinzDesSpielersExceptions();
+		} 
+		if(!(welt.isNachbar(from, to))) {
+			//nicht direkte Nachbarn (wenn auch gleiche Besitzer) -> kann nicht verschieben
+			throw new ProvinzNichtNachbarException("Einheiten können nur in benachbarte Provinzen verschoben werden.");	
 		}
 // verschieben über mehrere eigene Länder:  prüft transitive Beziehung
 //		else {
 //			for(int dTo = 0; dTo < welt.getBeziehungsMatrix().length; dTo++) {
 //				if(welt.getBeziehung(from, dTo) && kannVerschieben(dTo, to, pListe, welt)) {
-//					return true;
+//					//return true;
 //				} else {
-//					return false;
+//					//throw		
+//					//return false; 
 //				}
 //			}
 //		}
-		return false;
+		
 	}
 	
 

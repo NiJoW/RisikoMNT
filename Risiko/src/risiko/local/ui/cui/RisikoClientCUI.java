@@ -3,9 +3,12 @@ package risiko.local.ui.cui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.NumberFormat;
 
 import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.AnzahlDerSpielerNichtKorrektException;
+import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
+import risiko.local.domain.exceptions.NichtProvinzDesSpielersExceptions;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
 import risiko.local.valueobjects.Provinz;
@@ -79,6 +82,9 @@ public class RisikoClientCUI {
 			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
+		} catch (NumberFormatException e) {
+			System.out.println("Bitte eine positive, ganze Zahl eingeben.");
+			anzahl = erfrageSpielerAnzahl();
 		}
 		return anzahl;
 	}
@@ -236,10 +242,10 @@ public class RisikoClientCUI {
 		String input = "";
 
 		while (true) {
-			System.out.println("-------------L�nder von Spieler " + risiko.getSpielerName(spielerID) + "--------------");
+			System.out.println("-------------Spieler " + risiko.getSpielerName(spielerID) + "--------------");
 
 			System.out.println("Angreifen:        'a'");
-			System.out.println("Welt anzeigen:        'w'");
+			System.out.println("Weltkarte anzeigen:        'w'");
 			System.out.println("Phase beenden:        'q'");
 
 			try {
@@ -371,11 +377,15 @@ public class RisikoClientCUI {
 				System.out.print("Anzahl der Einheiten: ");
 				anzahlEinheiten = Integer.parseInt(liesEingabe());
 
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			// TODO: Validierung Eingaben -> aus kannVerschieben in Risiko exceptions werfen und mit tryCatch abfangen
-			risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
+				
+			try {
+				risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
+			} catch (AnzahlEinheitenFalschException | NichtProvinzDesSpielersExceptions | ProvinzNichtNachbarException e) {
+				System.out.println(e.getMessage());
+			} 
 		}
 	}
 

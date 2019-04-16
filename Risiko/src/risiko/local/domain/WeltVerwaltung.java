@@ -3,7 +3,6 @@ package risiko.local.domain;
 import java.util.List;
 import java.util.Vector;
 
-import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
