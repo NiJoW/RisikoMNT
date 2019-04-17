@@ -150,5 +150,12 @@ public class WeltVerwaltung {
 	public Vector <Kontinent> getKontinentListe(){
 		return (Vector<Kontinent>) kontinentListe;
 	}
+
+	public void resetInvolvierteEinheiten(Spieler spieler) {
+		Vector <Provinz> provinzen = getProvinzenVonSpieler(spieler);
+		for(Provinz provinz : provinzen) {
+			provinz.resetInvolvierteEinheiten();
+		}
+	}
 	
 }

@@ -65,5 +65,21 @@ public class Provinz {
 			armee.remove(einheit);
 		}
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setInvolvierteEinheiten(int anzahl) {
+		for(int i=0; i<anzahl; i++) {
+			armee.get(i).setInvolviert(true);
+		}
+	}
+
+	public void resetInvolvierteEinheiten() {
+		for(Einheit einheit : armee) {
+			einheit.setInvolviert(false);
+		}
+	}
 	
 }

@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
-import risiko.local.domain.exceptions.NichtProvinzDesSpielersExceptions;
+import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
 import risiko.local.valueobjects.Provinz;
@@ -67,7 +67,7 @@ public class SpielVerwaltung {
 		return bonus;
 	}
 
-	public void neueEinheitenSetzen(int toProvinz, int anzahlEinheiten, int spielerID) throws NichtProvinzDesSpielersExceptions, ProvinzIDExistiertNichtException, AnzahlEinheitenFalschException {
+	public void neueEinheitenSetzen(int toProvinz, int anzahlEinheiten, int spielerID) throws NichtProvinzDesSpielersException, ProvinzIDExistiertNichtException, AnzahlEinheitenFalschException {
 		Provinz provinz = weltVW.getProvinz(toProvinz);
 		validiereProvinz(toProvinz, spielerID);
 		for(int i = 0; i < anzahlEinheiten; i++) {
@@ -76,16 +76,16 @@ public class SpielVerwaltung {
 		validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
 	}	
 	
-	public void validiereProvinz(int provinzID, int spielerID) throws NichtProvinzDesSpielersExceptions, ProvinzIDExistiertNichtException {
+	public void validiereProvinz(int provinzID, int spielerID) throws NichtProvinzDesSpielersException, ProvinzIDExistiertNichtException {
 		Spieler spieler = spielerVW.getSpieler(spielerID);
 		
-		if(provinzID>41 && provinzID<0) {
+		if(provinzID>41 || provinzID<0) {
 			throw new  ProvinzIDExistiertNichtException();
 		}
 		
 		Provinz provinz = weltVW.getProvinz(provinzID);
 		 if(!(provinz).getBesitzer().equals((spieler))){
-			throw new NichtProvinzDesSpielersExceptions();
+			throw new NichtProvinzDesSpielersException();
 		}	
 		 
 	}
@@ -97,12 +97,17 @@ public class SpielVerwaltung {
 		}
 	}
 
-	public void validiereAngriffEingaben(int from, int to, int spielerID, int anzahlEinheiten) throws EigeneProvinzAngreifenException, NichtProvinzDesSpielersExceptions, AnzahlEinheitenFalschException, ProvinzIDExistiertNichtException {
+	public void validiereAngriffEingaben(int from, int to, int spielerID, int anzahlEinheiten) throws EigeneProvinzAngreifenException, NichtProvinzDesSpielersException, AnzahlEinheitenFalschException, ProvinzIDExistiertNichtException {
+		validiereProvinz(from, spielerID); //dem Angreifer gehoert das angreifende Land
+		
+		if(to>41 || to<0) {
+			throw new  ProvinzIDExistiertNichtException();
+		}
+		
 		Provinz fromProvinz = weltVW.getProvinz(from);
 		Provinz toProvinz = weltVW.getProvinz(to);
 		Spieler spieler = spielerVW.getSpieler(spielerID);
 		
-		validiereProvinz(from, spielerID); //dem Angreifer gehoert das angreifende Land
 			if(spieler.equals(toProvinz.getBesitzer())) { //dem Angreifer gehoert das verteidigende Land
 				throw new EigeneProvinzAngreifenException();
 			}else if(fromProvinz.getArmeeGroesse() - anzahlEinheiten < 1){
@@ -111,5 +116,10 @@ public class SpielVerwaltung {
 				throw new AnzahlEinheitenFalschException("Du darfst nicht mit mehr als 3 oder weiger als 1 Einheit(en) angreifen.");
 			}
 	
+	}
+
+	public void einheitenInvolviert(int anzahl, int from) {
+		Provinz fromProvinz = weltVW.getProvinz(from);
+		fromProvinz.setInvolvierteEinheiten(anzahl);
 	}
 }
