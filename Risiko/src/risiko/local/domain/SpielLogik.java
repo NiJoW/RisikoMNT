@@ -3,7 +3,8 @@ import java.util.Random;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
-import risiko.local.domain.exceptions.NichtProvinzDesSpielersExceptions;
+import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
+import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
@@ -152,11 +153,13 @@ public class SpielLogik {
 	}
 	
 	
-	public void kannVerschieben(int from, int to, int anzahlEinheiten) throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersExceptions, ProvinzNichtNachbarException {
+	public void kannVerschieben(int from, int to, int anzahlEinheiten) throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersException, ProvinzNichtNachbarException, ProvinzIDExistiertNichtException {
 		Vector<Provinz> pListe = weltVW.getProvinzListe();
 		Welt welt = weltVW.getWelt();
 		
 		
+		validiereProvinzID(from);
+		validiereProvinzID(to);
 		
 		int verschiebbareEinheiten = pListe.get(from).getAnzahlVerschiebbareEinheiten();
 		if(anzahlEinheiten > verschiebbareEinheiten) {
@@ -166,7 +169,7 @@ public class SpielLogik {
 		
 		//kann nur in eigene Provinzen Einheiten verschieden
 		if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer()))) {
-			throw new NichtProvinzDesSpielersExceptions();
+			throw new NichtProvinzDesSpielersException();
 		} 
 		if(!(welt.isNachbar(from, to))) {
 			//nicht direkte Nachbarn (wenn auch gleiche Besitzer) -> kann nicht verschieben
@@ -186,6 +189,12 @@ public class SpielLogik {
 		
 	}
 	
+
+	private void validiereProvinzID(int provinz) throws ProvinzIDExistiertNichtException {
+		if(provinz<0 || provinz>41) {
+			throw new ProvinzIDExistiertNichtException();
+		}
+	}
 
 	public void verschiebe(int anzahlEinheiten, int fromProvinz, int toProvinz) {
 		Provinz from = weltVW.getProvinz(fromProvinz);
@@ -232,6 +241,14 @@ public class SpielLogik {
 		}
 			
 		return bonus;
+	}
+
+	public String einerHatGewonnen(int id) {
+		Spieler spieler = spielerVW.getSpieler(id);
+		if(spieler.getAnzahlAktuelleLaender() == 42) {
+			return spieler.getName();
+		}
+		return "";
 	}
 
 	

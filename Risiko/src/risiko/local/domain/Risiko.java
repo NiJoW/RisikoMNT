@@ -3,7 +3,7 @@ package risiko.local.domain;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
-import risiko.local.domain.exceptions.NichtProvinzDesSpielersExceptions;
+import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
@@ -76,7 +76,7 @@ public class Risiko {
 	
 //	-----------------------VALIDIERE------------------------
 	
-	public void validiereAngriffEingaben(int fromProvinz, int toProvinz, int spielerID, int anzahlEinheiten) throws EigeneProvinzAngreifenException, NichtProvinzDesSpielersExceptions, AnzahlEinheitenFalschException, ProvinzIDExistiertNichtException {
+	public void validiereAngriffEingaben(int fromProvinz, int toProvinz, int spielerID, int anzahlEinheiten) throws EigeneProvinzAngreifenException, NichtProvinzDesSpielersException, AnzahlEinheitenFalschException, ProvinzIDExistiertNichtException {
 		spielVW.validiereAngriffEingaben(fromProvinz, toProvinz, spielerID, anzahlEinheiten);
 			
 	}
@@ -93,7 +93,7 @@ public class Risiko {
 		return spiellogik.berechneNeueEinheiten(spielerID);
 	}
 	
-	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten, int spielerID) throws NichtProvinzDesSpielersExceptions, ProvinzIDExistiertNichtException, AnzahlEinheitenFalschException {
+	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten, int spielerID) throws NichtProvinzDesSpielersException, ProvinzIDExistiertNichtException, AnzahlEinheitenFalschException {
 		//Erstellt neue Einheiten (Spielbeginn)
 		spielVW.neueEinheitenSetzen(toProvinz, anzahlEinheiten, spielerID);
 	}	
@@ -117,14 +117,16 @@ public class Risiko {
 	public String[][] angreifen(int fromProvinz, int toProvinz, int anzahlEinheiten, int[] wuerfelErgebnisse) throws ProvinzNichtNachbarException {
 		String[][] ergebnis = null;
 		spiellogik.kannAngreifen(fromProvinz, toProvinz);
+		spielVW.einheitenInvolviert(anzahlEinheiten, fromProvinz);
 		ergebnis = spiellogik.angriffAuswerten(wuerfelErgebnisse, fromProvinz, toProvinz, anzahlEinheiten);
-		
 		return ergebnis;
 	}
 	
 	
 	
-	
+	public String einerHatGewonnen(int spielerID) {
+		return spiellogik.einerHatGewonnen(spielerID);
+	}
 	
 	
 	
@@ -132,11 +134,20 @@ public class Risiko {
 
 	
 
-	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersExceptions, ProvinzNichtNachbarException {
+	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersException, ProvinzNichtNachbarException, ProvinzIDExistiertNichtException {
 		spiellogik.kannVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
 		spiellogik.verschiebe(anzahlEinheiten, fromProvinz, toProvinz);
 		
 	}
+
+	public void resetInvolvierteEinheiten(int spielerID) {
+		
+		weltVW.resetInvolvierteEinheiten(spielerVW.getSpieler(spielerID));
+	}
+
+	
+
+	
 
 	
 	

@@ -8,7 +8,8 @@ import java.text.NumberFormat;
 import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.AnzahlDerSpielerNichtKorrektException;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
-import risiko.local.domain.exceptions.NichtProvinzDesSpielersExceptions;
+import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
+import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
 import risiko.local.valueobjects.Provinz;
@@ -130,11 +131,13 @@ public class RisikoClientCUI {
 	private void spielStarten() {
 		risiko.spielVorbereiten();
 		einheitenVerteilen();
-		spielen();
+		String gewinner = spielen();
+		gewinnerAusgeben(gewinner);
 	}
 
 	// ---------------------------EINHEITEN
 	// VERTEILEN--------------------------------
+
 
 	private void einheitenVerteilen() {
 		weltkarteAusgeben();
@@ -145,13 +148,6 @@ public class RisikoClientCUI {
 				einheitenwahlVerarbeiten(j, 42, 0);
 			}
 		}
-	}
-
-	private void laenderInfoAusgeben(int i) {
-		for (Provinz provinz : risiko.getProvinzenVonSpieler(i)) {
-			System.out.println(provinz);
-		}
-
 	}
 
 	private void einheitenwahlVerarbeiten(int spielerID, int provinzID, int anzahlEinheiten) {
@@ -177,30 +173,28 @@ public class RisikoClientCUI {
 
 	// --------------------------------SPIELEN-----------------------------------------
 
-	private void spielen() {
+	private String spielen() {
+		String gewinner = "";
 		// Runden (=jeder Spieler durchl�uft jede Phase ein mal)
-		while (!einerHatGewonnen()) {
+		while (true) {
 			// einzelnen Spielz�ge mit jeweiligen Phasen
 			for (int o = 0; o < risiko.getSpielerAnzahl(); o++) {
 				weltkarteAusgeben();
 				// Einheiten bekommen / berechnen
 				neueEinheiten(o);
 				// Einheiten setzen
-				angreifen(o);
+				gewinner = angreifen(o);
+				if(!gewinner.equals("")) {
+					return gewinner;
+				}
 				// verschieben
-				einheitenVerschieben(o);
+				verschiebeMenu(o);
+				risiko.resetInvolvierteEinheiten(o);
 			}
 		}
 	}
 
-	// Pr�fen, ob jemand gewonnen hat
-	private boolean einerHatGewonnen() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	// ----------------------------------NEUE
-	// EINHEITEN---------------------------------
+	// ----------------------------------NEUE EINHEITEN---------------------------------
 
 	private void neueEinheiten(int spielerID) {
 		System.out.println("------------Spieler: " + risiko.getSpielerName(spielerID) + "--------------");
@@ -237,7 +231,8 @@ public class RisikoClientCUI {
 
 	// -------------------------------ANGRIFF--------------------------------------
 
-	private void angreifen(int spielerID) {
+	private String angreifen(int spielerID) {
+		String gewinner = "";
 		System.out.println("------------Phase: Angreifen--------------");
 		String input = "";
 
@@ -256,7 +251,7 @@ public class RisikoClientCUI {
 
 			switch (input) {
 			case "q":
-				return;
+				return "";
 			case "a":
 				angriffAusfuehren(spielerID);
 				break;
@@ -266,6 +261,8 @@ public class RisikoClientCUI {
 			default:
 				System.out.println("\nEingabe fehlerhaft! \nBitte w�hle eine der folgenden Optionen:");
 			}
+			gewinner = risiko.einerHatGewonnen(spielerID);
+			return gewinner;
 		}
 	}
 
@@ -286,7 +283,11 @@ public class RisikoClientCUI {
 
 			risiko.validiereAngriffEingaben(fromProvinz, toProvinz, spielerID, anzahlEinheiten);
 
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
+			System.out.println("Bitte eine positive, ganze Zahl eingeben.");
+			angriffAusfuehren(spielerID);
+			return;
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			angriffAusfuehren(spielerID);
 			return;
@@ -303,7 +304,7 @@ public class RisikoClientCUI {
 			// Ausgaben:
 			for (int t = 0; t < anzahlEinheiten; t++) {
 				System.out.println("Spieler " + risiko.getSpielerName(spielerID) + " hat eine " + wuerfelErgebnisse[t]
-						+ " gew�rfelt!");
+						+ " gew�rfelt!");  
 			}
 			for (int k = anzahlEinheiten; k < wuerfelErgebnisse.length; k++) {
 				System.out.println("Der verteidigende Spieler " + verteidiger + " hat eine " + wuerfelErgebnisse[k]
@@ -319,8 +320,7 @@ public class RisikoClientCUI {
 		System.out.println("\n");
 	}
 
-	private void wuerfelVergleichAusgeben(String[][] wuerfelVergleich, int toProvinz, int spielerID,
-			String verteidiger) {
+	private void wuerfelVergleichAusgeben(String[][] wuerfelVergleich, int toProvinz, int spielerID, String verteidiger) {
 		// Ergebnisse der einzelnen Wurf-Vergleiche
 		System.out.println("Vergleich der Würfel:");
 		System.out.println("Angreifer: " + wuerfelVergleich[0][0] + ", Verteidiger: " + wuerfelVergleich[0][1] + " -> "
@@ -331,7 +331,7 @@ public class RisikoClientCUI {
 		}
 
 		if (risiko.getProvinz(toProvinz).getBesitzer().getName().equals(risiko.getSpielerName(spielerID))) {
-			System.out.println(risiko.getSpielerName(spielerID) + " hat die Provinz " + risiko.getProvinz(toProvinz)
+			System.out.println(risiko.getSpielerName(spielerID) + " hat die Provinz " + risiko.getProvinz(toProvinz).getName()
 					+ " von " + verteidiger + " erobert!");
 		} else {
 			System.out.println("Der Verteidiger " + verteidiger + " hat seine Pronvinz verteidigt.");
@@ -343,19 +343,15 @@ public class RisikoClientCUI {
 	// NACHSCHAUEN: verschieben �ber mehrere L�nder (Matrix?)git
 //	risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
 
-	private void einheitenVerschieben(int spielerIndex) {
+	private void verschiebeMenu(int spielerIndex) {
 		System.out.println("----------Phase: Einheiten Verschieben-----------");
 		String input = "";
-		int fromProvinz = 42;
-		int toProvinz = 42;
-		int anzahlEinheiten = 0;
 
 		while (true) {
-			System.out.println(
-					"-------------L�nder von Spieler " + risiko.getSpielerName(spielerIndex) + "--------------");
-			laenderInfoAusgeben(spielerIndex);
+			System.out.println("-------------L�nder von Spieler " + risiko.getSpielerName(spielerIndex) + "--------------");
 
 			System.out.println("Einheiten verschieben:        'v'");
+			System.out.println("Weltkarte ausgeben:        'w'");
 			System.out.println("Phase beenden:        'q'");
 
 			try {
@@ -363,30 +359,59 @@ public class RisikoClientCUI {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			if (input.equals("q")) {
+			switch(input) {
+			
+			case "q":
 				return;
-			}
-
-			try {
-				System.out.print("Von Provinz (ID): ");
-				fromProvinz = Integer.parseInt(liesEingabe());
-
-				System.out.print("Nach Provinz (ID): ");
-				toProvinz = Integer.parseInt(liesEingabe());
-
-				System.out.print("Anzahl der Einheiten: ");
-				anzahlEinheiten = Integer.parseInt(liesEingabe());
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-				
-			try {
-				risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
-			} catch (AnzahlEinheitenFalschException | NichtProvinzDesSpielersExceptions | ProvinzNichtNachbarException e) {
-				System.out.println(e.getMessage());
+			case "w":
+				weltkarteAusgeben();
+				break;
+			case "v":
+				einheitenVerschieben(spielerIndex);
+				break;
+			default:
+				System.out.println("\nFehlerhafte Eingabe.");
 			} 
 		}
+	}
+
+	private void einheitenVerschieben(int spielerIndex) {
+
+		int fromProvinz = 42;
+		int toProvinz = 42;
+		int anzahlEinheiten = 0;
+		
+		try {
+			System.out.print("Von Provinz (ID): ");
+			fromProvinz = Integer.parseInt(liesEingabe());
+
+			System.out.print("Nach Provinz (ID): ");
+			toProvinz = Integer.parseInt(liesEingabe());
+
+			System.out.print("Anzahl der Einheiten: ");
+			anzahlEinheiten = Integer.parseInt(liesEingabe());
+
+			risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
+			
+		} catch (NumberFormatException e) {
+			System.out.println("Bitte eine positive, ganze Zahl eingeben.");
+			einheitenVerschieben(spielerIndex);
+			return;
+		}catch (ProvinzIDExistiertNichtException e) {
+			System.out.println(e.getMessage());
+		}catch (AnzahlEinheitenFalschException | NichtProvinzDesSpielersException | ProvinzNichtNachbarException e) {
+			System.out.println(e.getMessage());
+			System.out.println("");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+			
+	}
+	
+	private void gewinnerAusgeben(String gewinnerName) {
+		System.out.println("*************************************************************");
+		System.out.println("Spieler " + gewinnerName + " hat beherrscht die ganze Welt!");
+		System.out.println("*************************************************************\n\n");
 	}
 
 	// ----------------------------MEHRFACH GEBRAUCHT-------------------------
@@ -404,5 +429,10 @@ public class RisikoClientCUI {
 
 		}
 	}
-
+	
+	private void laenderInfoAusgeben(int i) {
+		for (Provinz provinz : risiko.getProvinzenVonSpieler(i)) {
+			System.out.println(provinz);
+		}
+	}
 }
