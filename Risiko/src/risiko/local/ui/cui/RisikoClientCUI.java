@@ -236,7 +236,7 @@ public class RisikoClientCUI {
 		System.out.println("\n------------Phase: Angreifen--------------");
 		String input = "";
 
-		while (true) {
+		while (gewinner.equals("")) {
 			System.out.println("-------------Spieler " + risiko.getSpielerName(spielerID) + "--------------\n");
 
 			System.out.println("Angreifen:        'a'");
@@ -262,8 +262,10 @@ public class RisikoClientCUI {
 				System.out.println("\nEingabe fehlerhaft! \nBitte wï¿½hle eine der folgenden Optionen:");
 			}
 			gewinner = risiko.einerHatGewonnen(spielerID);
-			return gewinner;
+			
 		}
+		//Return muss außerhalb der While, sonst immer Abbruch nach ersten Durchgang --> while-Schleife deswegen andere Überprüfung
+		return gewinner;
 	}
 
 	private void angriffAusfuehren(int spielerID) {
