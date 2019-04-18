@@ -197,8 +197,8 @@ public class RisikoClientCUI {
 	// ----------------------------------NEUE EINHEITEN---------------------------------
 
 	private void neueEinheiten(int spielerID) {
-		System.out.println("------------Spieler: " + risiko.getSpielerName(spielerID) + "--------------");
-		System.out.println("------------Phase: Einheiten setzen--------------");
+		System.out.println("\n------------Spieler: " + risiko.getSpielerName(spielerID) + "--------------");
+		System.out.println("------------Phase: Einheiten setzen--------------\n");
 
 		int anzahlMoeglich = risiko.berechneNeueEinheiten(spielerID); // auch Kontinente pr�fen
 
@@ -210,7 +210,7 @@ public class RisikoClientCUI {
 		while (anzahlMoeglich > 0) {
 			toProvinz = 42;
 			anzahlEinheitenWollen = 0;
-			System.out.println("\nSo viele einheiten: " + anzahlMoeglich);
+			System.out.println("\nAnzahl der Einheiten: " + anzahlMoeglich);
 			try {
 				System.out.print("Auf welche Provinz (ID) m�chtest du deine Einheit(en) setzen? : ");
 				toProvinz = Integer.parseInt(liesEingabe());
@@ -233,11 +233,11 @@ public class RisikoClientCUI {
 
 	private String angreifen(int spielerID) {
 		String gewinner = "";
-		System.out.println("------------Phase: Angreifen--------------");
+		System.out.println("\n------------Phase: Angreifen--------------");
 		String input = "";
 
 		while (true) {
-			System.out.println("-------------Spieler " + risiko.getSpielerName(spielerID) + "--------------");
+			System.out.println("-------------Spieler " + risiko.getSpielerName(spielerID) + "--------------\n");
 
 			System.out.println("Angreifen:        'a'");
 			System.out.println("Weltkarte anzeigen:        'w'");
@@ -278,7 +278,7 @@ public class RisikoClientCUI {
 			System.out.print("Nach Provinz (ID): ");
 			toProvinz = Integer.parseInt(liesEingabe());
 
-			System.out.print("Mit wie vielen Einheiten m�chtest du angreifen? (max 3) ");
+			System.out.print("Mit wie vielen Einheiten m�chtest du angreifen? (max 3): ");
 			anzahlEinheiten = Integer.parseInt(liesEingabe());
 
 			risiko.validiereAngriffEingaben(fromProvinz, toProvinz, spielerID, anzahlEinheiten);
@@ -422,9 +422,9 @@ public class RisikoClientCUI {
 	}
 
 	private void weltkarteAusgeben() {
-		System.out.println("AKTUELLE WELTKARTE:");
+		System.out.println("\nAKTUELLE WELTKARTE:\n");
 		for (int i = 0; i < risiko.getSpielerAnzahl(); i++) {
-			System.out.println("-------------L�nder von Spieler " + risiko.getSpielerName(i) + "--------------");
+			System.out.println("\n-------------L�nder von Spieler " + risiko.getSpielerName(i) + "--------------\n");
 			laenderInfoAusgeben(i);
 
 		}
