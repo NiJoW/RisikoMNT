@@ -57,7 +57,7 @@ public class Provinz {
 
 	public void verschiebeEinheitenNach(int anzahl, Provinz to) {
 		Einheit einheit;
-		for(int a = 0; a < anzahl; a++) {
+		for(int a = anzahl; a > 0; a--) {
 			einheit = armee.get(a);
 			einheit.setInvolviert(true);
 			einheit.setProvinz(to);
