@@ -251,6 +251,16 @@ public class SpielLogik {
 		return "";
 	}
 
+	public boolean kannEinheitenNachruecken(int spielerID, int fromProvinz) {
+		Vector<Provinz> pListe = weltVW.getProvinzListe();
+		int verschiebbareEinheiten = pListe.get(fromProvinz).getAnzahlVerschiebbareEinheiten();
+		
+		if(verschiebbareEinheiten > 1) {
+			return true;
+		}
+		return false;
+	}
+
 	
 	
 }

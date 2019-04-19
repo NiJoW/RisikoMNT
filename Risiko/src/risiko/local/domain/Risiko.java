@@ -122,11 +122,20 @@ public class Risiko {
 		return ergebnis;
 	}
 	
+	public boolean kannEinheitenNachruecken(int spielerID, int fromProvinz) {
+		return spiellogik.kannEinheitenNachruecken(spielerID, fromProvinz);
+	}
+	
+	public void einheitenNachruecken(int spielerID, int fromProvinz, int toProvinz, int anzahl) {
+		
+	}
+
 	
 	
 	public String einerHatGewonnen(int spielerID) {
 		return spiellogik.einerHatGewonnen(spielerID);
 	}
+	
 	
 	
 	
@@ -145,6 +154,9 @@ public class Risiko {
 		weltVW.resetInvolvierteEinheiten(spielerVW.getSpieler(spielerID));
 	}
 
+	
+
+	
 	
 
 	
