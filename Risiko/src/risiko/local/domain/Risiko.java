@@ -99,11 +99,7 @@ public class Risiko {
 	}	
 	
 	
-	
-	
-	
-	
-	
+
 	
 //	-------------------ANGRIFF-----------------------
 	
@@ -129,8 +125,6 @@ public class Risiko {
 	public void einheitenNachruecken(int spielerID, int fromProvinz, int toProvinz, int anzahl) {
 		
 	}
-
-	
 	
 	public String einerHatGewonnen(int spielerID) {
 		return spiellogik.einerHatGewonnen(spielerID);
@@ -150,7 +144,6 @@ public class Risiko {
 	}
 
 	public void resetInvolvierteEinheiten(int spielerID) {
-		
 		weltVW.resetInvolvierteEinheiten(spielerVW.getSpieler(spielerID));
 	}
 

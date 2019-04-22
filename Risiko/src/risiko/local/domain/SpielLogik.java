@@ -40,6 +40,7 @@ public class SpielLogik {
 			verteidigendeEinheiten = 2;
 		}
 		int [] wuerfelErgebnisse = new int[anzahlEinheiten + verteidigendeEinheiten];
+		//Array mit Länge der im Kampf verwickelten Einheiten
 		int zaehler = 0;
 		switch(anzahlEinheiten) {
 		case 3: 
@@ -68,9 +69,9 @@ public class SpielLogik {
 		int angreiferArray[] = new int[anzahlEinheiten];
 		int verteidigerArray[] = new int[wuerfelErgebnisse.length - anzahlEinheiten];
 		String [][] ergebnis = new String[2][3]; 
+		// Array, in dem die Ergebnisse gespeichert werden
 		
-		
-		//Arrays trennen
+		//Arrays nach Angreifer und Verteidiger trennen
 		for(int i = 0; i < anzahlEinheiten; i++) {
 			angreiferArray[i]  =  wuerfelErgebnisse[i];
 		}
@@ -79,15 +80,18 @@ public class SpielLogik {
 			verteidigerArray[l]  =  wuerfelErgebnisse[j];
 			l++;
 		}
-		//Arrays sortieren
+		//Arrays sortieren, um die höchsten Zahlen vergleichen zu können
 		angreiferArray = sortiereArray(angreiferArray);
 		verteidigerArray = sortiereArray(verteidigerArray);
 		
 		int angreiferGewonnen = 0;
 		int verteidigerGewonnen = 0;
+		// Zählen der Siege von Angreifer/Verteidiger
+		
 		ergebnis[0][0] = angreiferArray[0]+"";
 		ergebnis[0][1] = verteidigerArray[0]+"";
-		//Arrays auswerten
+		
+		// Auswertung/Vergleich der Würfelergebnisse
 		if(angreiferArray[0] > verteidigerArray[0]) {
 			//Bei gleichem Ergebniss gewinnt der Verteidiger
 			angreiferGewonnen++;
@@ -98,7 +102,7 @@ public class SpielLogik {
 		}
 		
 		if(anzahlEinheiten > 1 && verteidigerArray.length > 1) {
-			//2 Wï¿½rfel ï¿½berprï¿½fen
+			//2. Würfel überprüfen
 			ergebnis[1][0] = angreiferArray[1]+"";
 			ergebnis[1][1] = verteidigerArray[1]+"";
 			if(angreiferArray[1] > verteidigerArray[1]) {
@@ -113,13 +117,29 @@ public class SpielLogik {
 		return ergebnis;
 	}
 	
+	private int[] sortiereArray (int[] array) {
+		//Bubble-Sort
+		for (int k = array.length-1; k > 0; k--){
+            for(int m = 0; m < k; m++){
+                if(array[m] < array[m + 1]){
+                    int temp = array[m];
+                    array[m] = array [m+1];
+                    array[m+1] = temp;
+                }
+            }
+        }
+		return array;
+	}
+	
 	private void aendereEinheiten(Provinz from, Provinz to, int angreiferGewonnen, int verteidigerGewonnen, int anzahl) {
 		while(angreiferGewonnen > 0) {
 			if((to.getArmeeGroesse()-1 == 0)) {
 				to.getBesitzer().berechneAktuelleLaender(-1);
 				from.getBesitzer().berechneAktuelleLaender(1);
+				//wenn Verteidiger Armee = 0 --> Anzahl der aktuellen Länder ändern
 			}
 			to.verkleinereArmee(1);
+			//Armee um 1 verkleinern
 			if(to.getArmeeGroesse() == 0) {
 				einruecken(from, to, anzahl-verteidigerGewonnen);
 				//Lï¿½nderkarte verteilen
@@ -138,44 +158,29 @@ public class SpielLogik {
 		from.verschiebeEinheitenNach(anzahlEinheiten, to);
 	}
 
-	private int[] sortiereArray (int[] array) {
-		//Bubble-Sort
-		for (int k = array.length-1; k > 0; k--){
-            for(int m = 0; m < k; m++){
-                if(array[m] < array[m + 1]){
-                    int temp = array[m];
-                    array[m] = array [m+1];
-                    array[m+1] = temp;
-                }
-            }
-        }
-		return array;
-	}
-	
 	
 	public void kannVerschieben(int from, int to, int anzahlEinheiten) throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersException, ProvinzNichtNachbarException, ProvinzIDExistiertNichtException {
 		Vector<Provinz> pListe = weltVW.getProvinzListe();
 		Welt welt = weltVW.getWelt();
-		
 		
 		validiereProvinzID(from);
 		validiereProvinzID(to);
 		
 		int verschiebbareEinheiten = pListe.get(from).getAnzahlVerschiebbareEinheiten();
 		if(anzahlEinheiten > verschiebbareEinheiten) {
+			// zu viele Einheiten ausgewählt
 			throw new AnzahlEinheitenFalschException("Du kannst maximal "+verschiebbareEinheiten+" Einheiten aus dieser Provinz verschieben. \nBereits in den Kampf involvierte Einheiten kÃ¶nnen nicht mehr verschoben werden.");
 		}
 			
-		
-		//kann nur in eigene Provinzen Einheiten verschieden
 		if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer()))) {
+			//kann nur in eigene Provinzen Einheiten verschieden
 			throw new NichtProvinzDesSpielersException();
 		} 
 		if(!(welt.isNachbar(from, to))) {
 			//nicht direkte Nachbarn (wenn auch gleiche Besitzer) -> kann nicht verschieben
-			throw new ProvinzNichtNachbarException("Einheiten kÃ¶nnen nur in benachbarte Provinzen verschoben werden.");	
+			throw new ProvinzNichtNachbarException("Einheiten können nur in benachbarte Provinzen verschoben werden.");	
 		}
-// verschieben Ã¼ber mehrere eigene LÃ¤nder:  prÃ¼ft transitive Beziehung
+// verschieben über mehrere eigene Länder:  prüft transitive Beziehung
 //		else {
 //			for(int dTo = 0; dTo < welt.getBeziehungsMatrix().length; dTo++) {
 //				if(welt.getBeziehung(from, dTo) && kannVerschieben(dTo, to, pListe, welt)) {
@@ -192,6 +197,7 @@ public class SpielLogik {
 
 	private void validiereProvinzID(int provinz) throws ProvinzIDExistiertNichtException {
 		if(provinz<0 || provinz>41) {
+			//ungültige ProvinzID
 			throw new ProvinzIDExistiertNichtException();
 		}
 	}
@@ -209,9 +215,10 @@ public class SpielLogik {
 		int anzahl = spieler.getAnzahlAktuelleLaender()/3;
 		if(anzahl < 3) {
 			anzahl = 3;
+			// immer mindestens 3 Einheiten
 		}
 		anzahl += getKontinentBonus(spieler, kontinentListe);
-			
+		// Bonus-Einheiten durch Besetzung eines vollständigen Kontinents erhalten	
 		return anzahl;
 	}
 
@@ -249,9 +256,12 @@ public class SpielLogik {
 			return spieler.getName();
 		}
 		return "";
+		//Missionen bald
 	}
 
 	public boolean kannEinheitenNachruecken(int spielerID, int fromProvinz) {
+		// prüfen, ob nach Einnahme einer Provinz noch genügend 
+		// Einheiten vorhanden sind, um welche nachzurücken
 		Vector<Provinz> pListe = weltVW.getProvinzListe();
 		int verschiebbareEinheiten = pListe.get(fromProvinz).getAnzahlVerschiebbareEinheiten();
 		

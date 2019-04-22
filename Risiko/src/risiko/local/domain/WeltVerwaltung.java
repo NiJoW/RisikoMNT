@@ -33,6 +33,7 @@ public class WeltVerwaltung {
 	
 	public void erstelleWelt() {
 		welt = new Welt();
+		//Erstellung der Vectoren für Kontinente und Provinzen
 		kontinentListe = new Vector<Kontinent>(6);
 		erstelleKontinente();
 		provinzListe = new Vector<Provinz>(42);
