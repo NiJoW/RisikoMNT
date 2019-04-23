@@ -13,21 +13,40 @@ public class SpielerVerwaltung {
 		spielerliste = new Vector<Spieler>();
 	}
 
-	public void spielerHinzufuegen(String name) {
-		spielerliste.add(new Spieler(name));
-	}
-
-	public int getSpielerAnzahl() {
-		return spielerliste.size();
-	}
-
+	//---------------------- SPIELERLISTE ------------------------	
 	public Vector<Spieler> getSpielerListe() {
 		return (Vector<Spieler>) spielerliste;
 	}
 	
+	public int getSpielerAnzahl() {
+		return spielerliste.size();
+	}
+	
+	//---------------------- SPIELER ------------------------	
+	
+	public void spielerHinzufuegen(String name) {
+		spielerliste.add(new Spieler(name));
+	}
+	
+	public boolean spielerBereitsVorhanden(String name) throws SpielerBereitsVorhandenException {
+		for (Spieler spieler : spielerliste) {
+			if(spieler.getName().equals(name)) {
+				throw new SpielerBereitsVorhandenException("Es gibt bereits einen Spieler mit diesem Namen.");
+			}
+				
+		}
+		return false;
+	}
+
+	public Spieler getSpieler(int id) {
+		return spielerliste.get(id);
+	}
+
 	public String getSpielerName(int id) {
 		return spielerliste.get(id).getName();
 	}
+	
+	//---------------------- EINHEITEN DES SPIELERS ------------------------	
 
 	public int getVerteilbareEinheiten(int id) {
 		return spielerliste.get(id).getVerteilbareEinheiten();
@@ -43,21 +62,8 @@ public class SpielerVerwaltung {
 		}
 	}
 
-	public Spieler getSpieler(int id) {
-		return spielerliste.get(id);
-	}
-
 	public void berechneVerteilbareEinheiten(int aenderungsWert, int id) {
 		spielerliste.get(id).berechneVerteilbareEinheiten(aenderungsWert);
 	}
 
-	public boolean spielerBereitsVorhanden(String name) throws SpielerBereitsVorhandenException {
-		for (Spieler spieler : spielerliste) {
-			if(spieler.getName().equals(name)) {
-				throw new SpielerBereitsVorhandenException("Es gibt bereits einen Spieler mit diesem Namen.");
-			}
-				
-		}
-		return false;
-	}
 }

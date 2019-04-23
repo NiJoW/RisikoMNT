@@ -15,14 +15,14 @@ public class Provinz {
 		armee = new Vector<Einheit>();
 	}
 	
-	public void erstelleEinheit(Spieler spieler) {
-		armee.add(new Einheit(this, spieler));
+	public String getName() {
+		return name;
 	}
-	
-	public void addEinheit(Einheit einheit) {
-		armee.add(einheit);
+
+	public String toString() {
+		return id+") "+name+ " -> Einheiten: "+armee.size();
 	}
-	
+
 	public Spieler getBesitzer() {
 		return armee.get(0).getBesitzer();
 	}
@@ -31,6 +31,13 @@ public class Provinz {
 		return armee.size();
 	}
 	
+
+	//---------------------- EINHEITEN ------------------------	
+	
+	public void erstelleEinheit(Spieler spieler) {
+		armee.add(new Einheit(this, spieler));
+	}
+
 	public int getAnzahlVerschiebbareEinheiten() {
 		int anzahl = 0;
 		if(armee.size()==1) { //eine Einheit muss stehen bleiben
@@ -47,10 +54,6 @@ public class Provinz {
 		return anzahl;
 	}
 	
-	public String toString() {
-		return id+") "+name+ " -> Einheiten: "+armee.size();
-	}
-
 	public void verkleinereArmee(int anzahl) {
 		armee.remove(0);
 	}
@@ -65,9 +68,10 @@ public class Provinz {
 			armee.remove(einheit);
 		}
 	}
-
-	public String getName() {
-		return name;
+	
+	// bereits existierende Einheit zur Armee eines anderen Landes "verschieben"
+	private void addEinheit(Einheit einheit) {
+		armee.add(einheit);
 	}
 
 	public void setInvolvierteEinheiten(int anzahl) {

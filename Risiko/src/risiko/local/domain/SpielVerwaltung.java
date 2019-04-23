@@ -22,7 +22,7 @@ public class SpielVerwaltung {
 	}
 		
 	public void erstelleNeuesSpiel() {
-		Spiel spiel = new Spiel();
+		Spiel spiel = new Spiel(); //zukünftig gebraucht
 	}
 	
 	public int spielVorbereiten( Vector<Spieler> spielerListe) {
@@ -48,7 +48,7 @@ public class SpielVerwaltung {
 				zaehler++;
 			}
 		}
-		//verteilen der restlichen Karten/Provinze
+		//verteilen der restlichen Karten/Provinzen
 		int i = 0;
 		while(!hilfsVector.isEmpty()) {
 			zufall = rand.nextInt(hilfsVector.size());
@@ -75,6 +75,8 @@ public class SpielVerwaltung {
 		}
 		validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
 	}	
+	
+	//---------------------- VALIDIERUNG ------------------------	
 	
 	public void validiereProvinz(int provinzID, int spielerID) throws NichtProvinzDesSpielersException, ProvinzIDExistiertNichtException {
 		Spieler spieler = spielerVW.getSpieler(spielerID);

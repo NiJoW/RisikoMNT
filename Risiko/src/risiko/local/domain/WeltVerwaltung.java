@@ -20,30 +20,18 @@ public class WeltVerwaltung {
 		
 	}
 	
-	public Vector<Provinz> getProvinzenVonSpieler(Spieler spieler) {
-		Vector<Provinz> eigeneProvinzen = new Vector<Provinz>();
-		for(Provinz provinz : provinzListe) {
-			if(provinz.getBesitzer().equals(spieler)) {
-				eigeneProvinzen.add(provinz);
-			}
-		}
-		return eigeneProvinzen;
-	}
-	
+
+	//---------------------- SPIELVORBEREITUNG: ERSTELLUNG DER WELT ------------------------		
 	
 	public void erstelleWelt() {
 		welt = new Welt();
-		//Erstellung der Vectoren für Kontinente und Provinzen
+		//Erstellung der Vectoren fï¿½r Kontinente und Provinzen
 		kontinentListe = new Vector<Kontinent>(6);
 		erstelleKontinente();
 		provinzListe = new Vector<Provinz>(42);
 		erstelleProvinzen();
 		//kontinentiere = Verteilung der Provinzen auf die zugehï¿½rigen Kontinente
 		kontinentiereProvinzen();
-	}
-	
-	public Vector<Provinz> getProvinzListe() {
-		return (Vector<Provinz>) provinzListe;
 	}
 	
 	private void erstelleKontinente() {
@@ -140,18 +128,36 @@ public class WeltVerwaltung {
 		kontinentListe.get(5).setProvinzen(suedamerikasProvinzListe);
 	}
 
+	//---------------------- GETTER ------------------------	
+	
 	public Welt getWelt() {
 		return welt;
+	}
+	
+	public Vector<Provinz> getProvinzListe() {
+		return (Vector<Provinz>) provinzListe;
 	}
 	
 	public Provinz getProvinz (int provinzID) {
 		return provinzListe.get(provinzID);
 	}
+	
+	public Vector<Provinz> getProvinzenVonSpieler(Spieler spieler) {
+		Vector<Provinz> eigeneProvinzen = new Vector<Provinz>();
+		for(Provinz provinz : provinzListe) {
+			if(provinz.getBesitzer().equals(spieler)) {
+				eigeneProvinzen.add(provinz);
+			}
+		}
+		return eigeneProvinzen;
+	}
 
 	public Vector <Kontinent> getKontinentListe(){
 		return (Vector<Kontinent>) kontinentListe;
 	}
-
+	
+	//----------------------RUNDEN-NACHBEREITUNG------------------------	
+	
 	public void resetInvolvierteEinheiten(Spieler spieler) {
 		Vector <Provinz> provinzen = getProvinzenVonSpieler(spieler);
 		for(Provinz provinz : provinzen) {

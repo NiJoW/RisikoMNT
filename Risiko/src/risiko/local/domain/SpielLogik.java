@@ -22,6 +22,63 @@ public class SpielLogik {
 		this.spielerVW = spielerVW;
 	}
 	
+	public String einerHatGewonnen(int id) {
+		Spieler spieler = spielerVW.getSpieler(id);
+		if(spieler.getAnzahlAktuelleLaender() == 42) {
+			return spieler.getName();
+		}
+		return "";
+		//Missionen bald
+	}
+
+//----------------- RUNDEN-VORBEREITUNG ---------------------------
+	
+	//Berechnet wie viele Einheiten der Spieler zu Beginn der Runde verteilen kann
+	public int berechneNeueEinheiten(int spielerID) {
+		Vector<Kontinent> kontinentListe = weltVW.getKontinentListe();
+		Spieler spieler = spielerVW.getSpieler(spielerID);
+		int anzahl = spieler.getAnzahlAktuelleLaender()/3;
+		if(anzahl < 3) {
+			anzahl = 3;
+			// immer mindestens 3 Einheiten
+		}
+		anzahl += getKontinentBonus(spieler, kontinentListe);
+		// Bonus-Einheiten durch Besetzung eines vollstï¿½ndigen Kontinents erhalten	
+		return anzahl;
+	}
+
+	private int getKontinentBonus(Spieler spieler, Vector<Kontinent> kontinentListe) {
+		int bonus = 0;
+		for(int i = 0; i < kontinentListe.size() ; i++) {
+			if(kontinentListe.get(i).isHerrscher(spieler)) {
+				switch(kontinentListe.get(i).getName()) {
+					case "Asien":
+						bonus += 7;
+						break;
+					case "Afrika":
+						bonus += 3;	
+						break;
+					case "Europa": 
+					case "Nord-Amerika": 	
+						bonus += 5;
+						break;
+					case "Sued-Amerika": 
+					case "Australien": 	
+						bonus += 2;
+						break;	
+				}
+				
+			}
+			
+		}
+			
+		return bonus;
+	}
+
+
+	
+	//----------------------ANGREIFEN------------------------	
+	
 	public void kannAngreifen(int from, int to) throws ProvinzNichtNachbarException {	
 		Welt welt = weltVW.getWelt();
 		
@@ -40,7 +97,7 @@ public class SpielLogik {
 			verteidigendeEinheiten = 2;
 		}
 		int [] wuerfelErgebnisse = new int[anzahlEinheiten + verteidigendeEinheiten];
-		//Array mit Länge der im Kampf verwickelten Einheiten
+		//Array mit Lï¿½nge der im Kampf verwickelten Einheiten
 		int zaehler = 0;
 		switch(anzahlEinheiten) {
 		case 3: 
@@ -80,18 +137,18 @@ public class SpielLogik {
 			verteidigerArray[l]  =  wuerfelErgebnisse[j];
 			l++;
 		}
-		//Arrays sortieren, um die höchsten Zahlen vergleichen zu können
+		//Arrays sortieren, um die hï¿½chsten Zahlen vergleichen zu kï¿½nnen
 		angreiferArray = sortiereArray(angreiferArray);
 		verteidigerArray = sortiereArray(verteidigerArray);
 		
 		int angreiferGewonnen = 0;
 		int verteidigerGewonnen = 0;
-		// Zählen der Siege von Angreifer/Verteidiger
+		// Zï¿½hlen der Siege von Angreifer/Verteidiger
 		
 		ergebnis[0][0] = angreiferArray[0]+"";
 		ergebnis[0][1] = verteidigerArray[0]+"";
 		
-		// Auswertung/Vergleich der Würfelergebnisse
+		// Auswertung/Vergleich der Wï¿½rfelergebnisse
 		if(angreiferArray[0] > verteidigerArray[0]) {
 			//Bei gleichem Ergebniss gewinnt der Verteidiger
 			angreiferGewonnen++;
@@ -102,7 +159,7 @@ public class SpielLogik {
 		}
 		
 		if(anzahlEinheiten > 1 && verteidigerArray.length > 1) {
-			//2. Würfel überprüfen
+			//2. Wï¿½rfel ï¿½berprï¿½fen
 			ergebnis[1][0] = angreiferArray[1]+"";
 			ergebnis[1][1] = verteidigerArray[1]+"";
 			if(angreiferArray[1] > verteidigerArray[1]) {
@@ -131,22 +188,24 @@ public class SpielLogik {
 		return array;
 	}
 	
+	//bei Angriff Anzahl der Einheiten auf den Provinzen aendern
 	private void aendereEinheiten(Provinz from, Provinz to, int angreiferGewonnen, int verteidigerGewonnen, int anzahl) {
 		while(angreiferGewonnen > 0) {
+			//Verteidiger hat sein Land verloren
 			if((to.getArmeeGroesse()-1 == 0)) {
+				//wenn Verteidiger Armee = 0 --> Anzahl der aktuellen Lï¿½nder ï¿½ndern
 				to.getBesitzer().berechneAktuelleLaender(-1);
 				from.getBesitzer().berechneAktuelleLaender(1);
-				//wenn Verteidiger Armee = 0 --> Anzahl der aktuellen Länder ändern
 			}
+			//Angreifer: Armee um 1 verkleinern
 			to.verkleinereArmee(1);
-			//Armee um 1 verkleinern
 			if(to.getArmeeGroesse() == 0) {
 				einruecken(from, to, anzahl-verteidigerGewonnen);
-				//Lï¿½nderkarte verteilen
+				//zukueftig: Lï¿½nderkarte verteilen
 			}
 			angreiferGewonnen--;
 		}
-		
+		// Einheiten vom Verteidiger abziehen
 		while(verteidigerGewonnen > 0) {
 			from.verkleinereArmee(1);
 			verteidigerGewonnen--;
@@ -157,7 +216,20 @@ public class SpielLogik {
 	private void einruecken(Provinz from, Provinz to, int anzahlEinheiten) {
 		from.verschiebeEinheitenNach(anzahlEinheiten, to);
 	}
-
+	
+	// prï¿½fen, ob nach Einnahme einer Provinz noch genï¿½gend 
+	// Einheiten vorhanden sind, um welche nachzurï¿½cken
+	public boolean kannEinheitenNachruecken(int spielerID, int fromProvinz) {
+		Vector<Provinz> pListe = weltVW.getProvinzListe();
+		int verschiebbareEinheiten = pListe.get(fromProvinz).getAnzahlVerschiebbareEinheiten();
+		
+		if(verschiebbareEinheiten > 1) {
+			return true;
+		}
+		return false;
+	}
+	
+	//----------------------VERSCHIEBEN------------------------
 	
 	public void kannVerschieben(int from, int to, int anzahlEinheiten) throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersException, ProvinzNichtNachbarException, ProvinzIDExistiertNichtException {
 		Vector<Provinz> pListe = weltVW.getProvinzListe();
@@ -168,7 +240,7 @@ public class SpielLogik {
 		
 		int verschiebbareEinheiten = pListe.get(from).getAnzahlVerschiebbareEinheiten();
 		if(anzahlEinheiten > verschiebbareEinheiten) {
-			// zu viele Einheiten ausgewählt
+			// zu viele Einheiten ausgewï¿½hlt
 			throw new AnzahlEinheitenFalschException("Du kannst maximal "+verschiebbareEinheiten+" Einheiten aus dieser Provinz verschieben. \nBereits in den Kampf involvierte Einheiten kÃ¶nnen nicht mehr verschoben werden.");
 		}
 			
@@ -178,9 +250,9 @@ public class SpielLogik {
 		} 
 		if(!(welt.isNachbar(from, to))) {
 			//nicht direkte Nachbarn (wenn auch gleiche Besitzer) -> kann nicht verschieben
-			throw new ProvinzNichtNachbarException("Einheiten können nur in benachbarte Provinzen verschoben werden.");	
+			throw new ProvinzNichtNachbarException("Einheiten kï¿½nnen nur in benachbarte Provinzen verschoben werden.");	
 		}
-// verschieben über mehrere eigene Länder:  prüft transitive Beziehung
+// verschieben ï¿½ber mehrere eigene Lï¿½nder:  prï¿½ft transitive Beziehung
 //		else {
 //			for(int dTo = 0; dTo < welt.getBeziehungsMatrix().length; dTo++) {
 //				if(welt.getBeziehung(from, dTo) && kannVerschieben(dTo, to, pListe, welt)) {
@@ -197,7 +269,7 @@ public class SpielLogik {
 
 	private void validiereProvinzID(int provinz) throws ProvinzIDExistiertNichtException {
 		if(provinz<0 || provinz>41) {
-			//ungültige ProvinzID
+			//ungï¿½ltige ProvinzID
 			throw new ProvinzIDExistiertNichtException();
 		}
 	}
@@ -208,69 +280,6 @@ public class SpielLogik {
 		
 		from.verschiebeEinheitenNach(anzahlEinheiten, to);
 	}
-
-	public int berechneNeueEinheiten(int spielerID) {
-		Vector<Kontinent> kontinentListe = weltVW.getKontinentListe();
-		Spieler spieler = spielerVW.getSpieler(spielerID);
-		int anzahl = spieler.getAnzahlAktuelleLaender()/3;
-		if(anzahl < 3) {
-			anzahl = 3;
-			// immer mindestens 3 Einheiten
-		}
-		anzahl += getKontinentBonus(spieler, kontinentListe);
-		// Bonus-Einheiten durch Besetzung eines vollständigen Kontinents erhalten	
-		return anzahl;
-	}
-
-	private int getKontinentBonus(Spieler spieler, Vector<Kontinent> kontinentListe) {
-		int bonus = 0;
-		for(int i = 0; i < kontinentListe.size() ; i++) {
-			if(kontinentListe.get(i).isHerrscher(spieler)) {
-				switch(kontinentListe.get(i).getName()) {
-					case "Asien":
-						bonus += 7;
-						break;
-					case "Afrika":
-						bonus += 3;	
-						break;
-					case "Europa": 
-					case "Nord-Amerika": 	
-						bonus += 5;
-						break;
-					case "Sued-Amerika": 
-					case "Australien": 	
-						bonus += 2;
-						break;	
-				}
-				
-			}
-			
-		}
-			
-		return bonus;
-	}
-
-	public String einerHatGewonnen(int id) {
-		Spieler spieler = spielerVW.getSpieler(id);
-		if(spieler.getAnzahlAktuelleLaender() == 42) {
-			return spieler.getName();
-		}
-		return "";
-		//Missionen bald
-	}
-
-	public boolean kannEinheitenNachruecken(int spielerID, int fromProvinz) {
-		// prüfen, ob nach Einnahme einer Provinz noch genügend 
-		// Einheiten vorhanden sind, um welche nachzurücken
-		Vector<Provinz> pListe = weltVW.getProvinzListe();
-		int verschiebbareEinheiten = pListe.get(fromProvinz).getAnzahlVerschiebbareEinheiten();
-		
-		if(verschiebbareEinheiten > 1) {
-			return true;
-		}
-		return false;
-	}
-
 	
 	
 }
