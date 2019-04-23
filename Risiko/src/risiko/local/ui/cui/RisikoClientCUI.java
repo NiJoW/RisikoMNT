@@ -47,7 +47,7 @@ public class RisikoClientCUI {
 	
 	private void spielerRegistrierung() throws IOException {
 
-		//Abfrage der Anzahl der Spieler mit Exception für falsche Eingabe
+		//Abfrage der Anzahl der Spieler mit Exception fï¿½r falsche Eingabe
 		int anzahl = 0;
 		boolean anzahlKorrekt = false;
 		
@@ -60,7 +60,7 @@ public class RisikoClientCUI {
 			}
 		}
 		
-		//Anmelden der Spieler mit Exception für falsche Eingabe
+		//Anmelden der Spieler mit Exception fï¿½r falsche Eingabe
 		boolean angemeldet = false;
 		for (int i = 0; i < anzahl; i++) {
 			angemeldet = false;
@@ -102,12 +102,12 @@ public class RisikoClientCUI {
 
 	
 	
-	// -----------------------------SPIELMENÜ----------------------------------
+	// -----------------------------SPIELMENï¿½----------------------------------
 
 	
 	
 	private void spielMenue() {
-		//Auswahl im Spielmenü
+		//Auswahl im Spielmenï¿½
 		String input = "";
 		do {
 			spielMenueAusgeben();
@@ -122,8 +122,8 @@ public class RisikoClientCUI {
 
 	private void spielMenueAusgeben() {
 		System.out.println("Neues Spiel starten:        'n'");
-		// System.out.println("Spiel laden: 'l'"); //zukünftig
-		// System.out.println("Spiel beitreten: 'b'"); //zukünftig
+		// System.out.println("Spiel laden: 'l'"); //zukï¿½nftig
+		// System.out.println("Spiel beitreten: 'b'"); //zukï¿½nftig
 		System.out.println("---------------------");
 		System.out.println("Beenden:        'q'");
 	}
@@ -148,7 +148,7 @@ public class RisikoClientCUI {
 			break;
 		default:
 			//wenn kein Case eintritt --> falsche Eingabe
-			System.out.println("\nEingabe fehlerhaft! \nBitte wähle eine der folgenden Optionen:");
+			System.out.println("\nEingabe fehlerhaft! \nBitte wï¿½hle eine der folgenden Optionen:");
 		}
 	}
 
@@ -164,9 +164,8 @@ public class RisikoClientCUI {
 	// ---------------------------EINHEITEN VERTEILEN-------------------------------
 
 	
-	
+	//setzen der ersten Einheiten
 	private void einheitenVerteilen() {
-		//setzen der ersten Einheiten
 		weltkarteAusgeben();
 		for (int j = 0; j < risiko.getSpielerAnzahl(); j++) {
 			while (risiko.getVerteilbareEinheiten(j) > 0) {
@@ -196,7 +195,7 @@ public class RisikoClientCUI {
 		try {
 			risiko.setzeNeueEinheiten(provinzID, anzahlEinheiten, spielerID);
 			risiko.berechneVerteilbareEinheiten(-anzahlEinheiten, spielerID);
-			// auf korrekte Eingaben prüfen
+			// auf korrekte Eingaben prï¿½fen
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			einheitenwahlVerarbeiten(spielerID, 42, 0);
@@ -211,9 +210,9 @@ public class RisikoClientCUI {
 	
 	private String spielen() {
 		String gewinner = "";
-		//Runden (=jeder Spieler durchläuft jede Phase ein mal)
+		//Runden (=jeder Spieler durchlï¿½uft jede Phase ein mal)
 		while (true) {
-			//einzelnen Spielzüge mit jeweiligen Phasen
+			//einzelnen Spielzï¿½ge mit jeweiligen Phasen
 			for (int o = 0; o < risiko.getSpielerAnzahl(); o++) {
 				weltkarteAusgeben();
 				neueEinheitenPhase(o);
@@ -227,7 +226,7 @@ public class RisikoClientCUI {
 				verschiebeMenu(o);
 				// verschieben
 				risiko.resetInvolvierteEinheiten(o);
-				// Einheiten, die in der Runde involviert waren für nächste Runde zurücksetzen
+				// Einheiten, die in der Runde involviert waren fï¿½r nï¿½chste Runde zurï¿½cksetzen
 			}
 		}
 	}
@@ -245,7 +244,7 @@ public class RisikoClientCUI {
 	}
 
 	private void neueEinheiten(int spielerID) {
-		// Einheiten, die zu Beginn jeder Runde verteilt werden dürfen
+		// Einheiten, die zu Beginn jeder Runde verteilt werden dï¿½rfen
 		int anzahlMoeglich = risiko.berechneNeueEinheiten(spielerID);
 
 		int toProvinz = 42;
@@ -324,7 +323,7 @@ public class RisikoClientCUI {
 	}
 
 	private void angriffAusfuehren(int spielerID) {
-		// Einlesen der Eingaben für den Angriff
+		// Einlesen der Eingaben fï¿½r den Angriff
 		int fromProvinz = 42;
 		int toProvinz = 42;
 		int anzahlEinheiten = 0;
@@ -340,7 +339,7 @@ public class RisikoClientCUI {
 			anzahlEinheiten = Integer.parseInt(liesEingabe());
 
 			risiko.validiereAngriffEingaben(fromProvinz, toProvinz, spielerID, anzahlEinheiten);
-			//Inhaltliche Überprüfung der Eingaben
+			//Inhaltliche ï¿½berprï¿½fung der Eingaben
 		} catch (NumberFormatException e) {
 			System.out.println("Bitte eine positive, ganze Zahl eingeben.");
 			angriffAusfuehren(spielerID);
@@ -402,12 +401,12 @@ public class RisikoClientCUI {
 	}
 
 	private void einheitenNachruecken(int spielerID, int fromProvinz, int toProvinz) {
-		//nach einem Angriff, indem eine Provinz erobert wurde, können Einheiten nachgerückt werden
+		//nach einem Angriff, indem eine Provinz erobert wurde, kï¿½nnen Einheiten nachgerï¿½ckt werden
 		if (risiko.kannEinheitenNachruecken(spielerID, fromProvinz)) {
 			try {
 				if (willEinruecken()) {
 					int anzahl = 0;
-					System.out.println("Wie viele Einheiten möchtest du nachrücken? ");
+					System.out.println("Wie viele Einheiten mï¿½chtest du nachrï¿½cken? ");
 					try {
 						anzahl = Integer.parseInt(liesEingabe());
 					} catch (IOException e) {
@@ -430,9 +429,9 @@ public class RisikoClientCUI {
 	}
 
 	private boolean willEinruecken() {
-		//Abfrage, ob der Spieler überhautp einrücken möchte, wenn er kann
+		//Abfrage, ob der Spieler ï¿½berhautp einrï¿½cken mï¿½chte, wenn er kann
 		String input = "";
-		System.out.println("Möchtest du weitere Einheiten nachrücken?");
+		System.out.println("Mï¿½chtest du weitere Einheiten nachrï¿½cken?");
 		try {
 			System.out.println("Ja:             'j'");
 			System.out.println("Nein:           'n'");
@@ -559,7 +558,7 @@ public class RisikoClientCUI {
 	}
 
 	private void laenderInfoAusgeben(int i) {
-		//für Spieler i alle Provinzen ausgeben, die er besitzt
+		//fï¿½r Spieler i alle Provinzen ausgeben, die er besitzt
 		for (Provinz provinz : risiko.getProvinzenVonSpieler(i)) {
 			System.out.println(provinz);
 		}

@@ -122,10 +122,6 @@ public class Risiko {
 		return spiellogik.kannEinheitenNachruecken(spielerID, fromProvinz);
 	}
 	
-	public void einheitenNachruecken(int spielerID, int fromProvinz, int toProvinz, int anzahl) {
-		
-	}
-	
 	public String einerHatGewonnen(int spielerID) {
 		return spiellogik.einerHatGewonnen(spielerID);
 	}
