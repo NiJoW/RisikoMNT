@@ -22,7 +22,7 @@ public class SpielVerwaltung {
 	}
 		
 	public void erstelleNeuesSpiel() {
-		Spiel spiel = new Spiel(); //zukünftig gebraucht
+		Spiel spiel = new Spiel(); //zukuenftig gebraucht
 	}
 	
 	public int spielVorbereiten( Vector<Spieler> spielerListe) {
@@ -76,7 +76,11 @@ public class SpielVerwaltung {
 		validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
 	}	
 	
+	
+	
 	//---------------------- VALIDIERUNG ------------------------	
+	
+	
 	
 	public void validiereProvinz(int provinzID, int spielerID) throws NichtProvinzDesSpielersException, ProvinzIDExistiertNichtException {
 		Spieler spieler = spielerVW.getSpieler(spielerID);

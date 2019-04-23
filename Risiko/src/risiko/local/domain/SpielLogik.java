@@ -43,7 +43,7 @@ public class SpielLogik {
 			// immer mindestens 3 Einheiten
 		}
 		anzahl += getKontinentBonus(spieler, kontinentListe);
-		// Bonus-Einheiten durch Besetzung eines vollst�ndigen Kontinents erhalten	
+		// Bonus-Einheiten durch Besetzung eines vollstaendigen Kontinents erhalten	
 		return anzahl;
 	}
 
@@ -79,6 +79,8 @@ public class SpielLogik {
 	
 	//----------------------ANGREIFEN------------------------	
 	
+	
+	
 	public void kannAngreifen(int from, int to) throws ProvinzNichtNachbarException {	
 		Welt welt = weltVW.getWelt();
 		
@@ -97,7 +99,7 @@ public class SpielLogik {
 			verteidigendeEinheiten = 2;
 		}
 		int [] wuerfelErgebnisse = new int[anzahlEinheiten + verteidigendeEinheiten];
-		//Array mit L�nge der im Kampf verwickelten Einheiten
+		//Array mit Laenge der im Kampf verwickelten Einheiten
 		int zaehler = 0;
 		switch(anzahlEinheiten) {
 		case 3: 
@@ -137,18 +139,18 @@ public class SpielLogik {
 			verteidigerArray[l]  =  wuerfelErgebnisse[j];
 			l++;
 		}
-		//Arrays sortieren, um die h�chsten Zahlen vergleichen zu k�nnen
+		//Arrays sortieren, um die hoechsten Zahlen vergleichen zu koennen
 		angreiferArray = sortiereArray(angreiferArray);
 		verteidigerArray = sortiereArray(verteidigerArray);
 		
 		int angreiferGewonnen = 0;
 		int verteidigerGewonnen = 0;
-		// Z�hlen der Siege von Angreifer/Verteidiger
+		// Zaehlen der Siege von Angreifer/Verteidiger
 		
 		ergebnis[0][0] = angreiferArray[0]+"";
 		ergebnis[0][1] = verteidigerArray[0]+"";
 		
-		// Auswertung/Vergleich der W�rfelergebnisse
+		// Auswertung/Vergleich der Wuerfelergebnisse
 		if(angreiferArray[0] > verteidigerArray[0]) {
 			//Bei gleichem Ergebniss gewinnt der Verteidiger
 			angreiferGewonnen++;
@@ -159,7 +161,7 @@ public class SpielLogik {
 		}
 		
 		if(anzahlEinheiten > 1 && verteidigerArray.length > 1) {
-			//2. W�rfel �berpr�fen
+			//2. Wuerfel ueberpruefen
 			ergebnis[1][0] = angreiferArray[1]+"";
 			ergebnis[1][1] = verteidigerArray[1]+"";
 			if(angreiferArray[1] > verteidigerArray[1]) {
@@ -193,7 +195,7 @@ public class SpielLogik {
 		while(angreiferGewonnen > 0) {
 			//Verteidiger hat sein Land verloren
 			if((to.getArmeeGroesse()-1 == 0)) {
-				//wenn Verteidiger Armee = 0 --> Anzahl der aktuellen L�nder �ndern
+				//wenn Verteidiger Armee = 0 --> Anzahl der aktuellen Laender aendern
 				to.getBesitzer().berechneAktuelleLaender(-1);
 				from.getBesitzer().berechneAktuelleLaender(1);
 			}
@@ -201,7 +203,7 @@ public class SpielLogik {
 			to.verkleinereArmee(1);
 			if(to.getArmeeGroesse() == 0) {
 				einruecken(from, to, anzahl-verteidigerGewonnen);
-				//zukueftig: L�nderkarte verteilen
+				//zukueftig: Laenderkarte verteilen
 			}
 			angreiferGewonnen--;
 		}
@@ -217,8 +219,8 @@ public class SpielLogik {
 		from.verschiebeEinheitenNach(anzahlEinheiten, to);
 	}
 	
-	// pr�fen, ob nach Einnahme einer Provinz noch gen�gend 
-	// Einheiten vorhanden sind, um welche nachzur�cken
+	// pruefen, ob nach Einnahme einer Provinz noch genuegend 
+	// Einheiten vorhanden sind, um welche nachzuruecken
 	public boolean kannEinheitenNachruecken(int spielerID, int fromProvinz) {
 		Vector<Provinz> pListe = weltVW.getProvinzListe();
 		int verschiebbareEinheiten = pListe.get(fromProvinz).getAnzahlVerschiebbareEinheiten();
@@ -229,7 +231,11 @@ public class SpielLogik {
 		return false;
 	}
 	
+	
+	
 	//----------------------VERSCHIEBEN------------------------
+	
+	
 	
 	public void kannVerschieben(int from, int to, int anzahlEinheiten) throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersException, ProvinzNichtNachbarException, ProvinzIDExistiertNichtException {
 		Vector<Provinz> pListe = weltVW.getProvinzListe();
@@ -240,8 +246,8 @@ public class SpielLogik {
 		
 		int verschiebbareEinheiten = pListe.get(from).getAnzahlVerschiebbareEinheiten();
 		if(anzahlEinheiten > verschiebbareEinheiten) {
-			// zu viele Einheiten ausgew�hlt
-			throw new AnzahlEinheitenFalschException("Du kannst maximal "+verschiebbareEinheiten+" Einheiten aus dieser Provinz verschieben. \nBereits in den Kampf involvierte Einheiten können nicht mehr verschoben werden.");
+			// zu viele Einheiten ausgewaehlt
+			throw new AnzahlEinheitenFalschException("Du kannst maximal "+verschiebbareEinheiten+" Einheiten aus dieser Provinz verschieben. \nBereits in den Kampf involvierte Einheiten koennen nicht mehr verschoben werden.");
 		}
 			
 		if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer()))) {
@@ -250,9 +256,9 @@ public class SpielLogik {
 		} 
 		if(!(welt.isNachbar(from, to))) {
 			//nicht direkte Nachbarn (wenn auch gleiche Besitzer) -> kann nicht verschieben
-			throw new ProvinzNichtNachbarException("Einheiten k�nnen nur in benachbarte Provinzen verschoben werden.");	
+			throw new ProvinzNichtNachbarException("Einheiten koennen nur in benachbarte Provinzen verschoben werden.");	
 		}
-// verschieben �ber mehrere eigene L�nder:  pr�ft transitive Beziehung
+// verschieben ueber mehrere eigene Laender:  prueft transitive Beziehung
 //		else {
 //			for(int dTo = 0; dTo < welt.getBeziehungsMatrix().length; dTo++) {
 //				if(welt.getBeziehung(from, dTo) && kannVerschieben(dTo, to, pListe, welt)) {
@@ -269,7 +275,7 @@ public class SpielLogik {
 
 	private void validiereProvinzID(int provinz) throws ProvinzIDExistiertNichtException {
 		if(provinz<0 || provinz>41) {
-			//ung�ltige ProvinzID
+			//ungueltige ProvinzID
 			throw new ProvinzIDExistiertNichtException();
 		}
 	}

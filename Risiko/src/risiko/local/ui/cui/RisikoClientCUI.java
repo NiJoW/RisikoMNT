@@ -47,7 +47,7 @@ public class RisikoClientCUI {
 	
 	private void spielerRegistrierung() throws IOException {
 
-		//Abfrage der Anzahl der Spieler mit Exception f�r falsche Eingabe
+		//Abfrage der Anzahl der Spieler mit Exception fuer falsche Eingabe
 		int anzahl = 0;
 		boolean anzahlKorrekt = false;
 		
@@ -56,16 +56,16 @@ public class RisikoClientCUI {
 				anzahl = erfrageSpielerAnzahl();
 				anzahlKorrekt = true;
 			} catch (AnzahlDerSpielerNichtKorrektException e1) {
-				System.out.println(e1.getMessage() + "\nBitte eine andere Spieleranzahl w�hlen!\n");
+				System.out.println(e1.getMessage() + "\nBitte eine andere Spieleranzahl waehlen!\n");
 			}
 		}
 		
-		//Anmelden der Spieler mit Exception f�r falsche Eingabe
+		//Anmelden der Spieler mit Exception fuer falsche Eingabe
 		boolean angemeldet = false;
 		for (int i = 0; i < anzahl; i++) {
 			angemeldet = false;
 			while (!angemeldet) {
-				System.out.println("Geben Sie bitte den Namen für Spieler " + (i + 1) + " ein:");
+				System.out.println("Geben Sie bitte den Namen fuer Spieler " + (i + 1) + " ein:");
 				String name = liesEingabe();
 				
 				try {
@@ -74,7 +74,7 @@ public class RisikoClientCUI {
 						angemeldet = true;
 					}
 				} catch (SpielerBereitsVorhandenException e2) {
-					System.out.println(e2.getMessage() + "\nBitte einen anderen Namen w�hlen!\n");
+					System.out.println(e2.getMessage() + "\nBitte einen anderen Namen waehlen!\n");
 				}
 			}
 		}
@@ -102,12 +102,12 @@ public class RisikoClientCUI {
 
 	
 	
-	// -----------------------------SPIELMEN�----------------------------------
+	// -----------------------------SPIELMENUE----------------------------------
 
 	
 	
 	private void spielMenue() {
-		//Auswahl im Spielmen�
+		//Auswahl im Spielmenue
 		String input = "";
 		do {
 			spielMenueAusgeben();
@@ -122,8 +122,8 @@ public class RisikoClientCUI {
 
 	private void spielMenueAusgeben() {
 		System.out.println("Neues Spiel starten:        'n'");
-		// System.out.println("Spiel laden: 'l'"); //zuk�nftig
-		// System.out.println("Spiel beitreten: 'b'"); //zuk�nftig
+		// System.out.println("Spiel laden: 'l'"); //zukuenftig
+		// System.out.println("Spiel beitreten: 'b'"); //zukuenftig
 		System.out.println("---------------------");
 		System.out.println("Beenden:        'q'");
 	}
@@ -148,7 +148,7 @@ public class RisikoClientCUI {
 			break;
 		default:
 			//wenn kein Case eintritt --> falsche Eingabe
-			System.out.println("\nEingabe fehlerhaft! \nBitte w�hle eine der folgenden Optionen:");
+			System.out.println("\nEingabe fehlerhaft! \nBitte waehle eine der folgenden Optionen:");
 		}
 	}
 
@@ -195,7 +195,7 @@ public class RisikoClientCUI {
 		try {
 			risiko.setzeNeueEinheiten(provinzID, anzahlEinheiten, spielerID);
 			risiko.berechneVerteilbareEinheiten(-anzahlEinheiten, spielerID);
-			// auf korrekte Eingaben pr�fen
+			// auf korrekte Eingaben pruefen
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			einheitenwahlVerarbeiten(spielerID, 42, 0);
@@ -210,9 +210,9 @@ public class RisikoClientCUI {
 	
 	private String spielen() {
 		String gewinner = "";
-		//Runden (=jeder Spieler durchl�uft jede Phase ein mal)
+		//Runden (=jeder Spieler durchlaeuft jede Phase ein mal)
 		while (true) {
-			//einzelnen Spielz�ge mit jeweiligen Phasen
+			//einzelnen Spielzuege mit jeweiligen Phasen
 			for (int o = 0; o < risiko.getSpielerAnzahl(); o++) {
 				weltkarteAusgeben();
 				neueEinheitenPhase(o);
@@ -226,7 +226,7 @@ public class RisikoClientCUI {
 				verschiebeMenu(o);
 				// verschieben
 				risiko.resetInvolvierteEinheiten(o);
-				// Einheiten, die in der Runde involviert waren f�r n�chste Runde zur�cksetzen
+				// Einheiten, die in der Runde involviert waren fuer naechste Runde zuruecksetzen
 			}
 		}
 	}
@@ -244,7 +244,7 @@ public class RisikoClientCUI {
 	}
 
 	private void neueEinheiten(int spielerID) {
-		// Einheiten, die zu Beginn jeder Runde verteilt werden d�rfen
+		// Einheiten, die zu Beginn jeder Runde verteilt werden duerfen
 		int anzahlMoeglich = risiko.berechneNeueEinheiten(spielerID);
 
 		int toProvinz = 42;
@@ -259,10 +259,10 @@ public class RisikoClientCUI {
 			
 			System.out.println("\nAnzahl der Einheiten: " + anzahlMoeglich);
 			try {
-				System.out.print("Auf welche Provinz (ID) m�chtest du deine Einheit(en) setzen? : ");
+				System.out.print("Auf welche Provinz (ID) moechtest du deine Einheit(en) setzen? : ");
 				toProvinz = Integer.parseInt(liesEingabe());
 
-				System.out.print("Wie viele Einheiten m�chtest du setzen? : ");
+				System.out.print("Wie viele Einheiten moechtest du setzen? : ");
 				anzahlEinheitenWollen = Integer.parseInt(liesEingabe());
 
 				risiko.setzeNeueEinheiten(toProvinz, anzahlEinheitenWollen, spielerID);
@@ -314,7 +314,7 @@ public class RisikoClientCUI {
 				weltkarteAusgeben();
 				break;
 			default:
-				System.out.println("\nEingabe fehlerhaft! \nBitte w�hle eine der folgenden Optionen:");
+				System.out.println("\nEingabe fehlerhaft! \nBitte waehle eine der folgenden Optionen:");
 			}
 			gewinner = risiko.einerHatGewonnen(spielerID);
 
@@ -323,7 +323,7 @@ public class RisikoClientCUI {
 	}
 
 	private void angriffAusfuehren(int spielerID) {
-		// Einlesen der Eingaben f�r den Angriff
+		// Einlesen der Eingaben fuer den Angriff
 		int fromProvinz = 42;
 		int toProvinz = 42;
 		int anzahlEinheiten = 0;
@@ -335,11 +335,11 @@ public class RisikoClientCUI {
 			System.out.print("Nach Provinz (ID): ");
 			toProvinz = Integer.parseInt(liesEingabe());
 
-			System.out.print("Mit wie vielen Einheiten m�chtest du angreifen? (max 3): ");
+			System.out.print("Mit wie vielen Einheiten moechtest du angreifen? (max 3): ");
 			anzahlEinheiten = Integer.parseInt(liesEingabe());
 
 			risiko.validiereAngriffEingaben(fromProvinz, toProvinz, spielerID, anzahlEinheiten);
-			//Inhaltliche �berpr�fung der Eingaben
+			//Inhaltliche ueberpruefung der Eingaben
 		} catch (NumberFormatException e) {
 			System.out.println("Bitte eine positive, ganze Zahl eingeben.");
 			angriffAusfuehren(spielerID);
@@ -361,11 +361,11 @@ public class RisikoClientCUI {
 			// Ausgaben
 			for (int t = 0; t < anzahlEinheiten; t++) {
 				System.out.println("Spieler " + risiko.getSpielerName(spielerID) + " hat eine " + wuerfelErgebnisse[t]
-						+ " gew�rfelt!");
+						+ " gewuerfelt!");
 			}
 			for (int k = anzahlEinheiten; k < wuerfelErgebnisse.length; k++) {
 				System.out.println("Der verteidigende Spieler " + verteidiger + " hat eine " + wuerfelErgebnisse[k]
-						+ " gew�rfelt!");
+						+ " gewuerfelt!");
 			}
 			System.out.println("");
 			// Ergebnisse der einzelnen Wurf-Vergleiche ausgeben
@@ -380,7 +380,7 @@ public class RisikoClientCUI {
 	private void wuerfelVergleichAusgeben(String[][] wuerfelVergleich, int toProvinz, int fromProvinz, int spielerID,
 			String verteidiger) {
 		// Ergebnisse der einzelnen Wurf-Vergleiche
-		System.out.println("Vergleich der Würfel:");
+		System.out.println("Vergleich der Wuerfel:");
 		System.out.println("Angreifer: " + wuerfelVergleich[0][0] + ", Verteidiger: " + wuerfelVergleich[0][1] + " -> "
 				+ wuerfelVergleich[0][2] + " verliert eine Einheit.");
 		if (wuerfelVergleich[1][0] != null) {
@@ -401,12 +401,12 @@ public class RisikoClientCUI {
 	}
 
 	private void einheitenNachruecken(int spielerID, int fromProvinz, int toProvinz) {
-		//nach einem Angriff, indem eine Provinz erobert wurde, k�nnen Einheiten nachger�ckt werden
+		//nach einem Angriff, indem eine Provinz erobert wurde, k�nnen Einheiten nachgerueckt werden
 		if (risiko.kannEinheitenNachruecken(spielerID, fromProvinz)) {
 			try {
 				if (willEinruecken()) {
 					int anzahl = 0;
-					System.out.println("Wie viele Einheiten m�chtest du nachr�cken? ");
+					System.out.println("Wie viele Einheiten moechtest du nachruecken? ");
 					try {
 						anzahl = Integer.parseInt(liesEingabe());
 					} catch (IOException e) {
@@ -429,9 +429,9 @@ public class RisikoClientCUI {
 	}
 
 	private boolean willEinruecken() {
-		//Abfrage, ob der Spieler �berhautp einr�cken m�chte, wenn er kann
+		//Abfrage, ob der Spieler ueberhautp einruecken moechte, wenn er kann
 		String input = "";
-		System.out.println("M�chtest du weitere Einheiten nachr�cken?");
+		System.out.println("Moechtest du weitere Einheiten nachruecken?");
 		try {
 			System.out.println("Ja:             'j'");
 			System.out.println("Nein:           'n'");
@@ -461,7 +461,7 @@ public class RisikoClientCUI {
 
 	
 	
-	// NACHSCHAUEN: verschieben �ber mehrere L�nder (Matrix?)git
+	// NACHSCHAUEN: verschieben ueber mehrere Laender (Matrix?)git
 //	risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
 
 	private void verschiebeMenu(int spielerIndex) {
@@ -470,7 +470,7 @@ public class RisikoClientCUI {
 
 		while (true) {
 			System.out.println(
-					"-------------L�nder von Spieler " + risiko.getSpielerName(spielerIndex) + "--------------");
+					"-------------Laender von Spieler " + risiko.getSpielerName(spielerIndex) + "--------------");
 
 			System.out.println("Einheiten verschieben:        'v'");
 			System.out.println("Weltkarte ausgeben:        'w'");
@@ -551,14 +551,14 @@ public class RisikoClientCUI {
 	private void weltkarteAusgeben() {
 		System.out.println("\nAKTUELLE WELTKARTE:\n");
 		for (int i = 0; i < risiko.getSpielerAnzahl(); i++) {
-			System.out.println("\n-------------L�nder von Spieler " + risiko.getSpielerName(i) + "--------------\n");
+			System.out.println("\n-------------Laender von Spieler " + risiko.getSpielerName(i) + "--------------\n");
 			laenderInfoAusgeben(i);
 
 		}
 	}
 
 	private void laenderInfoAusgeben(int i) {
-		//f�r Spieler i alle Provinzen ausgeben, die er besitzt
+		//fuer Spieler i alle Provinzen ausgeben, die er besitzt
 		for (Provinz provinz : risiko.getProvinzenVonSpieler(i)) {
 			System.out.println(provinz);
 		}
