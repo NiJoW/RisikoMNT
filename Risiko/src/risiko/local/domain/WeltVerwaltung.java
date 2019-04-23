@@ -21,16 +21,19 @@ public class WeltVerwaltung {
 	}
 	
 
+	
 	//---------------------- SPIELVORBEREITUNG: ERSTELLUNG DER WELT ------------------------		
+	
+	
 	
 	public void erstelleWelt() {
 		welt = new Welt();
-		//Erstellung der Vectoren f�r Kontinente und Provinzen
+		//Erstellung der Vectoren fuer Kontinente und Provinzen
 		kontinentListe = new Vector<Kontinent>(6);
 		erstelleKontinente();
 		provinzListe = new Vector<Provinz>(42);
 		erstelleProvinzen();
-		//kontinentiere = Verteilung der Provinzen auf die zugeh�rigen Kontinente
+		//kontinentiere = Verteilung der Provinzen auf die zugehoerigen Kontinente
 		kontinentiereProvinzen();
 	}
 	
@@ -128,7 +131,11 @@ public class WeltVerwaltung {
 		kontinentListe.get(5).setProvinzen(suedamerikasProvinzListe);
 	}
 
+	
+	
 	//---------------------- GETTER ------------------------	
+	
+	
 	
 	public Welt getWelt() {
 		return welt;
@@ -156,7 +163,11 @@ public class WeltVerwaltung {
 		return (Vector<Kontinent>) kontinentListe;
 	}
 	
+	
+	
 	//----------------------RUNDEN-NACHBEREITUNG------------------------	
+	
+	
 	
 	public void resetInvolvierteEinheiten(Spieler spieler) {
 		Vector <Provinz> provinzen = getProvinzenVonSpieler(spieler);

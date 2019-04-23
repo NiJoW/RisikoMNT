@@ -49,6 +49,8 @@ public class Risiko {
 	
 //	-------------GETTER---------------------
 
+	
+	
 	public int getSpielerAnzahl() {
 		return spielerVW.getSpielerAnzahl();
 	}
@@ -76,15 +78,20 @@ public class Risiko {
 	
 //	-----------------------VALIDIERE------------------------
 	
+	
+	
 	public void validiereAngriffEingaben(int fromProvinz, int toProvinz, int spielerID, int anzahlEinheiten) throws EigeneProvinzAngreifenException, NichtProvinzDesSpielersException, AnzahlEinheitenFalschException, ProvinzIDExistiertNichtException {
 		spielVW.validiereAngriffEingaben(fromProvinz, toProvinz, spielerID, anzahlEinheiten);
 			
 	}
+	
+	
 //	----------------------VERTEILEN----------------------
 	
 	
+	
 	public void berechneVerteilbareEinheiten(int aenderungsWert, int spielerID) {
-		//�ndern der Variable verteilbareEinheiten
+		//aendern der Variable verteilbareEinheiten
 		spielerVW.berechneVerteilbareEinheiten(aenderungsWert, spielerID);
 	}
 

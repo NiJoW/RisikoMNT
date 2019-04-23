@@ -13,7 +13,11 @@ public class SpielerVerwaltung {
 		spielerliste = new Vector<Spieler>();
 	}
 
+	
+	
 	//---------------------- SPIELERLISTE ------------------------	
+	
+	
 	public Vector<Spieler> getSpielerListe() {
 		return (Vector<Spieler>) spielerliste;
 	}
@@ -22,7 +26,11 @@ public class SpielerVerwaltung {
 		return spielerliste.size();
 	}
 	
+	
+	
 	//---------------------- SPIELER ------------------------	
+	
+	
 	
 	public void spielerHinzufuegen(String name) {
 		spielerliste.add(new Spieler(name));
@@ -46,8 +54,12 @@ public class SpielerVerwaltung {
 		return spielerliste.get(id).getName();
 	}
 	
+	
+	
 	//---------------------- EINHEITEN DES SPIELERS ------------------------	
 
+	
+	
 	public int getVerteilbareEinheiten(int id) {
 		return spielerliste.get(id).getVerteilbareEinheiten();
 	}
