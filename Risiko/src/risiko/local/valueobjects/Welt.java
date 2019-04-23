@@ -5,11 +5,7 @@ public class Welt {
 	boolean [][] pBeziehungen;
 	
 	public Welt() {
-			erstellePBeziehungen();	
-	}
-
-	public boolean isNachbar(int from, int to) {
-		return pBeziehungen[from][to];		
+		erstellePBeziehungen();	
 	}
 	
 	private void erstellePBeziehungen() {
@@ -191,6 +187,12 @@ public class Welt {
 		pBeziehungen[41][32] = true;	
 	}
 
+
+	public boolean isNachbar(int from, int to) {
+		return pBeziehungen[from][to];		
+	}
+	
+	
 	public boolean[][] getBeziehungsMatrix() {
 		return pBeziehungen;
 	}
