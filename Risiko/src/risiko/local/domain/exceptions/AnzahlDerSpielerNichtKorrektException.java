@@ -12,5 +12,4 @@ public class AnzahlDerSpielerNichtKorrektException extends Exception {
 	public String getMessage() {
 		return message;
 	}
-	
 }

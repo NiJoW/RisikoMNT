@@ -100,6 +100,7 @@ public class SpielLogik {
 		}
 		int [] wuerfelErgebnisse = new int[anzahlEinheiten + verteidigendeEinheiten];
 		//Array mit Laenge der im Kampf verwickelten Einheiten
+		
 		int zaehler = 0;
 		switch(anzahlEinheiten) {
 		case 3: 
