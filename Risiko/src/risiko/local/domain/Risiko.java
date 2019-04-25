@@ -22,7 +22,7 @@ public class Risiko {
 		spielerVW = new SpielerVerwaltung();
 		weltVW = new WeltVerwaltung();
 		spielVW = new SpielVerwaltung(weltVW, spielerVW);
-		spiellogik = new SpielLogik(weltVW, spielerVW);
+		spiellogik = new SpielLogik(weltVW, spielerVW, spielVW);
 	}
 	
 	public boolean spielerNameVorhanden(String name) throws SpielerBereitsVorhandenException {
@@ -40,6 +40,7 @@ public class Risiko {
 		Vector<Spieler> spielerListe = spielerVW.getSpielerListe();
 		int bonusAbSpieler = spielVW.spielVorbereiten(spielerListe);
 		spielerVW.weiseEinheitenZu(bonusAbSpieler);
+		spiellogik.weiseMissionZu();
 	}
 	
 	
