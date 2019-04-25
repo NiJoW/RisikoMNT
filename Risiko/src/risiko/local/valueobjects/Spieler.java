@@ -1,5 +1,7 @@
 package risiko.local.valueobjects;
 
+import risiko.local.valueobjects.missions.Mission;
+
 public class Spieler {
 	private String name;
 	private int anzahlAktuelleLaender;
