@@ -153,27 +153,34 @@ public class RisikoClientCUI {
 	}
 
 	private void spielStarten() {
-		risiko.spielVorbereiten(); 
+		risiko.spielVorbereiten();
+		weltkarteAusgeben();
 		einheitenVerteilen();
 		String gewinner = spielen();
 		gewinnerAusgeben(gewinner);
 	}
 
 	
-	
+
 	// ---------------------------EINHEITEN VERTEILEN-------------------------------
+
+	
 
 	
 	//setzen der ersten Einheiten
 	private void einheitenVerteilen() {
-		weltkarteAusgeben();
 		for (int j = 0; j < risiko.getSpielerAnzahl(); j++) {
+			missionenVerraten(j);
 			while (risiko.getVerteilbareEinheiten(j) > 0) {
 				System.out.println(risiko.getSpielerName(j) + " ist an der Reihe und darf "
 						+ risiko.getVerteilbareEinheiten(j) + " Einheiten setzen!");
 				einheitenwahlVerarbeiten(j, 42, 0);
 			}
 		}
+	}
+	
+	private void missionenVerraten(int spielerID) {
+		System.out.println("\n**Mission: " + risiko.getMissionVonSpieler(spielerID)+"**\n");
 	}
 
 	private void einheitenwahlVerarbeiten(int spielerID, int provinzID, int anzahlEinheiten) {
@@ -474,7 +481,9 @@ public class RisikoClientCUI {
 
 			System.out.println("Einheiten verschieben:        'v'");
 			System.out.println("Weltkarte ausgeben:        'w'");
-			System.out.println("Phase beenden:        'q'");
+			System.out.println("Zug beenden:        'q'");
+			System.out.println("Zug beenden und speichern:        's'");
+//			System.out.println("Spiel beenden und speichern:        'b'");
 
 			try {
 				input = liesEingabe();
@@ -491,6 +500,9 @@ public class RisikoClientCUI {
 			case "v":
 				einheitenVerschieben(spielerIndex);
 				break;
+			case "s":
+				risiko.speichern(spielerIndex);
+				return;
 			default:
 				System.out.println("\nFehlerhafte Eingabe.");
 			}
@@ -533,7 +545,7 @@ public class RisikoClientCUI {
 	private void gewinnerAusgeben(String gewinnerName) {
 		// ein Spieler hat alle Provinzen erobert
 		System.out.println("*************************************************************");
-		System.out.println("Spieler " + gewinnerName + " hat beherrscht die ganze Welt!");
+		System.out.println("Spieler " + gewinnerName + " hat gewonnen!");
 		System.out.println("*************************************************************\n\n");
 	}
 

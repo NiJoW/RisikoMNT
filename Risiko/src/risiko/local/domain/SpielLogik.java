@@ -10,6 +10,7 @@ import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
 import risiko.local.valueobjects.Welt;
+import risiko.local.valueobjects.missions.EliminiereEinenSpielerMission;
 import risiko.local.valueobjects.missions.Mission;
 
 
@@ -33,18 +34,39 @@ public class SpielLogik {
 		for(Spieler spieler: sListe) {
 			int zufall = rand.nextInt(mListe.size());
 			spieler.setMission(mListe.get(zufall));
+			//Ziel fuer EliminiereEinenSpielerMission festlegen --> nicht der Spieler selbst
+			if(mListe.get(zufall) instanceof EliminiereEinenSpielerMission) {
+				int targetID;
+				do{
+					targetID = rand.nextInt(sListe.size());
+					
+				}while(sListe.get(targetID).equals(spieler));
+				((EliminiereEinenSpielerMission) mListe.get(zufall)).setTarget(sListe.get(targetID));
+			}
 			mListe.remove(zufall);
 		}
 	}
 	
 	
-	public String einerHatGewonnen(int id) {
-		Spieler spieler = spielerVW.getSpieler(id);
-		if(spieler.getAnzahlAktuelleLaender() == 42) {
-			return spieler.getName();
+	public String einerHatGewonnen(int aktiverSpielerID) {
+		Spieler aktiverSpieler = spielerVW.getSpieler(aktiverSpielerID);
+		//aktiver Spieler hat die Welt erobert und gewinnt
+		if(aktiverSpieler.getAnzahlAktuelleLaender() == 42) {
+			return aktiverSpieler.getName();
 		}
+		//aktiver Spieler hat seine Mission erfüllt und gewonnen
+		if(aktiverSpieler.getMission().isErfuellt(aktiverSpieler)) {
+			return aktiverSpieler.getName();
+		}
+		//ein anderer Spieler hat seine Mission erfüllt und damit gewonnen
+		Vector<Spieler> spielerListe =  spielerVW.getSpielerListe();
+		for(Spieler s :spielerListe) {
+			if(s.getMission().isErfuellt(s)) {
+				return s.getName();
+			}
+		}
+		//noch hat niemand gewonnen
 		return "";
-		//Missionen bald
 	}
 
 	

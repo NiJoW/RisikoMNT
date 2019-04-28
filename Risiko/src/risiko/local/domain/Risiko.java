@@ -72,7 +72,9 @@ public class Risiko {
 		return weltVW.getProvinzListe().get(provinzID);
 	}
 	
-	
+	public String getMissionVonSpieler(int spielerID) {
+		return spielerVW.getMission(spielerID);
+	}
 	
 	
 	
@@ -150,6 +152,13 @@ public class Risiko {
 	public void resetInvolvierteEinheiten(int spielerID) {
 		weltVW.resetInvolvierteEinheiten(spielerVW.getSpieler(spielerID));
 	}
+
+	public void speichern(int spielerIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 	
 

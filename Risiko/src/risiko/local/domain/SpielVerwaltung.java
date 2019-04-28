@@ -33,11 +33,11 @@ public class SpielVerwaltung {
 		missionenListe.add(new EliminiereEinenSpielerMission());
 		if(anzahlSpieler < 4) {	
 			missionenListe.add(new ErobereXProvinzenMission(26));
-			missionenListe.add(new SetzeZweiEinheitenAufXProvnizenMission(18));
+			missionenListe.add(new SetzeZweiEinheitenAufXProvnizenMission(18, weltVW.getProvinzListe()));
 		} else {
 			missionenListe.add(new ErobereXProvinzenMission(16));
 			missionenListe.add(new ErobereXProvinzenMission(16));
-			missionenListe.add(new SetzeZweiEinheitenAufXProvnizenMission(11));			
+			missionenListe.add(new SetzeZweiEinheitenAufXProvnizenMission(11, weltVW.getProvinzListe()));			
 		}
 		missionenListe.add(new ErobereKontineteMission(kontinentListe, 4,5,0));
 		missionenListe.add(new ErobereKontineteMission(kontinentListe, 1,2));
