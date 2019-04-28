@@ -7,9 +7,15 @@ import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
+import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spiel;
 import risiko.local.valueobjects.Spieler;
+import risiko.local.valueobjects.missions.EliminiereEinenSpielerMission;
+import risiko.local.valueobjects.missions.ErobereKontineteMission;
+import risiko.local.valueobjects.missions.ErobereXProvinzenMission;
+import risiko.local.valueobjects.missions.Mission;
+import risiko.local.valueobjects.missions.SetzeZweiEinheitenAufXProvnizenMission;
 
 public class SpielVerwaltung {
 	
@@ -21,6 +27,29 @@ public class SpielVerwaltung {
 		this.weltVW = weltVW;
 	}
 		
+	public Vector<Mission> erstelleMissionen(int anzahlSpieler) {
+		Vector<Mission> missionenListe = new Vector<Mission>();	
+		Vector<Kontinent> kontinentListe = weltVW.getKontinentListe();
+		missionenListe.add(new EliminiereEinenSpielerMission());
+		if(anzahlSpieler < 4) {	
+			missionenListe.add(new ErobereXProvinzenMission(26));
+			missionenListe.add(new SetzeZweiEinheitenAufXProvnizenMission(18));
+		} else {
+			missionenListe.add(new ErobereXProvinzenMission(16));
+			missionenListe.add(new ErobereXProvinzenMission(16));
+			missionenListe.add(new SetzeZweiEinheitenAufXProvnizenMission(11));			
+		}
+		missionenListe.add(new ErobereKontineteMission(kontinentListe, 4,5,0));
+		missionenListe.add(new ErobereKontineteMission(kontinentListe, 1,2));
+		missionenListe.add(new ErobereKontineteMission(kontinentListe, 4,2));
+		missionenListe.add(new ErobereKontineteMission(kontinentListe, 4,0));
+		missionenListe.add(new ErobereKontineteMission(kontinentListe, 1,5));
+		missionenListe.add(new ErobereKontineteMission(kontinentListe, 3,5,-1));
+		missionenListe.add(new ErobereKontineteMission(kontinentListe, 3,2,-1));
+		
+		return missionenListe;
+	}
+
 	public void erstelleNeuesSpiel() {
 		Spiel spiel = new Spiel(); //zukuenftig gebraucht
 	}

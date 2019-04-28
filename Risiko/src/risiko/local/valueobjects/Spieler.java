@@ -40,6 +40,14 @@ public class Spieler {
 	public void berechneVerteilbareEinheiten(int aenderungsWert) {
 		verteilbareEinheiten += aenderungsWert;
 	}
+
+	public Mission getMission() {
+		return mission;
+	}
+
+	public void setMission(Mission mission) {
+		this.mission = mission;
+	}
 	
 }
 

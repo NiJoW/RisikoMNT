@@ -67,9 +67,9 @@ public class SpielerVerwaltung {
 	public void weiseEinheitenZu(int bonusAbSpieler) {
 		for(int s = 0; s < spielerliste.size(); s++) {
 			if(s >= bonusAbSpieler) {
-				spielerliste.get(s).setVerteilbareEinheiten(11);
+				spielerliste.get(s).setVerteilbareEinheiten(6);
 			} else {
-				spielerliste.get(s).setVerteilbareEinheiten(10);
+				spielerliste.get(s).setVerteilbareEinheiten(5);
 			}
 		}
 	}

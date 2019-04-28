@@ -26,7 +26,7 @@ public class Kontinent {
 	
 	public boolean isHerrscher(Spieler spieler) {
 		for(Provinz provinz : provinzen) {
-			if(provinz.getBesitzer().equals(spieler)) {
+			if(!provinz.getBesitzer().equals(spieler)) {
 				return false;
 			}
 		}

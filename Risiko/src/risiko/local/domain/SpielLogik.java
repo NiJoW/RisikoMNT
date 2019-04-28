@@ -10,17 +10,33 @@ import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
 import risiko.local.valueobjects.Welt;
+import risiko.local.valueobjects.missions.Mission;
 
 
 public class SpielLogik {
 	
 	private WeltVerwaltung weltVW;
 	private SpielerVerwaltung spielerVW;
+	private SpielVerwaltung spielVW;
 	
-	public SpielLogik(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW) {
+	public SpielLogik(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW, SpielVerwaltung spielVW) {
 		this.weltVW = weltVW;
 		this.spielerVW = spielerVW;
+		this.spielVW = spielVW;
 	}
+	
+	public void weiseMissionZu() {
+		Random rand = new Random();
+		Vector<Spieler> sListe = spielerVW.getSpielerListe();
+		Vector<Mission> mListe = spielVW.erstelleMissionen(sListe.size());
+		
+		for(Spieler spieler: sListe) {
+			int zufall = rand.nextInt(mListe.size());
+			spieler.setMission(mListe.get(zufall));
+			mListe.remove(zufall);
+		}
+	}
+	
 	
 	public String einerHatGewonnen(int id) {
 		Spieler spieler = spielerVW.getSpieler(id);
@@ -30,6 +46,9 @@ public class SpielLogik {
 		return "";
 		//Missionen bald
 	}
+
+	
+	
 
 //----------------- RUNDEN-VORBEREITUNG ---------------------------
 	
@@ -287,6 +306,8 @@ public class SpielLogik {
 		
 		from.verschiebeEinheitenNach(anzahlEinheiten, to);
 	}
+
+	
 	
 	
 }
