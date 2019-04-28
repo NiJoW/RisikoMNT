@@ -6,15 +6,9 @@ import risiko.local.valueobjects.*;
 
 
 public interface PersistenceManager {
-
-	public void openForReading(String datenquelle) throws IOException;
 	
-	public void openForWriting(String datenquelle) throws IOException;
+	public void speichereSpiel();
 	
-	public boolean close();
-
-	public Provinz ladeProvinz() throws IOException;
-	
-	public boolean speichereProvinz (Provinz p) throws IOException;
+	//public void ladenSpiel(id);
 	
 }

@@ -48,6 +48,10 @@ public class Spieler {
 	public void setMission(Mission mission) {
 		this.mission = mission;
 	}
+
+	public String getMissionsBeschreibung() {
+		return mission.getBeschreibung();
+	}
 	
 }
 

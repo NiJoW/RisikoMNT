@@ -78,4 +78,10 @@ public class SpielerVerwaltung {
 		spielerliste.get(id).berechneVerteilbareEinheiten(aenderungsWert);
 	}
 
+
+
+	public String getMission(int spielerID) {
+		return spielerliste.get(spielerID).getMissionsBeschreibung();
+	}
+
 }
