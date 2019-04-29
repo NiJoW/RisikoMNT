@@ -1,5 +1,8 @@
 package risiko.local.domain;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
@@ -153,14 +156,19 @@ public class Risiko {
 		weltVW.resetInvolvierteEinheiten(spielerVW.getSpieler(spielerID));
 	}
 
-	public void speichern(int spielerIndex) {
-		// TODO Auto-generated method stub
-		
+	
+	public void speichern(int spielerID, String name) {
+		spielVW.speicherSpiel(spielerID, name);
 	}
 
+	public void spielLaden(String name) {
+		spielVW.spielLaden(name);
+	}
+	
+	
+	
 	
 
-	
 
 	
 	

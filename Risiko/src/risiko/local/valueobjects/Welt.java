@@ -1,6 +1,8 @@
 package risiko.local.valueobjects;
 
-public class Welt {
+import java.io.Serializable;
+
+public class Welt implements Serializable{
 		
 	boolean [][] pBeziehungen;
 	

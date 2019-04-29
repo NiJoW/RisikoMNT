@@ -1,9 +1,10 @@
 package risiko.local.valueobjects;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
-public class Kontinent {
+public class Kontinent implements Serializable{
 	
 	private List<Provinz> provinzen;
 	private String name;

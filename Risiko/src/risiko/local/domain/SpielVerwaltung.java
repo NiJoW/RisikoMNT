@@ -1,5 +1,10 @@
 package risiko.local.domain;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 import java.util.Vector;
 
@@ -21,6 +26,7 @@ public class SpielVerwaltung {
 	
 	private WeltVerwaltung weltVW;
 	private SpielerVerwaltung spielerVW;
+	Spiel spiel;
 	
 	public SpielVerwaltung(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW) {
 		this.spielerVW = spielerVW;
@@ -51,7 +57,7 @@ public class SpielVerwaltung {
 	}
 
 	public void erstelleNeuesSpiel() {
-		Spiel spiel = new Spiel(); //zukuenftig gebraucht
+		spiel = new Spiel(); //zukuenftig gebraucht
 	}
 	
 	public int spielVorbereiten( Vector<Spieler> spielerListe) {
@@ -157,4 +163,46 @@ public class SpielVerwaltung {
 		Provinz fromProvinz = weltVW.getProvinz(from);
 		fromProvinz.setInvolvierteEinheiten(anzahl);
 	}
+
+	
+	
+	
+	//---------------------- PERSISTENCE ------------------------	
+	
+	public void speicherSpiel(int spielerID, String name) {
+		spiel.setSpielerID(spielerID);
+		spiel.setProvinzenListe(weltVW.getProvinzListe());
+		spiel.setSpielerliste(spielerVW.getSpielerListe());
+		
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(name + ".ser"))) {
+			oos.writeObject(spiel);
+			System.out.println("Object has been serialized");
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+
+	public void spielLaden(String name) {
+		Spiel spiel = null; 
+		  
+        // Deserialization 
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(name + ".ser"))) {    
+            spiel = (Spiel) ois.readObject();
+            System.out.println("Object has been deserialized "); 
+            System.out.println("id = " + spiel.getSpielerID());
+            
+        } 
+          
+        catch(IOException e) { 
+            System.out.println("IOException is caught"); 
+        } 
+          
+        catch(ClassNotFoundException e) { 
+            System.out.println("ClassNotFoundException is caught"); 
+        } 
+  
+    } 
+	
+
 }

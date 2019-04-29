@@ -1,8 +1,9 @@
 package risiko.local.valueobjects;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class Provinz {
+public class Provinz implements Serializable {
 
 	private String name;
 	private Vector<Einheit> armee;
