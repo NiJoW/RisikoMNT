@@ -7,8 +7,8 @@ import risiko.local.valueobjects.*;
 
 public interface PersistenceManager {
 	
-	public void speichereSpiel();
+	public void speichereSpiel(int spielerID);
 	
-	//public void ladenSpiel(id);
+	public int spielLaden(String name);
 	
 }

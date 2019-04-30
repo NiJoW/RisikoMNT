@@ -1,8 +1,10 @@
 package risiko.local.valueobjects.missions;
 
+import java.io.Serializable;
+
 import risiko.local.valueobjects.Spieler;
 
-public abstract class Mission {
+public abstract class Mission implements Serializable {
 	
 	public Mission() {
 	}

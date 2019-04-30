@@ -1,6 +1,8 @@
 package risiko.local.valueobjects;
 
-public class Einheit {
+import java.io.Serializable;
+
+public class Einheit implements Serializable{
 	
 	private Spieler besitzer;
 	private Provinz provinz;

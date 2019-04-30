@@ -1,8 +1,10 @@
 package risiko.local.valueobjects;
 
+import java.io.Serializable;
+
 import risiko.local.valueobjects.missions.Mission;
 
-public class Spieler {
+public class Spieler implements Serializable{
 	private String name;
 	private int anzahlAktuelleLaender;
 	private int verteilbareEinheiten;

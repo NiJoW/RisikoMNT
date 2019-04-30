@@ -175,5 +175,22 @@ public class WeltVerwaltung {
 			provinz.resetInvolvierteEinheiten();
 		}
 	}
+
+	
+	//---------------------- LADEN ------------------------	
+
+	public void ladeProvinzListe(Vector<Provinz> provinzenListe) {
+		this.provinzListe = provinzenListe;
+	}
+
+
+
+	public void ladeKontinente(Vector<Kontinent> kontinentListe) {
+		this.kontinentListe = kontinentListe;
+	}
+	
+	public void ladeWelt(Welt welt) {
+		this.welt = welt;
+	}
 	
 }

@@ -1,13 +1,12 @@
 package risiko.local.domain;
 
-import java.util.List;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
 import risiko.local.valueobjects.Spieler;
 
 public class SpielerVerwaltung {
-	private List<Spieler> spielerliste;
+	private Vector<Spieler> spielerliste;
 	
 	public SpielerVerwaltung() {
 		spielerliste = new Vector<Spieler>();
@@ -82,6 +81,12 @@ public class SpielerVerwaltung {
 
 	public String getMission(int spielerID) {
 		return spielerliste.get(spielerID).getMissionsBeschreibung();
+	}
+
+	//---------------------- LADEN ------------------------	
+
+	public void ladeSpielerliste(Vector<Spieler> spielerliste) {
+		this.spielerliste = spielerliste;
 	}
 
 }

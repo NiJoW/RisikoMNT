@@ -1,11 +1,17 @@
 package risiko.local.domain;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
+import risiko.local.persistence.PersistenceManager;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
@@ -21,10 +27,12 @@ public class SpielVerwaltung {
 	
 	private WeltVerwaltung weltVW;
 	private SpielerVerwaltung spielerVW;
+	private PersistenceManager persistenceManager;
 	
-	public SpielVerwaltung(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW) {
+	public SpielVerwaltung(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW, PersistenceManager persistenceManager) {
 		this.spielerVW = spielerVW;
 		this.weltVW = weltVW;
+		this.persistenceManager = persistenceManager;
 	}
 		
 	public Vector<Mission> erstelleMissionen(int anzahlSpieler) {
@@ -50,9 +58,7 @@ public class SpielVerwaltung {
 		return missionenListe;
 	}
 
-	public void erstelleNeuesSpiel() {
-		Spiel spiel = new Spiel(); //zukuenftig gebraucht
-	}
+	
 	
 	public int spielVorbereiten( Vector<Spieler> spielerListe) {
 		Vector<Provinz> provinzListe = weltVW.getProvinzListe();
@@ -157,4 +163,20 @@ public class SpielVerwaltung {
 		Provinz fromProvinz = weltVW.getProvinz(from);
 		fromProvinz.setInvolvierteEinheiten(anzahl);
 	}
+
+	
+	
+	
+	//---------------------- PERSISTENCE ------------------------	
+	
+	public void speicherSpiel(int spielerID) {
+		persistenceManager.speichereSpiel(spielerID);
+	}
+	
+
+	public int spielLaden(String name) {
+		return persistenceManager.spielLaden(name);
+    } 
+	
+
 }

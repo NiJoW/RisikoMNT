@@ -122,7 +122,7 @@ public class RisikoClientCUI {
 
 	private void spielMenueAusgeben() {
 		System.out.println("Neues Spiel starten:        'n'");
-		// System.out.println("Spiel laden: 'l'"); //zukuenftig
+		System.out.println("Spiel laden: 'l'"); //zukuenftig
 		// System.out.println("Spiel beitreten: 'b'"); //zukuenftig
 		System.out.println("---------------------");
 		System.out.println("Beenden:        'q'");
@@ -135,17 +135,26 @@ public class RisikoClientCUI {
 		case "N": //Spiel starten
 			spielStarten();
 			break;
-//		case "l":
-//		case "L": //Spiel laden
-//			spielLaden();
-//			break;
+		case "l":
+		case "L": //Spiel laden
+			//TODO: Einladen pruefen
+			System.out.println("Spiel ID: ");
+			try {
+				input = liesEingabe();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			int spielerID = risiko.spielLaden(input);
+			spielen(spielerID);
+			break;
 //		case "b":
 //		case "B": //Spiel beitreten
 //			spielBeitreten();
 //			break;
 		case "Q":
 		case "q": //Spiel beenden
-			break;
+			System.exit(0);
 		default:
 			//wenn kein Case eintritt --> falsche Eingabe
 			System.out.println("\nEingabe fehlerhaft! \nBitte waehle eine der folgenden Optionen:");
@@ -156,7 +165,7 @@ public class RisikoClientCUI {
 		risiko.spielVorbereiten();
 		weltkarteAusgeben();
 		einheitenVerteilen();
-		String gewinner = spielen();
+		String gewinner = spielen(0);
 		gewinnerAusgeben(gewinner);
 	}
 
@@ -215,12 +224,12 @@ public class RisikoClientCUI {
 
 	
 	
-	private String spielen() {
+	private String spielen(int spielerID) {
 		String gewinner = "";
 		//Runden (=jeder Spieler durchlaeuft jede Phase ein mal)
 		while (true) {
 			//einzelnen Spielzuege mit jeweiligen Phasen
-			for (int o = 0; o < risiko.getSpielerAnzahl(); o++) {
+			for (int o = spielerID; o < risiko.getSpielerAnzahl(); o++) {
 				weltkarteAusgeben();
 				neueEinheitenPhase(o);
 				// Einheiten bekommen / berechnen
@@ -483,7 +492,7 @@ public class RisikoClientCUI {
 			System.out.println("Weltkarte ausgeben:        'w'");
 			System.out.println("Zug beenden:        'q'");
 			System.out.println("Zug beenden und speichern:        's'");
-//			System.out.println("Spiel beenden und speichern:        'b'");
+			System.out.println("Spiel beenden und speichern:        'b'");
 
 			try {
 				input = liesEingabe();
@@ -501,8 +510,27 @@ public class RisikoClientCUI {
 				einheitenVerschieben(spielerIndex);
 				break;
 			case "s":
+//				String name = "";
+//				System.out.println("Spiel ID: ");
+//				try {
+//					name = liesEingabe();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} 
 				risiko.speichern(spielerIndex);
 				return;
+			case "b":
+//				String id = "";
+//				System.out.println("Spiel ID: ");
+//				try {
+//					id = liesEingabe();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} 
+				risiko.speichern(spielerIndex);
+				System.exit(0);
 			default:
 				System.out.println("\nFehlerhafte Eingabe.");
 			}
