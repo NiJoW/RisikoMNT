@@ -11,6 +11,7 @@ import java.util.Vector;
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
+import risiko.local.persistence.PersistenceManager;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
@@ -26,11 +27,12 @@ public class SpielVerwaltung {
 	
 	private WeltVerwaltung weltVW;
 	private SpielerVerwaltung spielerVW;
-	Spiel spiel;
+	private PersistenceManager persistenceManager;
 	
-	public SpielVerwaltung(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW) {
+	public SpielVerwaltung(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW, PersistenceManager persistenceManager) {
 		this.spielerVW = spielerVW;
 		this.weltVW = weltVW;
+		this.persistenceManager = persistenceManager;
 	}
 		
 	public Vector<Mission> erstelleMissionen(int anzahlSpieler) {
@@ -56,9 +58,7 @@ public class SpielVerwaltung {
 		return missionenListe;
 	}
 
-	public void erstelleNeuesSpiel() {
-		spiel = new Spiel(); //zukuenftig gebraucht
-	}
+	
 	
 	public int spielVorbereiten( Vector<Spieler> spielerListe) {
 		Vector<Provinz> provinzListe = weltVW.getProvinzListe();
@@ -169,39 +169,13 @@ public class SpielVerwaltung {
 	
 	//---------------------- PERSISTENCE ------------------------	
 	
-	public void speicherSpiel(int spielerID, String name) {
-		spiel.setSpielerID(spielerID);
-		spiel.setProvinzenListe(weltVW.getProvinzListe());
-		spiel.setSpielerliste(spielerVW.getSpielerListe());
-		
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(name + ".ser"))) {
-			oos.writeObject(spiel);
-			System.out.println("Object has been serialized");
-		} catch(IOException e){
-			e.printStackTrace();
-		}
+	public void speicherSpiel(int spielerID) {
+		persistenceManager.speichereSpiel(spielerID);
 	}
 	
 
-	public void spielLaden(String name) {
-		Spiel spiel = null; 
-		  
-        // Deserialization 
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(name + ".ser"))) {    
-            spiel = (Spiel) ois.readObject();
-            System.out.println("Object has been deserialized "); 
-            System.out.println("id = " + spiel.getSpielerID());
-            
-        } 
-          
-        catch(IOException e) { 
-            System.out.println("IOException is caught"); 
-        } 
-          
-        catch(ClassNotFoundException e) { 
-            System.out.println("ClassNotFoundException is caught"); 
-        } 
-  
+	public int spielLaden(String name) {
+		return persistenceManager.spielLaden(name);
     } 
 	
 

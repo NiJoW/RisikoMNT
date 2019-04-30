@@ -10,6 +10,8 @@ import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
+import risiko.local.persistence.PersistenceManager;
+import risiko.local.persistence.PersistenceManagerSerialize;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
@@ -19,12 +21,14 @@ public class Risiko {
 	private WeltVerwaltung weltVW;
 	private SpielLogik spiellogik;
 	private SpielVerwaltung spielVW;
+	private PersistenceManager persistenceManager;
 	
 	
 	public Risiko() {
 		spielerVW = new SpielerVerwaltung();
 		weltVW = new WeltVerwaltung();
-		spielVW = new SpielVerwaltung(weltVW, spielerVW);
+		persistenceManager = new PersistenceManagerSerialize(weltVW, spielerVW);
+		spielVW = new SpielVerwaltung(weltVW, spielerVW, persistenceManager);
 		spiellogik = new SpielLogik(weltVW, spielerVW, spielVW);
 	}
 	
@@ -38,7 +42,6 @@ public class Risiko {
 	
 	
 	public void spielVorbereiten() {
-		spielVW.erstelleNeuesSpiel();
 		weltVW.erstelleWelt();
 		Vector<Spieler> spielerListe = spielerVW.getSpielerListe();
 		int bonusAbSpieler = spielVW.spielVorbereiten(spielerListe);
@@ -157,12 +160,14 @@ public class Risiko {
 	}
 
 	
-	public void speichern(int spielerID, String name) {
-		spielVW.speicherSpiel(spielerID, name);
+//----------------------PERSITENCE------------------------	
+
+	public void speichern(int spielerID) {
+		spielVW.speicherSpiel(spielerID);
 	}
 
-	public void spielLaden(String name) {
-		spielVW.spielLaden(name);
+	public int spielLaden(String name) {
+		return spielVW.spielLaden(name);
 	}
 	
 	

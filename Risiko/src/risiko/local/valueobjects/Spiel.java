@@ -13,8 +13,11 @@ public class Spiel implements Serializable{
 	
 	
 	private Vector <Spieler> spielerliste;
+	private Welt welt;
 	private Vector <Provinz> provinzenListe;
+	private Vector<Kontinent> kontinentListe;
 	private int spielerID;
+
 	
 	public Spiel() {
 	}
@@ -35,4 +38,29 @@ public class Spiel implements Serializable{
 		// TODO Auto-generated method stub
 		return spielerID;
 	}
+
+	public Vector<Provinz> getProvinzenListe() {
+		return provinzenListe;
+	}
+	
+	public Vector<Spieler> getSpielerListe() {
+		return spielerliste;
+	}
+
+	public void setKontinentListe(Vector<Kontinent> kontinentListe) {
+		this.kontinentListe = kontinentListe;
+	}
+	
+	public Vector<Kontinent> getKontinentListe(){
+		return kontinentListe;
+	}
+
+	public void setWelt(Welt welt) {
+		this.welt = welt;
+	}
+	
+	public Welt getWelt() {
+		return welt;
+	}
+	
 }

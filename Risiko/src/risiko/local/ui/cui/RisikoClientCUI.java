@@ -144,8 +144,8 @@ public class RisikoClientCUI {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			risiko.spielLaden(input);
-			spielen();
+			int spielerID = risiko.spielLaden(input);
+			spielen(spielerID);
 			break;
 //		case "b":
 //		case "B": //Spiel beitreten
@@ -164,7 +164,7 @@ public class RisikoClientCUI {
 		risiko.spielVorbereiten();
 		weltkarteAusgeben();
 		einheitenVerteilen();
-		String gewinner = spielen();
+		String gewinner = spielen(0);
 		gewinnerAusgeben(gewinner);
 	}
 
@@ -223,12 +223,12 @@ public class RisikoClientCUI {
 
 	
 	
-	private String spielen() {
+	private String spielen(int spielerID) {
 		String gewinner = "";
 		//Runden (=jeder Spieler durchlaeuft jede Phase ein mal)
 		while (true) {
 			//einzelnen Spielzuege mit jeweiligen Phasen
-			for (int o = 0; o < risiko.getSpielerAnzahl(); o++) {
+			for (int o = spielerID; o < risiko.getSpielerAnzahl(); o++) {
 				weltkarteAusgeben();
 				neueEinheitenPhase(o);
 				// Einheiten bekommen / berechnen
@@ -509,26 +509,26 @@ public class RisikoClientCUI {
 				einheitenVerschieben(spielerIndex);
 				break;
 			case "s":
-				String name = "";
-				System.out.println("Spiel ID: ");
-				try {
-					name = liesEingabe();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-				risiko.speichern(spielerIndex, name);
+//				String name = "";
+//				System.out.println("Spiel ID: ");
+//				try {
+//					name = liesEingabe();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} 
+				risiko.speichern(spielerIndex);
 				return;
 			case "b":
-				String id = "";
-				System.out.println("Spiel ID: ");
-				try {
-					id = liesEingabe();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-				risiko.speichern(spielerIndex, id);
+//				String id = "";
+//				System.out.println("Spiel ID: ");
+//				try {
+//					id = liesEingabe();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} 
+				risiko.speichern(spielerIndex);
 				System.exit(0);
 			default:
 				System.out.println("\nFehlerhafte Eingabe.");
