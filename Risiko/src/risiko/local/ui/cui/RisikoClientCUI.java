@@ -165,7 +165,7 @@ public class RisikoClientCUI {
 		risiko.spielVorbereiten();
 		weltkarteAusgeben();
 		einheitenVerteilen();
-		String gewinner = spielen(0);
+		String gewinner = spielen(7);
 		gewinnerAusgeben(gewinner);
 	}
 
@@ -227,6 +227,16 @@ public class RisikoClientCUI {
 	private String spielen(int spielerID) {
 		String gewinner = "";
 		//Runden (=jeder Spieler durchlaeuft jede Phase ein mal)
+		if(spielerID != 7) {	
+			if(spielerID ==  risiko.getSpielerAnzahl()-1) {
+				spielerID = 0;
+			}
+			else {
+				spielerID++;
+			}
+		} else {
+			spielerID = 0;
+		}
 		while (true) {
 			//einzelnen Spielzuege mit jeweiligen Phasen
 			for (int o = spielerID; o < risiko.getSpielerAnzahl(); o++) {
@@ -244,6 +254,7 @@ public class RisikoClientCUI {
 				risiko.resetInvolvierteEinheiten(o);
 				// Einheiten, die in der Runde involviert waren fuer naechste Runde zuruecksetzen
 			}
+			spielerID = 0;
 		}
 	}
 
