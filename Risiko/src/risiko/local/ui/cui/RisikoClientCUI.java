@@ -137,6 +137,7 @@ public class RisikoClientCUI {
 			break;
 		case "l":
 		case "L": //Spiel laden
+			//TODO: Einladen pruefen
 			System.out.println("Spiel ID: ");
 			try {
 				input = liesEingabe();
