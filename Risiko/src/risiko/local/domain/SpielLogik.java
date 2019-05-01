@@ -6,6 +6,8 @@ import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
+import risiko.local.domain.exceptions.TauschenNichtMoeglichException;
+import risiko.local.valueobjects.Einheitenkarte;
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
@@ -328,6 +330,58 @@ public class SpielLogik {
 		
 		from.verschiebeEinheitenNach(anzahlEinheiten, to);
 	}
+
+	
+
+
+
+//-----------------EINHEITENKARTEN--------------------
+
+
+
+	public Einheitenkarte einheitenkarteVerteilen(Spieler spieler) {
+		Random rand = new Random();
+		Einheitenkarte neueKarte = null;
+		Vector<Einheitenkarte> karten = spielVW.getKartenListe();
+		int zufall = rand.nextInt(karten.size());
+		neueKarte = karten.get(zufall);
+		spieler.addKarte(neueKarte);
+		karten.remove(zufall);
+		return neueKarte;
+	}
+	
+	
+	
+	
+	
+	
+	public boolean kannEintauschen(Spieler spieler) throws TauschenNichtMoeglichException {
+		Vector<Einheitenkarte> karten = spieler.getKarten();
+		if(karten.size() >= 3) {
+			int anzahlSoldaten = 0;
+			int anzahlReiter= 0;
+			int anzahlKanonen = 0;
+			
+			for(Einheitenkarte karte: karten) {
+				if(karte.getTyp().equals("Soldat")) {
+					anzahlSoldaten++;
+				} else if(karte.getTyp().equals("Reiter")) {
+					anzahlReiter++;
+				} else if(karte.getTyp().equals("Kanone")) {
+					anzahlKanonen++;
+				}
+			}
+			if(anzahlSoldaten >= 3 || anzahlReiter >= 3 || anzahlKanonen >= 3) {
+				return true;
+			}
+			if(anzahlSoldaten >= 1 && anzahlReiter >= 1 && anzahlKanonen >= 1) {
+				return true;
+			}
+		}
+		throw new TauschenNichtMoeglichException();
+	}
+
+	
 
 	
 	

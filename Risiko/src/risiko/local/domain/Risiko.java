@@ -6,13 +6,16 @@ import java.io.ObjectOutputStream;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
+import risiko.local.domain.exceptions.KeineEinheitenKartenInBesitzException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
+import risiko.local.domain.exceptions.TauschenNichtMoeglichException;
 import risiko.local.persistence.PersistenceManager;
 import risiko.local.persistence.PersistenceManagerSerialize;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
+import risiko.local.valueobjects.Einheitenkarte;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
 
@@ -45,7 +48,9 @@ public class Risiko {
 		weltVW.erstelleWelt();
 		Vector<Spieler> spielerListe = spielerVW.getSpielerListe();
 		int bonusAbSpieler = spielVW.spielVorbereiten(spielerListe);
+		
 		spielerVW.weiseEinheitenZu(bonusAbSpieler);
+		spielVW.erstelleEinheitenkarten();
 		spiellogik.weiseMissionZu();
 	}
 	
@@ -71,7 +76,7 @@ public class Risiko {
 	}
 	
 	public Vector<Provinz> getProvinzenVonSpieler(int id){
-		return weltVW.getProvinzenVonSpieler(spielerVW.getSpielerListe().get(id));
+		return weltVW.getProvinzenVonSpieler(spielerVW.getSpieler(id));
 	}
 
 	public Provinz getProvinz(int provinzID) {
@@ -82,7 +87,18 @@ public class Risiko {
 		return spielerVW.getMission(spielerID);
 	}
 	
-	
+	public boolean isProvinzErobert(int spielerID) {
+		return spielerVW.getSpieler(spielerID).isProvinzErobert();
+	}
+
+	public Vector<Einheitenkarte> getKartenVonSpieler(int spielerID) throws KeineEinheitenKartenInBesitzException {
+		Vector<Einheitenkarte> eigeneKarten = spielerVW.getSpieler(spielerID).getKarten();
+		if(eigeneKarten == null) {
+			throw new KeineEinheitenKartenInBesitzException();
+		}
+		return eigeneKarten;
+	}
+
 	
 	
 //	-----------------------VALIDIERE------------------------
@@ -142,7 +158,10 @@ public class Risiko {
 		return spiellogik.einerHatGewonnen(spielerID);
 	}
 	
-	
+
+	public void provinzWurdeErobert(int spielerID) {
+		spielerVW.getSpielerListe().get(spielerID).setProvinzErobert(true);
+	}
 	
 	
 //----------------------VERSCHIEBEN------------------------	
@@ -155,10 +174,31 @@ public class Risiko {
 		
 	}
 
-	public void resetInvolvierteEinheiten(int spielerID) {
-		weltVW.resetInvolvierteEinheiten(spielerVW.getSpieler(spielerID));
+	public void resetSpielerAttribute(int spielerID) {
+		Spieler spieler = spielerVW.getSpieler(spielerID);
+		weltVW.resetInvolvierteEinheiten(spieler);
+		spielerVW.resetProvinzErobert(spieler);
 	}
 
+	
+	
+	
+//------------------EINHEITENKARTEN---------------------
+	
+	
+	public Einheitenkarte einheitenkarteVerteilen(int spielerID) {
+		return spiellogik.einheitenkarteVerteilen(spielerVW.getSpielerListe().get(spielerID));
+	}
+	
+	
+	
+	
+	
+	public void kannEintauschen(int spielerID) throws TauschenNichtMoeglichException {
+		spiellogik.kannEintauschen(spielerVW.getSpielerListe().get(spielerID));
+	}
+	
+	
 	
 //----------------------PERSITENCE------------------------	
 
@@ -169,6 +209,13 @@ public class Risiko {
 	public int spielLaden(String name) {
 		return spielVW.spielLaden(name);
 	}
+
+
+	
+
+	
+
+	
 	
 	
 	
