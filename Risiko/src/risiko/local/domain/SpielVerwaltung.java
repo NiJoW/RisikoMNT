@@ -13,6 +13,7 @@ import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.persistence.PersistenceManager;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
+import risiko.local.valueobjects.Einheitenkarte;
 import risiko.local.valueobjects.Kontinent;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spiel;
@@ -28,6 +29,7 @@ public class SpielVerwaltung {
 	private WeltVerwaltung weltVW;
 	private SpielerVerwaltung spielerVW;
 	private PersistenceManager persistenceManager;
+	private Vector<Einheitenkarte> kartenListe;
 	
 	public SpielVerwaltung(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW, PersistenceManager persistenceManager) {
 		this.spielerVW = spielerVW;
@@ -35,6 +37,24 @@ public class SpielVerwaltung {
 		this.persistenceManager = persistenceManager;
 	}
 		
+	
+	public void erstelleEinheitenkarten() {
+		kartenListe = new Vector<Einheitenkarte>();
+		for(int i = 0; i < 14; i++) {
+			kartenListe.add(new Einheitenkarte("Soldat"));
+		}
+		for(int j = 0; j < 14; j++) {
+			kartenListe.add(new Einheitenkarte("Reiter"));
+		}
+		for(int k = 0; k < 14; k++) {
+			kartenListe.add(new Einheitenkarte("Kanone"));
+		}
+	} 
+	
+	public Vector<Einheitenkarte> getKartenListe() {
+		return kartenListe;
+	}
+	
 	public Vector<Mission> erstelleMissionen(int anzahlSpieler) {
 		Vector<Mission> missionenListe = new Vector<Mission>();	
 		Vector<Kontinent> kontinentListe = weltVW.getKontinentListe();
@@ -176,7 +196,9 @@ public class SpielVerwaltung {
 
 	public int spielLaden(String name) {
 		return persistenceManager.spielLaden(name);
-    } 
+    }
+
+	
 	
 
 }

@@ -8,10 +8,13 @@ import java.text.NumberFormat;
 import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.AnzahlDerSpielerNichtKorrektException;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
+import risiko.local.domain.exceptions.KeineEinheitenKartenInBesitzException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
+import risiko.local.domain.exceptions.TauschenNichtMoeglichException;
+import risiko.local.valueobjects.Einheitenkarte;
 import risiko.local.valueobjects.Provinz;
 
 public class RisikoClientCUI {
@@ -146,7 +149,7 @@ public class RisikoClientCUI {
 				e.printStackTrace();
 			}
 			int spielerID = risiko.spielLaden(input);
-			spielen(spielerID);
+			spielen(++spielerID);
 			break;
 //		case "b":
 //		case "B": //Spiel beitreten
@@ -165,7 +168,7 @@ public class RisikoClientCUI {
 		risiko.spielVorbereiten();
 		weltkarteAusgeben();
 		einheitenVerteilen();
-		String gewinner = spielen(7);
+		String gewinner = spielen(0);
 		gewinnerAusgeben(gewinner);
 	}
 
@@ -227,21 +230,18 @@ public class RisikoClientCUI {
 	private String spielen(int spielerID) {
 		String gewinner = "";
 		//Runden (=jeder Spieler durchlaeuft jede Phase ein mal)
-		if(spielerID != 7) {	
-			if(spielerID ==  risiko.getSpielerAnzahl()-1) {
-				spielerID = 0;
-			}
-			else {
-				spielerID++;
-			}
-		} else {
+//		
+		if(spielerID == risiko.getSpielerAnzahl()) {
 			spielerID = 0;
 		}
+		
+		
 		while (true) {
 			//einzelnen Spielzuege mit jeweiligen Phasen
 			for (int o = spielerID; o < risiko.getSpielerAnzahl(); o++) {
 				weltkarteAusgeben();
-				neueEinheitenPhase(o);
+				
+				menueNeueEinheitenPhase(o);
 				// Einheiten bekommen / berechnen
 				// Einheiten setzen
 				gewinner = angreifen(o);
@@ -249,26 +249,94 @@ public class RisikoClientCUI {
 				if (!gewinner.equals("")) {
 					return gewinner;
 				}
-				verschiebeMenu(o);
 				// verschieben
-				risiko.resetInvolvierteEinheiten(o);
+				verschiebeMenu(o);
+				//Einheitenkarten verwalten
+				einheitenkarteVerteilen(o);
 				// Einheiten, die in der Runde involviert waren fuer naechste Runde zuruecksetzen
+				risiko.resetSpielerAttribute(o);
+				
 			}
 			spielerID = 0;
 		}
 	}
 
-	
-	
+
 	// ----------------------------------NEUE EINHEITEN---------------------------------
 
 	
-	
-	private void neueEinheitenPhase(int spielerID) {
+
+	private void menueNeueEinheitenPhase(int spielerID) {
+		
 		System.out.println("\n------------Spieler: " + risiko.getSpielerName(spielerID) + "--------------");
 		System.out.println("------------Phase: Einheiten setzen--------------\n");
+		
+		while (true) {
+			
+			System.out.println("Einheitenkarten anzeigen:        'a'");
+			System.out.println("Einheitenkarten eintauschen:     'e'");
+			System.out.println("Einheiten setzen:                's'");
+
+			String input = "";
+			try {
+				input = liesEingabe();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			switch (input) {
+			case "a":
+				try {
+					eineheitenKartenAusgeben(spielerID);
+				} catch (KeineEinheitenKartenInBesitzException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+			case "e":
+				angriffAusfuehren(spielerID);
+				break;
+			case "s":
+				neueEinheitenPhase(spielerID);
+				return;
+			default:
+				System.out.println("\nEingabe fehlerhaft! \nBitte waehle eine der folgenden Optionen:");
+			}
+		}
+	}
+
+	private void neueEinheitenPhase(int spielerID) {		
 		neueEinheiten(spielerID);
 	}
+
+	private void einheitenkartenEintauschen(int spielerID) {
+		try{
+			risiko.kannEintauschen(spielerID);
+//			try {
+//				if (true) {
+//					int anzahl = 0;
+//					System.out.println("Wie viele Einheiten moechtest du nachruecken? ");
+//					try {
+//						anzahl = Integer.parseInt(liesEingabe());
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//
+//					try {
+//						
+//					} catch (AnzahlEinheitenFalschException | NichtProvinzDesSpielersException
+//							| ProvinzNichtNachbarException | ProvinzIDExistiertNichtException e) {
+//						System.out.println(e.getMessage());
+//					}
+//				}
+//			} catch (NumberFormatException e) {
+//				System.out.println("Bitte eine positive, ganze Zahl eingeben.");
+//				return;
+//			}
+		}catch(TauschenNichtMoeglichException e) {
+			System.out.println(e.getMessage);
+		}
+	}
+	
 
 	private void neueEinheiten(int spielerID) {
 		// Einheiten, die zu Beginn jeder Runde verteilt werden duerfen
@@ -321,9 +389,9 @@ public class RisikoClientCUI {
 		while (gewinner.equals("")) {
 			System.out.println("-------------Spieler " + risiko.getSpielerName(spielerID) + "--------------\n");
 
-			System.out.println("Angreifen:        'a'");
-			System.out.println("Weltkarte anzeigen:        'w'");
-			System.out.println("Phase beenden:        'q'");
+			System.out.println("Angreifen:              'a'");
+			System.out.println("Weltkarte anzeigen:     'w'");
+			System.out.println("Phase beenden:          'q'");
 
 			try {
 				input = liesEingabe();
@@ -416,6 +484,7 @@ public class RisikoClientCUI {
 		}
 
 		if (risiko.getProvinz(toProvinz).getBesitzer().getName().equals(risiko.getSpielerName(spielerID))) {
+			risiko.provinzWurdeErobert(spielerID); //aendert boolean, um Einheitskarte zu bekommen (boolean provinzErobert)
 			System.out.println("*********************");
 			System.out.println(risiko.getSpielerName(spielerID) + " hat die Provinz "
 					+ risiko.getProvinz(toProvinz).getName() + " von " + verteidiger + " erobert!");
@@ -589,6 +658,26 @@ public class RisikoClientCUI {
 	}
 
 	
+	//-------------------------------Einheitenkarten-------------------------------	
+	
+	
+	
+	private void einheitenkarteVerteilen(int spielerID) {
+		if(risiko.isProvinzErobert(spielerID)) {
+			Einheitenkarte neueKarte = risiko.einheitenkarteVerteilen(spielerID);
+			System.out.println("Du hast eine Karte vom Typ " + neueKarte.getTyp() + " erhalten.");
+		}
+	}
+	
+	
+	 
+	
+	
+	
+	
+	
+	
+	
 	
 	// ----------------------------MEHRFACH GEBRAUCHT-------------------------
 
@@ -613,5 +702,12 @@ public class RisikoClientCUI {
 		for (Provinz provinz : risiko.getProvinzenVonSpieler(i)) {
 			System.out.println(provinz);
 		}
+	}
+	
+	private void eineheitenKartenAusgeben(int spielerID) throws KeineEinheitenKartenInBesitzException  {
+		for(int i = 0; i<risiko.getKartenVonSpieler(spielerID).size(); i++) {
+			System.out.println(i+1 + ") " + risiko.getKartenVonSpieler(spielerID).get(i));
+		}
+		System.out.println("");
 	}
 }

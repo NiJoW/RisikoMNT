@@ -1,7 +1,9 @@
 package risiko.local.valueobjects;
 
 import java.io.Serializable;
+import java.util.Vector;
 
+import risiko.local.domain.exceptions.KeineEinheitenKartenInBesitzException;
 import risiko.local.valueobjects.missions.Mission;
 
 public class Spieler implements Serializable{
@@ -9,6 +11,8 @@ public class Spieler implements Serializable{
 	private int anzahlAktuelleLaender;
 	private int verteilbareEinheiten;
 	private Mission mission;
+	private Vector<Einheitenkarte> eigeneKarten = new Vector<Einheitenkarte>();
+	private boolean provinzErobert = false;
 
 	
 	public Spieler(String name) {
@@ -53,6 +57,22 @@ public class Spieler implements Serializable{
 
 	public String getMissionsBeschreibung() {
 		return mission.getBeschreibung();
+	}
+
+	public boolean isProvinzErobert() {
+		return provinzErobert;
+	}
+
+	public void setProvinzErobert(boolean provinzErobert) {
+		this.provinzErobert = provinzErobert;
+	}
+
+	public Vector<Einheitenkarte> getKarten() {
+		return eigeneKarten;
+	}
+	
+	public void addKarte(Einheitenkarte karte) {
+		eigeneKarten.add(karte);
 	}
 	
 }

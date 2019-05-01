@@ -89,4 +89,10 @@ public class SpielerVerwaltung {
 		this.spielerliste = spielerliste;
 	}
 
+
+
+	public void resetProvinzErobert(Spieler spieler) {
+		spieler.setProvinzErobert(false);
+	}
+
 }
