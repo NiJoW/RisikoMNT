@@ -92,7 +92,7 @@ public class RisikoClientCUI {
 		try {
 			anzahl = Integer.parseInt(liesEingabe());
 			if (anzahl < 2 || anzahl > 6) {
-				throw new AnzahlDerSpielerNichtKorrektException("Anzahl der Spieler muss zwischen 2 und 6 liegen");
+				throw new AnzahlDerSpielerNichtKorrektException();
 			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -333,7 +333,7 @@ public class RisikoClientCUI {
 //				return;
 //			}
 		}catch(TauschenNichtMoeglichException e) {
-			System.out.println(e.getMessage);
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -639,9 +639,9 @@ public class RisikoClientCUI {
 			System.out.println("Bitte eine positive, ganze Zahl eingeben.");
 			einheitenVerschieben(spielerIndex);
 			return;
-		} catch (ProvinzIDExistiertNichtException e) {
-			System.out.println(e.getMessage());
-		} catch (AnzahlEinheitenFalschException | NichtProvinzDesSpielersException | ProvinzNichtNachbarException e) {
+		} catch (AnzahlEinheitenFalschException e) {
+			System.out.println(e.getMessage() + "\nBereits in den Kampf involvierte Einheiten koennen nicht mehr verschoben werden.");
+		} catch (ProvinzIDExistiertNichtException | NichtProvinzDesSpielersException | ProvinzNichtNachbarException e) {
 			System.out.println(e.getMessage());
 			System.out.println("");
 		} catch (IOException e) {
