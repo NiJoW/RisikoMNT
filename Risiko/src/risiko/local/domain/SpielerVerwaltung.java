@@ -38,9 +38,8 @@ public class SpielerVerwaltung {
 	public boolean spielerBereitsVorhanden(String name) throws SpielerBereitsVorhandenException {
 		for (Spieler spieler : spielerliste) {
 			if(spieler.getName().equals(name)) {
-				throw new SpielerBereitsVorhandenException("Es gibt bereits einen Spieler mit diesem Namen.");
-			}
-				
+				throw new SpielerBereitsVorhandenException();
+			}	
 		}
 		return false;
 	}

@@ -291,7 +291,7 @@ public class SpielLogik {
 		int verschiebbareEinheiten = pListe.get(from).getAnzahlVerschiebbareEinheiten();
 		if(anzahlEinheiten > verschiebbareEinheiten) {
 			// zu viele Einheiten ausgewaehlt
-			throw new AnzahlEinheitenFalschException("Du kannst maximal "+verschiebbareEinheiten+" Einheiten aus dieser Provinz verschieben. \nBereits in den Kampf involvierte Einheiten koennen nicht mehr verschoben werden.");
+			throw new AnzahlEinheitenFalschException(verschiebbareEinheiten);
 		}
 			
 		if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer()))) {
