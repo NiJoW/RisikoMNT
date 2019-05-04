@@ -125,10 +125,10 @@ public class RisikoClientCUI {
 
 	private void spielMenueAusgeben() {
 		System.out.println("Neues Spiel starten:        'n'");
-		System.out.println("Spiel laden: 'l'"); //zukuenftig
+		System.out.println("Spiel laden: 				'l'"); //zukuenftig
 		// System.out.println("Spiel beitreten: 'b'"); //zukuenftig
-		System.out.println("---------------------");
-		System.out.println("Beenden:        'q'");
+		System.out.println("-------------------------------");
+		System.out.println("Beenden:        			'q'");
 	}
 
 	private void verarbeiteSpielmenue(String input) {
@@ -273,9 +273,9 @@ public class RisikoClientCUI {
 		
 		while (true) {
 			
-			System.out.println("Karten fuer zusaetzliche Einheiten anzeigen:      'a'");
-			System.out.println("Karten fuer zusaetzliche Einheiten eintauschen:   'e'");
-			System.out.println("Einheiten setzen:                                 's'");
+			System.out.println("Karten fuer zusaetzliche Einheiten anzeigen:   		'a'");
+			System.out.println("Karten fuer zusaetzliche Einheiten eintauschen:		'e'");
+			System.out.println("Einheiten setzen:                                 	's'");
 
 			String input = "";
 			try {
@@ -321,17 +321,22 @@ public class RisikoClientCUI {
 			String input = "";
 				
 			System.out.println("Welche Karten moechtest du Eintauschen? ");
-			System.out.println("Drei Soldaten eintauschen:     							  's'");
-			System.out.println("Drei Reiter eintauschen:       							  'r'");
-			System.out.println("Drei Kanonen eintauschen:   						      'k'");
-			System.out.println("Einen Soldat, einen Reiter und eine Kanone eintauschen:   'a'");
+			System.out.println("Drei Soldaten eintauschen:     									's'");
+			System.out.println("Drei Reiter eintauschen:       								 	'r'");
+			System.out.println("Drei Kanonen eintauschen:   						  			'k'");
+			System.out.println("Einen Soldat, einen Reiter und eine Kanone eintauschen: 	  	'a'");
+			System.out.println("-------------------------------------------------------------------");
+			System.out.println("Beenden:        												'q'");
+			
 					
 			try {
 				input = liesEingabe();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
+			if(input.equals("q")) {
+				return;
+			}
 			try {
 				risiko.einheitenKartenEintauschen(input, spielerID);
 			} catch (Exception e) {
@@ -568,10 +573,10 @@ public class RisikoClientCUI {
 			System.out.println(
 					"-------------Laender von Spieler " + risiko.getSpielerName(spielerIndex) + "--------------");
 
-			System.out.println("Einheiten verschieben:        'v'");
-			System.out.println("Weltkarte ausgeben:        'w'");
-			System.out.println("Zug beenden:        'q'");
-			System.out.println("Zug beenden und speichern:        's'");
+			System.out.println("Einheiten verschieben:        		'v'");
+			System.out.println("Weltkarte ausgeben:        			'w'");
+			System.out.println("Zug beenden:      					'q'");
+			System.out.println("Zug beenden und speichern:			's'");
 			System.out.println("Spiel beenden und speichern:        'b'");
 
 			try {
@@ -664,8 +669,10 @@ public class RisikoClientCUI {
 	
 	private void einheitenkarteVerteilen(int spielerID) {
 		if(risiko.isProvinzErobert(spielerID)) {
+			for(int i = 0; i<5; i++) { //nur fuer Test Zwecke
 			Einheitenkarte neueKarte = risiko.einheitenkarteVerteilen(spielerID);
 			System.out.println("Du hast eine Karte vom Typ " + neueKarte.getTyp() + " erhalten.");
+			}
 		}
 	}
 	
