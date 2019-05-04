@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.NumberFormat;
+import java.util.List;
 
 import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.AnzahlDerSpielerNichtKorrektException;
@@ -140,16 +141,7 @@ public class RisikoClientCUI {
 			break;
 		case "l":
 		case "L": //Spiel laden
-			//TODO: Einladen pruefen
-			System.out.println("Spiel ID: ");
-			try {
-				input = liesEingabe();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			int spielerID = risiko.spielLaden(input);
-			spielen(++spielerID);
+			spielladen();
 			break;
 //		case "b":
 //		case "B": //Spiel beitreten
@@ -162,6 +154,25 @@ public class RisikoClientCUI {
 			//wenn kein Case eintritt --> falsche Eingabe
 			System.out.println("\nEingabe fehlerhaft! \nBitte waehle eine der folgenden Optionen:");
 		}
+	}
+
+	private void spielladen() {
+		List<String> spielNamen = risiko.spielnamenAusgeben();
+		
+		for(String name : spielNamen) {
+			System.out.println("--" + name);
+		}
+		
+		String input = "";
+		System.out.println("Spiel ID: ");
+		try {
+			input = liesEingabe();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int spielerID = risiko.spielLaden(input);
+		spielen(++spielerID);
 	}
 
 	private void spielStarten() {
@@ -209,16 +220,19 @@ public class RisikoClientCUI {
 			return;
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		
 		try {
 			risiko.setzeNeueEinheiten(provinzID, anzahlEinheiten, spielerID);
 			risiko.berechneVerteilbareEinheiten(-anzahlEinheiten, spielerID);
 			// auf korrekte Eingaben pruefen
-		} catch (Exception e) {
+		} catch (IndexOutOfBoundsException e ) {
+			System.out.println("Diese ID entspricht keiner Provinz. Bitte eine Zahl zwichen 0 und 41 eingeben.");
+			einheitenwahlVerarbeiten(spielerID, 42, 0);
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			einheitenwahlVerarbeiten(spielerID, 42, 0);
-		}
+		} 
 	}
 
 	
@@ -304,7 +318,9 @@ public class RisikoClientCUI {
 		}
 	}
 
-	private void neueEinheitenPhase(int spielerID) {		
+	private void neueEinheitenPhase(int spielerID) {	
+		// Einheiten, die zu Beginn jeder Runde verteilt werden duerfen
+		risiko.berechneNeueEinheiten(spielerID);
 		neueEinheiten(spielerID);
 	}
 
@@ -320,7 +336,7 @@ public class RisikoClientCUI {
 				
 			String input = "";
 				
-			System.out.println("Welche Karten moechtest du Eintauschen? ");
+			System.out.println("Welche Karten moechtest du eintauschen? ");
 			System.out.println("Drei Soldaten eintauschen:     									's'");
 			System.out.println("Drei Reiter eintauschen:       								 	'r'");
 			System.out.println("Drei Kanonen eintauschen:   						  			'k'");
@@ -338,7 +354,8 @@ public class RisikoClientCUI {
 				return;
 			}
 			try {
-				risiko.einheitenKartenEintauschen(input, spielerID);
+				int tauscheBonus = risiko.einheitenKartenEintauschen(input, spielerID);
+				System.out.println("**Du hast im Tausch gegen Einheitenkarten " + tauscheBonus + " zusaetzliche Einheiten erhalten.**");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}		
@@ -347,9 +364,6 @@ public class RisikoClientCUI {
 	
 
 	private void neueEinheiten(int spielerID) {
-		// Einheiten, die zu Beginn jeder Runde verteilt werden duerfen
-		risiko.berechneNeueEinheiten(spielerID);
-
 		int toProvinz = 42;
 		int anzahlEinheitenWollen = 0;
 		
@@ -369,12 +383,18 @@ public class RisikoClientCUI {
 				risiko.setzeNeueEinheiten(toProvinz, anzahlEinheitenWollen, spielerID);
 				risiko.berechneVerteilbareEinheiten(-anzahlEinheitenWollen, spielerID);
 				
-			} catch (NumberFormatException e) {
+			} catch (NumberFormatException e ) {
 				System.out.println("Bitte eine positive, ganze Zahl eingeben.");
+				neueEinheiten(spielerID);
+				return;
+			} catch (IndexOutOfBoundsException e ) {
+				System.out.println("Diese ID entspricht keiner Provinz. Bitte eine Zahl zwichen 0 und 41 eingeben.");
 				neueEinheiten(spielerID);
 				return;
 			} catch (Exception e) {
 				System.out.print(e.getMessage());
+				neueEinheiten(spielerID);
+				return;
 			}
 
 		}
@@ -603,7 +623,7 @@ public class RisikoClientCUI {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				} 
-				risiko.speichern(spielerIndex);
+				risiko.speichern(spielerIndex);//TODO: pruefen
 				return;
 			case "b":
 //				String id = "";
@@ -614,7 +634,8 @@ public class RisikoClientCUI {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				} 
-				risiko.speichern(spielerIndex);
+				risiko.speichern(spielerIndex);//TODO: Exception?
+				System.out.println("Das Spiel wurde erfolgreich gespeichert und beendet");
 				System.exit(0);
 			default:
 				System.out.println("\nFehlerhafte Eingabe.");
@@ -669,10 +690,8 @@ public class RisikoClientCUI {
 	
 	private void einheitenkarteVerteilen(int spielerID) {
 		if(risiko.isProvinzErobert(spielerID)) {
-			for(int i = 0; i<5; i++) { //nur fuer Test Zwecke
 			Einheitenkarte neueKarte = risiko.einheitenkarteVerteilen(spielerID);
 			System.out.println("Du hast eine Karte vom Typ " + neueKarte.getTyp() + " erhalten.");
-			}
 		}
 	}
 	

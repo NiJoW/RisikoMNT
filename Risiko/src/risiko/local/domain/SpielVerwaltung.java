@@ -126,10 +126,10 @@ public class SpielVerwaltung {
 	public void neueEinheitenSetzen(int toProvinz, int anzahlEinheiten, int spielerID) throws NichtProvinzDesSpielersException, ProvinzIDExistiertNichtException, AnzahlEinheitenFalschException {
 		Provinz provinz = weltVW.getProvinz(toProvinz);
 		validiereProvinz(toProvinz, spielerID);
+		validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
 		for(int i = 0; i < anzahlEinheiten; i++) {
 			provinz.erstelleEinheit(provinz.getBesitzer());
 		}
-		validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
 	}	
 	
 	
@@ -191,10 +191,9 @@ public class SpielVerwaltung {
 	//---------------------- PERSISTENCE ------------------------	
 	
 	public void speicherSpiel(int spielerID) {
-		persistenceManager.speichereSpiel(spielerID);
+		persistenceManager.speichereSpiel(spielerID, this);
 	}
 	
-
 	public int spielLaden(String name) {
 		return persistenceManager.spielLaden(name);
     }
@@ -208,6 +207,10 @@ public class SpielVerwaltung {
 
 	public void erhoeheKartenTauschBonus(int anzahl) {
 		kartenTauschBonus += anzahl;
+	}
+	
+	public void ladeKartenTauschBonus(int bonus) {
+		kartenTauschBonus = bonus;
 	}
 
 }
