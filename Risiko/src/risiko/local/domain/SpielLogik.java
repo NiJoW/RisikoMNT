@@ -1,4 +1,5 @@
 package risiko.local.domain;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
@@ -389,9 +390,10 @@ public class SpielLogik {
 		return kartenAnzahl;
 	}
 
-	public void einheitenKartenEintauschen(String input, Spieler spieler) throws FalscheEingabeException, NichtGenugKartenFuerAktionException {
+	public int einheitenKartenEintauschen(String input, Spieler spieler) throws FalscheEingabeException, NichtGenugKartenFuerAktionException {
 		String typ = "";
 		int num = 3;
+		
 		switch(input) {
 		case "s":
 			typ = "Soldat";
@@ -406,34 +408,40 @@ public class SpielLogik {
 			num = 2;
 			break;
 		case "a":
-			jeEineKarteEintauschen(spieler);
-			return;
+			return jeEineKarteEintauschen(spieler);
+			
 		default:
 			throw new FalscheEingabeException();
 		}
-		typEintauschen(spieler, typ, num);
+		return typEintauschen(spieler, typ, num);
+		
 	}
 
-	private void typEintauschen(Spieler spieler, String typ, int num) throws NichtGenugKartenFuerAktionException {
+	private int typEintauschen(Spieler spieler, String typ, int num) throws NichtGenugKartenFuerAktionException {
 		Vector<Einheitenkarte> karten = spieler.getKarten();
 		int[] kartenAnzahl = EinheitenkartenZaehlen(karten);
 		
 		if(kartenAnzahl[num] >= 3) {
 			int zaehler = 0;
+			ArrayList<Einheitenkarte> removeIDs = new ArrayList<>();
 			
 			for(Einheitenkarte karte : karten) {
-				if(karte.getTyp().equals(typ) && zaehler <= 3) {
-					karten.remove(karte);
+				if(karte.getTyp().equals(typ) && zaehler < 3) {
+					removeIDs.add(karte);
 					zaehler++;
 				}
+			}
+			for (Einheitenkarte deleteKarte : removeIDs){
+				  karten.remove(deleteKarte);
 			}
 		} else {
 			throw new NichtGenugKartenFuerAktionException();
 		}
-		einheitenkartenBonusErhoehen();
+		
+		return einheitenkartenBonusErhoehen(spieler);
 	}
 
-	private void jeEineKarteEintauschen(Spieler spieler) throws NichtGenugKartenFuerAktionException {
+	private int jeEineKarteEintauschen(Spieler spieler) throws NichtGenugKartenFuerAktionException {
 		Vector<Einheitenkarte> karten = spieler.getKarten();
 		int[] kartenAnzahl = EinheitenkartenZaehlen(karten);
 		
@@ -441,28 +449,35 @@ public class SpielLogik {
 			int sZaehler = 0;
 			int rZaehler = 0;
 			int kZaehler = 0;
+			ArrayList<Einheitenkarte> removeIDs = new ArrayList<>();
 			
 			for(Einheitenkarte karte : karten) {
 				if(karte.getTyp().equals("Soldat") && sZaehler == 0) {
-					karten.remove(karte);
+					removeIDs.add(karte);
 					sZaehler++;
 				}
 				if(karte.getTyp().equals("Reiter") && rZaehler == 0) {
-					karten.remove(karte);
+					removeIDs.add(karte);
 					rZaehler++;
 				}
 				if(karte.getTyp().equals("Kanone") && kZaehler == 0) {
-					karten.remove(karte);
+					removeIDs.add(karte);
 					kZaehler++;
 				}
 			}
+			
+			for (Einheitenkarte deleteKarte : removeIDs){
+				  karten.remove(deleteKarte);
+			}
+			
 		} else {
 			throw new NichtGenugKartenFuerAktionException();
 		}
-		einheitenkartenBonusErhoehen();
+		return einheitenkartenBonusErhoehen(spieler);
+
 	}
 
-	private void einheitenkartenBonusErhoehen() {
+	private int einheitenkartenBonusErhoehen(Spieler spieler) {
 		int kartenTauschBonus = spielVW.getKartenTauschBonus();
 		if(kartenTauschBonus < 12) {
 			spielVW.erhoeheKartenTauschBonus(2);
@@ -471,6 +486,8 @@ public class SpielLogik {
 		} else {
 			spielVW.erhoeheKartenTauschBonus(5);
 		}
+		spieler.berechneVerteilbareEinheiten(kartenTauschBonus);
+		return kartenTauschBonus;
 	}
 	
 }

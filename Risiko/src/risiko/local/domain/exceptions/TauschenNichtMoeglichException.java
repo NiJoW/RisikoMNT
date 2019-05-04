@@ -3,6 +3,6 @@ package risiko.local.domain.exceptions;
 public class TauschenNichtMoeglichException extends Exception{
 	
 	public TauschenNichtMoeglichException() {
-		super("Du kannst keine Einheitenkarten eintauschen.");
+		super("Du kannst keine (weiteren) Einheitenkarten eintauschen.");
 	}
 }

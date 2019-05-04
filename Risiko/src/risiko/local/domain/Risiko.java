@@ -3,6 +3,7 @@ package risiko.local.domain;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.List;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
@@ -198,8 +199,8 @@ public class Risiko {
 	}
 	
 	
-	public void einheitenKartenEintauschen(String input, int spielerID) throws FalscheEingabeException, NichtGenugKartenFuerAktionException {
-		spiellogik.einheitenKartenEintauschen(input, spielerVW.getSpielerListe().get(spielerID));
+	public int einheitenKartenEintauschen(String input, int spielerID) throws FalscheEingabeException, NichtGenugKartenFuerAktionException {
+		return spiellogik.einheitenKartenEintauschen(input, spielerVW.getSpielerListe().get(spielerID));
 	}
 
 //----------------------PERSITENCE------------------------	
@@ -210,6 +211,10 @@ public class Risiko {
 
 	public int spielLaden(String name) {
 		return spielVW.spielLaden(name);
+	}
+
+	public List<String> spielnamenAusgeben() {
+		return persistenceManager.spielnamenAusgeben();
 	}
 
 	
