@@ -273,9 +273,9 @@ public class RisikoClientCUI {
 		
 		while (true) {
 			
-			System.out.println("Einheitenkarten anzeigen:        'a'");
-			System.out.println("Einheitenkarten eintauschen:     'e'");
-			System.out.println("Einheiten setzen:                's'");
+			System.out.println("Karten fuer zusaetzliche Einheiten anzeigen:      'a'");
+			System.out.println("Karten fuer zusaetzliche Einheiten eintauschen:   'e'");
+			System.out.println("Einheiten setzen:                                 's'");
 
 			String input = "";
 			try {
@@ -289,11 +289,11 @@ public class RisikoClientCUI {
 				try {
 					eineheitenKartenAusgeben(spielerID);
 				} catch (KeineEinheitenKartenInBesitzException e) {
-					System.out.println(e.getMessage());
+					System.out.println(e.getMessage()+ "\n");
 				}
 				break;
 			case "e":
-				angriffAusfuehren(spielerID);
+				einheitenkartenEintauschen(spielerID);
 				break;
 			case "s":
 				neueEinheitenPhase(spielerID);
@@ -309,50 +309,51 @@ public class RisikoClientCUI {
 	}
 
 	private void einheitenkartenEintauschen(int spielerID) {
-		try{
-			risiko.kannEintauschen(spielerID);
-//			try {
-//				if (true) {
-//					int anzahl = 0;
-//					System.out.println("Wie viele Einheiten moechtest du nachruecken? ");
-//					try {
-//						anzahl = Integer.parseInt(liesEingabe());
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-//
-//					try {
-//						
-//					} catch (AnzahlEinheitenFalschException | NichtProvinzDesSpielersException
-//							| ProvinzNichtNachbarException | ProvinzIDExistiertNichtException e) {
-//						System.out.println(e.getMessage());
-//					}
-//				}
-//			} catch (NumberFormatException e) {
-//				System.out.println("Bitte eine positive, ganze Zahl eingeben.");
-//				return;
-//			}
-		}catch(TauschenNichtMoeglichException e) {
-			System.out.println(e.getMessage());
+			
+		while (true) {
+			try {
+				risiko.kannEintauschen(spielerID);
+			}catch(TauschenNichtMoeglichException e) {
+				System.out.println(e.getMessage() + "\n");
+				return;
+			}
+				
+			String input = "";
+				
+			System.out.println("Welche Karten moechtest du Eintauschen? ");
+			System.out.println("Drei Soldaten eintauschen:     							  's'");
+			System.out.println("Drei Reiter eintauschen:       							  'r'");
+			System.out.println("Drei Kanonen eintauschen:   						      'k'");
+			System.out.println("Einen Soldat, einen Reiter und eine Kanone eintauschen:   'a'");
+					
+			try {
+				input = liesEingabe();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				risiko.einheitenKartenEintauschen(input, spielerID);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}		
 		}
 	}
 	
 
 	private void neueEinheiten(int spielerID) {
 		// Einheiten, die zu Beginn jeder Runde verteilt werden duerfen
-		int anzahlMoeglich = risiko.berechneNeueEinheiten(spielerID);
+		risiko.berechneNeueEinheiten(spielerID);
 
 		int toProvinz = 42;
 		int anzahlEinheitenWollen = 0;
 		
-		
-		risiko.berechneVerteilbareEinheiten(anzahlMoeglich, spielerID);
 
-		while (anzahlMoeglich > 0) {
+		while (risiko.getVerteilbareEinheiten(spielerID) > 0) {
 			toProvinz = 42;
 			anzahlEinheitenWollen = 0;
 			
-			System.out.println("\nAnzahl der Einheiten: " + anzahlMoeglich);
+			System.out.println("\nAnzahl der Einheiten: " + risiko.getVerteilbareEinheiten(spielerID));
 			try {
 				System.out.print("Auf welche Provinz (ID) moechtest du deine Einheit(en) setzen? : ");
 				toProvinz = Integer.parseInt(liesEingabe());
@@ -363,7 +364,6 @@ public class RisikoClientCUI {
 				risiko.setzeNeueEinheiten(toProvinz, anzahlEinheitenWollen, spielerID);
 				risiko.berechneVerteilbareEinheiten(-anzahlEinheitenWollen, spielerID);
 				
-				anzahlMoeglich -= anzahlEinheitenWollen;
 			} catch (NumberFormatException e) {
 				System.out.println("Bitte eine positive, ganze Zahl eingeben.");
 				neueEinheiten(spielerID);

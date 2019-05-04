@@ -28,6 +28,7 @@ public class PersistenceManagerSerialize implements PersistenceManager {
 		spiel.setSpielerliste(spielerVW.getSpielerListe());
 		spiel.setKontinentListe(weltVW.getKontinentListe());
 		spiel.setWelt(weltVW.getWelt());
+		//spiel.setTauschNummer()
 		//+ name +
 		
 //		for(Spieler spieler : spielerVW.spielerListe()) {

@@ -3,6 +3,8 @@ import java.util.Random;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
+import risiko.local.domain.exceptions.FalscheEingabeException;
+import risiko.local.domain.exceptions.NichtGenugKartenFuerAktionException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
@@ -77,7 +79,7 @@ public class SpielLogik {
 //----------------- RUNDEN-VORBEREITUNG ---------------------------
 	
 	//Berechnet wie viele Einheiten der Spieler zu Beginn der Runde verteilen kann
-	public int berechneNeueEinheiten(int spielerID) {
+	public void berechneNeueEinheiten(int spielerID) {
 		Vector<Kontinent> kontinentListe = weltVW.getKontinentListe();
 		Spieler spieler = spielerVW.getSpieler(spielerID);
 		int anzahl = spieler.getAnzahlAktuelleLaender()/3;
@@ -87,7 +89,7 @@ public class SpielLogik {
 		}
 		anzahl += getKontinentBonus(spieler, kontinentListe);
 		// Bonus-Einheiten durch Besetzung eines vollstaendigen Kontinents erhalten	
-		return anzahl;
+		spielerVW.berechneVerteilbareEinheiten(anzahl, spielerID);
 	}
 
 	private int getKontinentBonus(Spieler spieler, Vector<Kontinent> kontinentListe) {
@@ -351,30 +353,14 @@ public class SpielLogik {
 	}
 	
 	
-	
-	
-	
-	
 	public boolean kannEintauschen(Spieler spieler) throws TauschenNichtMoeglichException {
 		Vector<Einheitenkarte> karten = spieler.getKarten();
 		if(karten.size() >= 3) {
-			int anzahlSoldaten = 0;
-			int anzahlReiter= 0;
-			int anzahlKanonen = 0;
-			
-			for(Einheitenkarte karte: karten) {
-				if(karte.getTyp().equals("Soldat")) {
-					anzahlSoldaten++;
-				} else if(karte.getTyp().equals("Reiter")) {
-					anzahlReiter++;
-				} else if(karte.getTyp().equals("Kanone")) {
-					anzahlKanonen++;
-				}
-			}
-			if(anzahlSoldaten >= 3 || anzahlReiter >= 3 || anzahlKanonen >= 3) {
+			int [] kartenAnzahl = EinheitenkartenZaehlen(karten);
+			if(kartenAnzahl[0] >= 3 || kartenAnzahl[1] >= 3 || kartenAnzahl[2] >= 3) {
 				return true;
 			}
-			if(anzahlSoldaten >= 1 && anzahlReiter >= 1 && anzahlKanonen >= 1) {
+			if(kartenAnzahl[0] >= 1 && kartenAnzahl[1] >= 1 && kartenAnzahl[2] >= 1) {
 				return true;
 			}
 		}
@@ -382,8 +368,109 @@ public class SpielLogik {
 	}
 
 	
+	private int[] EinheitenkartenZaehlen(Vector<Einheitenkarte> karten) {
+		int[] kartenAnzahl = new int[3];
+		int anzahlSoldaten = 0;
+		int anzahlReiter= 0;
+		int anzahlKanonen = 0;
+		
+		for(Einheitenkarte karte: karten) {
+			if(karte.getTyp().equals("Soldat")) {
+				anzahlSoldaten++;
+			} else if(karte.getTyp().equals("Reiter")) {
+				anzahlReiter++;
+			} else if(karte.getTyp().equals("Kanone")) {
+				anzahlKanonen++;
+			}
+		}
+		kartenAnzahl[0] = anzahlSoldaten;
+		kartenAnzahl[1] = anzahlReiter;
+		kartenAnzahl[2] = anzahlKanonen;
+		return kartenAnzahl;
+	}
 
-	
-	
+	public void einheitenKartenEintauschen(String input, Spieler spieler) throws FalscheEingabeException, NichtGenugKartenFuerAktionException {
+		String typ = "";
+		int num = 3;
+		switch(input) {
+		case "s":
+			typ = "Soldat";
+			num = 0;
+			break;
+		case "r":
+			typ = "Reiter";
+			num = 1;
+			break;
+		case "k":
+			typ = "Kanone";
+			num = 2;
+			break;
+		case "a":
+			jeEineKarteEintauschen(spieler);
+			return;
+		default:
+			throw new FalscheEingabeException();
+		}
+		typEintauschen(spieler, typ, num);
+	}
+
+	private void typEintauschen(Spieler spieler, String typ, int num) throws NichtGenugKartenFuerAktionException {
+		Vector<Einheitenkarte> karten = spieler.getKarten();
+		int[] kartenAnzahl = EinheitenkartenZaehlen(karten);
+		
+		if(kartenAnzahl[num] >= 3) {
+			int zaehler = 0;
+			
+			for(Einheitenkarte karte : karten) {
+				if(karte.getTyp().equals(typ) && zaehler <= 3) {
+					karten.remove(karte);
+					zaehler++;
+				}
+			}
+		} else {
+			throw new NichtGenugKartenFuerAktionException();
+		}
+		einheitenkartenBonusErhoehen();
+	}
+
+	private void jeEineKarteEintauschen(Spieler spieler) throws NichtGenugKartenFuerAktionException {
+		Vector<Einheitenkarte> karten = spieler.getKarten();
+		int[] kartenAnzahl = EinheitenkartenZaehlen(karten);
+		
+		if(kartenAnzahl[0] >= 1 && kartenAnzahl[1] >= 1 && kartenAnzahl[2] >= 1) {
+			int sZaehler = 0;
+			int rZaehler = 0;
+			int kZaehler = 0;
+			
+			for(Einheitenkarte karte : karten) {
+				if(karte.getTyp().equals("Soldat") && sZaehler == 0) {
+					karten.remove(karte);
+					sZaehler++;
+				}
+				if(karte.getTyp().equals("Reiter") && rZaehler == 0) {
+					karten.remove(karte);
+					rZaehler++;
+				}
+				if(karte.getTyp().equals("Kanone") && kZaehler == 0) {
+					karten.remove(karte);
+					kZaehler++;
+				}
+			}
+		} else {
+			throw new NichtGenugKartenFuerAktionException();
+		}
+		einheitenkartenBonusErhoehen();
+	}
+
+	private void einheitenkartenBonusErhoehen() {
+		int kartenTauschBonus = spielVW.getKartenTauschBonus();
+		if(kartenTauschBonus < 12) {
+			spielVW.erhoeheKartenTauschBonus(2);
+		} else if(kartenTauschBonus == 12) {
+			spielVW.erhoeheKartenTauschBonus(3);
+		} else {
+			spielVW.erhoeheKartenTauschBonus(5);
+		}
+	}
 	
 }
