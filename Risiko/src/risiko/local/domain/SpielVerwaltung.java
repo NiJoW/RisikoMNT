@@ -30,6 +30,7 @@ public class SpielVerwaltung {
 	private SpielerVerwaltung spielerVW;
 	private PersistenceManager persistenceManager;
 	private Vector<Einheitenkarte> kartenListe;
+	private int kartenTauschBonus = 4;
 	
 	public SpielVerwaltung(WeltVerwaltung weltVW, SpielerVerwaltung spielerVW, PersistenceManager persistenceManager) {
 		this.spielerVW = spielerVW;
@@ -199,6 +200,14 @@ public class SpielVerwaltung {
     }
 
 	
+	//---------------------- Kartentausch für zusaetzliche Einheiten ------------------------	
 	
+	public int getKartenTauschBonus() {
+		return kartenTauschBonus;
+	}
+
+	public void erhoeheKartenTauschBonus(int anzahl) {
+		kartenTauschBonus += anzahl;
+	}
 
 }

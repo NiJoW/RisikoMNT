@@ -17,6 +17,7 @@ public class Spiel implements Serializable{
 	private Vector <Provinz> provinzenListe;
 	private Vector<Kontinent> kontinentListe;
 	private int spielerID;
+	private int kartenTauschNummer;
 
 	
 	public Spiel() {
@@ -61,6 +62,14 @@ public class Spiel implements Serializable{
 	
 	public Welt getWelt() {
 		return welt;
+	}
+
+	public int getKartenTauschNummer() {
+		return kartenTauschNummer;
+	}
+
+	public void setKartenTauschNummer(int kartenTauschNummer) {
+		this.kartenTauschNummer = kartenTauschNummer;
 	}
 	
 }

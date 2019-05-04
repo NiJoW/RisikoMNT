@@ -6,7 +6,9 @@ import java.io.ObjectOutputStream;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
+import risiko.local.domain.exceptions.FalscheEingabeException;
 import risiko.local.domain.exceptions.KeineEinheitenKartenInBesitzException;
+import risiko.local.domain.exceptions.NichtGenugKartenFuerAktionException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
@@ -93,7 +95,7 @@ public class Risiko {
 
 	public Vector<Einheitenkarte> getKartenVonSpieler(int spielerID) throws KeineEinheitenKartenInBesitzException {
 		Vector<Einheitenkarte> eigeneKarten = spielerVW.getSpieler(spielerID).getKarten();
-		if(eigeneKarten == null) {
+		if(eigeneKarten.isEmpty()) {
 			throw new KeineEinheitenKartenInBesitzException();
 		}
 		return eigeneKarten;
@@ -120,9 +122,9 @@ public class Risiko {
 		spielerVW.berechneVerteilbareEinheiten(aenderungsWert, spielerID);
 	}
 
-	public int berechneNeueEinheiten(int spielerID) {
+	public void berechneNeueEinheiten(int spielerID) {
 		//Beginn jeder Runde (anz. Provinzen/3)
-		return spiellogik.berechneNeueEinheiten(spielerID);
+		spiellogik.berechneNeueEinheiten(spielerID);
 	}
 	
 	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten, int spielerID) throws NichtProvinzDesSpielersException, ProvinzIDExistiertNichtException, AnzahlEinheitenFalschException {
@@ -191,15 +193,15 @@ public class Risiko {
 	}
 	
 	
-	
-	
-	
 	public void kannEintauschen(int spielerID) throws TauschenNichtMoeglichException {
 		spiellogik.kannEintauschen(spielerVW.getSpielerListe().get(spielerID));
 	}
 	
 	
-	
+	public void einheitenKartenEintauschen(String input, int spielerID) throws FalscheEingabeException, NichtGenugKartenFuerAktionException {
+		spiellogik.einheitenKartenEintauschen(input, spielerVW.getSpielerListe().get(spielerID));
+	}
+
 //----------------------PERSITENCE------------------------	
 
 	public void speichern(int spielerID) {
@@ -210,6 +212,7 @@ public class Risiko {
 		return spielVW.spielLaden(name);
 	}
 
+	
 
 	
 
