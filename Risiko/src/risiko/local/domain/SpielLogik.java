@@ -131,7 +131,7 @@ public class SpielLogik {
 		Welt welt = weltVW.getWelt();
 		
 		if(!welt.isNachbar(from, to)) {
-			throw new ProvinzNichtNachbarException("Du kannst nur benachbarte Provinzen angreifen.");
+			throw new ProvinzNichtNachbarException("Angriff");
 		}
 	}
 	
@@ -303,7 +303,7 @@ public class SpielLogik {
 		} 
 		if(!(welt.isNachbar(from, to))) {
 			//nicht direkte Nachbarn (wenn auch gleiche Besitzer) -> kann nicht verschieben
-			throw new ProvinzNichtNachbarException("Einheiten koennen nur in benachbarte Provinzen verschoben werden.");	
+			throw new ProvinzNichtNachbarException("Verschieben");	
 		}
 // verschieben ueber mehrere eigene Laender:  prueft transitive Beziehung
 //		else {

@@ -155,7 +155,7 @@ public class SpielVerwaltung {
 	public void validiereAnzahlEinheiten(int anzahl, int spielerID) throws AnzahlEinheitenFalschException {
 		int verteilbareEinheiten = spielerVW.getVerteilbareEinheiten(spielerID);
 		if(!((anzahl > 0) && verteilbareEinheiten >= anzahl)) {
-			throw new AnzahlEinheitenFalschException("Du musst mehr als 0 und maximal " + verteilbareEinheiten + " Einheiten setzten.");
+			throw new AnzahlEinheitenFalschException(verteilbareEinheiten);
 		}
 	}
 
@@ -195,7 +195,7 @@ public class SpielVerwaltung {
 	}
 	
 	public int spielLaden(String name) {
-		return persistenceManager.spielLaden(name);
+		return persistenceManager.spielLaden(name, this);
     }
 
 	

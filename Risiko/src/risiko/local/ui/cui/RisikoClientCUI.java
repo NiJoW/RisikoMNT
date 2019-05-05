@@ -159,12 +159,13 @@ public class RisikoClientCUI {
 	private void spielladen() {
 		List<String> spielNamen = risiko.spielnamenAusgeben();
 		
+		System.out.println("\nExsistierende Spiele:");
 		for(String name : spielNamen) {
-			System.out.println("--" + name);
+			System.out.println("> " + name);
 		}
 		
 		String input = "";
-		System.out.println("Spiel ID: ");
+		System.out.println("Bitte Name des Spielstandes eintragen: ");
 		try {
 			input = liesEingabe();
 		} catch (IOException e) {
@@ -623,18 +624,11 @@ public class RisikoClientCUI {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				} 
-				risiko.speichern(spielerIndex);//TODO: pruefen
+				risiko.speichern(spielerIndex);
+				System.out.println("Das Spiel wurde erfolgreich gespeichert");
 				return;
 			case "b":
-//				String id = "";
-//				System.out.println("Spiel ID: ");
-//				try {
-//					id = liesEingabe();
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} 
-				risiko.speichern(spielerIndex);//TODO: Exception?
+				risiko.speichern(spielerIndex);
 				System.out.println("Das Spiel wurde erfolgreich gespeichert und beendet");
 				System.exit(0);
 			default:

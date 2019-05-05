@@ -11,7 +11,7 @@ public interface PersistenceManager {
 	
 	public void speichereSpiel(int spielerID, SpielVerwaltung spielVW);
 	
-	public int spielLaden(String name);
+	public int spielLaden(String name, SpielVerwaltung spielVW);
 	
 	public List<String> spielnamenAusgeben();
 	
