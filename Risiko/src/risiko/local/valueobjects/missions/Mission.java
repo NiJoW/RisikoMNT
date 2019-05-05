@@ -6,8 +6,7 @@ import risiko.local.valueobjects.Spieler;
 
 public abstract class Mission implements Serializable {
 	
-	public Mission() {
-	}
+	public Mission() {}
 
 	public abstract String getBeschreibung();
 	
