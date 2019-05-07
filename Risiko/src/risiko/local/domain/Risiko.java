@@ -1,5 +1,6 @@
 package risiko.local.domain;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -13,7 +14,9 @@ import risiko.local.domain.exceptions.NichtGenugKartenFuerAktionException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
+import risiko.local.domain.exceptions.SpielNichtVorhandenException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
+import risiko.local.domain.exceptions.SpielerNichtTeilDesSpielsException;
 import risiko.local.domain.exceptions.TauschenNichtMoeglichException;
 import risiko.local.persistence.PersistenceManager;
 import risiko.local.persistence.PersistenceManagerSerialize;
@@ -205,12 +208,12 @@ public class Risiko {
 
 //----------------------PERSITENCE------------------------	
 
-	public void speichern(int spielerID) {
+	public void speichern(int spielerID) throws FileNotFoundException, IOException {
 		spielVW.speicherSpiel(spielerID);
 	}
 
-	public int spielLaden(String name) {
-		return spielVW.spielLaden(name);
+	public int spielLaden(int spielID, List<String> spielNamen) throws SpielNichtVorhandenException, SpielerNichtTeilDesSpielsException {
+		return spielVW.spielLaden(spielID, spielNamen, spielerVW.getSpielerListe());
 	}
 
 	public List<String> spielnamenAusgeben() {
