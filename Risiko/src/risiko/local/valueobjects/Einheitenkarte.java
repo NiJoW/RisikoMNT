@@ -1,6 +1,8 @@
 package risiko.local.valueobjects;
 
-public class Einheitenkarte {
+import java.io.Serializable;
+
+public class Einheitenkarte implements Serializable {
 	
 	private String typ;
 	
