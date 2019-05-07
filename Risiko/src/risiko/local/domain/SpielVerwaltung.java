@@ -1,16 +1,20 @@
 package risiko.local.domain;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
+import risiko.local.domain.exceptions.SpielNichtVorhandenException;
+import risiko.local.domain.exceptions.SpielerNichtTeilDesSpielsException;
 import risiko.local.persistence.PersistenceManager;
 import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
 import risiko.local.valueobjects.Einheitenkarte;
@@ -190,17 +194,19 @@ public class SpielVerwaltung {
 	
 	//---------------------- PERSISTENCE ------------------------	
 	
-	public void speicherSpiel(int spielerID) {
+	public void speicherSpiel(int spielerID) throws FileNotFoundException, IOException {
 		persistenceManager.speichereSpiel(spielerID, this);
 	}
 	
-	public int spielLaden(String name) {
+	public int spielLaden(int spielID, List<String> spielNamen, Vector<Spieler> spielerListe) throws SpielNichtVorhandenException, SpielerNichtTeilDesSpielsException {
+		String name = persistenceManager.validiereSpiel(spielNamen, spielID, spielerListe);
 		return persistenceManager.spielLaden(name, this);
     }
 
 	
 	//---------------------- Kartentausch für zusaetzliche Einheiten ------------------------	
-	
+
+
 	public int getKartenTauschBonus() {
 		return kartenTauschBonus;
 	}

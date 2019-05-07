@@ -1,6 +1,7 @@
 package risiko.local.ui.cui;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.NumberFormat;
@@ -13,7 +14,9 @@ import risiko.local.domain.exceptions.KeineEinheitenKartenInBesitzException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
+import risiko.local.domain.exceptions.SpielNichtVorhandenException;
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
+import risiko.local.domain.exceptions.SpielerNichtTeilDesSpielsException;
 import risiko.local.domain.exceptions.TauschenNichtMoeglichException;
 import risiko.local.valueobjects.Einheitenkarte;
 import risiko.local.valueobjects.Provinz;
@@ -142,15 +145,6 @@ public class RisikoClientCUI {
 		case "l":
 		case "L": //Spiel laden
 			spielladen();
-			//TODO: Einladen pruefen
-			System.out.println("Spiel ID: ");
-			try {
-				input = liesEingabe();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			int spielerID = risiko.spielLaden(input);
-			spielen(++spielerID);
 			break;
 //		case "b":
 //		case "B": //Spiel beitreten
@@ -169,20 +163,28 @@ public class RisikoClientCUI {
 		List<String> spielNamen = risiko.spielnamenAusgeben();
 		
 		System.out.println("\nExsistierende Spiele:");
-		for(String name : spielNamen) {
-			System.out.println("> " + name);
+		for(int i = 0; i < spielNamen.size(); i++) {
+			System.out.println(i + ") " + spielNamen.get(i));
 		}
 		
-		String input = "";
-		System.out.println("Bitte Name des Spielstandes eintragen: ");
+		int spielID = -1;
+		System.out.println("\nBitte die Nummer des Spielstandes eintragen: ");
+		int letzterAktiverSpielerID = 0;
 		try {
-			input = liesEingabe();
+			spielID = Integer.parseInt(liesEingabe());
+			
+			letzterAktiverSpielerID = risiko.spielLaden(spielID, spielNamen);
+			spielen(++letzterAktiverSpielerID);
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println("Bitte eine ganze Zahl eingeben.");
+			spielladen();
+		} catch (SpielerNichtTeilDesSpielsException | SpielNichtVorhandenException e) {
+			System.out.println(e.getMessage());
+			spielladen();
 		}
-		int spielerID = risiko.spielLaden(input);
-		spielen(++spielerID);
 	}
 
 	private void spielStarten() {
@@ -581,9 +583,8 @@ public class RisikoClientCUI {
 			return false;
 		default:
 			System.out.println("Fehlerhafte Eingabe, bitte erneut eingeben: ");
-			willEinruecken();
+			return willEinruecken();
 		}
-		return false;
 	}
 
 	
@@ -633,13 +634,23 @@ public class RisikoClientCUI {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				} 
-				risiko.speichern(spielerIndex);
-				System.out.println("Das Spiel wurde erfolgreich gespeichert");
+				try {
+					risiko.speichern(spielerIndex);
+					System.out.println("Das Spiel wurde erfolgreich gespeichert.");
+				}catch (IOException e) {
+					System.out.println("Das Spiel konnte leider nicht gespeichert werden.");
+					e.printStackTrace();
+				}
 				return;
 			case "b":
-				risiko.speichern(spielerIndex);
-				System.out.println("Das Spiel wurde erfolgreich gespeichert und beendet");
-				System.exit(0);
+				try {
+					risiko.speichern(spielerIndex);
+					System.out.println("Das Spiel wurde erfolgreich gespeichert und beendet.");
+					System.exit(0);
+				}catch (IOException e) {
+					System.out.println("Das Spiel konnte leider nicht gespeichert werden.");
+					e.printStackTrace();
+				}
 			default:
 				System.out.println("\nFehlerhafte Eingabe.");
 			}
