@@ -145,6 +145,7 @@ public class RisikoClientCUI {
 			try {
 				input = liesEingabe();
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			int spielerID = risiko.spielLaden(input);
