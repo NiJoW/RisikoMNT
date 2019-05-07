@@ -36,7 +36,6 @@ public class Spiel implements Serializable{
 	}
 
 	public int getSpielerID() {
-		// TODO Auto-generated method stub
 		return spielerID;
 	}
 
