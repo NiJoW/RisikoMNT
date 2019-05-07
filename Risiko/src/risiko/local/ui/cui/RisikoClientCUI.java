@@ -142,6 +142,15 @@ public class RisikoClientCUI {
 		case "l":
 		case "L": //Spiel laden
 			spielladen();
+			//TODO: Einladen pruefen
+			System.out.println("Spiel ID: ");
+			try {
+				input = liesEingabe();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			int spielerID = risiko.spielLaden(input);
+			spielen(++spielerID);
 			break;
 //		case "b":
 //		case "B": //Spiel beitreten
