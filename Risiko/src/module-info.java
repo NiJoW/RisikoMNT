@@ -6,4 +6,5 @@
  *
  */
 module risiko {
+	requires java.desktop;
 }
