@@ -1,4 +1,4 @@
-package risiko.local.ui.gui.awt;
+package risiko.local.ui.gui.swing;
 
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
