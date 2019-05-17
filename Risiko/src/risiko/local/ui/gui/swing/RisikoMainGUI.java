@@ -14,21 +14,32 @@ import risiko.local.domain.exceptions.SpielerNichtTeilDesSpielsException;
 public class RisikoMainGUI {
 	private Risiko risiko;
 	private BufferedReader in;
+	RisikoClientGUI spielFenster;
+	Anmeldefenster anmeldeFenster;
 	
 	public RisikoMainGUI() {
 		risiko = new Risiko();
 		in = new BufferedReader(new InputStreamReader(System.in));
-		RisikoClientGUI gui = new RisikoClientGUI(risiko);
 	}
 	
 	public static void main(String[] args) {
 		RisikoMainGUI main;
 		//try {
 			main = new RisikoMainGUI();
+			main.run();
 		//	main.run();
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
+	}
+	
+	private void run() {
+		boolean angemeldet = false;
+		anmeldeFenster = new Anmeldefenster();
+		anmeldeFenster.ereignisErzeugt();
+		if(angemeldet) {
+			spielFenster = new RisikoClientGUI(risiko);
+		}
 	}
 	
 	
