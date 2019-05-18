@@ -145,7 +145,7 @@ public class RisikoClientCUI {
 		case "l":
 		case "L": //Spiel laden
 			spielladen();
-			break;
+			break; 
 //		case "b":
 //		case "B": //Spiel beitreten
 //			spielBeitreten();
