@@ -16,8 +16,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Anmeldefenster extends JPanel {
+import risiko.local.ui.gui.swing.RisikoMainGUI.StarteSpielActionListener;
+
+public class AnmeldefensterGUI extends JPanel {
 	
+	StarteSpielActionListener starteSpielActionListener;
 	JDialog anmeldeFenster;
 	JPanel anmeldePanel;
 	GridBagLayout anmeldeLayout;
@@ -32,9 +35,10 @@ public class Anmeldefenster extends JPanel {
 	JTextField s5name;
 	JLabel s6;
 	JTextField s6name;
-	JButton start;
+	JButton neuesSpiel;
 	
-	public Anmeldefenster() {
+	public AnmeldefensterGUI(StarteSpielActionListener starteSpielActionListener) {
+		 this.starteSpielActionListener = starteSpielActionListener;
 		//abstrakte Klasse Fenster?
 		initialize();
 		ereignisErzeugt();
@@ -58,7 +62,7 @@ public class Anmeldefenster extends JPanel {
 			
 			JLabel welcomeText = new JLabel("Willkommen bei unserem Risiko!!!!");
 			welcomePanel.setBackground(Color.blue);
-			welcomePanel.setPreferredSize(new Dimension(400, 300));
+			welcomePanel.setPreferredSize(new Dimension(400, 200));
 			welcomePanel.add(welcomeText);
 			
 //			this.add(welcomePanel);
@@ -183,13 +187,14 @@ public class Anmeldefenster extends JPanel {
 			
 			
 			
-			
-			start = new JButton("start");
+			//TODO zukünftig Button "anmelden" und danach Spiel-Laden GUI + überprüfung,
+			//boolean oder spiel-id zurück geben an main
+			neuesSpiel = new JButton("neues Spiel starten");
 			c.gridx = 1;
 			c.gridy = 7;
-			anmeldeLayout.setConstraints(start, c);
-			start.setEnabled(false);
-			anmeldePanel.add(start);
+			anmeldeLayout.setConstraints(neuesSpiel, c);
+//			neuesSpiel.setEnabled(false);
+			anmeldePanel.add(neuesSpiel);
 			
 			
 			
@@ -203,7 +208,7 @@ public class Anmeldefenster extends JPanel {
 			anmeldeFenster.add(welcomePanel, BorderLayout.NORTH);
 			anmeldeFenster.add(anmeldePanel, BorderLayout.CENTER);
 			
-			anmeldeFenster.setSize(400, 600);		
+			anmeldeFenster.setSize(500, 700);		
 			anmeldeFenster.setVisible(true);
 		
 	}
@@ -261,9 +266,9 @@ public class Anmeldefenster extends JPanel {
 					addSpieler.setVisible(false);
 					anmeldePanel.add(s6);
 					anmeldePanel.add(s6name);
-					start.setEnabled(true);
+					neuesSpiel.setEnabled(true);
 					
-					anmeldePanel.add(start);
+					anmeldePanel.add(neuesSpiel);
 					anmeldeFenster.add(anmeldePanel);
 					anmeldeFenster.setVisible(true);
 					break;
@@ -273,16 +278,18 @@ public class Anmeldefenster extends JPanel {
 			
 		});
 		
-//		start.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Anmeldefenster.this.setVisible(false);
-//				dispose();
+		neuesSpiel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AnmeldefensterGUI.this.setVisible(false);
+				
+				//dispose
 //				System.exit(0);
-//			}
-//			
-//		});
+			}
+		});
+		neuesSpiel.addActionListener(starteSpielActionListener);
+		
 		
 	}
 	
