@@ -24,6 +24,7 @@ public class PhasenPanel extends JPanel {
 		this.risiko = risiko;
 		this.actionListenerEinheitenVerteilen = actionListenerEinheitenVerteilen;
 		initialize(screenWidth, screenHeight);
+		ereignisErzeugt();
 	}
 
 	private void initialize(int screenWidth, int screenHeight) {
