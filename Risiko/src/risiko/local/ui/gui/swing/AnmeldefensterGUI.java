@@ -120,7 +120,6 @@ public class AnmeldefensterGUI extends JPanel {
 			c.gridy = 2;
 			anmeldeLayout.setConstraints(addSpieler, c);
 			anmeldePanel.add(addSpieler);
-			System.out.println("Button erstellt");
 			
 			//Spieler 3
 			
@@ -282,15 +281,17 @@ public class AnmeldefensterGUI extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AnmeldefensterGUI.this.setVisible(false);
-				
+				System.out.println("close");
+				AnmeldefensterGUI.this.setVisible(false);				
 				//dispose
 //				System.exit(0);
 			}
 		});
+		
 		neuesSpiel.addActionListener(starteSpielActionListener);
 		
 		
 	}
+	
 	
 }
