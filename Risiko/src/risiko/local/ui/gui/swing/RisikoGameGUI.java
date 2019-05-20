@@ -89,15 +89,13 @@ public class RisikoGameGUI extends JFrame  {
 
 		this.setSize((screenWidth),(screenHeight));
 		this.setVisible(true);
-		//this.setEnabled(false);
 	}
 	
 	private void run(int letzterAktiverSpielerID) throws IOException {
+		
 		//spielerRegistrierung();
 		//spielMenue();
 		//risiko.spielVorbereiten();
-		
-		
 		
 		spielen(++letzterAktiverSpielerID);
 	}
@@ -105,7 +103,7 @@ public class RisikoGameGUI extends JFrame  {
 	
 	private void spielen(int spielerID) {
 		String gewinner = "";
-		//Runden (=jeder Spieler durchlaeuft jede Phase ein mal)
+		//Runden (jeder Spieler durchlaeuft jede Phase ein mal)
 //		
 		if(spielerID == risiko.getSpielerAnzahl()) {
 			spielerID = 0;
@@ -115,6 +113,9 @@ public class RisikoGameGUI extends JFrame  {
 		phasenPanel.setPhase(0);
 		anweisungsPanel.setPhase(0);
 		
+		anweisungsPanel.setAktuellerSpieler(spielerID);
+	
+		
 				//menueNeueEinheitenPhase(o);
 				//gewinner = angreifen(o);
 				//verschiebeMenu(o);
@@ -123,18 +124,13 @@ public class RisikoGameGUI extends JFrame  {
 				
 	}
 	
-	/**
-	 * Mitgliedsklasse fuer spielStarten - Button
-	 * @param args
-	 */
 	
 	public class PhaseNeueEinheitenBeendenListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//Phase: angreifen
-			//phasenPanel.setPhase(1);
-			//anweisungsPanel.setPhase(1);
+			anweisungsPanel.setPhase(1);
 			System.out.println("Phase neue Einheiten beendet");
 		}
 	}
@@ -144,7 +140,6 @@ public class RisikoGameGUI extends JFrame  {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//Phase: neue Einheiten setzten
-			phasenPanel.setPhase(2);
 			anweisungsPanel.setPhase(2);
 		}
 	}
