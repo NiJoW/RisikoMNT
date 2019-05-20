@@ -5,8 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Vector;
 
@@ -27,6 +30,7 @@ public class AnmeldefensterGUI extends JPanel {
 	GridBagConstraints c;
 	
 	JButton addSpieler;
+	JTextField s1name;
 	JLabel s3;
 	JTextField s3name;
 	JLabel s4;
@@ -89,7 +93,8 @@ public class AnmeldefensterGUI extends JPanel {
 			anmeldeLayout.setConstraints(s1, c);
 			anmeldePanel.add(s1);
 			
-			JTextField s1name = new JTextField("Spielername eingeben");
+			s1name = new JTextField();
+			//"Spielername eingeben"
 			//TODO: besser onHover Text angeben 
 			c.gridx = 1;
 			c.gridy = 1;
@@ -106,7 +111,8 @@ public class AnmeldefensterGUI extends JPanel {
 			anmeldeLayout.setConstraints(s2, c);
 			anmeldePanel.add(s2);
 			
-			JTextField s2name = new JTextField("Spielername eingeben");
+			JTextField s2name = new JTextField();
+			//"Spielername eingeben"
 			c.gridx = 1;
 			c.gridy = 2;
 			anmeldeLayout.setConstraints(s2name, c);
@@ -192,7 +198,11 @@ public class AnmeldefensterGUI extends JPanel {
 			c.gridx = 1;
 			c.gridy = 7;
 			anmeldeLayout.setConstraints(neuesSpiel, c);
-//			neuesSpiel.setEnabled(false);
+			//Start-Button
+			if(s1name.getText().isEmpty() && s2name.getText().isEmpty()) {
+				System.out.println("text ist leer");
+				neuesSpiel.setEnabled(false);
+			}
 			anmeldePanel.add(neuesSpiel);
 			
 			
@@ -202,17 +212,41 @@ public class AnmeldefensterGUI extends JPanel {
 //			anmeldePanel.setBackground(Color.red);
 //			anmeldePanel.add(bitteAnmelden);
 			
-			
+						
 			
 			anmeldeFenster.add(welcomePanel, BorderLayout.NORTH);
 			anmeldeFenster.add(anmeldePanel, BorderLayout.CENTER);
 			
 			anmeldeFenster.setSize(500, 700);		
 			anmeldeFenster.setVisible(true);
+			
+			
+
 		
 	}
 	
 	public void ereignisErzeugt() {
+		s1name.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {};
+			@Override
+			public void mousePressed(MouseEvent e) {};
+			@Override
+			public void mouseReleased(MouseEvent e) {;}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				System.out.println("Spielername eingeben");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 		addSpieler.addActionListener(new ActionListener() {
 			int zaehler = 3;
 			@Override
@@ -281,10 +315,8 @@ public class AnmeldefensterGUI extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("close");
-				AnmeldefensterGUI.this.setVisible(false);				
-				//dispose
-//				System.exit(0);
+				anmeldeFenster.setVisible(false);				
+				anmeldeFenster.dispose();
 			}
 		});
 		
