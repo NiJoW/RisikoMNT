@@ -14,6 +14,7 @@ public class AnweisungsPanel extends JPanel {
 
 	Risiko risiko;
 	int phasenID;
+	int aktuellerSpieler;
 	
 	public AnweisungsPanel(Risiko risiko, int screenWidth, int screenHeight) {
 		this.risiko = risiko;
@@ -21,16 +22,26 @@ public class AnweisungsPanel extends JPanel {
 	}
 
 	private void initialize(int screenWidth, int screenHeight) {
-		JLabel phasenText = new JLabel("Du darfst deine Einheiten verteilen.");
+		int verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
+		JLabel phasenText = new JLabel("Du darfst " + verteilbareEinheiten + " Einheiten verteilen. Auf welche Provinzen willst du sie setzten?");
 		this.add(phasenText);
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		Dimension pageEndSize = new Dimension(screenWidth, screenHeight/5);
 		this.setMinimumSize(pageEndSize);
 		this.setPreferredSize(pageEndSize);
-		
+		//TODO: Abtrennung fuer Tauschekarten
+	}
+	
+	private void updatePanel() {
+		//Anweisung an Phase anpassen
 	}
 
 	public void setPhase(int phasenID) {
 		this.phasenID = phasenID;
+		updatePanel();
+	}
+	
+	public void setAktuellerSpieler(int spielerID) {
+		aktuellerSpieler = spielerID;
 	}
 }

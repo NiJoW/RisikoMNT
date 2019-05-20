@@ -11,14 +11,18 @@ import java.util.List;
 import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.SpielNichtVorhandenException;
 import risiko.local.domain.exceptions.SpielerNichtTeilDesSpielsException;
+import risiko.local.ui.gui.swing.AnmeldefensterGUI.AnmeldeListener;
 
 //import javax.swing.*;
 
-public class RisikoMainGUI {
+public class RisikoMainGUI implements AnmeldeListener{
 	private Risiko risiko;
 	private BufferedReader in;
 	RisikoGameGUI spielFenster;
 	AnmeldefensterGUI anmeldeFenster;
+	
+	String nameS1;
+	String nameS2;
 	
 	public RisikoMainGUI() {
 		risiko = new Risiko();
@@ -36,10 +40,16 @@ public class RisikoMainGUI {
 //		}
 	}
 	
+	@Override
+	public void habenSpieler(String nameS1, String nameS2, String nameS3, String nameS4, String nameS5, String nameS6) {
+		this.nameS1 = nameS1;
+		this.nameS2 = nameS2;
+		
+	}
 	
 	
 	private void run() {
-		anmeldeFenster = new AnmeldefensterGUI(new StarteSpielActionListener());
+		anmeldeFenster = new AnmeldefensterGUI(new StarteSpielActionListener(), this);
 	}
 	
 	/**
@@ -52,6 +62,7 @@ public class RisikoMainGUI {
 		public void actionPerformed(ActionEvent e) {
 			starteSpiel();
 		}
+
 		
 	}
 	
@@ -63,14 +74,17 @@ public class RisikoMainGUI {
 		try {
 			letzterAktiverSpielerID = risiko.spielLaden(0, spielNamen);
 		} catch (SpielNichtVorhandenException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SpielerNichtTeilDesSpielsException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		spielVorbereitung(letzterAktiverSpielerID);
 		spielFenster = new RisikoGameGUI(risiko, letzterAktiverSpielerID);
 	}
-	
+
+	private void spielVorbereitung(int letzterAktiverSpielerID) {
+		//fuer laden und neues Spiel
+		risiko.berechneNeueEinheiten(letzterAktiverSpielerID);
+	}
+
 }
