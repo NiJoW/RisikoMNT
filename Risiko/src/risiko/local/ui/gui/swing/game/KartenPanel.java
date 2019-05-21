@@ -13,10 +13,13 @@ import risiko.local.domain.Risiko;
 public class KartenPanel extends JPanel {
 	
 	Risiko risiko;
+	int aktuellerSpielerID;
 	
-	public KartenPanel(Risiko risiko) {
+	public KartenPanel(Risiko risiko, int aktuellerSpielerID) {
 		this.risiko = risiko;
-		String spielername  = risiko.getSpielerName(0);
+		this.aktuellerSpielerID = aktuellerSpielerID;
+		System.out.println(aktuellerSpielerID);
+		String spielername  = risiko.getSpielerName(aktuellerSpielerID);
 		initialize(spielername);
 	}
 
