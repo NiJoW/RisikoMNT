@@ -100,7 +100,7 @@ public class RisikoGameGUI extends JFrame  {
 		spielen(++letzterAktiverSpielerID);
 	}
 	
-	
+	// Teste Git Tabea
 	private void spielen(int spielerID) {
 		String gewinner = "";
 		//Runden (jeder Spieler durchlaeuft jede Phase ein mal)
