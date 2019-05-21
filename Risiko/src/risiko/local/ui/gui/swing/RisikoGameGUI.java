@@ -51,11 +51,11 @@ import risiko.local.ui.gui.swing.game.PhasenPanel;
 public class RisikoGameGUI extends JFrame  { 
 	private Risiko risiko;
 	private BufferedReader in;
-	
+	//MOumita
 	KartenPanel kartenPanel;
 	PhasenPanel phasenPanel;
 	AnweisungsPanel anweisungsPanel;
-	//test
+	
 	public RisikoGameGUI(Risiko risiko, int letzterAktiverSpielerID) {
 		this.risiko = risiko;
 		initialize();
