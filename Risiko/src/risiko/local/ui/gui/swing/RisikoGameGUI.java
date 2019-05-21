@@ -132,7 +132,7 @@ public class RisikoGameGUI extends JFrame  {
 			int nextPhase = Integer.parseInt(e.getActionCommand());
 			//Phase: angreifen
 			anweisungsPanel.setPhase(nextPhase);
-			System.out.println("Phase neue Einheiten beendet");
+			System.out.println("Phase beendet, Phase "+nextPhase+" beginnen");
 		}
 	}
 	
