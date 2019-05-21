@@ -19,14 +19,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import risiko.local.domain.Risiko;
+import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
 import risiko.local.ui.gui.swing.RisikoMainGUI.StarteSpielActionListener;
 
 public class AnmeldefensterGUI extends JPanel {
 
 	public interface AnmeldeListener {
-		public void habenSpieler(String nameS1, String nameS2, String nameS3, String nameS4, String nameS5, String nameS6);
+		public void habenSpieler(String nameS1, String nameS2, String nameS3, String nameS4, String nameS5,
+				String nameS6);
 	}
 
+	Risiko risiko;
 	AnmeldeListener anmeldeListener;
 
 	StarteSpielActionListener starteSpielActionListener;
@@ -37,6 +41,7 @@ public class AnmeldefensterGUI extends JPanel {
 
 	JButton addSpieler;
 	JTextField s1name;
+	JLabel s2;
 	JTextField s2name;
 	JLabel s3;
 	JTextField s3name;
@@ -56,7 +61,9 @@ public class AnmeldefensterGUI extends JPanel {
 	String nameS5;
 	String nameS6;
 
-	public AnmeldefensterGUI(StarteSpielActionListener starteSpielActionListener, AnmeldeListener anmeldeListener) {
+	public AnmeldefensterGUI(Risiko risiko, StarteSpielActionListener starteSpielActionListener,
+			AnmeldeListener anmeldeListener) {
+		this.risiko = risiko;
 		this.starteSpielActionListener = starteSpielActionListener;
 		this.anmeldeListener = anmeldeListener;
 		// abstrakte Klasse Fenster?
@@ -114,30 +121,30 @@ public class AnmeldefensterGUI extends JPanel {
 		c.gridy = 1;
 		anmeldeLayout.setConstraints(s1name, c);
 		anmeldePanel.add(s1name);
+		
+		// Button
+
+		addSpieler = new JButton("+");
+		c.gridx = 3;
+		c.gridy = 1;
+		anmeldeLayout.setConstraints(addSpieler, c);
+		anmeldePanel.add(addSpieler);
 
 		// Spieler 2
 
-		JLabel s2 = new JLabel("Spieler 2:");
+		s2 = new JLabel("Spieler 2:");
 		c.gridx = 0;
 		c.gridy = 2;
 		c.anchor = GridBagConstraints.WEST;
 		anmeldeLayout.setConstraints(s2, c);
-		anmeldePanel.add(s2);
+		//anmeldePanel.add(s2);
 
 		s2name = new JTextField();
 		s2name.setToolTipText("Spielername eingeben");
 		c.gridx = 1;
 		c.gridy = 2;
 		anmeldeLayout.setConstraints(s2name, c);
-		anmeldePanel.add(s2name);
-
-		// Button
-
-		addSpieler = new JButton("+");
-		c.gridx = 3;
-		c.gridy = 2;
-		anmeldeLayout.setConstraints(addSpieler, c);
-		anmeldePanel.add(addSpieler);
+		//anmeldePanel.add(s2name);
 
 		// Spieler 3
 
@@ -203,21 +210,23 @@ public class AnmeldefensterGUI extends JPanel {
 		anmeldeLayout.setConstraints(s6name, c);
 		// anmeldePanel.add(s6name);
 
-		// TODO zukünftig Button "anmelden" und danach Spiel-Laden GUI + überprüfung,
-		// boolean oder spiel-id zurück geben an main
+		// TODO zukï¿½nftig Button "anmelden" und danach Spiel-Laden GUI + ï¿½berprï¿½fung,
+		// boolean oder spiel-id zurï¿½ck geben an main
 		// Start-Button
 		neuesSpiel = new JButton("neues Spiel starten");
-		c.gridx = 2;
+		neuesSpiel.setActionCommand("neuesSpiel");
+		c.gridx = 1;
 		c.gridy = 7;
 		anmeldeLayout.setConstraints(neuesSpiel, c);
 		anmeldePanel.add(neuesSpiel);
 
-//		// Lade-Button
-//		ladeSpiel = new JButton("lade ein bestehendes Spiel");
-//		c.gridx = 0;
-//		c.gridy = 7;
-//		anmeldeLayout.setConstraints(ladeSpiel, c);
-//		anmeldePanel.add(ladeSpiel);
+		// Lade-Button
+		ladeSpiel = new JButton("Spiel laden");
+		ladeSpiel.setActionCommand("ladeSpiel");
+		c.gridx = 0;
+		c.gridy = 7;
+		anmeldeLayout.setConstraints(ladeSpiel, c);
+		anmeldePanel.add(ladeSpiel);
 
 //			//anmeldeLayout.setConstraints(comp, constraints);
 //			anmeldePanel.setLayout(anmeldeLayout);
@@ -259,11 +268,26 @@ public class AnmeldefensterGUI extends JPanel {
 		});
 
 		addSpieler.addActionListener(new ActionListener() {
-			int zaehler = 3;
+			int zaehler = 2;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				switch (zaehler) {
+				case 2:
+					System.out.println(zaehler);
+					anmeldePanel.add(s2);
+					anmeldePanel.add(s2name);
+
+					// button
+					c.gridx = 3;
+					c.gridy = zaehler;
+					anmeldeLayout.setConstraints(addSpieler, c);
+
+					anmeldeFenster.add(anmeldePanel);
+					anmeldeFenster.setVisible(true);
+					spielerAnmelden(s1name.getText());
+					zaehler++;
+					break;
 				case 3:
 					System.out.println(zaehler);
 					anmeldePanel.add(s3);
@@ -276,6 +300,7 @@ public class AnmeldefensterGUI extends JPanel {
 
 					anmeldeFenster.add(anmeldePanel);
 					anmeldeFenster.setVisible(true);
+					spielerAnmelden(s2name.getText());
 					zaehler++;
 					break;
 				case 4:
@@ -290,6 +315,7 @@ public class AnmeldefensterGUI extends JPanel {
 
 					anmeldeFenster.add(anmeldePanel);
 					anmeldeFenster.setVisible(true);
+					spielerAnmelden(s3name.getText());
 					zaehler++;
 					break;
 				case 5:
@@ -304,6 +330,7 @@ public class AnmeldefensterGUI extends JPanel {
 
 					anmeldeFenster.add(anmeldePanel);
 					anmeldeFenster.setVisible(true);
+					spielerAnmelden(s4name.getText());
 					zaehler++;
 					break;
 				case 6:
@@ -316,9 +343,13 @@ public class AnmeldefensterGUI extends JPanel {
 					anmeldePanel.add(neuesSpiel);
 					anmeldeFenster.add(anmeldePanel);
 					anmeldeFenster.setVisible(true);
+					spielerAnmelden(s5name.getText());
 					break;
 				}
-
+				
+				//TODO: mÃ¼sste spieler 6 auch spielerAnmelden(s6name.getText());
+				//aber besser eine bessen Weg fÃ¼r anmelden und Ã¼berprÃ¼fen finden
+				//denn kein Button fÃ¼r den letzten und so wÃ¤ren bei Verschreiben Namen nicht Ã¤nderbar, direkt angemeldet
 			}
 
 		});
@@ -354,15 +385,21 @@ public class AnmeldefensterGUI extends JPanel {
 		});
 
 		neuesSpiel.addActionListener(starteSpielActionListener);
-//		ladeSpiel.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//
-//			}
-//
-//		});
+		ladeSpiel.addActionListener(starteSpielActionListener);
 
+	}
+
+	private void spielerAnmelden(String name) {
+		try {
+			if (!risiko.spielerNameVorhanden(name)) {
+				risiko.spielerHinzufuegen(name);
+				// angemeldet = true;
+				System.out.println("Spieler "+name+" wurde angemeldet");
+			}
+		} catch (SpielerBereitsVorhandenException e2) {
+			System.out.println(e2.getMessage() + "\nBitte einen anderen Namen waehlen!\n");
+
+		}
 	}
 
 }
