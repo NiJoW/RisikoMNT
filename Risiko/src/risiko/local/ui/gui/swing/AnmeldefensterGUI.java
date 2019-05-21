@@ -444,6 +444,7 @@ public class AnmeldefensterGUI extends JPanel {
 			
 			setUpLadeEvent(spiel);
 		}
+		
 		ladePanel.setVisible(true);
 		anmeldeFenster.add(ladePanel, BorderLayout.CENTER);
 	}
