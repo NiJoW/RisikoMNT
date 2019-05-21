@@ -29,13 +29,19 @@ public class AnmeldefensterGUI extends JPanel {
 		public void habenSpieler(String nameS1, String nameS2, String nameS3, String nameS4, String nameS5,
 				String nameS6);
 	}
+	
+	public interface LadeListener {
+		public void ladeSpiel(int spielID);
+	}
 
 	Risiko risiko;
 	AnmeldeListener anmeldeListener;
+	LadeListener ladeListener;
 
 	StarteSpielActionListener starteSpielActionListener;
 	JDialog anmeldeFenster;
 	JPanel anmeldePanel;
+	JPanel ladePanel;
 	GridBagLayout anmeldeLayout;
 	GridBagConstraints c;
 
@@ -60,12 +66,14 @@ public class AnmeldefensterGUI extends JPanel {
 	String nameS4;
 	String nameS5;
 	String nameS6;
+	
 
 	public AnmeldefensterGUI(Risiko risiko, StarteSpielActionListener starteSpielActionListener,
-			AnmeldeListener anmeldeListener) {
+			AnmeldeListener anmeldeListener, LadeListener ladeListener) {
 		this.risiko = risiko;
 		this.starteSpielActionListener = starteSpielActionListener;
 		this.anmeldeListener = anmeldeListener;
+		this.ladeListener = ladeListener;
 		// abstrakte Klasse Fenster?
 		initialize();
 		ereignisErzeugt();
@@ -81,6 +89,7 @@ public class AnmeldefensterGUI extends JPanel {
 		// Input
 		anmeldeFenster.setLayout(new BorderLayout());
 		JPanel welcomePanel = new JPanel();
+		ladePanel = new JPanel();
 		anmeldePanel = new JPanel();
 
 //			GridBagLayout mainGBL = new GridBagLayout();
@@ -385,8 +394,72 @@ public class AnmeldefensterGUI extends JPanel {
 		});
 
 		neuesSpiel.addActionListener(starteSpielActionListener);
-		ladeSpiel.addActionListener(starteSpielActionListener);
+		ladeSpiel.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				anmeldePanel.setVisible(false);
+				setUpLadePanel();
+			}
+
+			
+			
+		});
+		
+
+	}
+	
+	private void setUpLadePanel() {
+		GridBagLayout ladeLayout = new GridBagLayout();
+		anmeldePanel.setLayout(ladeLayout);
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		
+		JLabel leereZeile = new JLabel(" ");
+		c.gridy = 0;
+		ladeLayout.setConstraints(leereZeile, c);
+		ladePanel.add(leereZeile);
+		
+		JLabel anweisung = new JLabel("Bitte wähle eines der folgenden Spiele aus:");
+		c.gridy = 1;
+		ladeLayout.setConstraints(anweisung, c);
+		ladePanel.add(anweisung);
+		
+		JLabel leereZeile2 = new JLabel(" ");
+		c.gridy = 2;
+		ladeLayout.setConstraints(leereZeile2, c);
+		ladePanel.add(leereZeile2);
+		
+		
+		//Ladebare Spiele
+		List<String> spielNamen = risiko.spielnamenAusgeben();
+		
+		for(int i = 0; i < spielNamen.size(); i++) {
+			JButton spiel = new JButton(spielNamen.get(i));
+			c.gridy = i+3;
+			spiel.setActionCommand(i+"");
+			ladeLayout.setConstraints(spiel, c);
+			ladePanel.add(spiel);
+			
+			setUpLadeEvent(spiel);
+		}
+		ladePanel.setVisible(true);
+		anmeldeFenster.add(ladePanel, BorderLayout.CENTER);
+	}
+
+	private void setUpLadeEvent(JButton spiel) {
+		spiel.addActionListener(starteSpielActionListener);
+		spiel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int spielID = Integer.parseInt(e.getActionCommand());
+				ladeListener.ladeSpiel(spielID);
+				anmeldeFenster.setVisible(false);
+				anmeldeFenster.dispose();
+			}
+		});
 	}
 
 	private void spielerAnmelden(String name) {
