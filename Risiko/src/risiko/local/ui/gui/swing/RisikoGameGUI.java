@@ -80,7 +80,7 @@ public class RisikoGameGUI extends JFrame  {
 		
 		
 		kartenPanel = new KartenPanel(risiko);
-		phasenPanel = new PhasenPanel(risiko, screenWidth, screenHeight, new PhaseNeueEinheitenBeendenListener(), new PhaseAngreifenBeendeListener());
+		phasenPanel = new PhasenPanel(risiko, screenWidth, screenHeight, new PhaseBeendenListener());
 		anweisungsPanel = new AnweisungsPanel(risiko, screenWidth, screenHeight);
 		
 		this.add(kartenPanel, BorderLayout.CENTER);
@@ -125,22 +125,14 @@ public class RisikoGameGUI extends JFrame  {
 	}
 	
 	
-	public class PhaseNeueEinheitenBeendenListener implements ActionListener {
+	public class PhaseBeendenListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			int nextPhase = Integer.parseInt(e.getActionCommand());
 			//Phase: angreifen
-			anweisungsPanel.setPhase(1);
+			anweisungsPanel.setPhase(nextPhase);
 			System.out.println("Phase neue Einheiten beendet");
-		}
-	}
-	
-	public class PhaseAngreifenBeendeListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			//Phase: neue Einheiten setzten
-			anweisungsPanel.setPhase(2);
 		}
 	}
 	
