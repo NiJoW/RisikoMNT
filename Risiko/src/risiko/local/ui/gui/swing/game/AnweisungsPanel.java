@@ -20,8 +20,9 @@ public class AnweisungsPanel extends JPanel {
 	AnweisungEinheitenVerschieben phaseDrei;
 	
 	
-	public AnweisungsPanel(Risiko risiko, int screenWidth, int screenHeight) {
+	public AnweisungsPanel(Risiko risiko, int screenWidth, int screenHeight, int aktuellerSpieler) {
 		this.risiko = risiko;
+		this.aktuellerSpieler = aktuellerSpieler;
 		initialize(screenWidth, screenHeight);
 	}
 
@@ -30,8 +31,8 @@ public class AnweisungsPanel extends JPanel {
 		Dimension pageEndSize = new Dimension(screenWidth, screenHeight/5);
 		this.setMinimumSize(pageEndSize);
 		this.setPreferredSize(pageEndSize);
-		
-		phaseEins = new AnweisungEinheitenVerteilen(risiko, 0);
+		System.out.println("anweisung"+aktuellerSpieler);
+		phaseEins = new AnweisungEinheitenVerteilen(risiko, aktuellerSpieler);
 		this.add(phaseEins);
 		phaseZwei = new AnweisungAngriff();
 		this.add(phaseZwei);
