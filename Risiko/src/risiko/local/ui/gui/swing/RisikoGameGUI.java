@@ -79,18 +79,23 @@ public class RisikoGameGUI extends JFrame  {
 		
 		this.setMaximizedBounds(new Rectangle(0,0 , 500, 500));
 		this.setLayout(new BorderLayout());
-		
+		this.setSize((screenWidth),(screenHeight));
 		
 		kartenPanel = new KartenPanel(risiko, aktuellerSpieler);
 		phasenPanel = new PhasenPanel(risiko, screenWidth, screenHeight, new PhaseBeendenListener());
 		anweisungsPanel = new AnweisungsPanel(risiko, screenWidth, screenHeight, aktuellerSpieler);
 		
-		this.add(kartenPanel, BorderLayout.CENTER);
+		
 		this.add(phasenPanel, BorderLayout.LINE_END);
 		this.add(anweisungsPanel, BorderLayout.PAGE_END);
-
-		this.setSize((screenWidth),(screenHeight));
+		this.add(kartenPanel, BorderLayout.CENTER);
+		
 		this.setVisible(true);
+	//	this.pack();
+		System.out.println(kartenPanel.getSize());
+		kartenPanel.addMap(risiko.getSpielerName(aktuellerSpieler));
+		
+		
 	}
 	
 	private void run(int letzterAktiverSpielerID) throws IOException {
@@ -102,7 +107,6 @@ public class RisikoGameGUI extends JFrame  {
 		spielen(++letzterAktiverSpielerID);
 	}
 	
-	// Teste Git Tabea
 	private void spielen(int spielerID) {
 		String gewinner = "";
 		//Runden (jeder Spieler durchlaeuft jede Phase ein mal)

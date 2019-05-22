@@ -1,6 +1,5 @@
 package risiko.local.ui.gui.swing.game;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
@@ -24,24 +23,23 @@ public class KartenPanel extends JPanel {
 	}
 
 	private void initialize(String spielername) {
-		JLabel aktSpieler = new JLabel("Spieler "+ spielername +" ist an der Reihe");
+
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
+		this.setVisible(true);
+	}
+	public void addMap(String spielername) {
+		//JLayeredPane layeredPane = new JLayeredPane();
+		//layeredPane.setPreferredSize(this.getSize());
+		// System.out.println("Breite "+this.getWidth() + " und " + this.getHeight());
+		 
+		JLabel myImage = new JLabel(new ImageIcon("images/Weltkarte.jpeg"));
+		myImage.setPreferredSize(this.getSize());
+		this.add(myImage); //layeredPane.add(myImage);
 		
-		//panelCenter.setLayout(null);
+		JLabel aktSpieler = new JLabel("Spieler "+ spielername +" ist an der Reihe");
 		aktSpieler.setHorizontalTextPosition(JLabel.RIGHT);
 		aktSpieler.setVerticalTextPosition(JLabel.TOP);
-		JLabel myImage = new JLabel(new ImageIcon("images/world_map_free_vector.png"));
-		myImage.setBounds(0, 0, 50, 50);
-		this.add(myImage);
-//		JLabel background;
-//		setSize(panelCenter.getWidth(),panelCenter.getHeight());
-//		setLayout(null);
-//		ImageIcon img = new ImageIcon("images/world_map_free_vector.png");
-//		
-//		background = new JLabel("", img, JLabel.CENTER);
-//		background.setBounds(0,0,panelCenter.getWidth(),panelCenter.getHeight());
-//		add(background);
 		this.add(aktSpieler);
-		this.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+		//this.add(layeredPane);
 	}
 }
