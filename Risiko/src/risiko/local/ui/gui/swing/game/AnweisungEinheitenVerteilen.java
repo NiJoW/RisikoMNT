@@ -13,8 +13,8 @@ public class AnweisungEinheitenVerteilen extends JPanel {
 	Risiko risiko;
 	
 	public AnweisungEinheitenVerteilen(Risiko risiko, int aktuellerSpieler) {
-		setUpUI(aktuellerSpieler);
 		this.risiko = risiko;
+		setUpUI(aktuellerSpieler);
 	}
 	
 	private void setUpUI(int aktuellerSpieler) {
