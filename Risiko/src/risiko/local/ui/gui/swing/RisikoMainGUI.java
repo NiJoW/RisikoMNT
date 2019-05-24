@@ -10,12 +10,12 @@ import java.util.List;
 import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.SpielNichtVorhandenException;
 import risiko.local.domain.exceptions.SpielerNichtTeilDesSpielsException;
-import risiko.local.ui.gui.swing.AnmeldefensterGUI.AnmeldeListener;
 import risiko.local.ui.gui.swing.AnmeldefensterGUI.LadeListener;
+import risiko.local.valueobjects.Spieler;
 
 //import javax.swing.*;
 
-public class RisikoMainGUI implements AnmeldeListener, LadeListener{
+public class RisikoMainGUI implements LadeListener{
 	private Risiko risiko;
 	private BufferedReader in;
 	RisikoGameGUI spielFenster;
@@ -24,6 +24,7 @@ public class RisikoMainGUI implements AnmeldeListener, LadeListener{
 	String nameS1;
 	String nameS2;
 	int spielID;
+	String name;
 
 	public RisikoMainGUI() {
 		risiko = new Risiko();
@@ -41,15 +42,8 @@ public class RisikoMainGUI implements AnmeldeListener, LadeListener{
 //		}
 	}
 
-	@Override
-	public void habenSpieler(String nameS1, String nameS2, String nameS3, String nameS4, String nameS5, String nameS6) {
-		this.nameS1 = nameS1;
-		this.nameS2 = nameS2;
-
-	}
-
 	private void run() {
-		anmeldeFenster = new AnmeldefensterGUI(risiko, new StarteSpielActionListener(), this, this);
+		anmeldeFenster = new AnmeldefensterGUI(risiko, new StarteSpielActionListener(), this);
 	}
 
 	/**
@@ -61,6 +55,7 @@ public class RisikoMainGUI implements AnmeldeListener, LadeListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("hoffentlich als zweites");
 			starteSpiel(e.getActionCommand());
 		}
 
@@ -69,23 +64,22 @@ public class RisikoMainGUI implements AnmeldeListener, LadeListener{
 	public void starteSpiel(String typ) {
 		System.out.println("Spiel starten");
 		List<String> spielNamen = risiko.spielnamenAusgeben();
+		
 		int letzterAktiverSpielerID = -1;
 		int aktuellerSpieler = 0;
 
 		if (typ.equals("neuesSpiel")) {
 			risiko.spielVorbereiten();
+			for(int i = 0; i<risiko.getSpielerAnzahl(); i++) {
+				System.out.println(i + ") " + risiko.getSpielerName(i));
+			}
 			aktuellerSpieler = 0;
 		}else {
-			try {
-				letzterAktiverSpielerID = risiko.spielLaden(spielID, spielNamen);
-				aktuellerSpieler = ++letzterAktiverSpielerID;
-				if(aktuellerSpieler == risiko.getSpielerAnzahl()) {
-					aktuellerSpieler = 0;
-				}
-			} catch (SpielNichtVorhandenException e) {
-				e.printStackTrace();
-			} catch (SpielerNichtTeilDesSpielsException e) {
-				e.printStackTrace();
+			System.out.println(name);
+			letzterAktiverSpielerID = risiko.spielLaden(name);
+			aktuellerSpieler = ++letzterAktiverSpielerID;
+			if(aktuellerSpieler == risiko.getSpielerAnzahl()) {
+				aktuellerSpieler = 0;
 			}
 		}
 		
@@ -102,8 +96,10 @@ public class RisikoMainGUI implements AnmeldeListener, LadeListener{
 	}
 
 	@Override
-	public void ladeSpiel(int spielID) {
+	public void ladeSpiel(int spielID, String name) {
+		System.out.println("Spiel laden " + name + spielID);
 		this.spielID = spielID;
+		this.name = name;
 	}
 
 }

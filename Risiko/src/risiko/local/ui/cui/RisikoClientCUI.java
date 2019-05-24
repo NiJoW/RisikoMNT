@@ -172,8 +172,8 @@ public class RisikoClientCUI {
 		int letzterAktiverSpielerID = 0;
 		try {
 			spielID = Integer.parseInt(liesEingabe());
-			
-			letzterAktiverSpielerID = risiko.spielLaden(spielID, spielNamen);
+			String name = risiko.validiereSpiel(spielID, spielNamen);
+			letzterAktiverSpielerID = risiko.spielLaden(name);
 			spielen(++letzterAktiverSpielerID);
 			
 		} catch (IOException e) {

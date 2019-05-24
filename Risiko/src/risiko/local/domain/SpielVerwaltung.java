@@ -198,10 +198,14 @@ public class SpielVerwaltung {
 		persistenceManager.speichereSpiel(spielerID, this);
 	}
 	
-	public int spielLaden(int spielID, List<String> spielNamen, Vector<Spieler> spielerListe) throws SpielNichtVorhandenException, SpielerNichtTeilDesSpielsException {
-		String name = persistenceManager.validiereSpiel(spielNamen, spielID, spielerListe);
+	public int spielLaden(String name)  {
 		return persistenceManager.spielLaden(name, this);
     }
+	
+	public String validiereSpiel(int spielID, List<String> spielNamen, Vector<Spieler> spielerListe) throws SpielNichtVorhandenException, SpielerNichtTeilDesSpielsException {
+		return persistenceManager.validiereSpiel(spielNamen, spielID, spielerListe);
+		
+	}
 
 	
 	//---------------------- Kartentausch für zusaetzliche Einheiten ------------------------	
