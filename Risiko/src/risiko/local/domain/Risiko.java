@@ -212,8 +212,12 @@ public class Risiko {
 		spielVW.speicherSpiel(spielerID);
 	}
 
-	public int spielLaden(int spielID, List<String> spielNamen) throws SpielNichtVorhandenException, SpielerNichtTeilDesSpielsException {
-		return spielVW.spielLaden(spielID, spielNamen, spielerVW.getSpielerListe());
+	public int spielLaden(String name) {
+		return spielVW.spielLaden(name);
+	}
+	
+	public String validiereSpiel (int spielID, List<String> spielNamen) throws SpielNichtVorhandenException, SpielerNichtTeilDesSpielsException {
+		return spielVW.validiereSpiel(spielID, spielNamen, spielerVW.getSpielerListe());
 	}
 
 	public List<String> spielnamenAusgeben() {
