@@ -42,10 +42,23 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		JLabel leereZeile3 = new JLabel(" ");
 		layout.setConstraints(leereZeile3, c);
 		this.add(leereZeile3);
+		// Label für geklickte Provinzen
+		c.gridy = 4;
+		JLabel provinzLabel1 = new JLabel(" ");
+		layout.setConstraints(provinzLabel1, c);
+		this.add(provinzLabel1);
+		c.gridy = 5;
+		JLabel provinzLabel2 = new JLabel(" ");
+		layout.setConstraints(provinzLabel2, c);
+		this.add(provinzLabel2);
+		c.gridy = 6;
+		JLabel provinzLabel3 = new JLabel(" ");
+		layout.setConstraints(provinzLabel3, c);
+		this.add(provinzLabel3);
 		// Button
 		einheitenPhaseBeenden = new JButton("Einheiten verteilen");
 		einheitenPhaseBeenden.setActionCommand("2");
-		c.gridy = 4;
+		c.gridy = 7;
 		layout.setConstraints(einheitenPhaseBeenden, c);
 		this.add(einheitenPhaseBeenden);
 
