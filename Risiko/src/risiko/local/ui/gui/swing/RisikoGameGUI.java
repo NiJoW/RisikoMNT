@@ -70,7 +70,6 @@ public class RisikoGameGUI extends JFrame  {
 		
 	}	
 	
-
 	private void initialize() {
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,10 +90,11 @@ public class RisikoGameGUI extends JFrame  {
 		this.add(kartenPanel, BorderLayout.CENTER);
 		
 		this.setVisible(true);
-	//	this.pack();
+		this.pack();
 		System.out.println(kartenPanel.getSize());
 		kartenPanel.addMap(risiko.getSpielerName(aktuellerSpieler));
-		
+		this.setVisible(true);
+		this.pack();
 		
 	}
 	
