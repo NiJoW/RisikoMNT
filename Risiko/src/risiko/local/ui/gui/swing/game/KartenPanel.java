@@ -18,6 +18,7 @@ public class KartenPanel extends JPanel {
 	
 	Risiko risiko;
 	int aktuellerSpielerID;
+	private PhasenPanel phasenPanel;
 	
 	public KartenPanel(Risiko risiko, int aktuellerSpielerID) {
 		this.risiko = risiko;
@@ -64,6 +65,7 @@ public class KartenPanel extends JPanel {
 					System.out.println("Geklickter Farbwert: "+rgb);
 					//getProvinzIDByColor(rgb);
 					System.out.println(getProvinzIDByColor(rgb));
+					phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
 				} catch (AWTException e1) {
 					e1.printStackTrace();
 				} 
@@ -140,5 +142,9 @@ public class KartenPanel extends JPanel {
 		
      	return provinzID;
      }
+
+	public void addPhasenPanel(PhasenPanel phasenPanel) {
+		this.phasenPanel = phasenPanel;
+	}
 
 }

@@ -83,7 +83,7 @@ public class RisikoGameGUI extends JFrame  {
 		kartenPanel = new KartenPanel(risiko, aktuellerSpieler);
 		phasenPanel = new PhasenPanel(risiko, screenWidth, screenHeight, new PhaseBeendenListener());
 		anweisungsPanel = new AnweisungsPanel(risiko, screenWidth, screenHeight, aktuellerSpieler);
-		
+		kartenPanel.addPhasenPanel(phasenPanel);
 		
 		this.add(phasenPanel, BorderLayout.LINE_END);
 		this.add(anweisungsPanel, BorderLayout.PAGE_END);
