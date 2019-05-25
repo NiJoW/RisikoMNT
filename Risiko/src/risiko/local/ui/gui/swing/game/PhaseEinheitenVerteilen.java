@@ -21,7 +21,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		GridBagLayout layout = new GridBagLayout();
 		this.setLayout(layout);
 		c = new GridBagConstraints();
-		c.gridx = 0;
+		c.gridx = 1;
 
 		// leere Zeile
 		c.gridy = 0;
@@ -44,21 +44,39 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		this.add(leereZeile3);
 		// Label fÃ¼r geklickte Provinzen
 		c.gridy = 4;
-		JLabel provinzLabel1 = new JLabel(" ");
+		JLabel provinzLabel1 = new JLabel("Du darfst noch X Einheiten verteilen.");
 		layout.setConstraints(provinzLabel1, c);
 		this.add(provinzLabel1);
 		c.gridy = 5;
-		JLabel provinzLabel2 = new JLabel(" ");
+		JLabel provinzLabel2 = new JLabel("Auf welches Land möchtest du setzen? ");
 		layout.setConstraints(provinzLabel2, c);
 		this.add(provinzLabel2);
 		c.gridy = 6;
-		JLabel provinzLabel3 = new JLabel(" ");
+		JLabel provinzLabel3 = new JLabel("Land: ");
 		layout.setConstraints(provinzLabel3, c);
 		this.add(provinzLabel3);
+		c.gridy = 7;
+		JLabel provinzLabel4 = new JLabel("Landname "); // zuerst leer / geupdatet bei setProvinz
+		layout.setConstraints(provinzLabel4, c);
+		this.add(provinzLabel4);
+		c.gridy = 8;
+		c.gridx = 0;
+		JButton einheitenPlus = new JButton("+");
+		layout.setConstraints(einheitenPlus, c);
+		this.add(einheitenPlus);
+		c.gridx = 1;
+		JLabel einheitenLabel = new JLabel("ZAHL");
+		layout.setConstraints(einheitenLabel, c);
+		this.add(einheitenLabel);
+		c.gridx = 2;
+		JButton einheitenMinus = new JButton("-");
+		layout.setConstraints(einheitenMinus, c);
+		this.add(einheitenMinus);
 		// Button
 		einheitenPhaseBeenden = new JButton("Einheiten verteilen");
 		einheitenPhaseBeenden.setActionCommand("2");
-		c.gridy = 7;
+		c.gridy = 9;
+		c.gridx = 1;
 		layout.setConstraints(einheitenPhaseBeenden, c);
 		this.add(einheitenPhaseBeenden);
 
@@ -78,5 +96,9 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			}
 
 		});
+	}
+	
+	public void setProvinz(int provinz) {
+		
 	}
 }

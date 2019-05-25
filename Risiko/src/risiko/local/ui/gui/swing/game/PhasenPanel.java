@@ -54,4 +54,12 @@ public class PhasenPanel extends JPanel {
 	public void setPhase(int phasenID) {
 		this.phasenID = phasenID;
 	}
+
+	public void setClickedProvinz(int provinzIDByColor) {
+		
+		switch(this.phasenID) {
+		case 1: 
+			phaseEins.setProvinz(provinzIDByColor);
+		}
+	}
 }
