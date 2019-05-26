@@ -51,7 +51,7 @@ import risiko.local.ui.gui.swing.game.PhasenPanel;
 public class RisikoGameGUI extends JFrame  { 
 	private Risiko risiko;
 	private BufferedReader in;
-	//MOumita
+	//Moumita
 	KartenPanel kartenPanel;
 	PhasenPanel phasenPanel;
 	AnweisungsPanel anweisungsPanel;
@@ -81,8 +81,8 @@ public class RisikoGameGUI extends JFrame  {
 		this.setSize((screenWidth),(screenHeight));
 		
 		kartenPanel = new KartenPanel(risiko, aktuellerSpieler);
-		phasenPanel = new PhasenPanel(risiko, screenWidth, screenHeight, new PhaseBeendenListener());
 		anweisungsPanel = new AnweisungsPanel(risiko, screenWidth, screenHeight, aktuellerSpieler);
+		phasenPanel = new PhasenPanel(risiko, screenWidth, screenHeight, new PhaseBeendenListener(), anweisungsPanel);
 		kartenPanel.addPhasenPanel(phasenPanel);
 		
 		this.add(phasenPanel, BorderLayout.LINE_END);
@@ -112,9 +112,9 @@ public class RisikoGameGUI extends JFrame  {
 		//Runden (jeder Spieler durchlaeuft jede Phase ein mal)
 		
 		//Phase: EInheitenverteilen
-		phasenPanel.setPhase(0);
-		anweisungsPanel.setPhase(0);
-		
+		phasenPanel.setPhase(1);
+		anweisungsPanel.setPhase(1);
+		phasenPanel.setAktuellerSpieler(spielerID);
 		anweisungsPanel.setAktuellerSpieler(spielerID);
 	
 		

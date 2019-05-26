@@ -235,6 +235,8 @@ public class RisikoClientCUI {
 		} 
 		
 		try {
+			risiko.validiereProvinz(provinzID, spielerID);
+			risiko.validiereEinheiten(anzahlEinheiten, spielerID);
 			risiko.setzeNeueEinheiten(provinzID, anzahlEinheiten, spielerID);
 			risiko.berechneVerteilbareEinheiten(-anzahlEinheiten, spielerID);
 			// auf korrekte Eingaben pruefen

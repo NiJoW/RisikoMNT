@@ -15,9 +15,13 @@ public class AnweisungsPanel extends JPanel {
 	Risiko risiko;
 	int phasenID = 1;
 	int aktuellerSpieler;
-	AnweisungEinheitenVerteilen phaseEins;
-	AnweisungAngriff phaseZwei;
-	AnweisungEinheitenVerschieben phaseDrei;
+	
+	JLabel nachricht;
+	
+//	AnweisungEinheitenVerteilen phaseEins;
+//	AnweisungAngriff phaseZwei;
+//	AnweisungEinheitenVerschieben phaseDrei;
+	
 	
 	
 	public AnweisungsPanel(Risiko risiko, int screenWidth, int screenHeight, int aktuellerSpieler) {
@@ -31,13 +35,19 @@ public class AnweisungsPanel extends JPanel {
 		Dimension pageEndSize = new Dimension(screenWidth, screenHeight/5);
 		this.setMinimumSize(pageEndSize);
 		this.setPreferredSize(pageEndSize);
-		System.out.println("anweisung"+aktuellerSpieler);
-		phaseEins = new AnweisungEinheitenVerteilen(risiko, aktuellerSpieler);
-		this.add(phaseEins);
-		phaseZwei = new AnweisungAngriff();
-		this.add(phaseZwei);
-		phaseDrei = new AnweisungEinheitenVerschieben();
-		this.add(phaseDrei);
+		nachricht = new JLabel("Test Nachricht");
+		this.add(nachricht);
+		
+		
+		
+		
+//		System.out.println("anweisung"+aktuellerSpieler);
+//		phaseEins = new AnweisungEinheitenVerteilen(risiko, aktuellerSpieler);
+//		this.add(phaseEins);
+//		phaseZwei = new AnweisungAngriff();
+//		this.add(phaseZwei);
+//		phaseDrei = new AnweisungEinheitenVerschieben();
+//		this.add(phaseDrei);
 
 		
 		
@@ -46,30 +56,34 @@ public class AnweisungsPanel extends JPanel {
 	
 	}
 	
-	private void updatePanel() {
-		//Anweisung an Phase anpassen
-		switch(phasenID) {
-			case 1:
-				phaseDrei.setVisible(false);
-				phaseEins.setVisible(true);
-				break;
-			case 2:
-				phaseEins.setVisible(false);
-				phaseZwei.setVisible(true);
-				break;
-			case 3:
-				phaseZwei.setVisible(false);
-				phaseDrei.setVisible(true);
-				break;		
-		}
-	}
+//	private void updatePanel() {
+//		//Anweisung an Phase anpassen
+//		switch(phasenID) {
+//			case 1:
+//				phaseDrei.setVisible(false);
+//				phaseEins.setVisible(true);
+//				break;
+//			case 2:
+//				phaseEins.setVisible(false);
+//				phaseZwei.setVisible(true);
+//				break;
+//			case 3:
+//				phaseZwei.setVisible(false);
+//				phaseDrei.setVisible(true);
+//				break;		
+//		}
+//	}
 
 	public void setPhase(int phasenID) {
 		this.phasenID = phasenID;
-		updatePanel();
+		//updatePanel();
 	}
 	
 	public void setAktuellerSpieler(int spielerID) {
 		aktuellerSpieler = spielerID;
+	}
+
+	public void setNachricht(String message) {
+		nachricht.setText(message);
 	}
 }

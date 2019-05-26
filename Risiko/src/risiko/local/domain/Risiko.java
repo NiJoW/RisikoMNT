@@ -131,7 +131,7 @@ public class Risiko {
 		spiellogik.berechneNeueEinheiten(spielerID);
 	}
 	
-	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten, int spielerID) throws NichtProvinzDesSpielersException, ProvinzIDExistiertNichtException, AnzahlEinheitenFalschException {
+	public void setzeNeueEinheiten(int toProvinz, int anzahlEinheiten, int spielerID) {
 		//Erstellt neue Einheiten (Spielbeginn)
 		spielVW.neueEinheitenSetzen(toProvinz, anzahlEinheiten, spielerID);
 	}	
@@ -222,6 +222,14 @@ public class Risiko {
 
 	public List<String> spielnamenAusgeben() {
 		return persistenceManager.spielnamenAusgeben();
+	}
+
+	public void validiereProvinz(int provinzID, int aktuellerSpieler) throws NichtProvinzDesSpielersException, ProvinzIDExistiertNichtException {
+		spielVW.validiereProvinz(provinzID, aktuellerSpieler);
+	}
+
+	public void validiereEinheiten(int anzahlEinheiten, int spielerID) throws AnzahlEinheitenFalschException {
+		spielVW.validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
 	}
 
 	

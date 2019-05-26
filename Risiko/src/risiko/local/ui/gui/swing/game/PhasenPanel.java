@@ -13,25 +13,29 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 public class PhasenPanel extends JPanel {
 
 	Risiko risiko;
+	AnweisungsPanel anweisungsPanel;
 	
 	GridBagConstraints c;
 	PhaseEinheitenVerteilen phaseEins;
 	PhaseAngriff phaseZwei;
 	PhaseEinheitenVerschieben phaseDrei;
+	int aktuellerSpieler;
 
 	int phasenID;
 	PhaseBeendenListener phaseBeendenListener;
+
 	
 
-	public PhasenPanel(Risiko risiko, int screenWidth, int screenHeight, PhaseBeendenListener phaseBeendenListener) {
+	public PhasenPanel(Risiko risiko, int screenWidth, int screenHeight, PhaseBeendenListener phaseBeendenListener, AnweisungsPanel anweisungsPanel) {
 		this.risiko = risiko;
+		this.anweisungsPanel = anweisungsPanel;
 		this.phaseBeendenListener = phaseBeendenListener;
 		setUpUI(screenWidth, screenHeight);
 		ereignisErzeugt();
 	}
 
 	private void setUpUI(int screenWidth, int screenHeight) {
-		phaseEins = new PhaseEinheitenVerteilen();
+		phaseEins = new PhaseEinheitenVerteilen(risiko, anweisungsPanel, aktuellerSpieler);
 		this.add(phaseEins);
 		phaseZwei = new PhaseAngriff();
 		this.add(phaseZwei);
@@ -56,10 +60,14 @@ public class PhasenPanel extends JPanel {
 	}
 
 	public void setClickedProvinz(int provinzIDByColor) {
-		
+		System.out.println("phase: " + this.phasenID);
 		switch(this.phasenID) {
 		case 1: 
 			phaseEins.setProvinz(provinzIDByColor);
 		}
+	}
+
+	public void setAktuellerSpieler(int spielerID) {
+		aktuellerSpieler = spielerID;
 	}
 }
