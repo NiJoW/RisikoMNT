@@ -127,10 +127,8 @@ public class SpielVerwaltung {
 		return bonus;
 	}
 
-	public void neueEinheitenSetzen(int toProvinz, int anzahlEinheiten, int spielerID) throws NichtProvinzDesSpielersException, ProvinzIDExistiertNichtException, AnzahlEinheitenFalschException {
+	public void neueEinheitenSetzen(int toProvinz, int anzahlEinheiten, int spielerID) {
 		Provinz provinz = weltVW.getProvinz(toProvinz);
-		validiereProvinz(toProvinz, spielerID);
-		validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
 		for(int i = 0; i < anzahlEinheiten; i++) {
 			provinz.erstelleEinheit(provinz.getBesitzer());
 		}
