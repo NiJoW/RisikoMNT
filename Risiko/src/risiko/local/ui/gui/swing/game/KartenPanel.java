@@ -29,8 +29,10 @@ public class KartenPanel extends JPanel {
 	}
 
 	private void initialize(String spielername) {
-
+		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
+		JLabel aktuellerSpieler = new JLabel(spielername);
+		this.add(aktuellerSpieler);
 		this.setVisible(true);
 	}
 	public void addMap(String spielername) {
