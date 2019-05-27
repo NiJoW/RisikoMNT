@@ -13,11 +13,15 @@ import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.SpielNichtVorhandenException;
@@ -41,6 +45,8 @@ public class AnmeldefensterGUI extends JPanel {
 	JPanel ladePanel;
 	GridBagLayout anmeldeLayout;
 	GridBagConstraints c;
+	
+	GridBagLayout ladeLayout;
 
 	JButton spielerAnmeldenButton;
 	JTextField s1name;
@@ -65,8 +71,11 @@ public class AnmeldefensterGUI extends JPanel {
 	String nameS6;
 	
 	
-	List <Spieler> spielerNamenListe = null;
+	List<String> spielNamen;
 	
+	JButton bestaetigungsButton;
+	String name = null;
+	int spielID;
 
 	public AnmeldefensterGUI(Risiko risiko, StarteSpielActionListener starteSpielActionListener, LadeListener ladeListener) {
 		this.risiko = risiko;
@@ -259,26 +268,18 @@ public class AnmeldefensterGUI extends JPanel {
 		s1name.addMouseListener(new MouseListener() {
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
-			};
-
+			public void mouseClicked(MouseEvent e) {};
 			@Override
-			public void mousePressed(MouseEvent e) {
-			};
-
+			public void mousePressed(MouseEvent e) {}
 			@Override
-			public void mouseReleased(MouseEvent e) {
-			};
-
+			public void mouseReleased(MouseEvent e) {};
+			@Override
+			public void mouseExited(MouseEvent e) {};
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				System.out.println("Spielername eingeben");
 			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			};
-
 		});
 		
 		
@@ -308,7 +309,7 @@ public class AnmeldefensterGUI extends JPanel {
 							anmeldeFenster.setVisible(true);
 							zaehler++;
 						}
-					} catch (SpielerBereitsVorhandenException exeption) {
+					} catch (SpielerBereitsVorhandenException exception) {
 						s1name.setText("");
 					}
 					break;
@@ -332,7 +333,7 @@ public class AnmeldefensterGUI extends JPanel {
 							s2name.setEnabled(false);
 							zaehler++;
 						}
-					} catch (SpielerBereitsVorhandenException exeption) {
+					} catch (SpielerBereitsVorhandenException exception) {
 						s2name.setText("");
 					}
 					break;
@@ -355,7 +356,7 @@ public class AnmeldefensterGUI extends JPanel {
 							s3name.setEnabled(false);
 							zaehler++; 
 						}
-					} catch (SpielerBereitsVorhandenException exeption) {
+					} catch (SpielerBereitsVorhandenException exception) {
 						s3name.setText("");
 					}
 					break;
@@ -378,7 +379,7 @@ public class AnmeldefensterGUI extends JPanel {
 							s4name.setEnabled(false);
 							zaehler++;
 						}
-					} catch (SpielerBereitsVorhandenException exeption) {
+					} catch (SpielerBereitsVorhandenException exception) {
 						s4name.setText("");
 					}
 					break;
@@ -401,7 +402,7 @@ public class AnmeldefensterGUI extends JPanel {
 							s5name.setEnabled(false);
 							zaehler++;
 						}
-					} catch (SpielerBereitsVorhandenException exeption) {
+					} catch (SpielerBereitsVorhandenException exception) {
 						s5name.setText("");
 					}
 					break;
@@ -417,9 +418,6 @@ public class AnmeldefensterGUI extends JPanel {
 						spielerAnmeldenButton.setVisible(false);
 				}
 				
-				
-				
-				//TODO: müsste spieler 6 auch spielerAnmelden(s6name.getText());
 				//aber besser eine bessen Weg für anmelden und überprüfen finden
 				//denn kein Button für den letzten und so wären bei Verschreiben Namen nicht änderbar, direkt angemeldet
 			}
@@ -463,16 +461,10 @@ public class AnmeldefensterGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				anmeldePanel.setVisible(false);
-				setUpLadePanel();
+				setUpLadePanel();		
+				setUpLadeEvents();
 			}
-
-			
-			
 		});
-		
-		
-		
-
 	}
 	
 	
@@ -480,7 +472,7 @@ public class AnmeldefensterGUI extends JPanel {
 	//---------------------LADE PANEL-----------------------------
 	
 	private void setUpLadePanel() {
-		GridBagLayout ladeLayout = new GridBagLayout();
+		ladeLayout = new GridBagLayout();
 		anmeldePanel.setLayout(ladeLayout);
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -503,7 +495,14 @@ public class AnmeldefensterGUI extends JPanel {
 		
 		
 		//Ladebare Spiele
-		List<String> spielNamen = risiko.spielnamenAusgeben();
+		spielNamen = risiko.spielnamenAusgeben();
+		
+
+		bestaetigungsButton = new JButton("Spiel starten");
+		c.gridy = spielNamen.size() + 4;
+		ladeLayout.setConstraints(bestaetigungsButton, c);
+		bestaetigungsButton.setEnabled(false);
+		ladePanel.add(bestaetigungsButton);
 		
 		for(int i = 0; i < spielNamen.size(); i++) {
 			JButton spiel = new JButton(spielNamen.get(i));
@@ -512,49 +511,55 @@ public class AnmeldefensterGUI extends JPanel {
 			ladeLayout.setConstraints(spiel, c);
 			ladePanel.add(spiel);
 			
-			setUpLadeEvent(spiel);
+			setUpSpielButtons(spiel);
 		}
 		
 		ladePanel.setVisible(true);
 		anmeldeFenster.add(ladePanel, BorderLayout.CENTER);
 	}
 
-	private void setUpLadeEvent(JButton spiel) {
-		spiel.addActionListener(starteSpielActionListener);
-		spiel.addActionListener(new ActionListener() {
-
+	private void setUpLadeEvents() {
+		bestaetigungsButton.addActionListener(starteSpielActionListener);
+		bestaetigungsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int spielID = Integer.parseInt(e.getActionCommand());
-				String name;
-				name = pruefeSpiel(spielID);
 				if(name != null) {
 					ladeListener.ladeSpiel(spielID, name);
 					anmeldeFenster.setVisible(false);
 					anmeldeFenster.dispose();
-				}
+			}
+				
+			}
+		});
+	}
+
+	private void setUpSpielButtons(JButton spiel) {
+		spiel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				spielID = Integer.parseInt(e.getActionCommand());
+				
+				try {
+					name = pruefeSpiel(spielID);
+					
+					//TODO: Border wieder entfernen
+				    spiel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+				    bestaetigungsButton.setEnabled(true);
+				} catch (SpielNichtVorhandenException | SpielerNichtTeilDesSpielsException e1) {
+					System.out.println("exception");
+					JOptionPane.showMessageDialog(null, "Dieses Spiel wurde nicht von euch begonnen");
+				} 
 			}
 
-			private String pruefeSpiel(int spielID) {
-				List <String> spielerNamenListe = new Vector <String>();
-				for(int i = 0; i < risiko.getSpielerAnzahl(); i++) {
-					spielerNamenListe.add(risiko.getSpielerName(i));
-				}
+			private String pruefeSpiel(int spielID) throws SpielNichtVorhandenException, SpielerNichtTeilDesSpielsException {
 				String name = null;
-				try {
-					name = risiko.validiereSpiel(spielID, spielerNamenListe);
-				} catch (SpielNichtVorhandenException | SpielerNichtTeilDesSpielsException e) {
-					e.printStackTrace();
-				} 
-				
+				name = risiko.validiereSpiel(spielID, spielNamen);
 				return name;
 			}
 		});
 	}
 
-	
-	
-	
 	private void spielerAnmelden(String name) throws SpielerBereitsVorhandenException  {
 		if (!risiko.spielerNameVorhanden(name)) {
 			risiko.spielerHinzufuegen(name);
