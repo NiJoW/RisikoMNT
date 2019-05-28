@@ -17,6 +17,7 @@ import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
 import risiko.local.domain.exceptions.EigeneProvinzAngreifenException;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
+import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
 public class PhaseAngriff extends JPanel {
@@ -103,10 +104,11 @@ public class PhaseAngriff extends JPanel {
 
 		c.gridy = 5;
 		c.gridx = 0;
-		einheitenPlus = new JButton("+");
-		einheitenPlus.setEnabled(false);
-		layout.setConstraints(einheitenPlus, c);
-		this.add(einheitenPlus);
+		einheitenMinus = new JButton("-");
+		einheitenMinus.setEnabled(false);
+		layout.setConstraints(einheitenMinus, c);
+		this.add(einheitenMinus);
+		
 
 		c.gridy = 5;
 		c.gridx = 1;
@@ -117,12 +119,12 @@ public class PhaseAngriff extends JPanel {
 
 		c.gridy = 5;
 		c.gridx = 2;
-		einheitenMinus = new JButton("-");
-		einheitenMinus.setEnabled(false);
-		layout.setConstraints(einheitenMinus, c);
-		this.add(einheitenMinus);
+		einheitenPlus = new JButton("+");
+		einheitenPlus.setEnabled(false);
+		layout.setConstraints(einheitenPlus, c);
+		this.add(einheitenPlus);
 
-		wuerfelButton = new JButton("Wuerfeln");
+		wuerfelButton = new JButton("Angreifen");
 		c.gridy = 6;
 		c.gridx = 1;
 		layout.setConstraints(wuerfelButton, c);
@@ -130,7 +132,7 @@ public class PhaseAngriff extends JPanel {
 		this.add(wuerfelButton);
 
 		c.gridy = 7;
-		angriffBeenden = new JButton("Angriff beenden");
+		angriffBeenden = new JButton("Phase beenden");
 		angriffBeenden.setActionCommand("3");
 		layout.setConstraints(angriffBeenden, c);
 		this.add(angriffBeenden);
@@ -172,30 +174,66 @@ public class PhaseAngriff extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (einheitenWollen > 0) {
+				if (einheitenWollen > 1) {
 					einheitenLabel.setText(--einheitenWollen + "");
 				}
 			}
 		});
 		
-//		wuerfelButton.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//				if (einheitenWollen > 0) {
-//					risiko.setzeNeueEinheiten(gewaehlteProvinzID, einheitenWollen, aktuellerSpieler);
-//					einheitenWollen = 0;
-//					einheitenLabel.setText(einheitenWollen+"");
-//					wuerfelButton.setEnabled(false);
+		wuerfelButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("einheitenWollen: "+einheitenWollen);
+				String verteidiger = risiko.getProvinz(gewaehltToID).getBesitzer().getName();
+				int[] wuerfelErgebnisse = risiko.wuerfeln(einheitenWollen, gewaehltToID);
+				
+
+				try {
+					String[][] wuerfelVergleich = risiko.angreifen(gewaehltFromID, gewaehltToID, einheitenWollen, wuerfelErgebnisse);
+					String ausgabe = "<html>";
+//					for(int i=0; i<wuerfelVergleich.length; i++) {
+//						for(int j=0; j<wuerfelVergleich[i].length; j++) {
+//							ausgabe += wuerfelVergleich[i][j] +" ";
+//						}
 //				}
-//				
-//				if (verteilbareEinheiten == 0) { //einheitenWollen == 0 && 
-//					einheitenPhaseBeenden.setEnabled(true);
-//				}
-//				
-//			}
-//		});
+					// Ausgaben
+					for (int t = 0; t < einheitenWollen; t++) {
+						ausgabe += "Spieler " + risiko.getSpielerName(aktuellerSpieler) + " hat eine " + wuerfelErgebnisse[t]
+								+ " gewuerfelt!<p/>";
+					}
+					for (int k = einheitenWollen; k < wuerfelErgebnisse.length; k++) {
+						ausgabe += "Der verteidigende Spieler " + verteidiger + " hat eine " + wuerfelErgebnisse[k]
+								+ " gewuerfelt!<p/>";
+					}
+					// Ergebnisse der einzelnen Wurf-Vergleiche
+					ausgabe += "Vergleich der Wuerfel: <p/>";
+					ausgabe += "Angreifer: " + wuerfelVergleich[0][0] + ", Verteidiger: " + wuerfelVergleich[0][1] + " -> "
+							+ wuerfelVergleich[0][2] + " verliert eine Einheit.<p/>";
+					if (wuerfelVergleich[1][0] != null) {
+						ausgabe += "Angreifer: " + wuerfelVergleich[1][0] + ", Verteidiger: " + wuerfelVergleich[1][1]
+								+ " -> " + wuerfelVergleich[1][2] + " verliert eine Einheit.<p/>";
+					}
+
+					if (risiko.getProvinz(gewaehltToID).getBesitzer().getName().equals(risiko.getSpielerName(aktuellerSpieler))) {
+						risiko.provinzWurdeErobert(aktuellerSpieler); //aendert boolean, um Einheitskarte zu bekommen (boolean provinzErobert)
+						ausgabe += "*********************<p/>";
+						ausgabe += risiko.getSpielerName(aktuellerSpieler) + " hat die Provinz "
+								+ risiko.getProvinz(gewaehltToID).getName() + " von " + verteidiger + " erobert!<p/>";
+						ausgabe += "*********************";
+						// Provinz erobert
+	//	//TODO:				einheitenNachruecken(aktuellerSpieler, gewaehltFromID, gewaehltToID);
+					} else {
+						ausgabe += "Der Verteidiger " + verteidiger + " hat seine Pronvinz verteidigt.";
+					}
+					ausgabe += "</html>";
+					anweisungsPanel.setNachricht(ausgabe);
+				}catch(ProvinzNichtNachbarException ex) {
+					//bereits zuvor geprueft, nicht ausgeben
+				}
+				
+			}
+		});
 		
 		
 		
@@ -215,8 +253,9 @@ public class PhaseAngriff extends JPanel {
 				aktiveWahl = 2;
 				provinzLabel1.setBorder(BorderFactory.createEmptyBorder());
 				provinzLabel2.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-				nachProvinzLabel = new JLabel(" ");
+				nachProvinzLabel.setText(" ");
 				einheitenWollen = 0;
+				einheitenLabel.setText(einheitenWollen+"");
 				einheitenPlus.setEnabled(false);
 				einheitenLabel.setEnabled(false);
 				einheitenMinus.setEnabled(false);
@@ -228,21 +267,21 @@ public class PhaseAngriff extends JPanel {
 			if (!risiko.validiereGUIProvinz(provinzID, aktuellerSpieler)) {
 				anweisungsPanel.setNachricht("sind valinach");
 				gewaehltToID = provinzID;
+				System.out.println("ToProvinz: " + risiko.getProvinz(gewaehltToID).getName());
 				nachProvinzLabel.setText(risiko.getProvinz(gewaehltToID).getName());
-				aktiveWahl = 2;
+				aktiveWahl = 1;
 				provinzLabel2.setBorder(BorderFactory.createEmptyBorder());
-				provinzLabel1.setBorder(BorderFactory.createLineBorder(Color.black, 2));		
-				if (einheitenWollen > 0) {
-					try {
-//						risiko.validiereAngriffEingaben(gewaehltFromID, gewaehltToID, aktuellerSpieler, einheitenWollen);
-						risiko.provinzBenachbart(gewaehltFromID, gewaehltToID);
-						einheitenPlus.setEnabled(true);
-						einheitenLabel.setEnabled(true);
-						einheitenMinus.setEnabled(true);
-					} catch (Exception e) {
-						anweisungsPanel.setNachricht(e.getMessage());
-					}	 
-				}
+				provinzLabel1.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+				try {
+//					risiko.validiereAngriffEingaben(gewaehltFromID, gewaehltToID, aktuellerSpieler, einheitenWollen);
+					risiko.provinzBenachbart(gewaehltFromID, gewaehltToID);
+					einheitenPlus.setEnabled(true);
+					einheitenLabel.setEnabled(true);
+					einheitenMinus.setEnabled(true);
+				} catch (Exception e) {
+					anweisungsPanel.setNachricht(e.getMessage());
+				}	 
+				
 			} else {
 				anweisungsPanel.setNachricht("Diese Provinz kannst du nicht angreifen!");
 			}

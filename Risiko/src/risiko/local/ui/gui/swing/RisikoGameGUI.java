@@ -103,7 +103,9 @@ public class RisikoGameGUI extends JFrame  {
 		//spielerRegistrierung();
 		//spielMenue();
 		//risiko.spielVorbereiten();
-		
+		for(int i = 0; i < risiko.getSpielerAnzahl(); i++) {
+			System.out.println(risiko.getSpielerName(i) + ": " + risiko.getProvinzenVonSpieler(i));
+		}
 		spielen(++letzterAktiverSpielerID);
 	}
 	
@@ -133,6 +135,15 @@ public class RisikoGameGUI extends JFrame  {
 		public void actionPerformed(ActionEvent e) {
 			int nextPhase = Integer.parseInt(e.getActionCommand());
 			//Phase: angreifen
+			if(nextPhase == 1) {
+				aktuellerSpieler++;
+				if(aktuellerSpieler == risiko.getSpielerAnzahl()) {
+					aktuellerSpieler = 0;
+				}
+				phasenPanel.setAktuellerSpieler(aktuellerSpieler);
+				anweisungsPanel.setAktuellerSpieler(aktuellerSpieler);
+				kartenPanel.setAktuellerSpieler(aktuellerSpieler);
+			}
 			anweisungsPanel.setPhase(nextPhase);
 			phasenPanel.setPhase(nextPhase);
 			System.out.println("Phase beendet, Phase "+nextPhase+" beginnen");

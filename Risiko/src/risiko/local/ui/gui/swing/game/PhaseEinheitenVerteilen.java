@@ -98,9 +98,9 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		
 		c.gridy = 8;
 //		c.gridx = 0;
-		einheitenPlus = new JButton("+");
-		layout.setConstraints(einheitenPlus, c);
-		this.add(einheitenPlus);
+		einheitenMinus = new JButton("-");
+		layout.setConstraints(einheitenMinus, c);
+		this.add(einheitenMinus);
 		
 		c.gridy = 9;
 //		c.gridx = 1;
@@ -110,9 +110,10 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		
 		c.gridy = 10;
 //		c.gridx = 2;
-		einheitenMinus = new JButton("-");
-		layout.setConstraints(einheitenMinus, c);
-		this.add(einheitenMinus);
+		einheitenPlus = new JButton("+");
+		layout.setConstraints(einheitenPlus, c);
+		this.add(einheitenPlus);
+		
 		
 		bestaetigenButton = new JButton("Einheiten setzen");
 		c.gridy = 11;

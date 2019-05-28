@@ -74,4 +74,5 @@ public class PhasenPanel extends JPanel {
 	public void setAktuellerSpieler(int spielerID) {
 		aktuellerSpieler = spielerID;
 	}
+
 }
