@@ -21,7 +21,9 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	GridBagLayout layout;
 	
 	JLabel phaseEinheitenText;
-	JLabel provinzLabel1;
+	JLabel anweisungsLabel1;
+	
+	JLabel provinzLabel2;
 	
 	JButton einheitenPlus;
 	JLabel einheitenLabel;
@@ -75,24 +77,24 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		// Label fÃ¼r geklickte Provinzen
 		
 		c.gridy = 4;
-		provinzLabel1 = new JLabel("Du darfst noch " + verteilbareEinheiten + " Einheiten verteilen.");
+		anweisungsLabel1 = new JLabel("Du darfst noch " + verteilbareEinheiten + " Einheiten verteilen.");
+		layout.setConstraints(anweisungsLabel1, c);
+		this.add(anweisungsLabel1);
+		
+		c.gridy = 5;
+		JLabel anweisungsLabel2 = new JLabel("Auf welche Provinz möchtest du setzen? ");
+		layout.setConstraints(anweisungsLabel2, c);
+		this.add(anweisungsLabel2);
+		
+		c.gridy = 6;
+		JLabel provinzLabel1 = new JLabel("Provinz: ");
 		layout.setConstraints(provinzLabel1, c);
 		this.add(provinzLabel1);
 		
-		c.gridy = 5;
-		JLabel provinzLabel2 = new JLabel("Auf welches Land möchtest du setzen? ");
+		c.gridy = 7;
+		provinzLabel2 = new JLabel(""); // zuerst leer / geupdatet bei setProvinz
 		layout.setConstraints(provinzLabel2, c);
 		this.add(provinzLabel2);
-		
-		c.gridy = 6;
-		JLabel provinzLabel3 = new JLabel("Land: ");
-		layout.setConstraints(provinzLabel3, c);
-		this.add(provinzLabel3);
-		
-		c.gridy = 7;
-		JLabel provinzLabel4 = new JLabel("Landname "); // zuerst leer / geupdatet bei setProvinz
-		layout.setConstraints(provinzLabel4, c);
-		this.add(provinzLabel4);
 		
 		c.gridy = 8;
 //		c.gridx = 0;
@@ -137,7 +139,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (verteilbareEinheiten > 0) {
-					provinzLabel1.setText("Du darfst noch " + --verteilbareEinheiten + " Einheiten verteilen.");
+					anweisungsLabel1.setText("Du darfst noch " + --verteilbareEinheiten + " Einheiten verteilen.");
 					einheitenLabel.setText(++einheitenWollen + "");
 				}
 				if(einheitenWollen > 0 && gewaehlteProvinzID != -1) {
@@ -151,7 +153,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (einheitenWollen > 0) {
-					provinzLabel1.setText("Du darfst noch " + ++verteilbareEinheiten + " Einheiten verteilen.");
+					anweisungsLabel1.setText("Du darfst noch " + ++verteilbareEinheiten + " Einheiten verteilen.");
 					einheitenLabel.setText(--einheitenWollen + "");
 				}
 				if (einheitenWollen == 0) {
@@ -165,10 +167,10 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//System.out.println("Einheiten:" + risiko.getProvinzenVonSpieler(aktuellerSpieler).get(gewaehlteProvinzID).getArmeeGroesse());
+				
 				System.out.println("pID: " + gewaehlteProvinzID);
 				System.out.println(risiko.getProvinzenVonSpieler(aktuellerSpieler));
-				System.out.println(risiko.getProvinzenVonSpieler(aktuellerSpieler).get(gewaehlteProvinzID));
+				System.out.println(risiko.getProvinz(gewaehlteProvinzID));
 				if (einheitenWollen > 0) {
 					risiko.setzeNeueEinheiten(gewaehlteProvinzID, einheitenWollen, aktuellerSpieler);
 					einheitenWollen = 0;
@@ -179,7 +181,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 				if (verteilbareEinheiten == 0) { //einheitenWollen == 0 && 
 					einheitenPhaseBeenden.setEnabled(true);
 				}
-				//System.out.println("Einheiten:" + risiko.getProvinzenVonSpieler(aktuellerSpieler).get(gewaehlteProvinzID).getArmeeGroesse());
+				
 			}
 		});
 		
@@ -202,6 +204,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			risiko.validiereProvinz(provinzID, aktuellerSpieler);
 			anweisungsPanel.setNachricht("");
 			gewaehlteProvinzID = provinzID;
+			provinzLabel2.setText(risiko.getProvinz(gewaehlteProvinzID).getName());
 			if (einheitenWollen > 0) {
 				bestaetigenButton.setEnabled(true);
 			} 
