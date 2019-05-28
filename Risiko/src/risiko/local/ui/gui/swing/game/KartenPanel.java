@@ -36,7 +36,7 @@ public class KartenPanel extends JPanel {
 
 	private void initialize(String spielername, int screenWidth, int screenHeight) {
 		this.setLayout(null);
-		lp.setBounds(0, 0, screenWidth, screenHeight);
+	//	lp.setBounds(0, 0, screenWidth, screenHeight);
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		Dimension centerSize = new Dimension(4*(screenWidth/5), 4*(screenHeight/5));
@@ -45,30 +45,30 @@ public class KartenPanel extends JPanel {
 		
 		//ImagePanel myImage = new ImagePanel("images/Weltkarte.jpeg");
 		
-		JButton top = new JButton();
-	    top.setBackground(Color.white);
-	    top.setBounds(20, 20, 50, 50);
-	    JButton middle = new JButton();
-	    middle.setBackground(Color.gray);
-	    middle.setBounds(40, 40, 50, 50);
-	    JButton bottom = new JButton();
-	    bottom.setBackground(Color.black);
-	    bottom.setBounds(60, 60, 50, 50);
+//		JButton top = new JButton();
+//	    top.setBackground(Color.white);
+//	    top.setBounds(20, 20, 50, 50);
+//	    JButton middle = new JButton();
+//	    middle.setBackground(Color.gray);
+//	    middle.setBounds(40, 40, 50, 50);
+//	    JButton bottom = new JButton();
+//	    bottom.setBackground(Color.black);
+//	    bottom.setBounds(60, 60, 50, 50);
 
 	    // Place the buttons in different layers
-	    lp.add(middle, 2);
-	    lp.add(top, 3);
-	    lp.add(bottom, 1);
+//	    lp.add(middle, 2);
+//	    lp.add(top, 3);
+//	    lp.add(bottom, 1);
 		
 		JLabel myImage = new JLabel(new ImageIcon("images/Weltkarte.jpeg"));
 		myImage.setPreferredSize(centerSize);
 		myImage.addMouseListener(getMouseAdapter());
-		//this.add(myImage, 1); //layeredPane.add(myImage);
+		this.add(myImage); //layeredPane.add(myImage);
 		
 		JLabel aktuellerSpieler = new JLabel(spielername);
 		aktuellerSpieler.setBounds(70, 70, 60, 60);
-		//this.add(aktuellerSpieler, 3);
-		lp.add(aktuellerSpieler, 4);
+		this.add(aktuellerSpieler); 
+		//lp.add(aktuellerSpieler, 4);
 		this.setVisible(true);
 	}
 	public void addMap(String spielername) {
