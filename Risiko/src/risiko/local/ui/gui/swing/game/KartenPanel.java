@@ -10,7 +10,9 @@ import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import risiko.local.domain.Risiko;
@@ -20,9 +22,11 @@ public class KartenPanel extends JPanel {
 	Risiko risiko;
 	int aktuellerSpielerID;
 	private PhasenPanel phasenPanel;
+	JLayeredPane lp;
 	
-	public KartenPanel(Risiko risiko, int aktuellerSpielerID, int screenWidth, int screenHeight) {
+	public KartenPanel(JLayeredPane lp, Risiko risiko, int aktuellerSpielerID, int screenWidth, int screenHeight) {
 		this.risiko = risiko;
+		this.lp = lp;
 		
 		this.aktuellerSpielerID = aktuellerSpielerID;
 		System.out.println(aktuellerSpielerID);
@@ -31,22 +35,40 @@ public class KartenPanel extends JPanel {
 	}
 
 	private void initialize(String spielername, int screenWidth, int screenHeight) {
+		this.setLayout(null);
+		lp.setBounds(0, 0, screenWidth, screenHeight);
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		Dimension centerSize = new Dimension(4*(screenWidth/5), 4*(screenHeight/5));
 		this.setMinimumSize(centerSize);
 		this.setPreferredSize(centerSize);
 		
-		ImagePanel myImage = new ImagePanel("images/Weltkarte.jpeg");
+		//ImagePanel myImage = new ImagePanel("images/Weltkarte.jpeg");
 		
-//		JLabel myImage = new JLabel(new ImageIcon("images/Weltkarte.jpeg"));
-//		myImage.setPreferredSize(centerSize);
-//		myImage.addMouseListener(getMouseAdapter());
-//		this.add(myImage); //layeredPane.add(myImage);
+		JButton top = new JButton();
+	    top.setBackground(Color.white);
+	    top.setBounds(20, 20, 50, 50);
+	    JButton middle = new JButton();
+	    middle.setBackground(Color.gray);
+	    middle.setBounds(40, 40, 50, 50);
+	    JButton bottom = new JButton();
+	    bottom.setBackground(Color.black);
+	    bottom.setBounds(60, 60, 50, 50);
+
+	    // Place the buttons in different layers
+	    lp.add(middle, 2);
+	    lp.add(top, 3);
+	    lp.add(bottom, 1);
+		
+		JLabel myImage = new JLabel(new ImageIcon("images/Weltkarte.jpeg"));
+		myImage.setPreferredSize(centerSize);
+		myImage.addMouseListener(getMouseAdapter());
+		//this.add(myImage, 1); //layeredPane.add(myImage);
 		
 		JLabel aktuellerSpieler = new JLabel(spielername);
-		this.add(aktuellerSpieler);
-		
+		aktuellerSpieler.setBounds(70, 70, 60, 60);
+		//this.add(aktuellerSpieler, 3);
+		lp.add(aktuellerSpieler, 4);
 		this.setVisible(true);
 	}
 	public void addMap(String spielername) {
