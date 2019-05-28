@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -24,10 +25,12 @@ public class KartenPanel extends JPanel {
 	Risiko risiko;
 	int aktuellerSpielerID;
 	private PhasenPanel phasenPanel;
+
 	JLabel aktuellerSpieler;
 	
-	public KartenPanel(Risiko risiko, int aktuellerSpielerID, int screenWidth, int screenHeight) {
+	public KartenPanel(JLayeredPane lp, Risiko risiko, int aktuellerSpielerID, int screenWidth, int screenHeight) {
 		this.risiko = risiko;
+		this.lp = lp;
 		
 		this.aktuellerSpielerID = aktuellerSpielerID;
 		System.out.println(aktuellerSpielerID);
@@ -36,6 +39,8 @@ public class KartenPanel extends JPanel {
 	}
 
 	private void initialize(String spielername, int screenWidth, int screenHeight) {
+		this.setLayout(null);
+		lp.setBounds(0, 0, screenWidth, screenHeight);
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		Dimension centerSize = new Dimension(4*(screenWidth/5), 4*(screenHeight/5));
@@ -44,6 +49,7 @@ public class KartenPanel extends JPanel {
 		JTextField provinz = new JTextField("Provinz: ");
 		this.add(provinz);
 		
+
 		JButton bestaetigung = new JButton("bestaetigung");
 		bestaetigung.addActionListener(new ActionListener() {
 
@@ -63,7 +69,12 @@ public class KartenPanel extends JPanel {
 		
 		aktuellerSpieler = new JLabel(spielername);
 		this.add(aktuellerSpieler);
+
 		
+		JLabel aktuellerSpieler = new JLabel(spielername);
+		aktuellerSpieler.setBounds(70, 70, 60, 60);
+		//this.add(aktuellerSpieler, 3);
+		lp.add(aktuellerSpieler, 4);
 		this.setVisible(true);
 	}
 	
