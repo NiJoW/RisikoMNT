@@ -165,16 +165,21 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println("Einheiten:" + risiko.getProvinzenVonSpieler(aktuellerSpieler).get(gewaehlteProvinzID).getArmeeGroesse());
-
+				//System.out.println("Einheiten:" + risiko.getProvinzenVonSpieler(aktuellerSpieler).get(gewaehlteProvinzID).getArmeeGroesse());
+				System.out.println("pID: " + gewaehlteProvinzID);
+				System.out.println(risiko.getProvinzenVonSpieler(aktuellerSpieler));
+				System.out.println(risiko.getProvinzenVonSpieler(aktuellerSpieler).get(gewaehlteProvinzID));
 				if (einheitenWollen > 0) {
 					risiko.setzeNeueEinheiten(gewaehlteProvinzID, einheitenWollen, aktuellerSpieler);
+					einheitenWollen = 0;
+					einheitenLabel.setText(einheitenWollen+"");
+					bestaetigenButton.setEnabled(false);
 				}
 				
-				if (einheitenWollen == 0 && verteilbareEinheiten == 0) {
+				if (verteilbareEinheiten == 0) { //einheitenWollen == 0 && 
 					einheitenPhaseBeenden.setEnabled(true);
 				}
-				System.out.println("Einheiten:" + risiko.getProvinzenVonSpieler(aktuellerSpieler).get(gewaehlteProvinzID).getArmeeGroesse());
+				//System.out.println("Einheiten:" + risiko.getProvinzenVonSpieler(aktuellerSpieler).get(gewaehlteProvinzID).getArmeeGroesse());
 			}
 		});
 		
