@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -265,17 +266,7 @@ public class AnmeldefensterGUI extends JPanel {
 	
 
 	public void ereignisErzeugt() {
-		s1name.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {};
-			@Override
-			public void mousePressed(MouseEvent e) {}
-			@Override
-			public void mouseReleased(MouseEvent e) {};
-			@Override
-			public void mouseExited(MouseEvent e) {};
-			
+		s1name.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				System.out.println("Spielername eingeben");
