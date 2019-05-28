@@ -60,4 +60,8 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 		});
 		
 	}
+	public void setProvinz(int provinzIDByColor) {
+		// TODO Auto-generated method stub
+		
+	}
 }

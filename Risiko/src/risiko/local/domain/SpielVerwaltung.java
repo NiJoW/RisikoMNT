@@ -154,6 +154,16 @@ public class SpielVerwaltung {
 		 
 	}
 	
+
+	public boolean validiereGUIProvinz(int provinzID, int aktuellerSpieler) {
+		Spieler spieler = spielerVW.getSpieler(aktuellerSpieler);
+		Provinz provinz = weltVW.getProvinz(provinzID);
+		 if(!(provinz).getBesitzer().equals((spieler))){
+			return false;
+		}	
+		 return true;
+	}
+	
 	public void validiereAnzahlEinheiten(int anzahl, int spielerID) throws AnzahlEinheitenFalschException {
 		int verteilbareEinheiten = spielerVW.getVerteilbareEinheiten(spielerID);
 		if(!((anzahl > 0) && verteilbareEinheiten >= anzahl)) {
@@ -220,5 +230,7 @@ public class SpielVerwaltung {
 	public void ladeKartenTauschBonus(int bonus) {
 		kartenTauschBonus = bonus;
 	}
+
+
 
 }

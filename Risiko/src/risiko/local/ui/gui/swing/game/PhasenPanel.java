@@ -26,26 +26,23 @@ public class PhasenPanel extends JPanel {
 
 	
 
-	public PhasenPanel(Risiko risiko, int screenWidth, int screenHeight, PhaseBeendenListener phaseBeendenListener, AnweisungsPanel anweisungsPanel) {
+	public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, AnweisungsPanel anweisungsPanel) {
 		this.risiko = risiko;
 		this.anweisungsPanel = anweisungsPanel;
 		this.phaseBeendenListener = phaseBeendenListener;
-		setUpUI(screenWidth, screenHeight);
+		setUpUI();
 		ereignisErzeugt();
 	}
 
-	private void setUpUI(int screenWidth, int screenHeight) {
+	private void setUpUI() {
 		phaseEins = new PhaseEinheitenVerteilen(risiko, anweisungsPanel, aktuellerSpieler);
 		this.add(phaseEins);
-		phaseZwei = new PhaseAngriff();
+		phaseZwei = new PhaseAngriff(risiko, anweisungsPanel, aktuellerSpieler);
 		this.add(phaseZwei);
 		phaseDrei = new PhaseEinheitenVerschieben();
 		this.add(phaseDrei);
 
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
-		Dimension lineEndSize = new Dimension(screenWidth / 5, screenHeight);
-		this.setMinimumSize(lineEndSize);
-		this.setPreferredSize(lineEndSize);
 	}
 
 
@@ -64,6 +61,13 @@ public class PhasenPanel extends JPanel {
 		switch(this.phasenID) {
 		case 1: 
 			phaseEins.setProvinz(provinzIDByColor);
+			break;
+		case 2:
+			phaseZwei.setProvinz(provinzIDByColor);
+			break;
+		case 3:
+			phaseDrei.setProvinz(provinzIDByColor);
+			break;
 		}
 	}
 
