@@ -2,6 +2,7 @@ package risiko.local.ui.gui.swing.game;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Robot;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -20,19 +21,32 @@ public class KartenPanel extends JPanel {
 	int aktuellerSpielerID;
 	private PhasenPanel phasenPanel;
 	
-	public KartenPanel(Risiko risiko, int aktuellerSpielerID) {
+	public KartenPanel(Risiko risiko, int aktuellerSpielerID, int screenWidth, int screenHeight) {
 		this.risiko = risiko;
+		
 		this.aktuellerSpielerID = aktuellerSpielerID;
 		System.out.println(aktuellerSpielerID);
 		String spielername  = risiko.getSpielerName(aktuellerSpielerID);
-		initialize(spielername);
+		initialize(spielername, screenWidth, screenHeight);
 	}
 
-	private void initialize(String spielername) {
+	private void initialize(String spielername, int screenWidth, int screenHeight) {
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
+		Dimension centerSize = new Dimension(4*(screenWidth/5), 4*(screenHeight/5));
+		this.setMinimumSize(centerSize);
+		this.setPreferredSize(centerSize);
+		
+		ImagePanel myImage = new ImagePanel("images/Weltkarte.jpeg");
+		
+//		JLabel myImage = new JLabel(new ImageIcon("images/Weltkarte.jpeg"));
+//		myImage.setPreferredSize(centerSize);
+//		myImage.addMouseListener(getMouseAdapter());
+//		this.add(myImage); //layeredPane.add(myImage);
+		
 		JLabel aktuellerSpieler = new JLabel(spielername);
 		this.add(aktuellerSpieler);
+		
 		this.setVisible(true);
 	}
 	public void addMap(String spielername) {
@@ -40,10 +54,7 @@ public class KartenPanel extends JPanel {
 		//layeredPane.setPreferredSize(this.getSize());
 		// System.out.println("Breite "+this.getWidth() + " und " + this.getHeight());
 		 
-		JLabel myImage = new JLabel(new ImageIcon("images/Weltkarte.jpeg"));
-		myImage.setPreferredSize(this.getSize());
-		myImage.addMouseListener(getMouseAdapter());
-		this.add(myImage); //layeredPane.add(myImage);
+		
 		
 //		JLabel aktSpieler = new JLabel("Spieler "+ spielername +" ist an der Reihe");
 //		aktSpieler.setHorizontalTextPosition(JLabel.RIGHT);

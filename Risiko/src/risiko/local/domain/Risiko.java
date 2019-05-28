@@ -150,10 +150,14 @@ public class Risiko {
 	
 	public String[][] angreifen(int fromProvinz, int toProvinz, int anzahlEinheiten, int[] wuerfelErgebnisse) throws ProvinzNichtNachbarException {
 		String[][] ergebnis = null;
-		spiellogik.kannAngreifen(fromProvinz, toProvinz);
+		provinzBenachbart(fromProvinz, toProvinz);
 		spielVW.einheitenInvolviert(anzahlEinheiten, fromProvinz);
 		ergebnis = spiellogik.angriffAuswerten(wuerfelErgebnisse, fromProvinz, toProvinz, anzahlEinheiten);
 		return ergebnis;
+	}
+	
+	public void provinzBenachbart(int fromProvinz, int toProvinz) throws ProvinzNichtNachbarException {
+		spiellogik.kannAngreifen(fromProvinz, toProvinz);
 	}
 	
 	public boolean kannEinheitenNachruecken(int spielerID, int fromProvinz) {
@@ -228,6 +232,10 @@ public class Risiko {
 		spielVW.validiereProvinz(provinzID, aktuellerSpieler);
 	}
 
+	public boolean validiereGUIProvinz(int provinzID, int aktuellerSpieler) {
+		return spielVW.validiereGUIProvinz(provinzID, aktuellerSpieler);
+	}
+	
 	public void validiereEinheiten(int anzahlEinheiten, int spielerID) throws AnzahlEinheitenFalschException {
 		spielVW.validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
 	}

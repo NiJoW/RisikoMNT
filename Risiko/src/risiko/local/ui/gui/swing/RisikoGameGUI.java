@@ -80,9 +80,9 @@ public class RisikoGameGUI extends JFrame  {
 		this.setLayout(new BorderLayout());
 		this.setSize((screenWidth),(screenHeight));
 		
-		kartenPanel = new KartenPanel(risiko, aktuellerSpieler);
-		anweisungsPanel = new AnweisungsPanel(risiko, screenWidth, screenHeight, aktuellerSpieler);
-		phasenPanel = new PhasenPanel(risiko, screenWidth, screenHeight, new PhaseBeendenListener(), anweisungsPanel);
+		kartenPanel = new KartenPanel(risiko, aktuellerSpieler, screenWidth, screenHeight);
+		anweisungsPanel = new AnweisungsPanel(risiko, aktuellerSpieler);
+		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), anweisungsPanel);
 		kartenPanel.addPhasenPanel(phasenPanel);
 		
 		this.add(phasenPanel, BorderLayout.LINE_END);
@@ -134,6 +134,7 @@ public class RisikoGameGUI extends JFrame  {
 			int nextPhase = Integer.parseInt(e.getActionCommand());
 			//Phase: angreifen
 			anweisungsPanel.setPhase(nextPhase);
+			phasenPanel.setPhase(nextPhase);
 			System.out.println("Phase beendet, Phase "+nextPhase+" beginnen");
 		}
 	}

@@ -24,17 +24,14 @@ public class AnweisungsPanel extends JPanel {
 	
 	
 	
-	public AnweisungsPanel(Risiko risiko, int screenWidth, int screenHeight, int aktuellerSpieler) {
+	public AnweisungsPanel(Risiko risiko, int aktuellerSpieler) {
 		this.risiko = risiko;
 		this.aktuellerSpieler = aktuellerSpieler;
-		initialize(screenWidth, screenHeight);
+		initialize();
 	}
 
-	private void initialize(int screenWidth, int screenHeight) {	
+	private void initialize() {	
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
-		Dimension pageEndSize = new Dimension(screenWidth, screenHeight/5);
-		this.setMinimumSize(pageEndSize);
-		this.setPreferredSize(pageEndSize);
 		nachricht = new JLabel("Test Nachricht");
 		this.add(nachricht);
 		

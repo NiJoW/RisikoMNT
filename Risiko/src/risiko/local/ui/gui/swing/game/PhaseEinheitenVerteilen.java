@@ -92,7 +92,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		this.add(provinzLabel1);
 		
 		c.gridy = 7;
-		provinzLabel2 = new JLabel(""); // zuerst leer / geupdatet bei setProvinz
+		provinzLabel2 = new JLabel(" "); // zuerst leer / geupdatet bei setProvinz
 		layout.setConstraints(provinzLabel2, c);
 		this.add(provinzLabel2);
 		
@@ -200,17 +200,17 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	}
 	
 	public void setProvinz(int provinzID) {		
-		try {
-			risiko.validiereProvinz(provinzID, aktuellerSpieler);
+		if (risiko.validiereGUIProvinz(provinzID, aktuellerSpieler)) {
 			anweisungsPanel.setNachricht("");
 			gewaehlteProvinzID = provinzID;
 			provinzLabel2.setText(risiko.getProvinz(gewaehlteProvinzID).getName());
 			if (einheitenWollen > 0) {
 				bestaetigenButton.setEnabled(true);
-			} 
-		} catch (NichtProvinzDesSpielersException | ProvinzIDExistiertNichtException e) {
-			anweisungsPanel.setNachricht(e.getMessage());
-		} 
+			}
+		} else {
+			anweisungsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
+		}
+			
 			
 		
 		
