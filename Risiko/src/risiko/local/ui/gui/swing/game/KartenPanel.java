@@ -45,20 +45,20 @@ public class KartenPanel extends JPanel {
 		
 		//ImagePanel myImage = new ImagePanel("images/Weltkarte.jpeg");
 		
-//		JButton top = new JButton();
-//	    top.setBackground(Color.white);
-//	    top.setBounds(20, 20, 50, 50);
-//	    JButton middle = new JButton();
-//	    middle.setBackground(Color.gray);
-//	    middle.setBounds(40, 40, 50, 50);
-//	    JButton bottom = new JButton();
-//	    bottom.setBackground(Color.black);
-//	    bottom.setBounds(60, 60, 50, 50);
+		JButton top = new JButton();
+	    top.setBackground(Color.white);
+	    top.setBounds(20, 20, 50, 50);
+	    JButton middle = new JButton();
+	    middle.setBackground(Color.gray);
+	    middle.setBounds(40, 40, 50, 50);
+	    JButton bottom = new JButton();
+	    bottom.setBackground(Color.black);
+	    bottom.setBounds(60, 60, 50, 50);
 
-	    // Place the buttons in different layers
-//	    lp.add(middle, 2);
-//	    lp.add(top, 3);
-//	    lp.add(bottom, 1);
+	 //    Place the buttons in different layers
+	    lp.add(middle, 2);
+	    lp.add(top, 3);
+	    lp.add(bottom, 1);
 		
 		JLabel myImage = new JLabel(new ImageIcon("images/Weltkarte.jpeg"));
 		myImage.setPreferredSize(centerSize);
