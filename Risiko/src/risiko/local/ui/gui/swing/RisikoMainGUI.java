@@ -91,8 +91,8 @@ public class RisikoMainGUI implements LadeListener{
 
 	private void spielVorbereitung(int letzterAktiverSpielerID) {
 		// fuer laden und neues Spiel
-		// risiko.berechneNeueEinheiten(letzterAktiverSpielerID);
-		System.out.println(risiko.getVerteilbareEinheiten(letzterAktiverSpielerID));
+		risiko.berechneNeueEinheiten(letzterAktiverSpielerID);
+		System.out.println("Einheiten: " + risiko.getVerteilbareEinheiten(letzterAktiverSpielerID));
 
 	}
 

@@ -4,6 +4,8 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Robot;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
@@ -14,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import risiko.local.domain.Risiko;
 
@@ -22,7 +25,8 @@ public class KartenPanel extends JPanel {
 	Risiko risiko;
 	int aktuellerSpielerID;
 	private PhasenPanel phasenPanel;
-	JLayeredPane lp;
+
+	JLabel aktuellerSpieler;
 	
 	public KartenPanel(JLayeredPane lp, Risiko risiko, int aktuellerSpielerID, int screenWidth, int screenHeight) {
 		this.risiko = risiko;
@@ -42,28 +46,30 @@ public class KartenPanel extends JPanel {
 		Dimension centerSize = new Dimension(4*(screenWidth/5), 4*(screenHeight/5));
 		this.setMinimumSize(centerSize);
 		this.setPreferredSize(centerSize);
+		JTextField provinz = new JTextField("Provinz: ");
+		this.add(provinz);
 		
-		//ImagePanel myImage = new ImagePanel("images/Weltkarte.jpeg");
-		
-		JButton top = new JButton();
-	    top.setBackground(Color.white);
-	    top.setBounds(20, 20, 50, 50);
-	    JButton middle = new JButton();
-	    middle.setBackground(Color.gray);
-	    middle.setBounds(40, 40, 50, 50);
-	    JButton bottom = new JButton();
-	    bottom.setBackground(Color.black);
-	    bottom.setBounds(60, 60, 50, 50);
 
-	    // Place the buttons in different layers
-	    lp.add(middle, 2);
-	    lp.add(top, 3);
-	    lp.add(bottom, 1);
+		JButton bestaetigung = new JButton("bestaetigung");
+		bestaetigung.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				phasenPanel.setClickedProvinz(Integer.parseInt(provinz.getText()));
+			}
+			
+		});
+		this.add(bestaetigung);
+//		ImagePanel myImage = new ImagePanel("images/Weltkarte.jpeg");
 		
 		JLabel myImage = new JLabel(new ImageIcon("images/Weltkarte.jpeg"));
 		myImage.setPreferredSize(centerSize);
 		myImage.addMouseListener(getMouseAdapter());
-		//this.add(myImage, 1); //layeredPane.add(myImage);
+		this.add(myImage); //layeredPane.add(myImage);
+		
+		aktuellerSpieler = new JLabel(spielername);
+		this.add(aktuellerSpieler);
+
 		
 		JLabel aktuellerSpieler = new JLabel(spielername);
 		aktuellerSpieler.setBounds(70, 70, 60, 60);
@@ -71,6 +77,7 @@ public class KartenPanel extends JPanel {
 		lp.add(aktuellerSpieler, 4);
 		this.setVisible(true);
 	}
+	
 	public void addMap(String spielername) {
 		//JLayeredPane layeredPane = new JLayeredPane();
 		//layeredPane.setPreferredSize(this.getSize());
@@ -180,6 +187,12 @@ public class KartenPanel extends JPanel {
 
 	public void addPhasenPanel(PhasenPanel phasenPanel) {
 		this.phasenPanel = phasenPanel;
+	}
+
+	public void setAktuellerSpieler(int aktuellerSpielerID) {
+		this.aktuellerSpielerID = aktuellerSpielerID;
+		aktuellerSpieler.setText(risiko.getSpielerName(aktuellerSpielerID));
+		System.out.println("naechste Spieler: " + risiko.getSpielerName(aktuellerSpielerID));
 	}
 
 }
