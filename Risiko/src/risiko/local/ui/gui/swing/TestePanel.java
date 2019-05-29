@@ -25,53 +25,23 @@ import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 public class TestePanel extends JFrame {
-
+//5281 × 2820 //3439 × 2193
 	BufferedImage bi; //5281 ×  //(2820/4); //2820
-	int biWidth = (1259); //(1259/2); //(5281/4); //
-	int biHeigth =(1160); //(1160/2);
+	int biWidth = (3439); //(1259/2); //(5281/4); //
+	int biHeigth =(2193); //(1160/2);
 	
     public TestePanel() {
 
-       /* ImageIcon face = new ImageIcon("images/IllustratorWelt.png"); //new ImageIcon(getClass().getResource("/images/Weltkarte.jpeg"));
-        
-        JLabel fLab = new JLabel(face);
-        fLab.setBounds(0, 0, 1400, 1400);
-    
-        JLayeredPane layers = new JLayeredPane();
-
-        layers.add(fLab, 1);
-   
-        JPanel rightPanel = new JPanel() {
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(1400, 1400);
-            }
-        };
-        rightPanel.setLayout(null);
-        layers.setBounds(0, 0, 1400, 1400);
-        rightPanel.add(layers);
-
-       
-   
-
-        add(rightPanel);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);*/
+      
     	try
         {
-          // the line that reads the image file
+  
     		
-          bi = ImageIO.read(new File("images/karte.svg"));
-        //  setSize(bi.getWidth(), bi.getHeight());
-          
-          setSize(biWidth,biHeigth);
-       
+          bi = ImageIO.read(new File("images/weltPS.png")); 
+               setSize(biWidth,biHeigth);
   		this.addMouseListener(getMouseAdapter());
 
-          // work with the image here ...
+        
         } 
         catch (IOException e)
         {
@@ -96,14 +66,20 @@ public class TestePanel extends JFrame {
 					Robot r = new Robot();
 					c = r.getPixelColor(e.getX(),e.getY()); 
 					rgb = c.getRGB();
-					//System.out.println(c);
 					System.out.println("Geklickter Farbwert: "+rgb);
-					//getProvinzIDByColor(rgb);
-					//System.out.println(getProvinzIDByColor(rgb));
-					//phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
+					
 				} catch (AWTException e1) {
 					e1.printStackTrace();
 				} 
+//            	
+//            	int x = e.getX();
+//            	int y = e.getY();
+//            	
+//            	System.out.println("Koordinaten: " + x + ", " + y);
+//            	
+//            	Color myColor = new Color(bi.getRGB(x, y));
+//            	
+//            	System.out.println("Geklickter Farbwert: " + myColor);
             	
             	//System.out.println("clicked");
             }
