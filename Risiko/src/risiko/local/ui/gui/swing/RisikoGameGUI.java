@@ -47,13 +47,14 @@ import risiko.local.domain.exceptions.SpielerNichtTeilDesSpielsException;
 import risiko.local.ui.cui.RisikoClientCUI;
 import risiko.local.ui.gui.swing.game.AnweisungsPanel;
 import risiko.local.ui.gui.swing.game.KartenPanel;
+import risiko.local.ui.gui.swing.game.KartenPanelV1;
 import risiko.local.ui.gui.swing.game.PhasenPanel;
 
 public class RisikoGameGUI extends JFrame  { 
 	private Risiko risiko;
 	private BufferedReader in;
-	//Moumita
-	KartenPanel kartenPanel;
+	
+	KartenPanelV1 kartenPanel;
 	PhasenPanel phasenPanel;
 	AnweisungsPanel anweisungsPanel;
 	int aktuellerSpieler;
@@ -84,9 +85,9 @@ public class RisikoGameGUI extends JFrame  {
 		this.setLayout(new BorderLayout());
 		this.setSize((screenWidth),(screenHeight));
 		
-		kartenPanel = new KartenPanel(risiko, aktuellerSpieler, screenWidth, screenHeight);
+		kartenPanel = new KartenPanelV1(risiko, aktuellerSpieler, screenWidth, screenHeight);
 		anweisungsPanel = new AnweisungsPanel(risiko, aktuellerSpieler);
-		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), anweisungsPanel);
+		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), anweisungsPanel, kartenPanel);
 		kartenPanel.addPhasenPanel(phasenPanel);
 		
 		this.add(phasenPanel, BorderLayout.LINE_END);

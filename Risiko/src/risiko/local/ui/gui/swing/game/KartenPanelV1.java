@@ -48,7 +48,7 @@ public class KartenPanelV1 extends JPanel {
 		this.setMinimumSize(centerSize);
 		this.setPreferredSize(centerSize);
 		JTextField provinz = new JTextField("Provinz: ");
-//		this.add(provinz);
+		this.add(provinz);
 		
 		JButton bestaetigung = new JButton("bestaetigung");
 		bestaetigung.addActionListener(new ActionListener() {
@@ -59,7 +59,7 @@ public class KartenPanelV1 extends JPanel {
 			}
 			
 		});
-//		this.add(bestaetigung);
+		this.add(bestaetigung);
 //		ImagePanel myImage = new ImagePanel("images/Weltkarte.jpeg");
 		try {
 			karte = ImageIO.read(new File("images/test2.png"));
@@ -67,7 +67,7 @@ public class KartenPanelV1 extends JPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		this.addMouseListener(getMouseAdapter());
+//		this.addMouseListener(getMouseAdapter());
 		
 ////		JLabel myImage = new JLabel(karte);
 //		myImage.setPreferredSize(centerSize);
@@ -80,11 +80,11 @@ public class KartenPanelV1 extends JPanel {
 		this.setVisible(true);
 	}
 	
-	public void paint(Graphics g) {
-		Dimension d = getSize();
-		
-		g.drawImage(karte, 0, 0, (int) d.getWidth(), (int) d.getHeight(), this); //Observer = null -> moeglicherweise
-	}
+//	public void paint(Graphics g) {
+//		Dimension d = getSize();
+//		
+//		g.drawImage(karte, 0, 0, (int) d.getWidth(), (int) d.getHeight(), this); //Observer = null -> moeglicherweise
+//	}
 	
 	public void addMap(String spielername) {
 		//JLayeredPane layeredPane = new JLayeredPane();
@@ -100,37 +100,37 @@ public class KartenPanelV1 extends JPanel {
 		//this.add(layeredPane);
 	}
 
-	private MouseAdapter getMouseAdapter() {
-		return new MouseAdapter() {
-			Color c;
-			int rgb;
-            
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            	
-            		int xKoordinate = e.getX();
-            		int yKoordinate = e.getY();
-            		
-            		System.out.println("x-Koordinate = " + xKoordinate);
-            		
-            		Color myColor = new Color(karte.getRGB(xKoordinate, yKoordinate));
-//            		System.out.println(karte.getData().getPixel(xKoordinate, yKoordinate, new int[0]));
-            		//					Robot r = new Robot();
-//					c = r.getPixelColor(e.getX(),e.getY()); 
-//					rgb = c.getRGB();
-					//System.out.println(c);
-					System.out.println("Geklickter Farbwert: " + myColor);
-					//getProvinzIDByColor(rgb);
-//					System.out.println(getProvinzIDByColor(rgb));
-					phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
-//				} catch (AWTException e1) {
-//					e1.printStackTrace();
-//				} 
-            	
-            	System.out.println("clicked");
-            }
-        };
-	}
+//	private MouseAdapter getMouseAdapter() {
+//		return new MouseAdapter() {
+//			Color c;
+//			int rgb;
+//            
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//            	
+//            		int xKoordinate = e.getX();
+//            		int yKoordinate = e.getY();
+//            		
+//            		System.out.println("x-Koordinate = " + xKoordinate);
+//            		
+//            		Color myColor = new Color(karte.getRGB(xKoordinate, yKoordinate));
+////            		System.out.println(karte.getData().getPixel(xKoordinate, yKoordinate, new int[0]));
+//            		//					Robot r = new Robot();
+////					c = r.getPixelColor(e.getX(),e.getY()); 
+////					rgb = c.getRGB();
+//					//System.out.println(c);
+//					System.out.println("Geklickter Farbwert: " + myColor);
+//					//getProvinzIDByColor(rgb);
+////					System.out.println(getProvinzIDByColor(rgb));
+//					phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
+////				} catch (AWTException e1) {
+////					e1.printStackTrace();
+////				} 
+//            	
+//            	System.out.println("clicked");
+//            }
+//        };
+//	}
 	
 	 private int getProvinzIDByColor(int rgb) {
 		// if((c.getAlpha()==255) && (c.getRGB()()==255) && (c.getAlpha()==255) )
