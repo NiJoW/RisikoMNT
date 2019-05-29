@@ -12,10 +12,12 @@ import javax.swing.JPanel;
 import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
+import risiko.local.ui.gui.swing.game.PhasenPanel.InitialeRundeBeendet;
 
 public class PhaseEinheitenVerteilen extends JPanel{
 	Risiko risiko;
 	int aktuellerSpieler;
+	int phasenID = 0;
 	
 	GridBagConstraints c;
 	GridBagLayout layout;
@@ -36,14 +38,17 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	int verteilbareEinheiten;
 	private AnweisungsPanel anweisungsPanel;
 	int gewaehlteProvinzID = -1;
+	JButton initialesVerteilenButton;
+	InitialeRundeBeendet initialeRundeBeendet;
 	
 	
 	
-	public PhaseEinheitenVerteilen(Risiko risiko, AnweisungsPanel anweisungsPanel, int aktuellerSpieler) {
+	public PhaseEinheitenVerteilen(Risiko risiko, AnweisungsPanel anweisungsPanel, int aktuellerSpieler, InitialeRundeBeendet initialeRundeBeendet) {
 		this.risiko = risiko;
 		this.anweisungsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
 		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
+		this.initialeRundeBeendet = initialeRundeBeendet;
 		setUpUI();
 	}
 	
@@ -58,7 +63,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		layout.setConstraints(leereZeile, c);
 		this.add(leereZeile);
 		// Text
-		phaseEinheitenText = new JLabel("Phase: Einheiten Verteilen");
+		phaseEinheitenText = new JLabel("Vorbereitung: Einheiten setzen");
 		
 		c.gridy = 1;
 		layout.setConstraints(phaseEinheitenText, c);
@@ -121,6 +126,13 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		bestaetigenButton.setEnabled(false);
 		this.add(bestaetigenButton);
 		
+		initialesVerteilenButton = new JButton("fertig");
+		c.gridx = 1;
+		c.gridy = 12;
+		layout.setConstraints(initialesVerteilenButton, c);
+		initialesVerteilenButton.setEnabled(false);
+		this.add(initialesVerteilenButton);
+		
 		// Button
 		einheitenPhaseBeenden = new JButton("Phase beenden");
 		einheitenPhaseBeenden.setActionCommand("2");
@@ -128,7 +140,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		c.gridy = 12;
 		layout.setConstraints(einheitenPhaseBeenden, c);
 		einheitenPhaseBeenden.setEnabled(false);
-		this.add(einheitenPhaseBeenden);
+//		this.add(einheitenPhaseBeenden);
 
 	}
 	
@@ -177,15 +189,18 @@ public class PhaseEinheitenVerteilen extends JPanel{
 					einheitenWollen = 0;
 					einheitenLabel.setText(einheitenWollen+"");
 					bestaetigenButton.setEnabled(false);
+					initialesVerteilenButton.setEnabled(false);
 				}
 				
 				if (verteilbareEinheiten == 0) { //einheitenWollen == 0 && 
+					initialesVerteilenButton.setEnabled(true);
 					einheitenPhaseBeenden.setEnabled(true);
 				}
 				
 			}
 		});
 		
+		initialesVerteilenButton.addActionListener(initialeRundeBeendet);
 		
 		einheitenPhaseBeenden.addActionListener(phaseBeendenListener);
 		einheitenPhaseBeenden.addActionListener(new ActionListener() {
@@ -207,14 +222,39 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			provinzLabel2.setText(risiko.getProvinz(gewaehlteProvinzID).getName());
 			if (einheitenWollen > 0) {
 				bestaetigenButton.setEnabled(true);
+				initialesVerteilenButton.setEnabled(true);
 			}
 		} else {
 			anweisungsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
 		}
-			
-			
+				
+	}
+
+	public void initialesVerteilen(int spielerID) {
+		resetUI(spielerID);
 		
+		initialesVerteilenButton.setEnabled(false);
+		initialesVerteilenButton.setActionCommand(++spielerID+"");
+	}
+
+	public void beginneSpiel(int spieler) {
+		resetUI(spieler);
+		phaseEinheitenText.setText("Phase: Einheiten verteilen");
+		initialesVerteilenButton.setVisible(false);
 		
+		this.add(einheitenPhaseBeenden);
+	}
+	
+	private void resetUI(int spieler) {
+		aktuellerSpieler = spieler;
+		
+		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
+		anweisungsLabel1.setText("Du darfst noch " + verteilbareEinheiten + " Einheiten verteilen.");
+		
+		provinzLabel2.setText(" ");
+		
+		einheitenWollen = 0;
+		einheitenLabel.setText(einheitenWollen+"");
 		
 	}
 }

@@ -85,16 +85,10 @@ public class RisikoMainGUI implements LadeListener{
 			}
 		}
 		
-		spielVorbereitung(aktuellerSpieler);
 		spielFenster = new RisikoGameGUI(risiko, aktuellerSpieler);
 	}
 
-	private void spielVorbereitung(int letzterAktiverSpielerID) {
-		// fuer laden und neues Spiel
-		risiko.berechneNeueEinheiten(letzterAktiverSpielerID);
-		System.out.println("Einheiten: " + risiko.getVerteilbareEinheiten(letzterAktiverSpielerID));
-
-	}
+	
 
 	@Override
 	public void ladeSpiel(int spielID, String name) {
