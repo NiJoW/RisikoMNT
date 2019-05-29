@@ -3,13 +3,18 @@ package risiko.local.ui.gui.swing.game;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,6 +30,7 @@ public class KartenPanel extends JPanel {
 	int aktuellerSpielerID;
 	private PhasenPanel phasenPanel;
 	JLabel aktuellerSpieler;
+	BufferedImage karte;
 	
 	public KartenPanel(Risiko risiko, int aktuellerSpielerID, int screenWidth, int screenHeight) {
 		this.risiko = risiko;
@@ -42,7 +48,7 @@ public class KartenPanel extends JPanel {
 		this.setMinimumSize(centerSize);
 		this.setPreferredSize(centerSize);
 		JTextField provinz = new JTextField("Provinz: ");
-		this.add(provinz);
+//		this.add(provinz);
 		
 		JButton bestaetigung = new JButton("bestaetigung");
 		bestaetigung.addActionListener(new ActionListener() {
@@ -53,18 +59,31 @@ public class KartenPanel extends JPanel {
 			}
 			
 		});
-		this.add(bestaetigung);
+//		this.add(bestaetigung);
 //		ImagePanel myImage = new ImagePanel("images/Weltkarte.jpeg");
+		try {
+			karte = ImageIO.read(new File("images/test2.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		this.addMouseListener(getMouseAdapter());
 		
-		JLabel myImage = new JLabel(new ImageIcon("images/Weltkarte.jpeg"));
-		myImage.setPreferredSize(centerSize);
-		myImage.addMouseListener(getMouseAdapter());
-		this.add(myImage); //layeredPane.add(myImage);
+////		JLabel myImage = new JLabel(karte);
+//		myImage.setPreferredSize(centerSize);
+//		myImage.addMouseListener(getMouseAdapter());
+//		this.add(myImage); //layeredPane.add(myImage);
 		
 		aktuellerSpieler = new JLabel(spielername);
 		this.add(aktuellerSpieler);
 		
 		this.setVisible(true);
+	}
+	
+	public void paint(Graphics g) {
+		Dimension d = getSize();
+		
+		g.drawImage(karte, 0, 0, (int) d.getWidth(), (int) d.getHeight(), this); //Observer = null -> moeglicherweise
 	}
 	
 	public void addMap(String spielername) {
@@ -88,20 +107,27 @@ public class KartenPanel extends JPanel {
             
             @Override
             public void mouseClicked(MouseEvent e) {
-            	try {
-					Robot r = new Robot();
-					c = r.getPixelColor(e.getX(),e.getY()); 
-					rgb = c.getRGB();
-					//System.out.println(c);
-					System.out.println("Geklickter Farbwert: "+rgb);
-					//getProvinzIDByColor(rgb);
-					System.out.println(getProvinzIDByColor(rgb));
-					phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
-				} catch (AWTException e1) {
-					e1.printStackTrace();
-				} 
             	
-            	//System.out.println("clicked");
+            		int xKoordinate = e.getX();
+            		int yKoordinate = e.getY();
+            		
+            		System.out.println("x-Koordinate = " + xKoordinate);
+            		
+            		Color myColor = new Color(karte.getRGB(xKoordinate, yKoordinate));
+//            		System.out.println(karte.getData().getPixel(xKoordinate, yKoordinate, new int[0]));
+            		//					Robot r = new Robot();
+//					c = r.getPixelColor(e.getX(),e.getY()); 
+//					rgb = c.getRGB();
+					//System.out.println(c);
+					System.out.println("Geklickter Farbwert: " + myColor);
+					//getProvinzIDByColor(rgb);
+//					System.out.println(getProvinzIDByColor(rgb));
+					phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
+//				} catch (AWTException e1) {
+//					e1.printStackTrace();
+//				} 
+            	
+            	System.out.println("clicked");
             }
         };
 	}
