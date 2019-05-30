@@ -42,6 +42,9 @@ public class KartenPanel extends JPanel {
 	}
 	
 	private void initialize(String spielername, int screenWidth, int screenHeight) {
+		this.setSize(1024,768);
+		this.setPreferredSize(new Dimension(1024,768));
+		
 		ImagePanel myImage = new ImagePanel();
 		this.add(myImage);
 		this.setVisible(true);
@@ -54,7 +57,7 @@ public class KartenPanel extends JPanel {
 
 	public void setAktuellerSpieler(int aktuellerSpielerID) {
 		this.aktuellerSpielerID = aktuellerSpielerID;
-		aktuellerSpieler.setText(risiko.getSpielerName(aktuellerSpielerID));
+	//	aktuellerSpieler.setText(risiko.getSpielerName(aktuellerSpielerID));
 		System.out.println("naechste Spieler: " + risiko.getSpielerName(aktuellerSpielerID));
 	}
 

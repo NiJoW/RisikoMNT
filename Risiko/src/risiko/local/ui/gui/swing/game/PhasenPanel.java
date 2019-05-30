@@ -25,11 +25,11 @@ public class PhasenPanel extends JPanel {
 
 	int phasenID;
 	PhaseBeendenListener phaseBeendenListener;
-	KartenPanelV1 kartenPanel;
+	KartenPanel kartenPanel;
 
 	
 
-	public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, AnweisungsPanel anweisungsPanel, KartenPanelV1 kartenPanel) {
+	public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, AnweisungsPanel anweisungsPanel, KartenPanel kartenPanel) {
 		this.risiko = risiko;
 		this.anweisungsPanel = anweisungsPanel;
 		this.kartenPanel = kartenPanel;
