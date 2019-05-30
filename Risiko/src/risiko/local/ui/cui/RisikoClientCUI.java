@@ -549,6 +549,7 @@ public class RisikoClientCUI {
 					}
 
 					try {
+						risiko.verschiebenPruefen(fromProvinz, toProvinz, anzahl);
 						risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahl);
 					} catch (AnzahlEinheitenFalschException | NichtProvinzDesSpielersException
 							| ProvinzNichtNachbarException | ProvinzIDExistiertNichtException e) {
@@ -674,7 +675,8 @@ public class RisikoClientCUI {
 
 			System.out.print("Anzahl der Einheiten: ");
 			anzahlEinheiten = Integer.parseInt(liesEingabe());
-
+			
+			risiko.verschiebenPruefen(fromProvinz, toProvinz, anzahlEinheiten);
 			risiko.einheitenVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
 
 		} catch (NumberFormatException e) {
