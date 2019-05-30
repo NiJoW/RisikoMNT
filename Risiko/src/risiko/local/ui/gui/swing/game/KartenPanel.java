@@ -31,6 +31,8 @@ public class KartenPanel extends JPanel {
 	private PhasenPanel phasenPanel;
 	JLabel aktuellerSpieler;
 	BufferedImage karte;
+	int width = 1024;
+	int height = 525;
 	
 	public KartenPanel(Risiko risiko, int aktuellerSpielerID, int screenWidth, int screenHeight) {
 		this.risiko = risiko;
@@ -42,8 +44,8 @@ public class KartenPanel extends JPanel {
 	}
 	
 	private void initialize(String spielername, int screenWidth, int screenHeight) {
-		this.setSize(512,384);
-		this.setPreferredSize(new Dimension(512,384));
+		this.setSize(width,height);
+		this.setPreferredSize(new Dimension(width,height));
 		
 		ImagePanel myImage = new ImagePanel();
 		this.add(myImage);

@@ -62,7 +62,7 @@ public class WeltVerwaltung {
 		provinzListe.add(new Provinz("Japan", 11));
 		provinzListe.add(new Provinz("Kamtschatka", 12));
 		provinzListe.add(new Provinz("Mittlerer Osten", 13));
-		provinzListe.add(new Provinz("Monglei", 14));
+		provinzListe.add(new Provinz("Mongolei", 14));
 		provinzListe.add(new Provinz("Siam", 15));
 		provinzListe.add(new Provinz("Sibirien", 16));
 		provinzListe.add(new Provinz("Ural", 17));

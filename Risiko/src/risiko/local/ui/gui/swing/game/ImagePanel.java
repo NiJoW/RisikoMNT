@@ -16,22 +16,19 @@ public class ImagePanel extends JPanel{
     private BufferedImage bi;
 //    String pathToImage;
     int imgPanelWidth = 1024;
-    int imgPanelHeigth = 700;
+    int imgPanelHeigth = 525;
     int trueWidth;
 	int trueHeight;
 	float scaleFactorX;
 	float scaleFactorY;
 	
-
+	
     public ImagePanel() {
-    	//1024/768
-    	this.setSize(imgPanelWidth,imgPanelHeigth);
+       	this.setSize(imgPanelWidth,imgPanelHeigth);
 		this.setPreferredSize(new Dimension(imgPanelWidth,imgPanelHeigth));
 
-//    	pathToImage = "images/weltPS.png";
-       try {                
-          //image = ImageIO.read(new File(pathToImage));
-          bi = ImageIO.read(new File("images/weltpic.png"));
+       try {
+          bi = ImageIO.read(new File("images/WeltkarteFINAL.png"));
           trueWidth = bi.getWidth();
   		  trueHeight = bi.getHeight();
           setSize(imgPanelWidth,imgPanelHeigth);
@@ -58,7 +55,8 @@ public class ImagePanel extends JPanel{
 		scaleFactorY = trueHeight / parentHeight;
 		
 		
-		
+		System.out.println(scaleFactorX +" y: " + scaleFactorY);
+		System.out.println(trueWidth + " " + trueHeight);
 		System.out.println("breite "+this.getWidth() + " hoehe" + this.getHeight());
 		System.out.println("breite "+this.getParent().getWidth() + " hoehe" + this.getParent().getHeight());
 //        g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters            
@@ -72,12 +70,15 @@ public class ImagePanel extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
             		
-            		int xKoordinate = (int) (e.getX()*scaleFactorX);
-            		int yKoordinate = (int) (e.getY()*scaleFactorY);
-            		System.out.println("Skalierte x-Koordinate = " + xKoordinate);
-            		System.out.println("Skalierte y-Koordinate = " + yKoordinate);
+            		float xKoordinate = (e.getX()*scaleFactorX);//*scaleFactorX
+            		float yKoordinate = (e.getY()*scaleFactorY);
+            		int xK = (int)xKoordinate;
+            		int yK = (int)yKoordinate;
             		
-            		Color myColor = new Color(bi.getRGB(xKoordinate, yKoordinate));
+//            		System.out.println("Skalierte x-Koordinate = " + xKoordinate);
+//            		System.out.println("Skalierte y-Koordinate = " + yKoordinate);
+            		
+            		Color myColor = new Color(bi.getRGB(xK, yK));
 //            		System.out.println(karte.getData().getPixel(xKoordinate, yKoordinate, new int[0]));
             		//					Robot r = new Robot();
 //					c = r.getPixelColor(e.getX(),e.getY()); 
@@ -91,7 +92,7 @@ public class ImagePanel extends JPanel{
 //					e1.printStackTrace();
 //				} 
             	
-            	System.out.println("clicked");
+//            	System.out.println("clicked");
             }
         };
 	}
