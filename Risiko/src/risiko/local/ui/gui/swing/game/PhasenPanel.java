@@ -45,7 +45,7 @@ public class PhasenPanel extends JPanel {
 		this.add(phaseEins);
 		phaseZwei = new PhaseAngriff(risiko, anweisungsPanel, aktuellerSpieler);
 		this.add(phaseZwei);
-		phaseDrei = new PhaseEinheitenVerschieben();
+		phaseDrei = new PhaseEinheitenVerschieben(risiko, anweisungsPanel, aktuellerSpieler);
 		this.add(phaseDrei);
 
 		this.setBorder(BorderFactory.createLineBorder(Color.black));

@@ -24,6 +24,7 @@ import risiko.local.domain.exceptions.AnzahlEinheitenFalschException;
 import risiko.local.valueobjects.Einheitenkarte;
 import risiko.local.valueobjects.Provinz;
 import risiko.local.valueobjects.Spieler;
+import risiko.local.valueobjects.Welt;
 
 public class Risiko {
 	private SpielerVerwaltung spielerVW;
@@ -79,6 +80,10 @@ public class Risiko {
 	
 	public int getVerteilbareEinheiten(int id) {
 		return spielerVW.getVerteilbareEinheiten(id);
+	}
+	
+	public int getVerschiebbareEinheiten(int from) {
+		return weltVW.getProvinzListe().get(from).getAnzahlVerschiebbareEinheiten();
 	}
 	
 	public Vector<Provinz> getProvinzenVonSpieler(int id){
@@ -177,9 +182,11 @@ public class Risiko {
 //----------------------VERSCHIEBEN------------------------	
 
 	
-
-	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersException, ProvinzNichtNachbarException, ProvinzIDExistiertNichtException {
+	public void verschiebenPruefen(int fromProvinz, int toProvinz, int anzahlEinheiten)  throws AnzahlEinheitenFalschException, NichtProvinzDesSpielersException, ProvinzNichtNachbarException, ProvinzIDExistiertNichtException {
 		spiellogik.kannVerschieben(fromProvinz, toProvinz, anzahlEinheiten);
+	}
+	
+	public void einheitenVerschieben(int fromProvinz, int toProvinz, int anzahlEinheiten) {
 		spiellogik.verschiebe(anzahlEinheiten, fromProvinz, toProvinz);
 		
 	}
@@ -190,7 +197,11 @@ public class Risiko {
 		spielerVW.resetProvinzErobert(spieler);
 	}
 
-	
+	public void validiereGUIVerschieben(int toProvinz, int fromProvinz) throws NichtProvinzDesSpielersException, ProvinzNichtNachbarException {
+		Vector<Provinz> pListe = weltVW.getProvinzListe();
+		Welt welt = weltVW.getWelt();
+		spiellogik.beziehungPruefen(welt, pListe, toProvinz, fromProvinz);		
+	}
 	
 	
 //------------------EINHEITENKARTEN---------------------

@@ -297,6 +297,14 @@ public class SpielLogik {
 			throw new AnzahlEinheitenFalschException(verschiebbareEinheiten);
 		}
 			
+		beziehungPruefen(welt, pListe, from, to);
+		
+		
+	}
+	
+
+	public void beziehungPruefen(Welt welt, Vector<Provinz> pListe, int from, int to) throws NichtProvinzDesSpielersException, ProvinzNichtNachbarException {
+
 		if(!(pListe.get(from).getBesitzer().equals(pListe.get(to).getBesitzer()))) {
 			//kann nur in eigene Provinzen Einheiten verschieden
 			throw new NichtProvinzDesSpielersException();
@@ -316,9 +324,7 @@ public class SpielLogik {
 //				}
 //			}
 //		}
-		
 	}
-	
 
 	private void validiereProvinzID(int provinz) throws ProvinzIDExistiertNichtException {
 		if(provinz<0 || provinz>41) {
