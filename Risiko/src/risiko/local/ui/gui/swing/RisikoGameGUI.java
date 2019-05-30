@@ -98,6 +98,7 @@ public class RisikoGameGUI extends JFrame  {
 		this.pack();
 		System.out.println(kartenPanel.getSize());
 //		kartenPanel.addMap(risiko.getSpielerName(aktuellerSpieler));
+		this.setResizable(false);
 		this.setVisible(true);
 		this.pack();
 		
