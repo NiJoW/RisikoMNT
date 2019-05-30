@@ -42,8 +42,8 @@ public class KartenPanel extends JPanel {
 	}
 	
 	private void initialize(String spielername, int screenWidth, int screenHeight) {
-		this.setSize(1024,768);
-		this.setPreferredSize(new Dimension(1024,768));
+		this.setSize(512,384);
+		this.setPreferredSize(new Dimension(512,384));
 		
 		ImagePanel myImage = new ImagePanel();
 		this.add(myImage);
