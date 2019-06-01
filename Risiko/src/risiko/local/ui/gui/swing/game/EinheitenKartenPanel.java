@@ -5,23 +5,20 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class AnweisungsPanel extends JPanel{
-	
+public class EinheitenKartenPanel extends JPanel {
 	JLabel nachricht;
 	
-	public AnweisungsPanel(int parentWidth, int parentHeight) {
+	public EinheitenKartenPanel(int parentWidth, int parentHeight) {
 		setUpUI(parentWidth,parentHeight);
 	}
 	private void setUpUI(int parentWidth, int parentHeight) {
-		System.out.println(parentWidth);
-		this.setSize(parentWidth/2,parentHeight);
-		this.setPreferredSize(new Dimension(parentWidth/2,parentHeight));
-		nachricht = new JLabel("Anweisung");
+		this.setSize(parentWidth/4,parentHeight);
+		this.setPreferredSize(new Dimension(parentWidth/4,parentHeight));
+		nachricht = new JLabel("EinheitenKarten");
 		this.add(nachricht);
 		
 	}
 	public void setNachricht(String message) {
 		nachricht.setText(message);
 	}
-
 }

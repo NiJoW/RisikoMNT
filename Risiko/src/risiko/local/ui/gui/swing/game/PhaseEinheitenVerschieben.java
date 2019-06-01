@@ -18,7 +18,7 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
 public class PhaseEinheitenVerschieben  extends JPanel {
 	Risiko risiko;
-	AnweisungsPanel anweisungsPanel;	
+	InformationsPanel anweisungsPanel;	
 	int aktuellerSpieler;
 	
 	GridBagConstraints c;
@@ -45,7 +45,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 	int toProvinzID;
 	String verschiebeProvinzName;
 	
-	PhaseEinheitenVerschieben(Risiko risiko, AnweisungsPanel anweisungsPanel, int aktuellerSpieler){
+	PhaseEinheitenVerschieben(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler){
 		this.risiko = risiko;
 		this.anweisungsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;

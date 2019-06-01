@@ -45,7 +45,7 @@ import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.SpielNichtVorhandenException;
 import risiko.local.domain.exceptions.SpielerNichtTeilDesSpielsException;
 import risiko.local.ui.cui.RisikoClientCUI;
-import risiko.local.ui.gui.swing.game.AnweisungsPanel;
+import risiko.local.ui.gui.swing.game.InformationsPanel;
 import risiko.local.ui.gui.swing.game.KartenPanel;
 import risiko.local.ui.gui.swing.game.KartenPanelV1;
 import risiko.local.ui.gui.swing.game.PhasenPanel;
@@ -56,7 +56,7 @@ public class RisikoGameGUI extends JFrame  {
 	
 	KartenPanel kartenPanel;
 	PhasenPanel phasenPanel;
-	AnweisungsPanel anweisungsPanel;
+	InformationsPanel informationsPanel;
 	int aktuellerSpieler;
 	
 	public RisikoGameGUI(Risiko risiko, int aktuellerSpieler) {
@@ -86,17 +86,18 @@ public class RisikoGameGUI extends JFrame  {
 		this.setSize((screenWidth),(screenHeight));
 		
 		kartenPanel = new KartenPanel(risiko, aktuellerSpieler, screenWidth, screenHeight);
-		anweisungsPanel = new AnweisungsPanel(risiko, aktuellerSpieler);
-		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), anweisungsPanel, kartenPanel);
-		kartenPanel.addPhasenPanel(phasenPanel);
+		informationsPanel = new InformationsPanel(risiko, aktuellerSpieler);
+		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), informationsPanel, kartenPanel);
+		kartenPanel.addMapAndPhasenPanel(phasenPanel);
 		
 		this.add(phasenPanel, BorderLayout.LINE_END);
-		this.add(anweisungsPanel, BorderLayout.PAGE_END);
+		this.add(informationsPanel, BorderLayout.PAGE_END);
 		this.add(kartenPanel, BorderLayout.CENTER);
 		
 		this.setVisible(true);
 		this.pack();
 		System.out.println(kartenPanel.getSize());
+		informationsPanel.setUpUI();
 //		kartenPanel.addMap(risiko.getSpielerName(aktuellerSpieler));
 		this.setResizable(false);
 		this.setVisible(true);
@@ -121,9 +122,9 @@ public class RisikoGameGUI extends JFrame  {
 		
 		//Phase: EInheitenverteilen
 		phasenPanel.setPhase(1);
-		anweisungsPanel.setPhase(1);
+		informationsPanel.setPhase(1);
 		phasenPanel.setAktuellerSpieler(spielerID);
-		anweisungsPanel.setAktuellerSpieler(spielerID);
+		informationsPanel.setAktuellerSpieler(spielerID);
 	
 		
 				//menueNeueEinheitenPhase(o);
@@ -147,10 +148,10 @@ public class RisikoGameGUI extends JFrame  {
 					aktuellerSpieler = 0;
 				}
 				phasenPanel.setAktuellerSpieler(aktuellerSpieler);
-				anweisungsPanel.setAktuellerSpieler(aktuellerSpieler);
+				informationsPanel.setAktuellerSpieler(aktuellerSpieler);
 				kartenPanel.setAktuellerSpieler(aktuellerSpieler);
 			}
-			anweisungsPanel.setPhase(nextPhase);
+			informationsPanel.setPhase(nextPhase);
 			phasenPanel.setPhase(nextPhase);
 			System.out.println("Phase beendet, Phase "+nextPhase+" beginnen");
 		}
