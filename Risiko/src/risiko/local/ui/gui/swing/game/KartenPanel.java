@@ -27,6 +27,8 @@ import risiko.local.domain.Risiko;
 public class KartenPanel extends JPanel {
 	
 	Risiko risiko;
+	AnweisungsPanel anweisungsPanel;
+	
 	int aktuellerSpielerID;
 	private PhasenPanel phasenPanel;
 	JLabel aktuellerSpieler;
@@ -34,8 +36,9 @@ public class KartenPanel extends JPanel {
 	int width = 1024;
 	int height = 525;
 	
-	public KartenPanel(Risiko risiko, int aktuellerSpielerID, int screenWidth, int screenHeight) {
+	public KartenPanel(Risiko risiko, AnweisungsPanel anweisungsPanel, int aktuellerSpielerID, int screenWidth, int screenHeight) {
 		this.risiko = risiko;
+		this.anweisungsPanel = anweisungsPanel;
 		
 		this.aktuellerSpielerID = aktuellerSpielerID;
 		System.out.println(aktuellerSpielerID);
@@ -47,7 +50,7 @@ public class KartenPanel extends JPanel {
 		this.setSize(width,height);
 		this.setPreferredSize(new Dimension(width,height));
 		
-		ImagePanel myImage = new ImagePanel();
+		ImagePanel myImage = new ImagePanel(this);
 		this.add(myImage);
 		this.setVisible(true);
 	}
@@ -61,6 +64,14 @@ public class KartenPanel extends JPanel {
 		this.aktuellerSpielerID = aktuellerSpielerID;
 	//	aktuellerSpieler.setText(risiko.getSpielerName(aktuellerSpielerID));
 		System.out.println("naechste Spieler: " + risiko.getSpielerName(aktuellerSpielerID));
+	}
+
+	public void setClickedProvinz(int provinzByColor) {
+		if(provinzByColor == 42) {
+			anweisungsPanel.setNachricht("Bitte waehle eine Provinz aus.");
+		}
+		phasenPanel.setClickedProvinz(provinzByColor);
+
 	}
 
 }

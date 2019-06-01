@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -37,6 +38,8 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 	JLabel einheitenLabel;
 	JButton einheitenPlus;
 	JButton bestaetigenButton;
+	
+	JButton speicherSpiel;
 	
 	int einheitenWollen = 0;
 	int verschiebbareEinheiten;
@@ -166,6 +169,11 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 		verschiebenBeenden.setActionCommand("1");
 		layout.setConstraints(verschiebenBeenden, c);
 		this.add(verschiebenBeenden);
+		
+		c.gridy = 13;
+		speicherSpiel = new JButton("Spiel speichern");
+		layout.setConstraints(speicherSpiel, c);
+		this.add(speicherSpiel);
 
 		this.setVisible(false);
 	}
@@ -221,6 +229,20 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				PhaseEinheitenVerschieben.this.setVisible(false);
 				phaseEins.setVisible(true);
 			}
+		});
+		
+		speicherSpiel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					risiko.speichern(aktuellerSpieler);
+					System.out.println("letzter Spieler: " + aktuellerSpieler + "\nSpiel wurde erfolgreich gespeichert");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
 		});
 		
 	}

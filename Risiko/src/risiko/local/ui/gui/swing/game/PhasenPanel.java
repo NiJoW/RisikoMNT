@@ -92,6 +92,10 @@ public class PhasenPanel extends JPanel {
 
 	public void setClickedProvinz(int provinzIDByColor) {
 		System.out.println("phase: " + this.phasenID);
+		if(provinzIDByColor == 42) {
+			return;
+		}
+		System.out.println("Provinz: " + risiko.getProvinz(provinzIDByColor).getName());
 		switch(this.phasenID) {
 		case 1: 
 			phaseEins.setProvinz(provinzIDByColor);

@@ -21,9 +21,12 @@ public class ImagePanel extends JPanel{
 	int trueHeight;
 	float scaleFactorX;
 	float scaleFactorY;
+	KartenPanel kartenenPanel;
+
 	
 	
-    public ImagePanel() {
+    public ImagePanel(KartenPanel kartenPanel) {
+    	this.kartenenPanel = kartenPanel;
        	this.setSize(imgPanelWidth,imgPanelHeigth);
 		this.setPreferredSize(new Dimension(imgPanelWidth,imgPanelHeigth));
 
@@ -84,7 +87,8 @@ public class ImagePanel extends JPanel{
 //					c = r.getPixelColor(e.getX(),e.getY()); 
 //					rgb = c.getRGB();
 					//System.out.println(c);
-					System.out.println("Farbwert: " + myColor);
+					System.out.println("Farbwert: " + myColor.hashCode());
+					kartenenPanel.setClickedProvinz(getProvinzByColor(myColor)); 
 					//getProvinzIDByColor(rgb);
 //					System.out.println(getProvinzIDByColor(rgb));
 				//	phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
@@ -94,6 +98,160 @@ public class ImagePanel extends JPanel{
             	
 //            	System.out.println("clicked");
             }
+
+			private int getProvinzByColor(Color myColor) {
+				int farbwert = myColor.hashCode();
+				int provinzID = 0;
+				switch(farbwert) {
+				
+				
+				//Afrika
+				case -13998027: //Aegypten
+					provinzID = 0;
+					break;
+				case -16742038: //Kongo 
+					provinzID = 1;
+					break;
+				case -10515867: //Madagaska
+					provinzID = 2;
+					break;
+				case -12482198: //Nordwestafrika
+					provinzID = 3;
+					break;
+				case -10515916: //Ostafrika
+					provinzID = 4;
+					break;
+				case -16747688: //Suedafrika
+					provinzID = 5;
+					break;
+					
+					
+				//Asien
+				case -12237370: //Afganistan
+					provinzID = 6;
+					break;
+				case -16774797: //China
+					provinzID = 7;
+					break;
+				case -14984762: //Indien
+					provinzID = 8;
+					break;
+				case -16729716: //Irkutsk
+					provinzID = 9;
+					break;
+				case -16729689: //Jakutien
+					provinzID = 10;
+					break;
+				case -16743028: //Japan
+					provinzID = 11;
+					break;
+				case -16737908: //Kamtschatka
+					provinzID = 12;
+					break;
+				case -2740343://Mittlerer Osten
+					provinzID = 13;
+					break;
+				case -16761485: //Mongolei
+					provinzID = 14;
+					break;
+				case -14973498: //Siam
+					provinzID = 15;
+					break;
+				case -14973581: //Sibirien
+					provinzID = 16;
+					break;
+				case -12232250: //Ural
+					provinzID = 17;
+					break;	
+				
+					
+				//Australien
+				case -9221519: //Indonesien
+					provinzID = 18;
+					break;
+				case -9225414: //Neu Guinera
+					provinzID = 19;
+					break;
+				case -9240463: //Ost-Australien
+					provinzID = 20;
+					break;
+				case -9240518: //West-Australien
+					provinzID = 21;
+					break;
+					
+				//Europa
+				case -5549961: //Grossbritanien
+					provinzID = 22;
+					break;
+				case -3377289: //Island
+					provinzID = 23;
+					break;
+				case -2731863: //Mitteleuropa
+					provinzID = 24;
+					break;
+				case -5549911: //Skandinavien
+					provinzID = 25;
+					break;
+				case -2731920: //Sued-Europa
+					provinzID = 26;
+					break;
+				case -2731895: //Ukraine
+					provinzID = 27;
+					break;
+				case -5550024: //West-Europa
+					provinzID = 28;
+					break;
+				
+				//Nordamerika
+				case -5979818: //Alaska
+					provinzID = 29;
+					break;
+				case -3096234: //Alberta
+					provinzID = 30;
+					break;
+				case -2510553: //Groenland
+					provinzID = 31;
+					break;
+				case -5966809: //Mittel-Amerika
+					provinzID = 32;
+					break;
+				case -3096320: //Nordwest-Territorium
+					provinzID = 33;
+					break;
+				case -5988010: //Ontario
+					provinzID = 34;
+					break;
+				case -2493401: //Oststaaten
+					provinzID = 35;
+					break;
+				case -5987945: //Quebeck
+					provinzID = 36;
+					break;
+				case -5975769: //Weststaaten
+					provinzID = 37;
+					break;
+					
+				//Australien
+				case -6666648: //Argentienien
+					provinzID = 38;
+					break;
+				case -8763899: //Brasilien
+					provinzID = 39;
+					break;
+				case -8763820: //Peru
+					provinzID = 40;
+					break;
+				case -8781819: //Venezuela
+					provinzID = 41;
+					break;
+					
+				default:
+					provinzID = 42;
+					System.out.println("keine valide Provinz");
+					break;
+				}
+				return provinzID;
+			}
         };
 	}
 
