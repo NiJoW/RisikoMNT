@@ -114,6 +114,7 @@ public class RisikoGameGUI extends JFrame  {
 		for(int i = 0; i < risiko.getSpielerAnzahl(); i++) {
 			System.out.println(risiko.getSpielerName(i) + ": " + risiko.getProvinzenVonSpieler(i));
 		}
+		
 		spielen(++letzterAktiverSpielerID);
 	}
 	
