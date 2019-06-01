@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -21,11 +23,13 @@ public class ImagePanel extends JPanel{
 	int trueHeight;
 	float scaleFactorX;
 	float scaleFactorY;
+	PhasenPanel phasenPanel;
 	
 	
-    public ImagePanel() {
+    public ImagePanel(PhasenPanel phasenPanel) {
        	this.setSize(imgPanelWidth,imgPanelHeigth);
 		this.setPreferredSize(new Dimension(imgPanelWidth,imgPanelHeigth));
+		this.phasenPanel = phasenPanel;
 
        try {
           bi = ImageIO.read(new File("images/WeltkarteFINAL.png"));
@@ -87,7 +91,12 @@ public class ImagePanel extends JPanel{
 					System.out.println("Farbwert: " + myColor);
 					//getProvinzIDByColor(rgb);
 //					System.out.println(getProvinzIDByColor(rgb));
-				//	phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
+					System.out.println(myColor.getRGB());
+					rgb = myColor.getRGB();
+					if(getProvinzIDByColor(rgb)!=42) {
+						phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
+					}
+					
 //				} catch (AWTException e1) {
 //					e1.printStackTrace();
 //				} 
@@ -97,4 +106,13 @@ public class ImagePanel extends JPanel{
         };
 	}
 
+    private int getProvinzIDByColor(int rgb) {   	
+    	//zufälliges Fake-Ergebnis //südamerikanische Provinz oder Provinz "Weststaaten"
+    			Random rand = new Random();
+    			int provinzID = 37 + rand.nextInt(5);
+    			System.out.println("Zufällige Provinz-ID:"+provinzID);
+    			
+    	     	return provinzID;
+    }
+    
 }

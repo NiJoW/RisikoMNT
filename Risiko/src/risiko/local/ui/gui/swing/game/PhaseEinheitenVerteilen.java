@@ -36,14 +36,14 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	
 	int einheitenWollen = 0;
 	int verteilbareEinheiten;
-	private AnweisungsPanel anweisungsPanel;
+	private InformationsPanel anweisungsPanel;
 	int gewaehlteProvinzID = -1;
 	JButton initialesVerteilenButton;
 	InitialeRundeBeendet initialeRundeBeendet;
 	
 	
 	
-	public PhaseEinheitenVerteilen(Risiko risiko, AnweisungsPanel anweisungsPanel, int aktuellerSpieler, InitialeRundeBeendet initialeRundeBeendet) {
+	public PhaseEinheitenVerteilen(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, InitialeRundeBeendet initialeRundeBeendet) {
 		this.risiko = risiko;
 		this.anweisungsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
