@@ -224,11 +224,19 @@ public class PhaseAngriff extends JPanel {
 						ausgabe += "*********************";
 						// Provinz erobert
 	//	//TODO:				einheitenNachruecken(aktuellerSpieler, gewaehltFromID, gewaehltToID);
+					
+					
 					} else {
 						ausgabe += "Der Verteidiger " + verteidiger + " hat seine Pronvinz verteidigt.";
 					}
 					ausgabe += "</html>";
 					anweisungsPanel.setNachricht(ausgabe);
+					// Gewinner pruefen
+					String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
+					if(gewinner.equals(""))  {
+						//Gewinner Panel
+						//String gewinner ausgeben
+					}
 				}catch(ProvinzNichtNachbarException ex) {
 					//bereits zuvor geprueft, nicht ausgeben
 				}

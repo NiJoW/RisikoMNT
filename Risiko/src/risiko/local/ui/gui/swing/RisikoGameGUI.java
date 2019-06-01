@@ -150,6 +150,7 @@ public class RisikoGameGUI extends JFrame  {
 				phasenPanel.setAktuellerSpieler(aktuellerSpieler);
 				informationsPanel.setAktuellerSpieler(aktuellerSpieler);
 				kartenPanel.setAktuellerSpieler(aktuellerSpieler);
+				
 			}
 			informationsPanel.setPhase(nextPhase);
 			phasenPanel.setPhase(nextPhase);

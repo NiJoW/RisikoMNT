@@ -13,11 +13,12 @@ public class AnweisungsPanel extends JPanel{
 		setUpUI(parentWidth,parentHeight);
 	}
 	private void setUpUI(int parentWidth, int parentHeight) {
-		System.out.println(parentWidth);
-		this.setSize(parentWidth/2,parentHeight);
-		this.setPreferredSize(new Dimension(parentWidth/2,parentHeight));
+		System.out.println(parentWidth/2);
+		
 		nachricht = new JLabel("Anweisung");
 		this.add(nachricht);
+		this.setSize(parentWidth/2,parentHeight);
+		this.setPreferredSize(new Dimension(parentWidth/2,parentHeight));
 		
 	}
 	public void setNachricht(String message) {

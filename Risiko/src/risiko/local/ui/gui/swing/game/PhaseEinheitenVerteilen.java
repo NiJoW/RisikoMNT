@@ -190,6 +190,12 @@ public class PhaseEinheitenVerteilen extends JPanel{
 					einheitenLabel.setText(einheitenWollen+"");
 					bestaetigenButton.setEnabled(false);
 					initialesVerteilenButton.setEnabled(false);
+					
+					String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
+					if(gewinner.equals(""))  {
+						//Gewinner Panel
+						//String gewinner ausgeben
+					}
 				}
 				
 				if (verteilbareEinheiten == 0) { //einheitenWollen == 0 && 
