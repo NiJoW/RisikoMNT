@@ -18,7 +18,7 @@ public class InformationsPanel extends JPanel {
 	Risiko risiko;
 	int phasenID = 1;
 	int aktuellerSpieler;
-	int height = 200;
+	int height = 150;
 	
 	GridBagConstraints c;
 	GridBagLayout layout;
@@ -36,6 +36,7 @@ public class InformationsPanel extends JPanel {
 	public InformationsPanel(Risiko risiko, int aktuellerSpieler) {
 		this.risiko = risiko;
 		this.aktuellerSpieler = aktuellerSpieler;
+	//	this.setVisible(true);
 		//setUpUI();
 	}
 
@@ -47,7 +48,7 @@ public class InformationsPanel extends JPanel {
 		this.setLayout(layout);
 		c = new GridBagConstraints();
 		
-		missionsPanel = new MissionsPanel(this.getWidth(),height);
+		missionsPanel = new MissionsPanel(risiko, this.getWidth(),height);
 		einheitenKartenPanel = new EinheitenKartenPanel(this.getWidth(),height);
 		anweisungsPanel = new AnweisungsPanel(this.getWidth(),height);
 		
@@ -76,6 +77,8 @@ public class InformationsPanel extends JPanel {
 	
 	public void setAktuellerSpieler(int spielerID) {
 		aktuellerSpieler = spielerID;
+		missionsPanel.setAktuellerSpieler(spielerID);
+		einheitenKartenPanel.setAktuellerSpieler(spielerID);
 	}
 
 	public void setNachricht(String message) {

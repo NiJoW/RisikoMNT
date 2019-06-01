@@ -211,6 +211,12 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				for(int i = 0; i<2; i++) {
 					System.out.println(risiko.getProvinzenVonSpieler(i));
 				}
+				// Gewinner pruefen
+				String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
+				if(gewinner.equals(""))  {
+					//Gewinner Panel
+					//String gewinner ausgeben
+				}
 			}
 		});
 		
