@@ -24,40 +24,44 @@ public class PhasenPanel extends JPanel {
 	int aktuellerSpieler;
 
 	int phasenID;
+	boolean neuesSpiel;
 	PhaseBeendenListener phaseBeendenListener;
 	KartenPanel kartenPanel;
 
 	
 
-	public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, AnweisungsPanel anweisungsPanel, KartenPanel kartenPanel) {
+	public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, AnweisungsPanel anweisungsPanel, KartenPanel kartenPanel, boolean neuesSpiel) {
 		this.risiko = risiko;
 		this.anweisungsPanel = anweisungsPanel;
 		this.kartenPanel = kartenPanel;
 		this.phaseBeendenListener = phaseBeendenListener;
+		this.neuesSpiel = neuesSpiel;
 		setUpUI();
 		
 		ereignisErzeugt();
 	}
 
 	private void setUpUI() {
-
+		
 		phaseEins = new PhaseEinheitenVerteilen(risiko, anweisungsPanel, aktuellerSpieler, new InitialeRundeBeendet());
 		this.add(phaseEins);
 		phaseZwei = new PhaseAngriff(risiko, anweisungsPanel, aktuellerSpieler);
 		this.add(phaseZwei);
 		phaseDrei = new PhaseEinheitenVerschieben(risiko, anweisungsPanel, aktuellerSpieler);
 		this.add(phaseDrei);
-
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
-		// TODO: nur wenn neues Spiel, nicht bei geladenem
-		intitialeEinheitenVerteilen(0);
+		if(!neuesSpiel) {
+			risiko.berechneNeueEinheiten(aktuellerSpieler); //Nicht huebsch, aber functioniert
+			phaseEins.beginneSpiel(aktuellerSpieler);
+		}else {
+			intitialeEinheitenVerteilen(0);
+		}
 	}
 
 
 	private void intitialeEinheitenVerteilen(int spieler) {
-		// TODO Auto-generated method stub
-		int einheitenSetztenRunden = risiko.getSpielerAnzahl(); 
-		if(spieler<einheitenSetztenRunden) {
+		int spielerAnzahl = risiko.getSpielerAnzahl(); 
+		if(spieler<spielerAnzahl) {
 			phaseEins.initialesVerteilen(spieler);
 			kartenPanel.setAktuellerSpieler(spieler);
 		}else {
@@ -91,12 +95,13 @@ public class PhasenPanel extends JPanel {
 	
 
 	public void setClickedProvinz(int provinzIDByColor) {
-		System.out.println("phase: " + this.phasenID);
 		if(provinzIDByColor == 42) {
 			return;
 		}
 		System.out.println("Provinz: " + risiko.getProvinz(provinzIDByColor).getName());
+		System.out.println("phase: "+ phasenID);
 		switch(this.phasenID) {
+		case 0:
 		case 1: 
 			phaseEins.setProvinz(provinzIDByColor);
 			break;

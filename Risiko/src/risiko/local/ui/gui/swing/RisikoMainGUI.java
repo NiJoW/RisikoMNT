@@ -67,6 +67,8 @@ public class RisikoMainGUI implements LadeListener{
 		
 		int letzterAktiverSpielerID = -1;
 		int aktuellerSpieler = 0;
+		int phase = 0;
+		boolean neuesSpiel = true;
 
 		if (typ.equals("neuesSpiel")) {
 			risiko.spielVorbereiten();
@@ -75,6 +77,7 @@ public class RisikoMainGUI implements LadeListener{
 			}
 			aktuellerSpieler = 0;
 		}else {
+			neuesSpiel = false;
 			for(int i = 0; i<risiko.getSpielerAnzahl(); i++) {
 				System.out.println(i + ") " + risiko.getSpielerName(i));
 			}
@@ -83,9 +86,10 @@ public class RisikoMainGUI implements LadeListener{
 			if(aktuellerSpieler == risiko.getSpielerAnzahl()) {
 				aktuellerSpieler = 0;
 			}
+			phase = 1;
 		}
 		
-		spielFenster = new RisikoGameGUI(risiko, aktuellerSpieler);
+		spielFenster = new RisikoGameGUI(risiko, aktuellerSpieler, phase, neuesSpiel);
 	}
 
 	

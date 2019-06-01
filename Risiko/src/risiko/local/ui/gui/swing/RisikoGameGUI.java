@@ -58,11 +58,13 @@ public class RisikoGameGUI extends JFrame  {
 	PhasenPanel phasenPanel;
 	AnweisungsPanel anweisungsPanel;
 	int aktuellerSpieler;
+	int phase;
 	
-	public RisikoGameGUI(Risiko risiko, int aktuellerSpieler) {
+	public RisikoGameGUI(Risiko risiko, int aktuellerSpieler, int phase, boolean neuesSpiel) {
 		this.risiko = risiko;
 		this.aktuellerSpieler = aktuellerSpieler;
-		initialize();
+		this.phase = phase;
+		initialize(neuesSpiel);
 		try {
 			run(aktuellerSpieler);
 		} catch (IOException e) {
@@ -72,7 +74,7 @@ public class RisikoGameGUI extends JFrame  {
 		
 	}	
 	
-	private void initialize() {
+	private void initialize(boolean neuesSpiel) {
 //		JLayeredPane lp = getLayeredPane();
 		
 		
@@ -87,7 +89,7 @@ public class RisikoGameGUI extends JFrame  {
 		
 		anweisungsPanel = new AnweisungsPanel(risiko, aktuellerSpieler);
 		kartenPanel = new KartenPanel(risiko, anweisungsPanel, aktuellerSpieler, screenWidth, screenHeight);
-		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), anweisungsPanel, kartenPanel);
+		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), anweisungsPanel, kartenPanel, neuesSpiel);
 		kartenPanel.addPhasenPanel(phasenPanel);
 		
 		this.add(phasenPanel, BorderLayout.LINE_END);
@@ -120,8 +122,9 @@ public class RisikoGameGUI extends JFrame  {
 		//Runden (jeder Spieler durchlaeuft jede Phase ein mal)
 		
 		//Phase: EInheitenverteilen
-		phasenPanel.setPhase(1);
-		anweisungsPanel.setPhase(1);
+		System.out.println("Phase: " + phase);
+		phasenPanel.setPhase(phase);
+		anweisungsPanel.setPhase(phase);
 		phasenPanel.setAktuellerSpieler(spielerID);
 		anweisungsPanel.setAktuellerSpieler(spielerID);
 	
