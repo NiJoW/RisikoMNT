@@ -207,7 +207,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				verschiebbareEinheiten -= einheitenWollen;
 				anweisungsLabel2.setText("Von " + verschiebeProvinzName + " kannst du noch " + verschiebbareEinheiten + " Einheiten verschieben.");
 				einheitenWollen = 0;
-				einheitenLabel.setText(einheitenWollen+"");;
+				einheitenLabel.setText(einheitenWollen+"");
 				for(int i = 0; i<2; i++) {
 					System.out.println(risiko.getProvinzenVonSpieler(i));
 				}
