@@ -15,7 +15,7 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 public class PhasenPanel extends JPanel {
 
 	Risiko risiko;
-	InformationsPanel anweisungsPanel;
+	InformationsPanel informationsPanel;
 	
 	GridBagConstraints c;
 	PhaseEinheitenVerteilen phaseEins;
@@ -31,10 +31,10 @@ public class PhasenPanel extends JPanel {
 	
 
 
-	public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, InformationsPanel anweisungsPanel, KartenPanel kartenPanel, boolean neuesSpiel) {
+	public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, InformationsPanel informationsPanel, KartenPanel kartenPanel, boolean neuesSpiel) {
 
 		this.risiko = risiko;
-		this.anweisungsPanel = anweisungsPanel;
+		this.informationsPanel = informationsPanel;
 		this.kartenPanel = kartenPanel;
 		this.phaseBeendenListener = phaseBeendenListener;
 		this.neuesSpiel = neuesSpiel;
@@ -45,11 +45,11 @@ public class PhasenPanel extends JPanel {
 
 	private void setUpUI() {
 		
-		phaseEins = new PhaseEinheitenVerteilen(risiko, anweisungsPanel, aktuellerSpieler, new InitialeRundeBeendet());
+		phaseEins = new PhaseEinheitenVerteilen(risiko, informationsPanel, aktuellerSpieler, new InitialeRundeBeendet());
 		this.add(phaseEins);
-		phaseZwei = new PhaseAngriff(risiko, anweisungsPanel, aktuellerSpieler);
+		phaseZwei = new PhaseAngriff(risiko, informationsPanel, aktuellerSpieler);
 		this.add(phaseZwei);
-		phaseDrei = new PhaseEinheitenVerschieben(risiko, anweisungsPanel, aktuellerSpieler);
+		phaseDrei = new PhaseEinheitenVerschieben(risiko, informationsPanel, aktuellerSpieler);
 		this.add(phaseDrei);
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		if(!neuesSpiel) {

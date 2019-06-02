@@ -40,7 +40,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	
 	int einheitenWollen = 0;
 	int verteilbareEinheiten;
-	private InformationsPanel anweisungsPanel;
+	private InformationsPanel informationsPanel;
 	int gewaehlteProvinzID = -1;
 	JButton initialesVerteilenButton;
 	InitialeRundeBeendet initialeRundeBeendet;
@@ -49,7 +49,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	
 	public PhaseEinheitenVerteilen(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, InitialeRundeBeendet initialeRundeBeendet) {
 		this.risiko = risiko;
-		this.anweisungsPanel = anweisungsPanel;
+		this.informationsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
 		this.initialeRundeBeendet = initialeRundeBeendet;
 		setUpUI();
@@ -266,6 +266,8 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				PhaseEinheitenVerteilen.this.setVisible(false);
 				phaseZwei.setVisible(true);
+				informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
+				informationsPanel.setMissionsNachricht(aktuellerSpieler);
 			}
 
 		});
@@ -273,7 +275,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	
 	public void setProvinz(int provinzID) {		
 		if (risiko.validiereGUIProvinz(provinzID, aktuellerSpieler)) {
-			anweisungsPanel.setNachricht("");
+			informationsPanel.setNachricht("");
 			gewaehlteProvinzID = provinzID;
 			provinzLabel2.setText(risiko.getProvinz(gewaehlteProvinzID).getName());
 			if (einheitenWollen > 0) {
@@ -281,7 +283,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 				initialesVerteilenButton.setEnabled(true);
 			}
 		} else {
-			anweisungsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
+			informationsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
 		}
 				
 	}

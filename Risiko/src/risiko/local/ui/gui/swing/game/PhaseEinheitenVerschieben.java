@@ -20,7 +20,7 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
 public class PhaseEinheitenVerschieben  extends JPanel {
 	Risiko risiko;
-	InformationsPanel anweisungsPanel;	
+	InformationsPanel informationsPanel;	
 	int aktuellerSpieler;
 	
 	GridBagConstraints c;
@@ -51,7 +51,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 	
 	PhaseEinheitenVerschieben(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler){
 		this.risiko = risiko;
-		this.anweisungsPanel = anweisungsPanel;
+		this.informationsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
 				
 		setUpUI();
@@ -235,6 +235,8 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				PhaseEinheitenVerschieben.this.setVisible(false);
 				phaseEins.setVisible(true);
+				informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
+				informationsPanel.setMissionsNachricht(aktuellerSpieler);
 			}
 		});
 		
@@ -261,7 +263,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				verschiebbareEinheiten = risiko.getVerschiebbareEinheiten(provinzID);
 				System.out.println("Verschiebbar = " + verschiebbareEinheiten);
 				anweisungsLabel2.setText("Von " + verschiebeProvinzName + " kannst du noch " + verschiebbareEinheiten + " Einheiten verschieben.");
-				anweisungsPanel.setNachricht("");
+				informationsPanel.setNachricht("");
 				vonProvinzName.setText(verschiebeProvinzName);
 				
 				vonProvinzLabel.setBorder(BorderFactory.createEmptyBorder());
@@ -273,7 +275,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				einheitenPlus.setEnabled(false);
 				aktiveWahl++;
 			} else {
-				anweisungsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
+				informationsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
 			}
 		} else {	//Nach
 			if (risiko.validiereGUIProvinz(provinzID, aktuellerSpieler)) {
@@ -281,7 +283,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 					risiko.validiereGUIVerschieben(provinzID, fromProvinzID);
 					
 					toProvinzID = provinzID;
-					anweisungsPanel.setNachricht("");
+					informationsPanel.setNachricht("");
 					nachProvinzName.setText(risiko.getProvinz(provinzID).getName());
 			
 					vonProvinzLabel.setBorder(BorderFactory.createEmptyBorder());
@@ -291,11 +293,11 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 					einheitenLabel.setEnabled(true);
 					einheitenPlus.setEnabled(true);
 				} catch (NichtProvinzDesSpielersException | ProvinzNichtNachbarException e) {
-					anweisungsPanel.setNachricht(e.getMessage());
+					informationsPanel.setNachricht(e.getMessage());
 				}
 				
 			} else {
-				anweisungsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
+				informationsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
 			}
 		}
 		

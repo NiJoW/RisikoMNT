@@ -77,8 +77,7 @@ public class ImagePanel extends JPanel{
     
     private MouseAdapter getMouseAdapter() {
 		return new MouseAdapter() {
-			Color c;
-			int rgb;
+			Color myColor;
             
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -90,8 +89,7 @@ public class ImagePanel extends JPanel{
             		
 //            		System.out.println("Skalierte x-Koordinate = " + xKoordinate);
 //            		System.out.println("Skalierte y-Koordinate = " + yKoordinate);
-            		
-            		Color myColor = new Color(bi.getRGB(xK, yK));
+            		myColor = new Color(bi.getRGB(xK, yK));
 //            		System.out.println(karte.getData().getPixel(xKoordinate, yKoordinate, new int[0]));
             		//					Robot r = new Robot();
 //					c = r.getPixelColor(e.getX(),e.getY()); 
@@ -101,8 +99,10 @@ public class ImagePanel extends JPanel{
 					kartenenPanel.setClickedProvinz(getProvinzByColor(myColor)); 
 					//getProvinzIDByColor(rgb);
 //					System.out.println(getProvinzIDByColor(rgb));
-					System.out.println(myColor.getRGB());
-					rgb = myColor.getRGB();
+					
+//					System.out.println(myColor.getRGB());
+//					rgb = myColor.getRGB();
+					
 //					if(getProvinzIDByColor(rgb)!=42) {
 //						phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
 //					}

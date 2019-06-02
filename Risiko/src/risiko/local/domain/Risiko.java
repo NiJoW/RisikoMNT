@@ -109,6 +109,11 @@ public class Risiko {
 		}
 		return eigeneKarten;
 	}
+	
+	public Vector<Einheitenkarte> getKartenVonSpielerGUI(int spielerID) {
+		Vector<Einheitenkarte> eigeneKarten = spielerVW.getSpieler(spielerID).getKarten();
+		return eigeneKarten;
+	}
 
 	
 	
