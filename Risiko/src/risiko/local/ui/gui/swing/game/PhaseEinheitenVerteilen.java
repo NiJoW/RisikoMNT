@@ -17,7 +17,6 @@ import risiko.local.ui.gui.swing.game.PhasenPanel.InitialeRundeBeendet;
 public class PhaseEinheitenVerteilen extends JPanel{
 	Risiko risiko;
 	int aktuellerSpieler;
-	int phasenID = 0;
 	
 	GridBagConstraints c;
 	GridBagLayout layout;
@@ -47,7 +46,6 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		this.risiko = risiko;
 		this.anweisungsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
-		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
 		this.initialeRundeBeendet = initialeRundeBeendet;
 		setUpUI();
 	}
@@ -62,9 +60,9 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		JLabel leereZeile = new JLabel(" ");
 		layout.setConstraints(leereZeile, c);
 		this.add(leereZeile);
+		
 		// Text
 		phaseEinheitenText = new JLabel("Vorbereitung: Einheiten setzen");
-		
 		c.gridy = 1;
 		layout.setConstraints(phaseEinheitenText, c);
 		this.add(phaseEinheitenText);
@@ -79,9 +77,10 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		JLabel leereZeile3 = new JLabel(" ");
 		layout.setConstraints(leereZeile3, c);
 		this.add(leereZeile3);
-		// Label für geklickte Provinzen
 		
+
 		c.gridy = 4;
+		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
 		anweisungsLabel1 = new JLabel("Du darfst noch " + verteilbareEinheiten + " Einheiten verteilen.");
 		layout.setConstraints(anweisungsLabel1, c);
 		this.add(anweisungsLabel1);
@@ -90,7 +89,8 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		JLabel anweisungsLabel2 = new JLabel("Auf welche Provinz m�chtest du setzen? ");
 		layout.setConstraints(anweisungsLabel2, c);
 		this.add(anweisungsLabel2);
-		
+
+		// Label für geklickte Provinzen
 		c.gridy = 6;
 		JLabel provinzLabel1 = new JLabel("Provinz: ");
 		layout.setConstraints(provinzLabel1, c);

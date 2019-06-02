@@ -58,11 +58,13 @@ public class RisikoGameGUI extends JFrame  {
 	PhasenPanel phasenPanel;
 	InformationsPanel informationsPanel;
 	int aktuellerSpieler;
+	int phase;
 	
-	public RisikoGameGUI(Risiko risiko, int aktuellerSpieler) {
+	public RisikoGameGUI(Risiko risiko, int aktuellerSpieler, int phase, boolean neuesSpiel) {
 		this.risiko = risiko;
 		this.aktuellerSpieler = aktuellerSpieler;
-		initialize();
+		this.phase = phase;
+		initialize(neuesSpiel);
 		try {
 			run(aktuellerSpieler);
 		} catch (IOException e) {
@@ -72,7 +74,7 @@ public class RisikoGameGUI extends JFrame  {
 		
 	}	
 	
-	private void initialize() {
+	private void initialize(boolean neuesSpiel) {
 //		JLayeredPane lp = getLayeredPane();
 		
 		
@@ -85,10 +87,12 @@ public class RisikoGameGUI extends JFrame  {
 		this.setLayout(new BorderLayout());
 		this.setSize((screenWidth),(screenHeight));
 		
-		kartenPanel = new KartenPanel(risiko, aktuellerSpieler, screenWidth, screenHeight);
+
 		informationsPanel = new InformationsPanel(risiko, aktuellerSpieler);
-		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), informationsPanel, kartenPanel);
+		kartenPanel = new KartenPanel(risiko, informationsPanel, aktuellerSpieler, screenWidth, screenHeight);
+		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), informationsPanel, kartenPanel, neuesSpiel);
 		kartenPanel.addMapAndPhasenPanel(phasenPanel);
+
 		
 		this.add(phasenPanel, BorderLayout.LINE_END);
 		this.add(informationsPanel, BorderLayout.PAGE_END);
@@ -113,6 +117,7 @@ public class RisikoGameGUI extends JFrame  {
 		for(int i = 0; i < risiko.getSpielerAnzahl(); i++) {
 			System.out.println(risiko.getSpielerName(i) + ": " + risiko.getProvinzenVonSpieler(i));
 		}
+		
 		spielen(++letzterAktiverSpielerID);
 	}
 	
@@ -121,8 +126,10 @@ public class RisikoGameGUI extends JFrame  {
 		//Runden (jeder Spieler durchlaeuft jede Phase ein mal)
 		
 		//Phase: EInheitenverteilen
-		phasenPanel.setPhase(1);
-		informationsPanel.setPhase(1);
+		System.out.println("Phase: " + phase);
+		phasenPanel.setPhase(phase);
+		informationsPanel.setPhase(phase);
+
 		phasenPanel.setAktuellerSpieler(spielerID);
 		informationsPanel.setAktuellerSpieler(spielerID);
 	
