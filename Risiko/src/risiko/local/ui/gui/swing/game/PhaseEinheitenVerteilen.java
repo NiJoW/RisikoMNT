@@ -1,13 +1,18 @@
 package risiko.local.ui.gui.swing.game;
 
+import java.awt.Color;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
@@ -86,7 +91,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		this.add(anweisungsLabel1);
 		
 		c.gridy = 5;
-		JLabel anweisungsLabel2 = new JLabel("Auf welche Provinz möchtest du setzen? ");
+		JLabel anweisungsLabel2 = new JLabel("Auf welche Provinz mï¿½chtest du setzen? ");
 		layout.setConstraints(anweisungsLabel2, c);
 		this.add(anweisungsLabel2);
 
@@ -144,6 +149,36 @@ public class PhaseEinheitenVerteilen extends JPanel{
 
 	}
 	
+	public JPanel winnerPanel(String gewinner) {
+
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, 444, 271);
+        panel.setBackground(new Color(176, 224, 230));
+        getRootPane().add(panel);
+        panel.setLayout(null);
+
+        JLabel lblIcon = new JLabel("");
+        lblIcon.setBounds(0, 0, 200, 200); //(30,30,
+        lblIcon.setIcon(new ImageIcon("images/Gewonnen.png"));
+        panel.add(lblIcon);
+
+        JLabel lblText2 = new JLabel(gewinner+" hat gewonnen!");
+        lblText2.setVerticalAlignment(SwingConstants.TOP);
+      //  lblText2.setFont(new Font("Tahoma", Font.ITALIC, 14));
+        lblText2.setHorizontalAlignment(SwingConstants.CENTER);
+        lblText2.setBounds(240, 130, 175, 100);
+        panel.add(lblText2);
+
+        JLabel lblText1 = new JLabel("Yaaaay!");
+        lblText1.setHorizontalAlignment(SwingConstants.CENTER);
+//        lblText1.setFont(new Font("Tahoma", Font.ITALIC, 14));
+        lblText1.setBounds(240, 30, 175, 100);
+        panel.add(lblText1);
+
+        return panel;
+
+    }
+	
 
 	public void setUpEvents(ActionListener phaseBeendenListener, PhaseAngriff phaseZwei) {
 		
@@ -192,9 +227,24 @@ public class PhaseEinheitenVerteilen extends JPanel{
 					initialesVerteilenButton.setEnabled(false);
 					
 					String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
-					if(gewinner.equals(""))  {
+					//gewinner = "tab";
+					if(!gewinner.equals(""))  {
 						//Gewinner Panel
 						//String gewinner ausgeben
+						JDialog d = new JDialog(); 
+			  
+//			            // create a label 
+//			            JLabel l = new JLabel("Glueckwusch!! "+gewinner+" hat gewonnen!"); 
+//			            d.add(l); 
+//			            // setsize of dialog 
+			            d.setSize(400, 400); 
+			            
+			            d.getContentPane().add(winnerPanel(gewinner));
+			            d.repaint();
+			            d.revalidate();
+			  
+			            // set visibility of dialog 
+			            d.setVisible(true); 
 					}
 				}
 				
