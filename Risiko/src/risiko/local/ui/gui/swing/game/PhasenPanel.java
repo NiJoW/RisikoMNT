@@ -102,6 +102,7 @@ public class PhasenPanel extends JPanel {
 		}
 		System.out.println("Provinz: " + risiko.getProvinz(provinzIDByColor).getName());
 		System.out.println("phase: "+ phasenID);
+		System.out.println("Anzahl: " + risiko.getProvinzenVonSpieler(aktuellerSpieler).size());
 		switch(this.phasenID) {
 		case 0:
 		case 1: 
