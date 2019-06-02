@@ -103,9 +103,9 @@ public class ImagePanel extends JPanel{
 //					System.out.println(getProvinzIDByColor(rgb));
 					System.out.println(myColor.getRGB());
 					rgb = myColor.getRGB();
-					if(getProvinzIDByColor(rgb)!=42) {
-						phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
-					}
+//					if(getProvinzIDByColor(rgb)!=42) {
+//						phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
+//					}
 					
 //				} catch (AWTException e1) {
 //					e1.printStackTrace();
