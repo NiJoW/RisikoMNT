@@ -1,3 +1,4 @@
+
 package risiko.local.ui.gui.swing.game;
 
 import java.awt.Color;
@@ -19,7 +20,7 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
 public class PhaseEinheitenVerschieben  extends JPanel {
 	Risiko risiko;
-	AnweisungsPanel anweisungsPanel;	
+	InformationsPanel anweisungsPanel;	
 	int aktuellerSpieler;
 	
 	GridBagConstraints c;
@@ -48,7 +49,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 	int toProvinzID;
 	String verschiebeProvinzName;
 	
-	PhaseEinheitenVerschieben(Risiko risiko, AnweisungsPanel anweisungsPanel, int aktuellerSpieler){
+	PhaseEinheitenVerschieben(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler){
 		this.risiko = risiko;
 		this.anweisungsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
@@ -218,6 +219,12 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				einheitenLabel.setText(einheitenWollen+"");;
 				for(int i = 0; i<2; i++) {
 					System.out.println(risiko.getProvinzenVonSpieler(i));
+				}
+        // Gewinner pruefen
+				String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
+				if(gewinner.equals(""))  {
+					//Gewinner Panel
+					//String gewinner ausgeben
 				}
 			}
 		});

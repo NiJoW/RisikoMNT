@@ -53,11 +53,16 @@ public class KartenPanel extends JPanel {
 		ImagePanel myImage = new ImagePanel(this);
 		this.add(myImage);
 		this.setVisible(true);
+
 	}
 	
 	
-	public void addPhasenPanel(PhasenPanel phasenPanel) {
+	public void addMapAndPhasenPanel(PhasenPanel phasenPanel) {
 		this.phasenPanel = phasenPanel;
+		
+	//	ImagePanel myImage = new ImagePanel(phasenPanel);
+	//	this.add(myImage);
+	//	this.setVisible(true);
 	}
 
 	public void setAktuellerSpieler(int aktuellerSpielerID) {

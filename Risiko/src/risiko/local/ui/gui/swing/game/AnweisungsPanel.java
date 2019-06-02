@@ -1,86 +1,28 @@
 package risiko.local.ui.gui.swing.game;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import risiko.local.domain.Risiko;
-
-public class AnweisungsPanel extends JPanel {
-
-	Risiko risiko;
-	int phasenID = 1;
-	int aktuellerSpieler;
+public class AnweisungsPanel extends JPanel{
 	
 	JLabel nachricht;
 	
-//	AnweisungEinheitenVerteilen phaseEins;
-//	AnweisungAngriff phaseZwei;
-//	AnweisungEinheitenVerschieben phaseDrei;
-	
-	
-	
-	public AnweisungsPanel(Risiko risiko, int aktuellerSpieler) {
-		this.risiko = risiko;
-		this.aktuellerSpieler = aktuellerSpieler;
-		initialize();
+	public AnweisungsPanel(int parentWidth, int parentHeight) {
+		setUpUI(parentWidth,parentHeight);
 	}
-
-	private void initialize() {	
-		this.setBorder(BorderFactory.createLineBorder(Color.black));
-		nachricht = new JLabel("Test Nachricht");
+	private void setUpUI(int parentWidth, int parentHeight) {
+		System.out.println(parentWidth/2);
+		
+		nachricht = new JLabel("Anweisung");
 		this.add(nachricht);
+		this.setSize(parentWidth/2,parentHeight);
+		this.setPreferredSize(new Dimension(parentWidth/2,parentHeight));
 		
-		
-		
-		
-//		System.out.println("anweisung"+aktuellerSpieler);
-//		phaseEins = new AnweisungEinheitenVerteilen(risiko, aktuellerSpieler);
-//		this.add(phaseEins);
-//		phaseZwei = new AnweisungAngriff();
-//		this.add(phaseZwei);
-//		phaseDrei = new AnweisungEinheitenVerschieben();
-//		this.add(phaseDrei);
-
-		
-		
-		
-		//TODO: Abtrennung fuer Tauschekarten
-	
 	}
-	
-//	private void updatePanel() {
-//		//Anweisung an Phase anpassen
-//		switch(phasenID) {
-//			case 1:
-//				phaseDrei.setVisible(false);
-//				phaseEins.setVisible(true);
-//				break;
-//			case 2:
-//				phaseEins.setVisible(false);
-//				phaseZwei.setVisible(true);
-//				break;
-//			case 3:
-//				phaseZwei.setVisible(false);
-//				phaseDrei.setVisible(true);
-//				break;		
-//		}
-//	}
-
-	public void setPhase(int phasenID) {
-		this.phasenID = phasenID;
-		//updatePanel();
-	}
-	
-	public void setAktuellerSpieler(int spielerID) {
-		aktuellerSpieler = spielerID;
-	}
-
 	public void setNachricht(String message) {
 		nachricht.setText(message);
 	}
+
 }

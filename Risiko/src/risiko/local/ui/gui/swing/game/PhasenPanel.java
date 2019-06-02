@@ -15,7 +15,7 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 public class PhasenPanel extends JPanel {
 
 	Risiko risiko;
-	AnweisungsPanel anweisungsPanel;
+	InformationsPanel anweisungsPanel;
 	
 	GridBagConstraints c;
 	PhaseEinheitenVerteilen phaseEins;
@@ -30,7 +30,9 @@ public class PhasenPanel extends JPanel {
 
 	
 
+
 	public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, AnweisungsPanel anweisungsPanel, KartenPanel kartenPanel, boolean neuesSpiel) {
+
 		this.risiko = risiko;
 		this.anweisungsPanel = anweisungsPanel;
 		this.kartenPanel = kartenPanel;

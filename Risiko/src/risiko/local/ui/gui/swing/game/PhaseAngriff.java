@@ -22,7 +22,7 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
 public class PhaseAngriff extends JPanel {
 	Risiko risiko;
-	AnweisungsPanel anweisungsPanel;
+	InformationsPanel anweisungsPanel;
 	int aktuellerSpieler;
 	int gewaehltFromID;
 	int gewaehltToID;
@@ -47,7 +47,7 @@ public class PhaseAngriff extends JPanel {
 	JButton wuerfelButton;
 	JButton angriffBeenden;
 
-	public PhaseAngriff(Risiko risiko, AnweisungsPanel anweisungsPanel, int aktuellerSpieler) {
+	public PhaseAngriff(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler) {
 		this.risiko = risiko;
 		this.anweisungsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
@@ -149,6 +149,7 @@ public class PhaseAngriff extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				PhaseAngriff.this.setVisible(false);
 				phaseDrei.setVisible(true);
+				anweisungsPanel.setNachricht("");
 			}
 
 		});
@@ -223,11 +224,19 @@ public class PhaseAngriff extends JPanel {
 						ausgabe += "*********************";
 						// Provinz erobert
 	//	//TODO:				einheitenNachruecken(aktuellerSpieler, gewaehltFromID, gewaehltToID);
+					
+					
 					} else {
 						ausgabe += "Der Verteidiger " + verteidiger + " hat seine Pronvinz verteidigt.";
 					}
 					ausgabe += "</html>";
 					anweisungsPanel.setNachricht(ausgabe);
+					// Gewinner pruefen
+					String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
+					if(gewinner.equals(""))  {
+						//Gewinner Panel
+						//String gewinner ausgeben
+					}
 				}catch(ProvinzNichtNachbarException ex) {
 					//bereits zuvor geprueft, nicht ausgeben
 				}
