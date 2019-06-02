@@ -222,7 +222,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				}
         // Gewinner pruefen
 				String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
-				if(gewinner.equals(""))  {
+				if(!gewinner.equals(""))  {
 					//Gewinner Panel
 					//String gewinner ausgeben
 				}

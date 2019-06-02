@@ -233,7 +233,7 @@ public class PhaseAngriff extends JPanel {
 					anweisungsPanel.setNachricht(ausgabe);
 					// Gewinner pruefen
 					String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
-					if(gewinner.equals(""))  {
+					if(!gewinner.equals(""))  {
 						//Gewinner Panel
 						//String gewinner ausgeben
 					}

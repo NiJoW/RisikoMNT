@@ -270,13 +270,13 @@ public class ImagePanel extends JPanel{
         };
 	}
 
-    private int getProvinzIDByColor(int rgb) {   	
-    	//zufälliges Fake-Ergebnis //südamerikanische Provinz oder Provinz "Weststaaten"
-    			Random rand = new Random();
-    			int provinzID = 37 + rand.nextInt(5);
-    			System.out.println("Zufällige Provinz-ID:"+provinzID);
-    			
-    	     	return provinzID;
-    }
+//    private int getProvinzIDByColor(int rgb) {   	
+//    	//zufälliges Fake-Ergebnis //südamerikanische Provinz oder Provinz "Weststaaten"
+//    			Random rand = new Random();
+//    			int provinzID = 37 + rand.nextInt(5);
+//    			System.out.println("Zufällige Provinz-ID:"+provinzID);
+//    			
+//    	     	return provinzID;
+//    }
     
 }
