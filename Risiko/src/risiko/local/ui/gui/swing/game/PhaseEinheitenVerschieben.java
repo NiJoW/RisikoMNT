@@ -82,7 +82,10 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 		this.add(leereZeile2);
 		
 		c.gridy = 3;
-		anweisungsLabel1 = new JLabel("Willst du Einheiten innerhalb deiner Provinzen verschieben?");
+		anweisungsLabel1 = new JLabel("");
+		//String ausgabe = "<html>";
+		//ausgabe += "Willst du Einheiten innerhalb "<p/>\""
+		anweisungsLabel1.setText("<html>Willst du Einheiten<p/>innerhalb deiner Provinzen<p/>verschieben?</html>");
 		layout.setConstraints(anweisungsLabel1, c);
 		this.add(anweisungsLabel1);
 		
@@ -158,7 +161,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 		layout.setConstraints(leereZeile8, c);
 		this.add(leereZeile8);
 		
-		bestaetigenButton = new JButton("Einheiten verschieben");
+		bestaetigenButton = new JButton("Verschieben");
 		c.gridy = 11;
 		layout.setConstraints(bestaetigenButton, c);
 		bestaetigenButton.setEnabled(false);

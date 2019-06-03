@@ -28,7 +28,8 @@ public class PhasenPanel extends JPanel {
 	PhaseBeendenListener phaseBeendenListener;
 	KartenPanel kartenPanel;
 
-	
+	int width = 320;
+	int height = 525;
 
 
 	public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, InformationsPanel anweisungsPanel, KartenPanel kartenPanel, boolean neuesSpiel) {
@@ -44,6 +45,8 @@ public class PhasenPanel extends JPanel {
 	}
 
 	private void setUpUI() {
+		this.setSize(width,height);
+		this.setPreferredSize(new Dimension(width,height));
 		
 		phaseEins = new PhaseEinheitenVerteilen(risiko, informationsPanel, aktuellerSpieler, new InitialeRundeBeendet());
 		this.add(phaseEins);
