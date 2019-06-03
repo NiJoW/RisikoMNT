@@ -40,7 +40,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	
 	int einheitenWollen = 0;
 	int verteilbareEinheiten;
-	private InformationsPanel anweisungsPanel;
+	private InformationsPanel informationsPanel;
 	int gewaehlteProvinzID = -1;
 	JButton initialesVerteilenButton;
 	InitialeRundeBeendet initialeRundeBeendet;
@@ -49,7 +49,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	
 	public PhaseEinheitenVerteilen(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, InitialeRundeBeendet initialeRundeBeendet) {
 		this.risiko = risiko;
-		this.anweisungsPanel = anweisungsPanel;
+		this.informationsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
 		this.initialeRundeBeendet = initialeRundeBeendet;
 		setUpUI();
@@ -226,26 +226,27 @@ public class PhaseEinheitenVerteilen extends JPanel{
 					bestaetigenButton.setEnabled(false);
 					initialesVerteilenButton.setEnabled(false);
 					
-					String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
-					//gewinner = "tab";
-					if(!gewinner.equals(""))  {
-						//Gewinner Panel
-						//String gewinner ausgeben
-						JDialog d = new JDialog(); 
-			  
-//			            // create a label 
-//			            JLabel l = new JLabel("Glueckwusch!! "+gewinner+" hat gewonnen!"); 
-//			            d.add(l); 
-//			            // setsize of dialog 
-			            d.setSize(400, 400); 
-			            
-			            d.getContentPane().add(winnerPanel(gewinner));
-			            d.repaint();
-			            d.revalidate();
-			  
-			            // set visibility of dialog 
-			            d.setVisible(true); 
-					}
+//					String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
+//					//gewinner = "tab";
+//					System.out.println("<" + gewinner + ">");
+//					if(!gewinner.equals(""))  {
+//						//Gewinner Panel
+//						//String gewinner ausgeben
+//						JDialog d = new JDialog(); 
+//			  
+////			            // create a label 
+////			            JLabel l = new JLabel("Glueckwusch!! "+gewinner+" hat gewonnen!"); 
+////			            d.add(l); 
+////			            // setsize of dialog 
+//			            d.setSize(400, 400); 
+//			            
+//			            d.getContentPane().add(winnerPanel(gewinner));
+//			            d.repaint();
+//			            d.revalidate();
+//			  
+//			            // set visibility of dialog 
+//			            d.setVisible(true); 
+//					}
 				}
 				
 				if (verteilbareEinheiten == 0) { //einheitenWollen == 0 && 
@@ -266,6 +267,8 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				PhaseEinheitenVerteilen.this.setVisible(false);
 				phaseZwei.setVisible(true);
+				informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
+				
 			}
 
 		});
@@ -273,7 +276,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	
 	public void setProvinz(int provinzID) {		
 		if (risiko.validiereGUIProvinz(provinzID, aktuellerSpieler)) {
-			anweisungsPanel.setNachricht("");
+			informationsPanel.setNachricht("");
 			gewaehlteProvinzID = provinzID;
 			provinzLabel2.setText(risiko.getProvinz(gewaehlteProvinzID).getName());
 			if (einheitenWollen > 0) {
@@ -281,7 +284,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 				initialesVerteilenButton.setEnabled(true);
 			}
 		} else {
-			anweisungsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
+			informationsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
 		}
 				
 	}

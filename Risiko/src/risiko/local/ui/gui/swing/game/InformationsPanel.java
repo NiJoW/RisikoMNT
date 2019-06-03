@@ -85,11 +85,15 @@ public class InformationsPanel extends JPanel {
 		anweisungsPanel.setNachricht(message);
 	}
 	
-	public void setMissionsNachricht(String message) {
-		missionsPanel.setNachricht(message);
+	public void setMissionsNachricht(int aktuellerSpieler) {
+		if(aktuellerSpieler == (risiko.getSpielerAnzahl()-1)) {
+			missionsPanel.setNachricht(0);
+		} else {
+			missionsPanel.setNachricht(aktuellerSpieler+1);
+		}
 	}
 	
-	public void setEinheitenKartenNachricht(String message) {
-		einheitenKartenPanel.setNachricht(message);
+	public void setEinheitenKartenNachricht(int aktuellerSpieler) {
+		einheitenKartenPanel.setNachricht(aktuellerSpieler, risiko);
 	}
 }
