@@ -125,4 +125,9 @@ public class PhasenPanel extends JPanel {
 		aktuellerSpieler = spielerID;
 	}
 
+	public void setUpKartenTausch() {
+		phaseEins.setVisible(false);
+		KartenTauschPanel tauschPanel = new KartenTauschPanel(risiko, aktuellerSpieler);
+	}
+
 }

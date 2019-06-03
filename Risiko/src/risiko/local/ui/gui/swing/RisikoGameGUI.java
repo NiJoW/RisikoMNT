@@ -44,6 +44,7 @@ import javax.swing.WindowConstants;
 import risiko.local.domain.Risiko;
 import risiko.local.domain.exceptions.SpielNichtVorhandenException;
 import risiko.local.domain.exceptions.SpielerNichtTeilDesSpielsException;
+import risiko.local.domain.exceptions.TauschenNichtMoeglichException;
 import risiko.local.ui.cui.RisikoClientCUI;
 import risiko.local.ui.gui.swing.game.InformationsPanel;
 import risiko.local.ui.gui.swing.game.KartenPanel;
@@ -88,11 +89,18 @@ public class RisikoGameGUI extends JFrame  {
 		this.setSize((screenWidth),(screenHeight));
 		
 
-		informationsPanel = new InformationsPanel(risiko, aktuellerSpieler);
+		informationsPanel = new InformationsPanel(risiko, aktuellerSpieler, new KartenEintauschenListener());
 		kartenPanel = new KartenPanel(risiko, informationsPanel, aktuellerSpieler, screenWidth, screenHeight, lp);
 		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), informationsPanel, kartenPanel, neuesSpiel);
 		kartenPanel.addMapAndPhasenPanel(phasenPanel);
-
+		
+			try {
+				risiko.kannEintauschen(aktuellerSpieler);
+				informationsPanel.enableTauscheButton();
+			} catch (TauschenNichtMoeglichException e) {
+				
+			}
+		
 		
 		this.add(phasenPanel, BorderLayout.LINE_END);
 		this.add(informationsPanel, BorderLayout.PAGE_END);
@@ -165,5 +173,12 @@ public class RisikoGameGUI extends JFrame  {
 		}
 	}
 	
+	public class KartenEintauschenListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			phasenPanel.setUpKartenTausch();
+		}
+	}
 
 }

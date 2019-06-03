@@ -19,6 +19,7 @@ import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
+import risiko.local.valueobjects.Einheitenkarte;
 
 public class PhaseAngriff extends JPanel {
 	Risiko risiko;
@@ -230,13 +231,21 @@ public class PhaseAngriff extends JPanel {
 					}
 
 					if (risiko.getProvinz(gewaehltToID).getBesitzer().getName().equals(risiko.getSpielerName(aktuellerSpieler))) {
-						risiko.provinzWurdeErobert(aktuellerSpieler); //aendert boolean, um Einheitskarte zu bekommen (boolean provinzErobert)
+						//risiko.provinzWurdeErobert(aktuellerSpieler); //aendert boolean, um Einheitskarte zu bekommen (boolean provinzErobert)
 						ausgabe += "*********************<p/>";
 						ausgabe += risiko.getSpielerName(aktuellerSpieler) + " hat die Provinz "
 								+ risiko.getProvinz(gewaehltToID).getName() + " von " + verteidiger + " erobert!<p/>";
 						ausgabe += "*********************";
 						aufGewinnerPruefen();
 						
+						if (!risiko.isProvinzErobert(aktuellerSpieler)) {
+							risiko.provinzWurdeErobert(aktuellerSpieler);
+//							Einheitenkarte neueKarte = falls Ausgabe
+							Einheitenkarte neueKarte = risiko.einheitenkarteVerteilen(aktuellerSpieler);
+							System.out.println("Einheitskarte: " + neueKarte.getTyp());
+							informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
+							
+						}
 						if (risiko.kannEinheitenNachruecken(aktuellerSpieler, gewaehltFromID)) {
 							nachrueckenButton.setEnabled(true);
 							wuerfelButton.setEnabled(false);

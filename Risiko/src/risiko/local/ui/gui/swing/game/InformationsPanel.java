@@ -5,12 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import risiko.local.domain.Risiko;
+import risiko.local.ui.gui.swing.RisikoGameGUI.KartenEintauschenListener;
 import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
 public class InformationsPanel extends JPanel {
@@ -21,11 +23,12 @@ public class InformationsPanel extends JPanel {
 	int height = 150;
 	
 	GridBagConstraints c;
-	GridBagLayout layout;
+	GridLayout layout;
 	
 	MissionsPanel missionsPanel;
 	AnweisungsPanel anweisungsPanel;
 	EinheitenKartenPanel einheitenKartenPanel;
+	KartenEintauschenListener kartenEintauschenListener;
 	
 	
 
@@ -33,9 +36,10 @@ public class InformationsPanel extends JPanel {
 	
 	
 	
-	public InformationsPanel(Risiko risiko, int aktuellerSpieler) {
+	public InformationsPanel(Risiko risiko, int aktuellerSpieler, KartenEintauschenListener kartenEintauschenListener) {
 		this.risiko = risiko;
 		this.aktuellerSpieler = aktuellerSpieler;
+		this.kartenEintauschenListener = kartenEintauschenListener;
 	//	this.setVisible(true);
 		//setUpUI();
 	}
@@ -44,24 +48,15 @@ public class InformationsPanel extends JPanel {
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setPreferredSize(new Dimension(this.getParent().getWidth(), height));
 		
-		layout = new GridBagLayout();
+		layout = new GridLayout(1, 3);
 		this.setLayout(layout);
-		c = new GridBagConstraints();
 		
-		missionsPanel = new MissionsPanel(risiko, this.getWidth(),height);
-		einheitenKartenPanel = new EinheitenKartenPanel(this.getWidth(),height);
-		anweisungsPanel = new AnweisungsPanel(this.getWidth(),height);
+		missionsPanel = new MissionsPanel(risiko, this.getWidth(), height);
+		einheitenKartenPanel = new EinheitenKartenPanel(this.getWidth(), height, kartenEintauschenListener);
+		anweisungsPanel = new AnweisungsPanel(this.getWidth(), height);
 		
-		c.gridx = 0;
-		layout.setConstraints(missionsPanel, c);
 		this.add(missionsPanel);
-		
-		c.gridx = 1;
-		layout.setConstraints(anweisungsPanel, c);
 		this.add(anweisungsPanel);
-		
-		c.gridx = 2;
-		layout.setConstraints(einheitenKartenPanel, c);
 		this.add(einheitenKartenPanel);
 	
 		
@@ -96,5 +91,19 @@ public class InformationsPanel extends JPanel {
 	
 	public void setEinheitenKartenNachricht(int aktuellerSpieler) {
 		einheitenKartenPanel.setNachricht(aktuellerSpieler, risiko);
+	}
+
+	public void updateInfoPanel(int aktuellerSpieler2) {
+		if(aktuellerSpieler == (risiko.getSpielerAnzahl()-1)) {
+			setEinheitenKartenNachricht(0);
+			missionsPanel.setNachricht(0);
+		} else {
+			setEinheitenKartenNachricht(aktuellerSpieler+1);
+			missionsPanel.setNachricht(aktuellerSpieler+1);
+		}
+	}
+
+	public void enableTauscheButton() {
+		einheitenKartenPanel.enableTauscheButton();
 	}
 }

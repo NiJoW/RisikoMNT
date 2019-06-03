@@ -280,7 +280,6 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		
 		einheitenPhaseBeenden.addActionListener(phaseBeendenListener);
 		einheitenPhaseBeenden.addActionListener(new ActionListener() {
-			// TODO: aendern in Phase beenden Button mit zaehler?
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
