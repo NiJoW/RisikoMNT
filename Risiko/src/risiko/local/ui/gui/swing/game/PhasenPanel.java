@@ -53,6 +53,7 @@ public class PhasenPanel extends JPanel {
 		this.add(phaseDrei);
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		if(!neuesSpiel) {
+			aktuellerSpieler++;
 			risiko.berechneNeueEinheiten(aktuellerSpieler); //Nicht huebsch, aber functioniert
 			phaseEins.beginneSpiel(aktuellerSpieler);
 		}else {
@@ -69,9 +70,7 @@ public class PhasenPanel extends JPanel {
 		}else {
 			kartenPanel.setAktuellerSpieler(0);
 			phaseEins.beginneSpiel(0);
-		}
-		informationsPanel.setMissionsNachricht(aktuellerSpieler);
-		
+		}		
 		
 	}
 	
