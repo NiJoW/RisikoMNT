@@ -74,11 +74,11 @@ public class FaceLayout extends JFrame {
    
         JLayeredPane layers = new JLayeredPane();
         
-        ImagePanel myImage = new ImagePanel();
+      //  ImagePanel myImage = new ImagePanel();
        // myImage.setVisible(false);
 		//this.add(myImage);
 		
-		layers.add(myImage, 6);
+//		layers.add(myImage, 6);
         layers.add(fLab, 2);
         layers.add(eLab, 3);
         layers.add(nLab, 4);

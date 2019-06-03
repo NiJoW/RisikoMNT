@@ -47,38 +47,90 @@ public class KartenPanel extends JPanel {
 		initialize(spielername, screenWidth, screenHeight, lp);
 	}
 	
-	private void initialize(String spielername, int screenWidth, int screenHeight,  JLayeredPane lp) {
+	private void initialize(String spielername, int screenWidth, int screenHeight,  JLayeredPane orginaleLayerPane) {
 		this.setSize(width,height);
 		this.setPreferredSize(new Dimension(width,height));
 		
-		JLayeredPane layers = lp;
-		JLayeredPane mapPanel = new JLayeredPane();// new JPanel();
-		mapPanel.setBounds(0, 0, 1024, 525);
+		JLayeredPane orginalLayerPane = orginaleLayerPane;
+		JLayeredPane kartenLayer = new JLayeredPane();
+		kartenLayer.setBounds(0, 0, 1024, 525);
+		kartenLayer.setLayout(null);
+		
+		ImagePanel myImage = new ImagePanel(this);
+		ImagePanelZeigen myImageZeigen = new ImagePanelZeigen(this);
 		
 		ImageIcon face = new ImageIcon("images/Gewonnen.png"); 
-		JLabel fLab = new JLabel(face);
-        fLab.setBounds(25, 25, 100, 100);
-        fLab.setPreferredSize(new Dimension(100,100));
-//        layers.add(fLab);
-//        JLabel fLab2 = new JLabel(face);
-//        fLab2.setBounds(75, 75, 100, 100);
-//        layers.add(fLab2);
-//        
-//		
-		ImagePanel myImage = new ImagePanel(this);
-//		layers.add(myImage);
-		ImagePanelZeigen myImageZeigen = new ImagePanelZeigen(this);
-//		//this.add(myImageZeigen);
-//		layers.add(myImageZeigen);
-//	//	this.add(layers);
-		mapPanel.add(fLab);
-		mapPanel.add(myImageZeigen);
-		mapPanel.add(myImage);
+//		JLabel alaska = new JLabel(face); //new JLabel(face);
+//		alaska.setBounds(85, 65, 10, 10);
+//		alaska.setPreferredSize(new Dimension(100,100));
+//		alaskaText.setPreferredSize(new Dimension(100,100));
+		JLabel alaskaText = new JLabel("3"); //new JLabel(face);
+		alaskaText.setLocation(86, 62);
+		alaskaText.setSize(new Dimension(10,10));
+		alaskaText.setBackground(Color.WHITE);
+		alaskaText.setOpaque(true);
+		kartenLayer.add(alaskaText);
+		
+		JLabel nwTerriteriumText  = new JLabel("3");
+		nwTerriteriumText.setLocation(172, 62);
+		nwTerriteriumText.setSize(new Dimension(10,10));
+		nwTerriteriumText.setBackground(Color.WHITE);
+		nwTerriteriumText.setOpaque(true);
+		kartenLayer.add(nwTerriteriumText);
+		
+		JLabel ontarioText  = new JLabel("4");
+		ontarioText.setLocation(150, 100);
+		ontarioText.setSize(new Dimension(10,10));
+		ontarioText.setBackground(Color.WHITE);
+		ontarioText.setForeground(Color.RED);
+		ontarioText.setOpaque(true);
+		kartenLayer.add(ontarioText);
+		
+		JLabel argentinienText  = new JLabel("6");
+		argentinienText.setLocation(270, 478);
+		argentinienText.setSize(new Dimension(10,10));
+		argentinienText.setBackground(Color.WHITE);
+		argentinienText.setOpaque(true);
+		kartenLayer.add(argentinienText);
+		
+		JLabel islandText  = new JLabel("8");
+		islandText.setLocation(412, 62);
+		islandText.setSize(new Dimension(10,10));
+		islandText.setBackground(Color.WHITE);
+		islandText.setForeground(Color.RED);
+		islandText.setOpaque(true);
+		kartenLayer.add(islandText);
+		
+		JLabel großbritanienText  = new JLabel("3");
+		großbritanienText.setLocation(350, 62);
+		großbritanienText.setSize(new Dimension(10,10));
+		großbritanienText.setBackground(Color.WHITE);
+		großbritanienText.setOpaque(true);	
+		
+		JLabel kamtschatkaText  = new JLabel("9");
+		kamtschatkaText.setLocation(918, 62);
+		kamtschatkaText.setSize(new Dimension(10,10));
+		kamtschatkaText.setBackground(Color.WHITE);
+		kamtschatkaText.setForeground(Color.RED);
+		kamtschatkaText.setOpaque(true);
+		kartenLayer.add(kamtschatkaText);
+		
+		JLabel ostAustralienText  = new JLabel("7");
+		ostAustralienText.setLocation(920, 430);
+		ostAustralienText.setSize(new Dimension(10,10));
+		ostAustralienText.setBackground(Color.WHITE);
+		ostAustralienText.setOpaque(true);
+		kartenLayer.add(ostAustralienText);
 		
 		
 		
 		
-		layers.add(mapPanel);
+		
+	//	kartenLayer.add(alaska);
+		kartenLayer.add(myImageZeigen);
+		kartenLayer.add(myImage);
+
+		orginalLayerPane.add(kartenLayer);
 		
 	//	ImagePanel myImage = new ImagePanel(this);
 //		this.add(myImage);

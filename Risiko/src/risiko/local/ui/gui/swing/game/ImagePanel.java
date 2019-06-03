@@ -54,27 +54,7 @@ public class ImagePanel extends JPanel{
        
     }
 
-    //TODO wieder raus, zum Test der Layered Pane brauchte ich nen anderen Konstruktor
-    public ImagePanel() {
-       	this.setSize(imgPanelWidth,imgPanelHeigth);
-    		this.setPreferredSize(new Dimension(imgPanelWidth,imgPanelHeigth));
-    	//	this.phasenPanel = phasenPanel;
-
-           try {
-              bi = ImageIO.read(new File("images/WeltkarteFINAL.png"));
-              trueWidth = bi.getWidth();
-      		  trueHeight = bi.getHeight();
-              setSize(imgPanelWidth,imgPanelHeigth);
-              this.addMouseListener(getMouseAdapter());
-           } catch (IOException ex) {
-        	   System.out.println(ex.getMessage());
-                // handle exception...
-           }
-           this.setVisible(true);
-
-	}
-
-	@Override
+    @Override
 	public void paint(Graphics g) {
 //        super.paintComponent(g);
         Dimension d = getSize(); //1000, 600,
@@ -118,7 +98,7 @@ public class ImagePanel extends JPanel{
 //					rgb = c.getRGB();
 					//System.out.println(c);
 					System.out.println("Farbwert: " + myColor.hashCode());
-				//	kartenenPanel.setClickedProvinz(getProvinzByColor(myColor)); 
+					kartenenPanel.setClickedProvinz(getProvinzByColor(myColor)); 
 					//getProvinzIDByColor(rgb);
 //					System.out.println(getProvinzIDByColor(rgb));
 					System.out.println(myColor.getRGB());

@@ -39,7 +39,7 @@ public class ImagePanelZeigen extends JPanel{
 	//	this.phasenPanel = phasenPanel;
 
        try {
-          bi = ImageIO.read(new File("images/WeltkarteFINALschwarz.png"));
+          bi = ImageIO.read(new File("images/WeltkarteBlauKreise.png"));
           trueWidth = bi.getWidth();
   		  trueHeight = bi.getHeight();
           setSize(imgPanelWidth,imgPanelHeigth);
@@ -65,11 +65,5 @@ public class ImagePanelZeigen extends JPanel{
 		scaleFactorX = trueWidth / parentWidth;
 		scaleFactorY = trueHeight / parentHeight;
 		
-//		
-//		System.out.println(scaleFactorX +" y: " + scaleFactorY);
-//		System.out.println(trueWidth + " " + trueHeight);
-//		System.out.println("breite "+this.getWidth() + " hoehe" + this.getHeight());
-//		System.out.println("breite "+this.getParent().getWidth() + " hoehe" + this.getParent().getHeight());
-//        g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters            
     }
 }	
