@@ -75,7 +75,7 @@ public class RisikoGameGUI extends JFrame  {
 	}	
 	
 	private void initialize(boolean neuesSpiel) {
-//		JLayeredPane lp = getLayeredPane();
+		JLayeredPane lp = getLayeredPane();
 		
 		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -89,7 +89,7 @@ public class RisikoGameGUI extends JFrame  {
 		
 
 		informationsPanel = new InformationsPanel(risiko, aktuellerSpieler);
-		kartenPanel = new KartenPanel(risiko, informationsPanel, aktuellerSpieler, screenWidth, screenHeight);
+		kartenPanel = new KartenPanel(risiko, informationsPanel, aktuellerSpieler, screenWidth, screenHeight, lp);
 		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), informationsPanel, kartenPanel, neuesSpiel);
 		kartenPanel.addMapAndPhasenPanel(phasenPanel);
 
