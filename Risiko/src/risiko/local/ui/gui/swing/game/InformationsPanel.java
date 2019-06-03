@@ -86,6 +86,7 @@ public class InformationsPanel extends JPanel {
 	}
 	
 	public void setMissionsNachricht(int aktuellerSpieler) {
+		System.out.println("Spieler: " + aktuellerSpieler);
 		if(aktuellerSpieler == (risiko.getSpielerAnzahl()-1)) {
 			missionsPanel.setNachricht(0);
 		} else {

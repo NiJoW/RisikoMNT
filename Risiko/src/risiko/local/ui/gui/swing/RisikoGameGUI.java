@@ -118,7 +118,7 @@ public class RisikoGameGUI extends JFrame  {
 			System.out.println(risiko.getSpielerName(i) + ": " + risiko.getProvinzenVonSpieler(i));
 		}
 		
-		spielen(++letzterAktiverSpielerID);
+		spielen(letzterAktiverSpielerID);
 	}
 	
 	private void spielen(int spielerID) {
@@ -129,7 +129,7 @@ public class RisikoGameGUI extends JFrame  {
 		System.out.println("Phase: " + phase);
 		phasenPanel.setPhase(phase);
 		informationsPanel.setPhase(phase);
-
+		System.out.println(spielerID + " SetUp");
 		phasenPanel.setAktuellerSpieler(spielerID);
 		informationsPanel.setAktuellerSpieler(spielerID);
 	

@@ -258,6 +258,16 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		});
 		
 		initialesVerteilenButton.addActionListener(initialeRundeBeendet);
+		initialesVerteilenButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Listener ausgeführt");
+				informationsPanel.setMissionsNachricht(aktuellerSpieler);
+			}
+
+		});
+
 		
 		einheitenPhaseBeenden.addActionListener(phaseBeendenListener);
 		einheitenPhaseBeenden.addActionListener(new ActionListener() {
