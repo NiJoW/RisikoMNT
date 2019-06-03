@@ -124,7 +124,7 @@ public class KartenPanel extends JPanel {
 		ostAustralienText.setOpaque(true);
 		kartenLayer.add(ostAustralienText);
 
-
+		
 
 
 

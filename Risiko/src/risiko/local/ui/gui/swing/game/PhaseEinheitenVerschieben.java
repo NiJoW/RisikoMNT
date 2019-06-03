@@ -240,8 +240,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				PhaseEinheitenVerschieben.this.setVisible(false);
 				
-				informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
-				informationsPanel.setMissionsNachricht(aktuellerSpieler);
+				informationsPanel.updateInfoPanel(aktuellerSpieler);
 				phaseEins.updateData(aktuellerSpieler);
 				
 			}
