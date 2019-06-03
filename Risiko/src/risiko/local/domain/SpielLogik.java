@@ -56,7 +56,7 @@ public class SpielLogik {
 	public String einerHatGewonnen(int aktiverSpielerID) {
 		Spieler aktiverSpieler = spielerVW.getSpieler(aktiverSpielerID);
 		//aktiver Spieler hat die Welt erobert und gewinnt
-		if(aktiverSpieler.getAnzahlAktuelleLaender() == 42) {
+		if(aktiverSpieler.getAnzahlAktuelleLaender() == 21) {
 			return aktiverSpieler.getName();
 		}
 		//aktiver Spieler hat seine Mission erfüllt und gewonnen

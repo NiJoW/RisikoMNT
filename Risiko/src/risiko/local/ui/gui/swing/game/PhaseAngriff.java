@@ -222,6 +222,7 @@ public class PhaseAngriff extends JPanel {
 						ausgabe += risiko.getSpielerName(aktuellerSpieler) + " hat die Provinz "
 								+ risiko.getProvinz(gewaehltToID).getName() + " von " + verteidiger + " erobert!<p/>";
 						ausgabe += "*********************";
+						aufGewinnerPruefen();
 						// Provinz erobert
 	//	//TODO:				einheitenNachruecken(aktuellerSpieler, gewaehltFromID, gewaehltToID);
 					
@@ -231,16 +232,22 @@ public class PhaseAngriff extends JPanel {
 					}
 					ausgabe += "</html>";
 					anweisungsPanel.setNachricht(ausgabe);
-					// Gewinner pruefen
-					String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
-					if(!gewinner.equals(""))  {
-						//Gewinner Panel
-						//String gewinner ausgeben
-					}
-				}catch(ProvinzNichtNachbarException ex) {
+					
+				} catch(ProvinzNichtNachbarException ex) {
 					//bereits zuvor geprueft, nicht ausgeben
 				}
 				
+			}
+
+			private void aufGewinnerPruefen() {
+				// Gewinner pruefen
+				String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
+				if(!gewinner.equals(""))  {
+					//TODO: dieses Panel schlieﬂen
+					//Gewinner Panel
+					GewinnerPanel gp = new GewinnerPanel(risiko.getSpielerName(aktuellerSpieler));
+					//String gewinner ausgeben
+				}
 			}
 		});
 		
