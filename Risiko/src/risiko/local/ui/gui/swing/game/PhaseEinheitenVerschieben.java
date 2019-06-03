@@ -82,7 +82,9 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 		this.add(leereZeile2);
 		
 		c.gridy = 3;
-		anweisungsLabel1 = new JLabel("Willst du Einheiten innerhalb deiner Provinzen verschieben?");
+		anweisungsLabel1 = new JLabel("");
+		anweisungsLabel1.setText("<html>Willst du Einheiten<p/>innerhalb "
+				+ "deiner Provinzen<p/>verschieben?</html>");
 		layout.setConstraints(anweisungsLabel1, c);
 		this.add(anweisungsLabel1);
 		
@@ -197,7 +199,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (einheitenWollen <= verschiebbareEinheiten) {
+				if (einheitenWollen < verschiebbareEinheiten) {
 					System.out.println(einheitenWollen++);
 					einheitenLabel.setText(einheitenWollen + "");
 					bestaetigenButton.setEnabled(true);
@@ -214,9 +216,12 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				risiko.einheitenVerschieben(fromProvinzID, toProvinzID, einheitenWollen);
 				verschiebbareEinheiten -= einheitenWollen;
-				anweisungsLabel2.setText("Von " + verschiebeProvinzName + " kannst du noch " + verschiebbareEinheiten + " Einheiten verschieben.");
+				anweisungsLabel2.setText("<html>Von " + verschiebeProvinzName + 
+						"<p/> kannst du noch " + verschiebbareEinheiten + 
+						"<p/> Einheiten verschieben.");
 				einheitenWollen = 0;
-				einheitenLabel.setText(einheitenWollen+"");;
+				einheitenLabel.setText(einheitenWollen+"");
+				bestaetigenButton.setEnabled(false);
 				for(int i = 0; i<2; i++) {
 					System.out.println(risiko.getProvinzenVonSpieler(i));
 				}
@@ -234,9 +239,11 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PhaseEinheitenVerschieben.this.setVisible(false);
-				phaseEins.setVisible(true);
+				
 				informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
 				informationsPanel.setMissionsNachricht(aktuellerSpieler);
+				phaseEins.updateData(aktuellerSpieler);
+				
 			}
 		});
 		
@@ -262,7 +269,9 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				verschiebeProvinzName = risiko.getProvinz(provinzID).getName();
 				verschiebbareEinheiten = risiko.getVerschiebbareEinheiten(provinzID);
 				System.out.println("Verschiebbar = " + verschiebbareEinheiten);
-				anweisungsLabel2.setText("Von " + verschiebeProvinzName + " kannst du noch " + verschiebbareEinheiten + " Einheiten verschieben.");
+				anweisungsLabel2.setText("<html>Von " + verschiebeProvinzName + 
+						"<p/> kannst du noch " + verschiebbareEinheiten +
+						"<p/> Einheiten verschieben.</html>");
 				informationsPanel.setNachricht("");
 				vonProvinzName.setText(verschiebeProvinzName);
 				
@@ -273,22 +282,20 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				einheitenMinus.setEnabled(false);
 				einheitenLabel.setEnabled(false);
 				einheitenPlus.setEnabled(false);
-				aktiveWahl++;
+				aktiveWahl = 2;
 			} else {
 				informationsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
 			}
 		} else {	//Nach
+			toProvinzID = provinzID;
+			informationsPanel.setNachricht("");
+			nachProvinzName.setText(risiko.getProvinz(provinzID).getName());
+			aktiveWahl = 1;
+			nachProvinzLabel.setBorder(BorderFactory.createEmptyBorder());
+			vonProvinzLabel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 			if (risiko.validiereGUIProvinz(provinzID, aktuellerSpieler)) {
 				try {
 					risiko.validiereGUIVerschieben(provinzID, fromProvinzID);
-					
-					toProvinzID = provinzID;
-					informationsPanel.setNachricht("");
-					nachProvinzName.setText(risiko.getProvinz(provinzID).getName());
-			
-					vonProvinzLabel.setBorder(BorderFactory.createEmptyBorder());
-					nachProvinzLabel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-					
 					einheitenMinus.setEnabled(true);
 					einheitenLabel.setEnabled(true);
 					einheitenPlus.setEnabled(true);
@@ -300,6 +307,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				informationsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
 			}
 		}
-		
 	}
+	
+	
 }

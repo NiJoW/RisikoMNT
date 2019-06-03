@@ -68,10 +68,10 @@ public class ImagePanel extends JPanel{
 		scaleFactorY = trueHeight / parentHeight;
 		
 		
-		System.out.println(scaleFactorX +" y: " + scaleFactorY);
-		System.out.println(trueWidth + " " + trueHeight);
-		System.out.println("breite "+this.getWidth() + " hoehe" + this.getHeight());
-		System.out.println("breite "+this.getParent().getWidth() + " hoehe" + this.getParent().getHeight());
+//		System.out.println(scaleFactorX +" y: " + scaleFactorY);
+//		System.out.println(trueWidth + " " + trueHeight);
+//		System.out.println("breite "+this.getWidth() + " hoehe" + this.getHeight());
+//		System.out.println("breite "+this.getParent().getWidth() + " hoehe" + this.getParent().getHeight());
 //        g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters            
     }
     

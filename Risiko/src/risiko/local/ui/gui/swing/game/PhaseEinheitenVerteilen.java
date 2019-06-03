@@ -52,6 +52,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		this.informationsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
 		this.initialeRundeBeendet = initialeRundeBeendet;
+		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
 		setUpUI();
 	}
 	
@@ -85,8 +86,9 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		
 
 		c.gridy = 4;
-		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
-		anweisungsLabel1 = new JLabel("Du darfst noch " + verteilbareEinheiten + " Einheiten verteilen.");
+		anweisungsLabel1 = new JLabel("Du darfst noch " + 
+									  verteilbareEinheiten + 
+									  " Einheiten verteilen.");
 		layout.setConstraints(anweisungsLabel1, c);
 		this.add(anweisungsLabel1);
 		
@@ -144,7 +146,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		c.gridx = 1;
 		c.gridy = 12;
 		layout.setConstraints(einheitenPhaseBeenden, c);
-		einheitenPhaseBeenden.setEnabled(false);
+//		einheitenPhaseBeenden.setEnabled(false);
 //		this.add(einheitenPhaseBeenden);
 
 	}
@@ -187,7 +189,8 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (verteilbareEinheiten > 0) {
-					anweisungsLabel1.setText("Du darfst noch " + --verteilbareEinheiten + " Einheiten verteilen.");
+					anweisungsLabel1.setText("Du darfst noch " + --verteilbareEinheiten + 
+											 " Einheiten verteilen.");
 					einheitenLabel.setText(++einheitenWollen + "");
 				}
 				if(einheitenWollen > 0 && gewaehlteProvinzID != -1) {
@@ -201,7 +204,8 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (einheitenWollen > 0) {
-					anweisungsLabel1.setText("Du darfst noch " + ++verteilbareEinheiten + " Einheiten verteilen.");
+					anweisungsLabel1.setText("Du darfst noch " + ++verteilbareEinheiten + 
+							                 " Einheiten verteilen.");
 					einheitenLabel.setText(--einheitenWollen + "");
 				}
 				if (einheitenWollen == 0) {
@@ -221,11 +225,18 @@ public class PhaseEinheitenVerteilen extends JPanel{
 				System.out.println(risiko.getProvinz(gewaehlteProvinzID));
 				if (einheitenWollen > 0) {
 					risiko.setzeNeueEinheiten(gewaehlteProvinzID, einheitenWollen, aktuellerSpieler);
+					risiko.berechneVerteilbareEinheiten(-einheitenWollen, aktuellerSpieler);
+					System.out.println("Verteilbare Einheiten: " + risiko.getVerteilbareEinheiten(aktuellerSpieler));
 					einheitenWollen = 0;
 					einheitenLabel.setText(einheitenWollen+"");
 					bestaetigenButton.setEnabled(false);
 					initialesVerteilenButton.setEnabled(false);
-					
+					gewaehlteProvinzID = -1;					
+
+					if (verteilbareEinheiten == 0) { 
+						initialesVerteilenButton.setEnabled(true);
+						einheitenPhaseBeenden.setEnabled(true);
+					}
 //					String gewinner = risiko.einerHatGewonnen(aktuellerSpieler);
 //					//gewinner = "tab";
 //					System.out.println("<" + gewinner + ">");
@@ -249,10 +260,6 @@ public class PhaseEinheitenVerteilen extends JPanel{
 //					}
 				}
 				
-				if (verteilbareEinheiten == 0) { //einheitenWollen == 0 && 
-					initialesVerteilenButton.setEnabled(true);
-					einheitenPhaseBeenden.setEnabled(true);
-				}
 				
 			}
 		});
@@ -264,6 +271,8 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Listener ausgeführt");
 				informationsPanel.setMissionsNachricht(aktuellerSpieler);
+				risiko.berechneNeueEinheiten(aktuellerSpieler);
+				gewaehlteProvinzID = -1;
 			}
 
 		});
@@ -278,6 +287,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 				PhaseEinheitenVerteilen.this.setVisible(false);
 				phaseZwei.setVisible(true);
 				informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
+				einheitenPhaseBeenden.setEnabled(false);
 				
 			}
 
@@ -291,7 +301,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 			provinzLabel2.setText(risiko.getProvinz(gewaehlteProvinzID).getName());
 			if (einheitenWollen > 0) {
 				bestaetigenButton.setEnabled(true);
-				initialesVerteilenButton.setEnabled(true);
+//				initialesVerteilenButton.setEnabled(true);
 			}
 		} else {
 			informationsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
@@ -312,18 +322,40 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		initialesVerteilenButton.setVisible(false);
 		
 		this.add(einheitenPhaseBeenden);
+		einheitenPhaseBeenden.setEnabled(false);
 	}
 	
 	private void resetUI(int spieler) {
 		aktuellerSpieler = spieler;
 		
 		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
-		anweisungsLabel1.setText("Du darfst noch " + verteilbareEinheiten + " Einheiten verteilen.");
+		anweisungsLabel1.setText("Du darfst noch " + verteilbareEinheiten + 
+				" Einheiten verteilen.");
 		
 		provinzLabel2.setText(" ");
 		
 		einheitenWollen = 0;
 		einheitenLabel.setText(einheitenWollen+"");
 		
+	}
+
+	public void updateData(int spieler) {
+		
+		//TODO: WO KOMMT DIE 7 HER??
+		
+		if (spieler == risiko.getSpielerAnzahl()-1) {
+			spieler = 0;
+			risiko.berechneNeueEinheiten(spieler);
+		} else {
+			risiko.berechneNeueEinheiten(++spieler);
+		}
+		verteilbareEinheiten = risiko.getVerteilbareEinheiten(spieler);
+		anweisungsLabel1.setText("Du darfst noch " + 
+									verteilbareEinheiten + 
+									" Einheiten verteilen.");
+		System.out.println("Durch Verschieben aktualisierte Einheiten: " + 
+		verteilbareEinheiten);
+		System.out.println("SName: " + risiko.getSpielerName(spieler));
+		this.setVisible(true);
 	}
 }

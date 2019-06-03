@@ -17,7 +17,6 @@ import risiko.local.valueobjects.Spieler;
 
 public class RisikoMainGUI implements LadeListener{
 	private Risiko risiko;
-	private BufferedReader in;
 	RisikoGameGUI spielFenster;
 	AnmeldefensterGUI anmeldeFenster;
 
@@ -28,34 +27,22 @@ public class RisikoMainGUI implements LadeListener{
 
 	public RisikoMainGUI() {
 		risiko = new Risiko();
-		in = new BufferedReader(new InputStreamReader(System.in));
 	}
 
 	public static void main(String[] args) {
 		RisikoMainGUI main;
-		// try {
 		main = new RisikoMainGUI();
-		main.run();
-		// main.run();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		main.run();	
 	}
 
 	private void run() {
 		anmeldeFenster = new AnmeldefensterGUI(risiko, new StarteSpielActionListener(), this);
 	}
 
-	/**
-	 * Mitgliedsklasse fuer spielStarten - Button
-	 * 
-	 * @param args
-	 */
 	class StarteSpielActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("hoffentlich als zweites");
 			starteSpiel(e.getActionCommand());
 		}
 
