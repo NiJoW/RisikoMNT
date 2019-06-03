@@ -46,6 +46,8 @@ public class PhaseAngriff extends JPanel {
 
 	JButton wuerfelButton;
 	JButton angriffBeenden;
+	JButton nachrueckenButton;
+	int einheitenMoeglich = 3;
 
 	public PhaseAngriff(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler) {
 		this.risiko = risiko;
@@ -130,8 +132,15 @@ public class PhaseAngriff extends JPanel {
 		layout.setConstraints(wuerfelButton, c);
 		wuerfelButton.setEnabled(false);
 		this.add(wuerfelButton);
-
+		
+		nachrueckenButton = new JButton("Nachruecken");
 		c.gridy = 7;
+		c.gridx = 1;
+		layout.setConstraints(nachrueckenButton, c);
+		nachrueckenButton.setEnabled(false);
+		this.add(nachrueckenButton);
+		
+		c.gridy = 9;
 		angriffBeenden = new JButton("Phase beenden");
 		angriffBeenden.setActionCommand("3");
 		layout.setConstraints(angriffBeenden, c);
@@ -160,7 +169,7 @@ public class PhaseAngriff extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (einheitenWollen < 3) {
+				if (einheitenWollen < einheitenMoeglich) {
 					einheitenLabel.setText(++einheitenWollen + "");
 				}
 				try {
@@ -176,8 +185,11 @@ public class PhaseAngriff extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (einheitenWollen > 1) {
+				if (einheitenWollen > 0) {
 					einheitenLabel.setText(--einheitenWollen + "");
+				}
+				if (einheitenWollen == 0) {
+					wuerfelButton.setEnabled(false);
 				}
 			}
 		});
@@ -224,8 +236,11 @@ public class PhaseAngriff extends JPanel {
 								+ risiko.getProvinz(gewaehltToID).getName() + " von " + verteidiger + " erobert!<p/>";
 						ausgabe += "*********************";
 						aufGewinnerPruefen();
-						// Provinz erobert
-	//	//TODO:				einheitenNachruecken(aktuellerSpieler, gewaehltFromID, gewaehltToID);
+						
+						if (risiko.kannEinheitenNachruecken(aktuellerSpieler, gewaehltFromID)) {
+							nachrueckenButton.setEnabled(true);
+							wuerfelButton.setEnabled(false);
+						}
 					
 					
 					} else {
@@ -233,6 +248,8 @@ public class PhaseAngriff extends JPanel {
 					}
 					ausgabe += "</html>";
 					informationsPanel.setNachricht(ausgabe);
+					einheitenWollen = 0;
+					einheitenLabel.setText(einheitenWollen+"");
 					
 				} catch(ProvinzNichtNachbarException ex) {
 					//bereits zuvor geprueft, nicht ausgeben
@@ -253,6 +270,29 @@ public class PhaseAngriff extends JPanel {
 		});
 		
 		
+		nachrueckenButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if (nachrueckenButton.getText().equals("Nachruecken")) {
+					einheitenWollen = 0;
+					einheitenLabel.setText(einheitenWollen + "");
+					nachrueckenButton.setText("Bestaetigen");
+					einheitenMoeglich = risiko.getVerschiebbareEinheiten(gewaehltFromID);
+				} else {
+					
+					risiko.einheitenVerschieben(gewaehltFromID, gewaehltToID, einheitenWollen);
+					
+					einheitenWollen = 0;
+					einheitenLabel.setText(einheitenWollen + "");
+					nachrueckenButton.setText("Nachruecken");
+					nachrueckenButton.setEnabled(false);
+					einheitenMoeglich = 3;
+					wuerfelButton.setEnabled(true);
+				}
+			}
+		});
 		
 	}
 	
@@ -261,10 +301,16 @@ public class PhaseAngriff extends JPanel {
 	
 
 	public void setProvinz(int provinzID) {
+		if (nachrueckenButton.isEnabled()) {
+			nachrueckenButton.setEnabled(false);
+			einheitenMoeglich = 3;
+			einheitenWollen = 0;
+			einheitenLabel.setText(einheitenWollen+"");
+		}
 		System.out.println("Wahl: " + aktiveWahl);
-		if (aktiveWahl == 1) { //VON
+		if (aktiveWahl == 1) {	 //VON
 			if (risiko.validiereGUIProvinz(provinzID, aktuellerSpieler)) {
-				informationsPanel.setNachricht("Text");
+				//informationsPanel.setNachricht("Text");
 				gewaehltFromID = provinzID;
 				vonProvinzLabel.setText(risiko.getProvinz(gewaehltFromID).getName());
 				aktiveWahl = 2;
@@ -276,19 +322,20 @@ public class PhaseAngriff extends JPanel {
 				einheitenPlus.setEnabled(false);
 				einheitenLabel.setEnabled(false);
 				einheitenMinus.setEnabled(false);
+				wuerfelButton.setEnabled(false);
 			} else {
 				informationsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
 			}
 		} else { //NACH
 			
+//			informationsPanel.setNachricht("sind valinach");
+			gewaehltToID = provinzID;
+			System.out.println("ToProvinz: " + risiko.getProvinz(gewaehltToID).getName());
+			nachProvinzLabel.setText(risiko.getProvinz(gewaehltToID).getName());
+			aktiveWahl = 1;
+			provinzLabel2.setBorder(BorderFactory.createEmptyBorder());
+			provinzLabel1.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 			if (!risiko.validiereGUIProvinz(provinzID, aktuellerSpieler)) {
-				informationsPanel.setNachricht("sind valinach");
-				gewaehltToID = provinzID;
-				System.out.println("ToProvinz: " + risiko.getProvinz(gewaehltToID).getName());
-				nachProvinzLabel.setText(risiko.getProvinz(gewaehltToID).getName());
-				aktiveWahl = 1;
-				provinzLabel2.setBorder(BorderFactory.createEmptyBorder());
-				provinzLabel1.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 				try {
 //					risiko.validiereAngriffEingaben(gewaehltFromID, gewaehltToID, aktuellerSpieler, einheitenWollen);
 					risiko.provinzBenachbart(gewaehltFromID, gewaehltToID);
@@ -303,10 +350,5 @@ public class PhaseAngriff extends JPanel {
 				informationsPanel.setNachricht("Diese Provinz kannst du nicht angreifen!");
 			}
 		}
-		
-			
-		
-		
-		
 	}
 }

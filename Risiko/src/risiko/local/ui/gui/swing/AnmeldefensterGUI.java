@@ -82,7 +82,6 @@ public class AnmeldefensterGUI extends JPanel {
 		this.risiko = risiko;
 		this.starteSpielActionListener = starteSpielActionListener;
 		this.ladeListener = ladeListener;
-		// abstrakte Klasse Fenster?
 		initialize();
 		ereignisErzeugt();
 	}
@@ -90,25 +89,15 @@ public class AnmeldefensterGUI extends JPanel {
 	private void initialize() {
 		anmeldeFenster = new JDialog();
 		anmeldeFenster.setTitle("Bitte Anmelden");
-		// Panel
-		// JPanel anmeldePanel = new JPanel();
-		// anmeldePanel.setBackground(Color.cyan);
-//			anmeldeFenster.add(anmeldePanel);
-		// Input
 		anmeldeFenster.setLayout(new BorderLayout());
 		JPanel welcomePanel = new JPanel();
 		ladePanel = new JPanel();
 		anmeldePanel = new JPanel();
 
-//			GridBagLayout mainGBL = new GridBagLayout();
-//			this.setLayout(mainGBL);
-
 		JLabel welcomeText = new JLabel("Willkommen bei unserem Risiko!!!!");
 		welcomePanel.setBackground(Color.blue);
 		welcomePanel.setPreferredSize(new Dimension(400, 200));
 		welcomePanel.add(welcomeText);
-
-//			this.add(welcomePanel);
 
 		anmeldeLayout = new GridBagLayout();
 		anmeldePanel.setLayout(anmeldeLayout);
@@ -140,7 +129,6 @@ public class AnmeldefensterGUI extends JPanel {
 		anmeldePanel.add(s1name);
 		
 		// Button
-
 		spielerAnmeldenButton = new JButton("Spieler anmelden");
 		c.gridx = 3;
 		c.gridy = 1;
@@ -148,20 +136,17 @@ public class AnmeldefensterGUI extends JPanel {
 		anmeldePanel.add(spielerAnmeldenButton);
 
 		// Spieler 2
-
 		s2 = new JLabel("Spieler 2:");
 		c.gridx = 0;
 		c.gridy = 2;
 		c.anchor = GridBagConstraints.WEST;
 		anmeldeLayout.setConstraints(s2, c);
-		//anmeldePanel.add(s2);
 
 		s2name = new JTextField();
 		s2name.setToolTipText("Spielername eingeben");
 		c.gridx = 1;
 		c.gridy = 2;
 		anmeldeLayout.setConstraints(s2name, c);
-		//anmeldePanel.add(s2name);
 
 		// Spieler 3
 
@@ -170,65 +155,52 @@ public class AnmeldefensterGUI extends JPanel {
 		c.gridy = 3;
 		c.anchor = GridBagConstraints.WEST;
 		anmeldeLayout.setConstraints(s3, c);
-		// anmeldePanel.add(s3);
 
 		s3name = new JTextField();
 		s3name.setToolTipText("Spielername eingeben");
 		c.gridx = 1;
 		c.gridy = 3;
 		anmeldeLayout.setConstraints(s3name, c);
-		// anmeldePanel.add(s3name);
 
 		// Spieler 4
-
 		s4 = new JLabel("Spieler 4:");
 		c.gridx = 0;
 		c.gridy = 4;
 		c.anchor = GridBagConstraints.WEST;
 		anmeldeLayout.setConstraints(s4, c);
-		// anmeldePanel.add(s4);
 
 		s4name = new JTextField();
 		s4name.setToolTipText("Spielername eingeben");
 		c.gridx = 1;
 		c.gridy = 4;
 		anmeldeLayout.setConstraints(s4name, c);
-		// anmeldePanel.add(s4name);
 
 		// Spieler 5
-
 		s5 = new JLabel("Spieler 5:");
 		c.gridx = 0;
 		c.gridy = 5;
 		c.anchor = GridBagConstraints.WEST;
 		anmeldeLayout.setConstraints(s5, c);
-		// anmeldePanel.add(s5);
 
 		s5name = new JTextField();
 		s5name.setToolTipText("Spielername eingeben");
 		c.gridx = 1;
 		c.gridy = 5;
 		anmeldeLayout.setConstraints(s5name, c);
-		// anmeldePanel.add(s5name);
 
 		// Spieler 6
-
 		s6 = new JLabel("Spieler 6:");
 		c.gridx = 0;
 		c.gridy = 6;
 		c.anchor = GridBagConstraints.WEST;
 		anmeldeLayout.setConstraints(s6, c);
-		// anmeldePanel.add(s6);
 
 		s6name = new JTextField();
 		s6name.setToolTipText("Spielername eingeben");
 		c.gridx = 1;
 		c.gridy = 6;
 		anmeldeLayout.setConstraints(s6name, c);
-		// anmeldePanel.add(s6name);
 
-		// TODO zuk�nftig Button "anmelden" und danach Spiel-Laden GUI + �berpr�fung,
-		// boolean oder spiel-id zur�ck geben an main
 		// Start-Button
 		neuesSpiel = new JButton("neues Spiel starten");
 		neuesSpiel.setActionCommand("neuesSpiel");
@@ -247,11 +219,6 @@ public class AnmeldefensterGUI extends JPanel {
 		ladeSpiel.setEnabled(false);
 		anmeldePanel.add(ladeSpiel);
 
-//			anmeldeLayout.setConstraints(comp, constraints);
-//			anmeldePanel.setLayout(anmeldeLayout);
-//			anmeldePanel.setBackground(Color.red);
-//			anmeldePanel.add(bitteAnmelden);
-
 		anmeldeFenster.add(welcomePanel, BorderLayout.NORTH);
 		anmeldeFenster.add(anmeldePanel, BorderLayout.CENTER);
 
@@ -263,18 +230,8 @@ public class AnmeldefensterGUI extends JPanel {
 	
 	//----------------------ACTION LISTENER: AnmeldeFenster--------------------------------
 	
-	
-
-	public void ereignisErzeugt() {
-		s1name.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				System.out.println("Spielername eingeben");
-			}
-		});
+	private void ereignisErzeugt() {
 		
-		
-
 		spielerAnmeldenButton.addActionListener(new ActionListener() {
 			int zaehler = 2;
 
@@ -554,7 +511,6 @@ public class AnmeldefensterGUI extends JPanel {
 	private void spielerAnmelden(String name) throws SpielerBereitsVorhandenException  {
 		if (!risiko.spielerNameVorhanden(name)) {
 			risiko.spielerHinzufuegen(name);
-			// angemeldet = true;
 			System.out.println("Spieler "+name+" wurde angemeldet");
 		}
 	}
