@@ -29,8 +29,9 @@ public class MissionsPanel extends JPanel{
 		this.setPreferredSize(new Dimension(parentWidth/4,parentHeight));
 		
 	}
-	public void setNachricht(String message) {
-		nachricht.setText(message);
+	public void setNachricht(int aktuellerSpieler) {
+		mission = risiko.getMissionVonSpieler(aktuellerSpieler);
+		nachricht.setText(mission);
 	}
 	public void setAktuellerSpieler(int spielerID) {
 		this.aktuellerSpieler = spielerID;	
