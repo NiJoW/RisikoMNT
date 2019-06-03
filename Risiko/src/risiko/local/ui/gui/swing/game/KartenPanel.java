@@ -103,11 +103,11 @@ public class KartenPanel extends JPanel {
 		islandText.setOpaque(true);
 		kartenLayer.add(islandText);
 
-		JLabel groﬂbritanienText  = new JLabel("3");
-		groﬂbritanienText.setLocation(350, 62);
-		groﬂbritanienText.setSize(new Dimension(10,10));
-		groﬂbritanienText.setBackground(Color.WHITE);
-		groﬂbritanienText.setOpaque(true);	
+		JLabel grossbritanienText  = new JLabel("3");
+		grossbritanienText.setLocation(350, 62);
+		grossbritanienText.setSize(new Dimension(10,10));
+		grossbritanienText.setBackground(Color.WHITE);
+		grossbritanienText.setOpaque(true);	
 
 		JLabel kamtschatkaText  = new JLabel("9");
 		kamtschatkaText.setLocation(918, 62);
