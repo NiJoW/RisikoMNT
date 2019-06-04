@@ -48,7 +48,7 @@ public class PhaseAngriff extends JPanel {
 	JButton wuerfelButton;
 	JButton angriffBeenden;
 	JButton nachrueckenButton;
-	int einheitenMoeglich = 3;
+	int einheitenMoeglich = 0;
 
 	public PhaseAngriff(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler) {
 		this.risiko = risiko;
@@ -258,11 +258,16 @@ public class PhaseAngriff extends JPanel {
 							nachrueckenButton.setEnabled(true);
 							wuerfelButton.setEnabled(false);
 						}
+						
 					
 					
 					} else {
 						ausgabe += "Der Verteidiger " + verteidiger + " hat seine Pronvinz verteidigt.";
+						if (risiko.getVerschiebbareEinheiten(gewaehltFromID) == 0) {
+							wuerfelButton.setEnabled(false);
+						}
 					}
+					
 					ausgabe += "</html>";
 					informationsPanel.setNachricht(ausgabe);
 					einheitenWollen = 0;
@@ -299,6 +304,7 @@ public class PhaseAngriff extends JPanel {
 					einheitenLabel.setText(einheitenWollen + "");
 					nachrueckenButton.setText("Bestaetigen");
 					einheitenMoeglich = risiko.getVerschiebbareEinheiten(gewaehltFromID);
+					System.out.println("moeglich: " + einheitenMoeglich);
 				} else {
 					
 					risiko.einheitenVerschieben(gewaehltFromID, gewaehltToID, einheitenWollen);
@@ -307,7 +313,8 @@ public class PhaseAngriff extends JPanel {
 					einheitenLabel.setText(einheitenWollen + "");
 					nachrueckenButton.setText("Nachruecken");
 					nachrueckenButton.setEnabled(false);
-					einheitenMoeglich = 3;
+					einheitenMoeglich = risiko.getAnzahlEinheitenAngriff(gewaehltFromID);
+					System.out.println("moeglich: " + einheitenMoeglich);
 					wuerfelButton.setEnabled(true);
 				}
 			}
@@ -322,7 +329,7 @@ public class PhaseAngriff extends JPanel {
 	public void setProvinz(int provinzID) {
 		if (nachrueckenButton.isEnabled()) {
 			nachrueckenButton.setEnabled(false);
-			einheitenMoeglich = 3;
+			einheitenMoeglich = risiko.getAnzahlEinheitenAngriff(gewaehltFromID);
 			einheitenWollen = 0;
 			einheitenLabel.setText(einheitenWollen+"");
 		}
@@ -343,6 +350,8 @@ public class PhaseAngriff extends JPanel {
 				einheitenMinus.setEnabled(false);
 				wuerfelButton.setEnabled(false);
 				informationsPanel.setNachricht("");
+				einheitenMoeglich = risiko.getAnzahlEinheitenAngriff(gewaehltFromID);
+				System.out.println("EinheitenMoeglich: " + einheitenMoeglich);
 			} else {
 				informationsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
 			}

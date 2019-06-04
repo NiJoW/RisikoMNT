@@ -48,7 +48,6 @@ import risiko.local.domain.exceptions.TauschenNichtMoeglichException;
 import risiko.local.ui.cui.RisikoClientCUI;
 import risiko.local.ui.gui.swing.game.InformationsPanel;
 import risiko.local.ui.gui.swing.game.KartenPanel;
-import risiko.local.ui.gui.swing.game.KartenPanelV1;
 import risiko.local.ui.gui.swing.game.PhasenPanel;
 
 public class RisikoGameGUI extends JFrame  { 

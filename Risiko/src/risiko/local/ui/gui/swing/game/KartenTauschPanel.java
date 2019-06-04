@@ -77,7 +77,6 @@ public class KartenTauschPanel extends JPanel{
 		infoLabel = new JLabel(" ");
 		this.add(infoLabel);
 		this.setVisible(false);
-		
 		tauscheMoeglichkeitenPruefen();
 	}
 	

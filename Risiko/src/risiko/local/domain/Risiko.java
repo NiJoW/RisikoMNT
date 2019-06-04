@@ -91,6 +91,10 @@ public class Risiko {
 		return weltVW.getProvinzListe().get(from).getAnzahlVerschiebbareEinheiten();
 	}
 	
+	public int getAnzahlEinheitenAngriff(int from ) { 
+		return weltVW.getProvinzListe().get(from).getAnzahlEinheitenAngriff();
+	}
+	
 	public Vector<Provinz> getProvinzenVonSpieler(int id){
 		return weltVW.getProvinzenVonSpieler(spielerVW.getSpieler(id));
 	}

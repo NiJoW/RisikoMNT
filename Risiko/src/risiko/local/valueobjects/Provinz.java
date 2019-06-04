@@ -49,10 +49,26 @@ public class Provinz implements Serializable {
 				anzahl++;
 			}
 		}
+		
 		if(armee.size()==anzahl) { //eine Einheit muss stehen bleiben
 			anzahl--;
 		}
 		return anzahl;
+	}
+	
+	public int getAnzahlEinheitenAngriff() {
+		int anzahl = 0;
+		if(armee.size()==1) { //eine Einheit muss stehen bleiben
+			return 0;
+		}
+		for(Einheit einheit : armee) {
+			anzahl++;
+		}
+		if(armee.size()==anzahl) { //eine Einheit muss stehen bleiben
+			anzahl--;
+		}
+		return anzahl;
+		
 	}
 	
 	public void verkleinereArmee(int anzahl) {
@@ -86,5 +102,7 @@ public class Provinz implements Serializable {
 			einheit.setInvolviert(false);
 		}
 	}
+
+	
 	
 }
