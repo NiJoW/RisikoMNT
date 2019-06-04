@@ -26,6 +26,7 @@ public class EinheitenKartenPanel extends JPanel {
 		this.risiko = risiko;
 		this.aktuellerSpieler = aktuellerSpieler;
 		setUpUI(parentWidth,parentHeight);
+		setUpEvents();
 		pruefeTauschen();
 	}
 	public void pruefeTauschen() {
