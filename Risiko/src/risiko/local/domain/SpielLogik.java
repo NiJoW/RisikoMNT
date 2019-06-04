@@ -88,8 +88,8 @@ public class SpielLogik {
 			anzahl = 3;
 			// immer mindestens 3 Einheiten
 		}
-		anzahl += getKontinentBonus(spieler, kontinentListe);
 		// Bonus-Einheiten durch Besetzung eines vollstaendigen Kontinents erhalten	
+		anzahl += getKontinentBonus(spieler, kontinentListe);
 		spielerVW.berechneVerteilbareEinheiten(anzahl, spielerID);
 	}
 

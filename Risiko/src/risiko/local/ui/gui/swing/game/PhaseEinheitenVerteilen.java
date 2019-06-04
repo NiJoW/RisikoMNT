@@ -358,6 +358,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		System.out.println("Durch Verschieben aktualisierte Einheiten: " + 
 		verteilbareEinheiten);
 		System.out.println("SName: " + risiko.getSpielerName(spieler));
+		System.out.println("updateData-> naechsterSpieler: " + risiko.getSpielerName(spieler));
 		this.setVisible(true);
 	}
 }

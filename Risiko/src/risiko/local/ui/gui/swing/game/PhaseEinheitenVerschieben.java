@@ -239,7 +239,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PhaseEinheitenVerschieben.this.setVisible(false);
-				
+				System.out.println("verschieben-> aktuellerSpieler: " + risiko.getSpielerName(aktuellerSpieler));
 				informationsPanel.updateInfoPanel(aktuellerSpieler);
 				phaseEins.updateData(aktuellerSpieler);
 				

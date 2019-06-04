@@ -117,7 +117,7 @@ public class RisikoGameGUI extends JFrame  {
 		
 	}
 	
-	private void run(int letzterAktiverSpielerID) throws IOException {
+	private void run(int aktuellerSpieler) throws IOException {
 		
 		//spielerRegistrierung();
 		//spielMenue();
@@ -126,7 +126,7 @@ public class RisikoGameGUI extends JFrame  {
 			System.out.println(risiko.getSpielerName(i) + ": " + risiko.getProvinzenVonSpieler(i));
 		}
 		
-		spielen(letzterAktiverSpielerID);
+		spielen(aktuellerSpieler);
 	}
 	
 	private void spielen(int spielerID) {
@@ -162,6 +162,7 @@ public class RisikoGameGUI extends JFrame  {
 				if(aktuellerSpieler == risiko.getSpielerAnzahl()) {
 					aktuellerSpieler = 0;
 				}
+				System.out.println("Listener-> naechsterSpieler (bereits erhoeht): " + risiko.getSpielerName(aktuellerSpieler));
 				phasenPanel.setAktuellerSpieler(aktuellerSpieler);
 				informationsPanel.setAktuellerSpieler(aktuellerSpieler);
 				kartenPanel.setAktuellerSpieler(aktuellerSpieler);
