@@ -157,6 +157,8 @@ public class PhaseAngriff extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				vonProvinzLabel.setText("");
+				nachProvinzLabel.setText("");
 				informationsPanel.setNachricht("");
 				PhaseAngriff.this.setVisible(false);
 				phaseDrei.setVisible(true);
@@ -291,6 +293,8 @@ public class PhaseAngriff extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (nachrueckenButton.getText().equals("Nachruecken")) {
+					vonProvinzLabel.setText("");
+					nachProvinzLabel.setText("");
 					einheitenWollen = 0;
 					einheitenLabel.setText(einheitenWollen + "");
 					nachrueckenButton.setText("Bestaetigen");
