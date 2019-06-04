@@ -29,11 +29,14 @@ public class KartenTauschPanel extends JPanel{
 	private JButton abbrechenButton;
 	private JLabel infoLabel;
 	
+	PhaseEinheitenVerteilen phaseEins;
+	
 
-	public KartenTauschPanel(Risiko risiko, int aktuellerSpieler) {
+	public KartenTauschPanel(Risiko risiko, int aktuellerSpieler, PhaseEinheitenVerteilen phaseEins) {
 		tauscheListener = new TauscheListener();
 		this.risiko = risiko;
 		this.aktuellerSpieler = aktuellerSpieler;
+		this.phaseEins = phaseEins;
 		setUpUI();
 		setUpEvents();
 	}
@@ -73,6 +76,7 @@ public class KartenTauschPanel extends JPanel{
 		
 		infoLabel = new JLabel(" ");
 		this.add(infoLabel);
+		this.setVisible(false);
 		
 		tauscheMoeglichkeitenPruefen();
 	}
@@ -115,6 +119,7 @@ public class KartenTauschPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				infoLabel.setText(" ");
 				KartenTauschPanel.this.setVisible(false);
+				phaseEins.setVisible(true);
 			}
 		});
 

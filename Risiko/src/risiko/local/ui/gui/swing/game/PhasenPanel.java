@@ -21,6 +21,7 @@ public class PhasenPanel extends JPanel {
     PhaseEinheitenVerteilen phaseEins;
     PhaseAngriff phaseZwei;
     PhaseEinheitenVerschieben phaseDrei;
+    KartenTauschPanel phaseTauschen;
     int aktuellerSpieler;
 
     int phasenID;
@@ -55,6 +56,8 @@ public class PhasenPanel extends JPanel {
         this.add(phaseZwei);
         phaseDrei = new PhaseEinheitenVerschieben(risiko, informationsPanel, aktuellerSpieler);
         this.add(phaseDrei);
+        phaseTauschen = new KartenTauschPanel(risiko, aktuellerSpieler, phaseEins);
+        this.add(phaseTauschen);
         this.setBorder(BorderFactory.createLineBorder(Color.black));
         if(!neuesSpiel) {
             aktuellerSpieler++; //TODO wurde ggf schon erhoeht? bitte nachgucken
@@ -131,8 +134,7 @@ public class PhasenPanel extends JPanel {
     public void setUpKartenTausch() {
         System.out.println("Karten tauschen enrichten");
         phaseEins.setVisible(false);
-        KartenTauschPanel tauschPanel = new KartenTauschPanel(risiko, aktuellerSpieler);
-        this.add(tauschPanel);
+        phaseTauschen.setVisible(true);
     }
 
 }

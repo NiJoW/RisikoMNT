@@ -290,6 +290,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 				phaseZwei.setVisible(true);
 				informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
 				einheitenPhaseBeenden.setEnabled(false);
+				informationsPanel.toggleTauschen(false);
 				
 			}
 

@@ -242,7 +242,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 				System.out.println("verschieben-> aktuellerSpieler: " + risiko.getSpielerName(aktuellerSpieler));
 				informationsPanel.updateInfoPanel(aktuellerSpieler);
 				phaseEins.updateData(aktuellerSpieler);
-				
+				informationsPanel.toggleTauschen(true);
 			}
 		});
 		
