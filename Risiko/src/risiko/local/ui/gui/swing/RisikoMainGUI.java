@@ -62,7 +62,7 @@ public class RisikoMainGUI implements LadeListener{
 			for(int i = 0; i<risiko.getSpielerAnzahl(); i++) {
 				System.out.println(i + ") " + risiko.getSpielerName(i));
 			}
-			aktuellerSpieler = 0;
+//			aktuellerSpieler = 0;
 		}else {
 			neuesSpiel = false;
 			for(int i = 0; i<risiko.getSpielerAnzahl(); i++) {

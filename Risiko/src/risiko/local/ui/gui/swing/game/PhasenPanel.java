@@ -57,7 +57,7 @@ public class PhasenPanel extends JPanel {
 		this.add(phaseDrei);
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		if(!neuesSpiel) {
-			aktuellerSpieler++;
+			aktuellerSpieler++; //TODO wurde ggf schon erhoeht? bitte nachgucken
 			risiko.berechneNeueEinheiten(aktuellerSpieler); //Nicht huebsch, aber functioniert
 			phaseEins.beginneSpiel(aktuellerSpieler);
 		}else {

@@ -74,6 +74,7 @@ public class InformationsPanel extends JPanel {
 		anweisungsPanel.setNachricht(message);
 	}
 	
+	//TODO: aktuellerspieler zentral erhoehen
 	public void setMissionsNachricht(int aktuellerSpieler) {
 		System.out.println("Spieler: " + aktuellerSpieler);
 		if(aktuellerSpieler == (risiko.getSpielerAnzahl()-1)) {
