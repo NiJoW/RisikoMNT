@@ -269,9 +269,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Listener ausgeführt");
 				informationsPanel.setMissionsNachricht(aktuellerSpieler);
-				risiko.berechneNeueEinheiten(aktuellerSpieler);
 				gewaehlteProvinzID = -1;
 			}
 
@@ -283,6 +281,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				provinzLabel2.setText(" ");
 				PhaseEinheitenVerteilen.this.setVisible(false);
 				phaseZwei.setVisible(true);
 				informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
@@ -348,10 +347,10 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		} else {
 			risiko.berechneNeueEinheiten(++spieler);
 		}
+		
 		verteilbareEinheiten = risiko.getVerteilbareEinheiten(spieler);
-		anweisungsLabel1.setText("Du darfst noch " + 
-									verteilbareEinheiten + 
-									" Einheiten verteilen.");
+		provinzLabel2.setText(" ");
+		anweisungsLabel1.setText("Du darfst noch " + verteilbareEinheiten + " Einheiten verteilen.");
 		System.out.println("Durch Verschieben aktualisierte Einheiten: " + 
 		verteilbareEinheiten);
 		System.out.println("SName: " + risiko.getSpielerName(spieler));

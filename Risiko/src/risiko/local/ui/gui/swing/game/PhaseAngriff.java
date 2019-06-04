@@ -241,7 +241,10 @@ public class PhaseAngriff extends JPanel {
 						if (!risiko.isProvinzErobert(aktuellerSpieler)) {
 							risiko.provinzWurdeErobert(aktuellerSpieler);
 //							Einheitenkarte neueKarte = falls Ausgabe
-							Einheitenkarte neueKarte = risiko.einheitenkarteVerteilen(aktuellerSpieler);
+							Einheitenkarte neueKarte = null;
+							for(int i=0; i<6; i++) {
+								neueKarte = risiko.einheitenkarteVerteilen(aktuellerSpieler);
+							}
 							System.out.println("Einheitskarte: " + neueKarte.getTyp());
 							informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
 							
