@@ -101,4 +101,8 @@ public class InformationsPanel extends JPanel {
 	public void pruefeTauschen() {
 		einheitenKartenPanel.pruefeTauschen();
 	}
+
+	public void toggleTauschen(boolean status) {
+		einheitenKartenPanel.toggleTauschen(status);
+	}
 }

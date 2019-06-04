@@ -61,10 +61,10 @@ public class RisikoGameGUI extends JFrame  {
 	int aktuellerSpieler;
 	int phase;
 	
-	public RisikoGameGUI(Risiko risiko, int aktuellerSpieler, int phase, boolean neuesSpiel) {
+	public RisikoGameGUI(Risiko risiko, int spieler, int phaseID, boolean neuesSpiel) {
 		this.risiko = risiko;
-		this.aktuellerSpieler = aktuellerSpieler;
-		this.phase = phase;
+		this.aktuellerSpieler = spieler;
+		this.phase = phaseID;
 		initialize(neuesSpiel);
 		try {
 			run(aktuellerSpieler);

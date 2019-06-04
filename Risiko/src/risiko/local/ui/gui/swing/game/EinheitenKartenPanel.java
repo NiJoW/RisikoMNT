@@ -82,4 +82,7 @@ public class EinheitenKartenPanel extends JPanel {
 	public void setAktuellerSpieler(int spielerID) {
 		this.aktuellerSpieler = spielerID;
 	}
+	public void toggleTauschen(boolean status) {
+		willTauschenButton.setEnabled(status);
+	}
 }
