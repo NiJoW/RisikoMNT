@@ -77,6 +77,7 @@ public class AnmeldefensterGUI extends JPanel {
 	JButton bestaetigungsButton;
 	String name = null;
 	int spielID;
+	Vector<Color> colors;
 
 	public AnmeldefensterGUI(Risiko risiko, StarteSpielActionListener starteSpielActionListener, LadeListener ladeListener) {
 		this.risiko = risiko;
@@ -93,6 +94,14 @@ public class AnmeldefensterGUI extends JPanel {
 		JPanel welcomePanel = new JPanel();
 		ladePanel = new JPanel();
 		anmeldePanel = new JPanel();
+		
+		colors = new Vector<Color>();
+		colors.add(Color.RED);
+		colors.add(Color.BLUE);
+		colors.add(new Color(0, 153, 0));
+		colors.add(Color.ORANGE);
+		colors.add(Color.PINK);
+		colors.add(Color.CYAN);
 
 		JLabel welcomeText = new JLabel("Willkommen bei unserem Risiko!!!!");
 		welcomePanel.setBackground(Color.blue);
@@ -431,7 +440,7 @@ public class AnmeldefensterGUI extends JPanel {
 		ladeLayout.setConstraints(leereZeile, c);
 		ladePanel.add(leereZeile);
 		
-		JLabel anweisung = new JLabel("Bitte wähle eines der folgenden Spiele aus:");
+		JLabel anweisung = new JLabel("Bitte wï¿½hle eines der folgenden Spiele aus:");
 		c.gridy = 1;
 		ladeLayout.setConstraints(anweisung, c);
 		ladePanel.add(anweisung);
@@ -510,7 +519,8 @@ public class AnmeldefensterGUI extends JPanel {
 
 	private void spielerAnmelden(String name) throws SpielerBereitsVorhandenException  {
 		if (!risiko.spielerNameVorhanden(name)) {
-			risiko.spielerHinzufuegen(name);
+			risiko.spielerHinzufuegen(name, colors.get(0));
+			colors.remove(0);
 			System.out.println("Spieler "+name+" wurde angemeldet");
 		}
 	}

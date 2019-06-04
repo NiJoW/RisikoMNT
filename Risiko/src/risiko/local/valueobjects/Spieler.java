@@ -1,5 +1,6 @@
 package risiko.local.valueobjects;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.Vector;
 
@@ -13,6 +14,7 @@ public class Spieler implements Serializable{
 	private Mission mission;
 	private Vector<Einheitenkarte> eigeneKarten = new Vector<Einheitenkarte>();
 	private boolean provinzErobert = false;
+	private Color farbe;
 
 	
 	public Spieler(String name) {
@@ -73,6 +75,14 @@ public class Spieler implements Serializable{
 	
 	public void addKarte(Einheitenkarte karte) {
 		eigeneKarten.add(karte);
+	}
+
+	public Color getFarbe() {
+		return farbe;
+	}
+
+	public void setFarbe(Color farbe) {
+		this.farbe = farbe;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package risiko.local.domain;
 
+import java.awt.Color;
 import java.util.Vector;
 
 import risiko.local.domain.exceptions.SpielerBereitsVorhandenException;
@@ -29,10 +30,15 @@ public class SpielerVerwaltung {
 	
 	//---------------------- SPIELER ------------------------	
 	
-	
-	
 	public void spielerHinzufuegen(String name) {
-		spielerliste.add(new Spieler(name));
+		Spieler neuerSpieler = new Spieler(name);
+		spielerliste.add(neuerSpieler);
+	}
+	
+	public void spielerHinzufuegen(String name, Color farbe) {
+		Spieler neuerSpieler = new Spieler(name);
+		neuerSpieler.setFarbe(farbe);
+		spielerliste.add(neuerSpieler);
 	}
 	
 	public boolean spielerBereitsVorhanden(String name) throws SpielerBereitsVorhandenException {
