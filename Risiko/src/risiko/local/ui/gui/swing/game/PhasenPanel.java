@@ -72,6 +72,7 @@ public class PhasenPanel extends JPanel {
 			phaseEins.initialesVerteilen(spieler);
 			kartenPanel.setAktuellerSpieler(spieler);
 		}else {
+			risiko.berechneNeueEinheiten(0);
 			kartenPanel.setAktuellerSpieler(0);
 			phaseEins.beginneSpiel(0);
 		}		
@@ -97,8 +98,6 @@ public class PhasenPanel extends JPanel {
 	public void setPhase(int phasenID) {
 		this.phasenID = phasenID;
 	}
-	
-	
 
 	public void setClickedProvinz(int provinzIDByColor) {
 		if(provinzIDByColor == 42) {

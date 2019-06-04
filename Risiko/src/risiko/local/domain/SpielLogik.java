@@ -364,18 +364,39 @@ public class SpielLogik {
 		Vector<Einheitenkarte> karten = spieler.getKarten();
 		if(karten.size() >= 3) {
 			int [] kartenAnzahl = EinheitenkartenZaehlen(karten);
-			if(kartenAnzahl[0] >= 3 || kartenAnzahl[1] >= 3 || kartenAnzahl[2] >= 3) {
-				return true;
+			for(int i = 0; i < 3; i++) {
+				if((kannDreiGleicheTypTauschen(kartenAnzahl, i)) != null) {
+					return true;
+				}
 			}
-			if(kartenAnzahl[0] >= 1 && kartenAnzahl[1] >= 1 && kartenAnzahl[2] >= 1) {
+			if(jeEineTauschen(kartenAnzahl)) {
 				return true;
 			}
 		}
 		throw new TauschenNichtMoeglichException();
 	}
+	
+	public boolean jeEineTauschen(int [] kartenAnzahl) {
+		
+		if(kartenAnzahl[0] >= 1 && kartenAnzahl[1] >= 1 && kartenAnzahl[2] >= 1) {
+			return true;
+		}
+		return false;
+	}
+
+	public Vector<Integer> kannDreiGleicheTypTauschen(int [] kartenAnzahl, int stelle) {
+		//0 = Soldaten
+		//1 = Reiter
+		//2 = Kanonen
+		Vector<Integer> moeglichkeiten = new Vector<Integer>();
+		if(kartenAnzahl[stelle] >= 3) {
+			moeglichkeiten.add(stelle);
+		}
+		return moeglichkeiten;
+	}
 
 	
-	private int[] EinheitenkartenZaehlen(Vector<Einheitenkarte> karten) {
+	public int[] EinheitenkartenZaehlen(Vector<Einheitenkarte> karten) {
 		int[] kartenAnzahl = new int[3];
 		int anzahlSoldaten = 0;
 		int anzahlReiter= 0;

@@ -224,6 +224,18 @@ public class Risiko {
 	public int einheitenKartenEintauschen(String input, int spielerID) throws FalscheEingabeException, NichtGenugKartenFuerAktionException {
 		return spiellogik.einheitenKartenEintauschen(input, spielerVW.getSpielerListe().get(spielerID));
 	}
+	
+	public Vector<Integer> kannDreiGleicheVonTypTauschen(int spielerID, int stelle) {		
+		Vector<Einheitenkarte> karten = spielerVW.getSpielerListe().get(spielerID).getKarten();
+		int [] kartenAnzahl = spiellogik.EinheitenkartenZaehlen(karten);
+		return spiellogik.kannDreiGleicheTypTauschen(kartenAnzahl, stelle);
+	}
+	
+	public boolean jeEineEintauschen(int spielerID) {
+		Vector<Einheitenkarte> karten = spielerVW.getSpielerListe().get(spielerID).getKarten();
+		int [] kartenAnzahl = spiellogik.EinheitenkartenZaehlen(karten);
+		return spiellogik.jeEineTauschen(kartenAnzahl);
+	}
 
 //----------------------PERSITENCE------------------------	
 

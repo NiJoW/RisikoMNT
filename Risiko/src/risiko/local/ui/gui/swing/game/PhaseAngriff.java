@@ -157,6 +157,7 @@ public class PhaseAngriff extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				informationsPanel.setNachricht("");
 				PhaseAngriff.this.setVisible(false);
 				phaseDrei.setVisible(true);
 				informationsPanel.setNachricht("");
@@ -170,6 +171,7 @@ public class PhaseAngriff extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				informationsPanel.setNachricht("");
 				if (einheitenWollen < einheitenMoeglich) {
 					einheitenLabel.setText(++einheitenWollen + "");
 				}
@@ -186,6 +188,7 @@ public class PhaseAngriff extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				informationsPanel.setNachricht("");
 				if (einheitenWollen > 0) {
 					einheitenLabel.setText(--einheitenWollen + "");
 				}
@@ -241,7 +244,10 @@ public class PhaseAngriff extends JPanel {
 						if (!risiko.isProvinzErobert(aktuellerSpieler)) {
 							risiko.provinzWurdeErobert(aktuellerSpieler);
 //							Einheitenkarte neueKarte = falls Ausgabe
-							Einheitenkarte neueKarte = risiko.einheitenkarteVerteilen(aktuellerSpieler);
+							Einheitenkarte neueKarte = null;
+							for(int i=0; i<6; i++) {
+								neueKarte = risiko.einheitenkarteVerteilen(aktuellerSpieler);
+							}
 							System.out.println("Einheitskarte: " + neueKarte.getTyp());
 							informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
 							
@@ -332,6 +338,7 @@ public class PhaseAngriff extends JPanel {
 				einheitenLabel.setEnabled(false);
 				einheitenMinus.setEnabled(false);
 				wuerfelButton.setEnabled(false);
+				informationsPanel.setNachricht("");
 			} else {
 				informationsPanel.setNachricht("Diese Provinz gehoert dir nicht!");
 			}
@@ -351,6 +358,7 @@ public class PhaseAngriff extends JPanel {
 					einheitenPlus.setEnabled(true);
 					einheitenLabel.setEnabled(true);
 					einheitenMinus.setEnabled(true);
+					informationsPanel.setNachricht("");
 				} catch (Exception e) {
 					informationsPanel.setNachricht(e.getMessage());
 				}	 

@@ -261,6 +261,7 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 		});
 		
 	}
+	
 	public void setProvinz(int provinzID) {
 		if(aktiveWahl == 1) {	//Von
 			if (risiko.validiereGUIProvinz(provinzID, aktuellerSpieler)) {
