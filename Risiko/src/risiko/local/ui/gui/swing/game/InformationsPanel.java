@@ -30,12 +30,6 @@ public class InformationsPanel extends JPanel {
 	EinheitenKartenPanel einheitenKartenPanel;
 	KartenEintauschenListener kartenEintauschenListener;
 	
-	
-
-
-	
-	
-	
 	public InformationsPanel(Risiko risiko, int aktuellerSpieler, KartenEintauschenListener kartenEintauschenListener) {
 		this.risiko = risiko;
 		this.aktuellerSpieler = aktuellerSpieler;

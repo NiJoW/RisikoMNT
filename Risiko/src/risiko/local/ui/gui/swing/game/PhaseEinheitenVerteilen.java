@@ -188,6 +188,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				informationsPanel.setNachricht("");
 				if (verteilbareEinheiten > 0) {
 					anweisungsLabel1.setText("Du darfst noch " + --verteilbareEinheiten + 
 											 " Einheiten verteilen.");
@@ -203,6 +204,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				informationsPanel.setNachricht("");
 				if (einheitenWollen > 0) {
 					anweisungsLabel1.setText("Du darfst noch " + ++verteilbareEinheiten + 
 							                 " Einheiten verteilen.");
@@ -218,7 +220,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				informationsPanel.setNachricht("");
 				
 				System.out.println("pID: " + gewaehlteProvinzID);
 				System.out.println(risiko.getProvinzenVonSpieler(aktuellerSpieler));
@@ -269,6 +271,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				informationsPanel.setNachricht("");
 				informationsPanel.setMissionsNachricht(aktuellerSpieler);
 				gewaehlteProvinzID = -1;
 			}
@@ -281,6 +284,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				informationsPanel.setNachricht("");
 				provinzLabel2.setText(" ");
 				PhaseEinheitenVerteilen.this.setVisible(false);
 				phaseZwei.setVisible(true);
