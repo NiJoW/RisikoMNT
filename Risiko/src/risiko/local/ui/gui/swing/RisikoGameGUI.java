@@ -172,6 +172,7 @@ public class RisikoGameGUI extends JFrame  {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("KartenEvent clicked");
 			phasenPanel.setUpKartenTausch();
 		}
 	}

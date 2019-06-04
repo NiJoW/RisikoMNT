@@ -88,7 +88,7 @@ public class InformationsPanel extends JPanel {
 		einheitenKartenPanel.setNachricht(aktuellerSpieler, risiko);
 	}
 
-	public void updateInfoPanel(int aktuellerSpieler2) {
+	public void updateInfoPanel(int aktuellerSpieler) {
 		if(aktuellerSpieler == (risiko.getSpielerAnzahl()-1)) {
 			setEinheitenKartenNachricht(0);
 			missionsPanel.setNachricht(0);
