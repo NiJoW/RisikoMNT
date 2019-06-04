@@ -1,3 +1,4 @@
+//Kommentar
 package risiko.local.ui.gui.swing.game;
 
 import java.awt.Dimension;
