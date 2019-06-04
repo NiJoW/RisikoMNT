@@ -1,5 +1,6 @@
 package risiko.local.domain;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,6 +49,10 @@ public class Risiko {
 
 	public void spielerHinzufuegen(String name) {
 		spielerVW.spielerHinzufuegen(name);
+	}
+	
+	public void spielerHinzufuegen(String name, Color farbe) {
+		spielerVW.spielerHinzufuegen(name, farbe);
 	}
 	
 	
@@ -113,6 +118,10 @@ public class Risiko {
 	public Vector<Einheitenkarte> getKartenVonSpielerGUI(int spielerID) {
 		Vector<Einheitenkarte> eigeneKarten = spielerVW.getSpieler(spielerID).getKarten();
 		return eigeneKarten;
+	}
+	
+	public Spieler getSpieler(int spielerID) {
+		return spielerVW.getSpieler(spielerID);
 	}
 	
 	
