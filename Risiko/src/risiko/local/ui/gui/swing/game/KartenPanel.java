@@ -74,20 +74,93 @@ public class KartenPanel extends JPanel {
 		kartenLayer.add(alaskaText);
 
 		JLabel nwTerriteriumText  = new JLabel("3");
-		nwTerriteriumText.setLocation(172, 62);
+		nwTerriteriumText.setLocation(170, 62);
 		nwTerriteriumText.setSize(new Dimension(10,10));
 		nwTerriteriumText.setBackground(Color.WHITE);
 		nwTerriteriumText.setOpaque(true);
 		kartenLayer.add(nwTerriteriumText);
+		
+		JLabel groenlandText  = new JLabel("5");
+		groenlandText.setLocation(364, 37);
+		groenlandText.setSize(new Dimension(10,10));
+		groenlandText.setBackground(Color.WHITE);
+		groenlandText.setForeground(Color.RED);
+		groenlandText.setOpaque(true);
+		kartenLayer.add(groenlandText);
 
+		JLabel albertaText  = new JLabel("4");
+		albertaText.setLocation(152, 100);
+		albertaText.setSize(new Dimension(10,10));
+		albertaText.setBackground(Color.WHITE);
+		albertaText.setForeground(Color.RED);
+		albertaText.setOpaque(true);
+		kartenLayer.add(albertaText);
+		
 		JLabel ontarioText  = new JLabel("4");
-		ontarioText.setLocation(150, 100);
+		ontarioText.setLocation(214, 99);
 		ontarioText.setSize(new Dimension(10,10));
 		ontarioText.setBackground(Color.WHITE);
-		ontarioText.setForeground(Color.RED);
+		ontarioText.setForeground(Color.BLUE);
 		ontarioText.setOpaque(true);
 		kartenLayer.add(ontarioText);
+		
+		JLabel quebeckText  = new JLabel("5");
+		quebeckText.setLocation(280, 100);
+		quebeckText.setSize(new Dimension(10,10));
+		quebeckText.setBackground(Color.WHITE);
+		quebeckText.setForeground(Color.BLUE);
+		quebeckText.setOpaque(true);
+		kartenLayer.add(quebeckText);
+		
+		JLabel weststaatenText  = new JLabel("6");
+		weststaatenText.setLocation(134, 142);
+		weststaatenText.setSize(new Dimension(10,10));
+		weststaatenText.setBackground(Color.WHITE);
+		weststaatenText.setForeground(Color.RED);
+		weststaatenText.setOpaque(true);
+		kartenLayer.add(weststaatenText);
 
+		JLabel oststaatenText  = new JLabel("6");
+		oststaatenText.setLocation(208, 159);
+		oststaatenText.setSize(new Dimension(10,10));
+		oststaatenText.setBackground(Color.WHITE);
+		oststaatenText.setForeground(Color.RED);
+		oststaatenText.setOpaque(true);
+		kartenLayer.add(oststaatenText);
+
+		JLabel mittelAmerikaText  = new JLabel("7");
+		mittelAmerikaText.setLocation(134, 212);
+		mittelAmerikaText.setSize(new Dimension(10,10));
+		mittelAmerikaText.setBackground(Color.WHITE);
+		mittelAmerikaText.setForeground(Color.RED);
+		mittelAmerikaText.setOpaque(true);
+		kartenLayer.add(mittelAmerikaText);
+		
+		JLabel venezuelaText  = new JLabel("5");
+		venezuelaText.setLocation(242, 281);
+		venezuelaText.setSize(new Dimension(10,10));
+		venezuelaText.setBackground(Color.WHITE);
+		venezuelaText.setForeground(Color.BLUE);
+		venezuelaText.setOpaque(true);
+		kartenLayer.add(venezuelaText);
+		
+		JLabel peruText  = new JLabel("3");
+		peruText.setLocation(254, 364);
+		peruText.setSize(new Dimension(10,10));
+		peruText.setBackground(Color.WHITE);
+		peruText.setForeground(Color.BLUE);
+		peruText.setOpaque(true);
+		kartenLayer.add(peruText);
+		
+		JLabel brasilienText  = new JLabel("8");
+		brasilienText.setLocation(301, 334);
+		brasilienText.setSize(new Dimension(10,10));
+		brasilienText.setBackground(Color.WHITE);
+		brasilienText.setForeground(Color.BLUE);
+		brasilienText.setOpaque(true);
+		kartenLayer.add(brasilienText);
+
+		
 		JLabel argentinienText  = new JLabel("6");
 		argentinienText.setLocation(270, 478);
 		argentinienText.setSize(new Dimension(10,10));
@@ -95,22 +168,118 @@ public class KartenPanel extends JPanel {
 		argentinienText.setOpaque(true);
 		kartenLayer.add(argentinienText);
 
+		
+		//-----------------
 		JLabel islandText  = new JLabel("8");
-		islandText.setLocation(412, 62);
+		islandText.setLocation(414, 62);
 		islandText.setSize(new Dimension(10,10));
 		islandText.setBackground(Color.WHITE);
 		islandText.setForeground(Color.RED);
 		islandText.setOpaque(true);
 		kartenLayer.add(islandText);
+		
+		JLabel skandinavienText  = new JLabel("3");
+		skandinavienText.setLocation(482, 69);
+		skandinavienText.setSize(new Dimension(10,10));
+		skandinavienText.setBackground(Color.WHITE);
+		skandinavienText.setForeground(Color.RED);
+		skandinavienText.setOpaque(true);
+		kartenLayer.add(skandinavienText);
 
-		JLabel grossbritanienText  = new JLabel("3");
-		grossbritanienText.setLocation(350, 62);
+		JLabel mittelEuropaText  = new JLabel("3");
+		mittelEuropaText.setLocation(482, 103);
+		mittelEuropaText.setSize(new Dimension(10,10));
+		mittelEuropaText.setBackground(Color.WHITE);
+		mittelEuropaText.setForeground(Color.RED);
+		mittelEuropaText.setOpaque(true);
+		kartenLayer.add(mittelEuropaText);
+		
+		JLabel suedEuropaText  = new JLabel("3");
+		suedEuropaText.setLocation(517, 131);
+		suedEuropaText.setSize(new Dimension(10,10));
+		suedEuropaText.setBackground(Color.WHITE);
+		suedEuropaText.setForeground(Color.RED);
+		suedEuropaText.setOpaque(true);
+		kartenLayer.add(suedEuropaText);
+		
+		JLabel ukraineText  = new JLabel("9");
+		ukraineText.setLocation(548, 98);
+		ukraineText.setSize(new Dimension(10,10));
+		ukraineText.setBackground(Color.WHITE);
+		ukraineText.setForeground(Color.ORANGE);
+		ukraineText.setOpaque(true);
+		kartenLayer.add(ukraineText);
+
+		JLabel grossbritanienText  = new JLabel("4");
+		grossbritanienText.setLocation(407,105);
 		grossbritanienText.setSize(new Dimension(10,10));
 		grossbritanienText.setBackground(Color.WHITE);
 		grossbritanienText.setOpaque(true);	
+		kartenLayer.add(grossbritanienText);
+		
+		JLabel westEuropaText  = new JLabel("1");
+		westEuropaText.setLocation(424, 150);
+		westEuropaText.setSize(new Dimension(10,10));
+		westEuropaText.setBackground(Color.WHITE);
+		westEuropaText.setOpaque(true);	
+		kartenLayer.add(westEuropaText);
+
+	
+		
+		//---------------
+		
+		JLabel nordwestAfrikaText  = new JLabel("0");
+		nordwestAfrikaText.setLocation(447, 224);
+		nordwestAfrikaText.setSize(new Dimension(10,10));
+		nordwestAfrikaText.setBackground(Color.WHITE);
+		nordwestAfrikaText.setOpaque(true);	
+		kartenLayer.add(nordwestAfrikaText);
+		
+		
+		JLabel aegyptenText  = new JLabel("3");
+		aegyptenText.setLocation(517, 200);
+		aegyptenText.setSize(new Dimension(10,10));
+		aegyptenText.setBackground(Color.WHITE);
+		aegyptenText.setForeground(Color.RED);
+		aegyptenText.setOpaque(true);
+		kartenLayer.add(aegyptenText);
+
+		JLabel ostafrikaText  = new JLabel("3");
+		ostafrikaText.setLocation(566, 263);
+		ostafrikaText.setSize(new Dimension(10,10));
+		ostafrikaText.setBackground(Color.WHITE);
+		ostafrikaText.setForeground(Color.BLUE);
+		ostafrikaText.setOpaque(true);
+		kartenLayer.add(ostafrikaText);
+		
+		JLabel kongoText  = new JLabel("9");
+		kongoText.setLocation(517, 297);
+		kongoText.setSize(new Dimension(10,10));
+		kongoText.setBackground(Color.WHITE);
+		kongoText.setForeground(Color.RED);
+		kongoText.setOpaque(true);
+		kartenLayer.add(kongoText);
+		
+		JLabel suedAfrikaText  = new JLabel("9");
+		suedAfrikaText.setLocation(517, 381);
+		suedAfrikaText.setSize(new Dimension(10,10));
+		suedAfrikaText.setBackground(Color.WHITE);
+		suedAfrikaText.setForeground(Color.RED);
+		suedAfrikaText.setOpaque(true);
+		kartenLayer.add(suedAfrikaText);
+		
+		JLabel madagaskaText  = new JLabel("3");
+		madagaskaText.setLocation(597, 366);
+		madagaskaText.setSize(new Dimension(10,10));
+		madagaskaText.setBackground(Color.WHITE);
+		madagaskaText.setForeground(Color.BLUE);
+		madagaskaText.setOpaque(true);
+		kartenLayer.add(madagaskaText);
+		
+//----------------
 
 		JLabel kamtschatkaText  = new JLabel("9");
-		kamtschatkaText.setLocation(918, 62);
+		kamtschatkaText.setLocation(906, 62);
 		kamtschatkaText.setSize(new Dimension(10,10));
 		kamtschatkaText.setBackground(Color.WHITE);
 		kamtschatkaText.setForeground(Color.RED);
@@ -118,14 +287,11 @@ public class KartenPanel extends JPanel {
 		kartenLayer.add(kamtschatkaText);
 
 		JLabel ostAustralienText  = new JLabel("7");
-		ostAustralienText.setLocation(920, 430);
+		ostAustralienText.setLocation(912, 430);
 		ostAustralienText.setSize(new Dimension(10,10));
 		ostAustralienText.setBackground(Color.WHITE);
 		ostAustralienText.setOpaque(true);
 		kartenLayer.add(ostAustralienText);
-
-		
-
 
 
 	//	kartenLayer.add(alaska);
