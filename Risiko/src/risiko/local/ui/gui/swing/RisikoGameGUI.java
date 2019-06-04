@@ -149,7 +149,6 @@ public class RisikoGameGUI extends JFrame  {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int nextPhase = Integer.parseInt(e.getActionCommand());
-			//Phase: angreifen
 			if(nextPhase == 1) {
 				aktuellerSpieler++;
 				if(aktuellerSpieler == risiko.getSpielerAnzahl()) {

@@ -308,6 +308,10 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 			}
 		}
 	}
+
+	public void setAktuellerSpieler(int spielerID) {
+		aktuellerSpieler = spielerID;
+	}
 	
 	
 }

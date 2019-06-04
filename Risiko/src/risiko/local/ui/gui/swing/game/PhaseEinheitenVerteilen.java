@@ -361,4 +361,8 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		System.out.println("updateData-> naechsterSpieler: " + risiko.getSpielerName(spieler));
 		this.setVisible(true);
 	}
+
+	public void setAktuellerSpieler(int spielerID) {
+		aktuellerSpieler = spielerID;
+	}
 }

@@ -359,8 +359,9 @@ public class KartenPanel extends JPanel {
 	//	this.setVisible(true);
 	}
 
-	public void setAktuellerSpieler(int aktuellerSpielerID) {
-		this.aktuellerSpielerID = aktuellerSpielerID;
+	public void setAktuellerSpieler(int spielerID) {
+		aktuellerSpielerID = spielerID;
+		
 	//	aktuellerSpieler.setText(risiko.getSpielerName(aktuellerSpielerID));
 		System.out.println("naechste Spieler: " + risiko.getSpielerName(aktuellerSpielerID));
 	}
