@@ -94,13 +94,6 @@ public class RisikoGameGUI extends JFrame  {
 		phasenPanel = new PhasenPanel(risiko, new PhaseBeendenListener(), informationsPanel, kartenPanel, neuesSpiel);
 		kartenPanel.addMapAndPhasenPanel(phasenPanel);
 		
-			try {
-				risiko.kannEintauschen(aktuellerSpieler);
-				informationsPanel.enableTauscheButton();
-			} catch (TauschenNichtMoeglichException e) {
-				
-			}
-		
 		
 		this.add(phasenPanel, BorderLayout.LINE_END);
 		this.add(informationsPanel, BorderLayout.PAGE_END);
@@ -166,6 +159,7 @@ public class RisikoGameGUI extends JFrame  {
 				phasenPanel.setAktuellerSpieler(aktuellerSpieler);
 				informationsPanel.setAktuellerSpieler(aktuellerSpieler);
 				kartenPanel.setAktuellerSpieler(aktuellerSpieler);
+				informationsPanel.pruefeTauschen();
 				
 			}
 			informationsPanel.setPhase(nextPhase);
@@ -178,6 +172,7 @@ public class RisikoGameGUI extends JFrame  {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("KartenEvent clicked");
 			phasenPanel.setUpKartenTausch();
 		}
 	}
