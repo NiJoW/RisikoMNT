@@ -10,24 +10,36 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import risiko.local.domain.Risiko;
+import risiko.local.domain.exceptions.TauschenNichtMoeglichException;
 import risiko.local.ui.gui.swing.RisikoGameGUI.KartenEintauschenListener;
 import risiko.local.valueobjects.Einheitenkarte;
 
 public class EinheitenKartenPanel extends JPanel {
+	Risiko risiko;
 	JLabel nachricht;
 	private int aktuellerSpieler;
 	JButton willTauschenButton;
 	KartenEintauschenListener kartenEintauschenListener;
 	
-	public EinheitenKartenPanel(int parentWidth, int parentHeight, KartenEintauschenListener kartenEintauschenListener) {
-		setUpUI(parentWidth,parentHeight);
+	public EinheitenKartenPanel(Risiko risiko, int aktuellerSpieler, int parentWidth, int parentHeight, KartenEintauschenListener kartenEintauschenListener) {
 		this.kartenEintauschenListener = kartenEintauschenListener;
+		this.risiko = risiko;
+		this.aktuellerSpieler = aktuellerSpieler;
+		setUpUI(parentWidth,parentHeight);
+		pruefeTauschen();
+	}
+	public void pruefeTauschen() {
+		try {
+			risiko.kannEintauschen(aktuellerSpieler);
+			willTauschenButton.setEnabled(true);
+		} catch (TauschenNichtMoeglichException e) {
+			// nichts passieren
+		}
 	}
 	private void setUpUI(int parentWidth, int parentHeight) {
 		
 		nachricht = new JLabel("");
 		this.add(nachricht);
-		
 		willTauschenButton = new JButton("Karten eintauschen");
 		willTauschenButton.setEnabled(false);
 		this.add(willTauschenButton);
@@ -66,14 +78,7 @@ public class EinheitenKartenPanel extends JPanel {
 		willTauschenButton.addActionListener(kartenEintauschenListener);
 	}
 	
-	
-	
-	
-	
 	public void setAktuellerSpieler(int spielerID) {
 		this.aktuellerSpieler = spielerID;
-	}
-	public void enableTauscheButton() {
-		willTauschenButton.setEnabled(true);
 	}
 }

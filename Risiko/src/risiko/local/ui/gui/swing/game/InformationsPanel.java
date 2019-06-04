@@ -46,7 +46,7 @@ public class InformationsPanel extends JPanel {
 		this.setLayout(layout);
 		
 		missionsPanel = new MissionsPanel(risiko, this.getWidth(), height);
-		einheitenKartenPanel = new EinheitenKartenPanel(this.getWidth(), height, kartenEintauschenListener);
+		einheitenKartenPanel = new EinheitenKartenPanel(risiko, aktuellerSpieler, this.getWidth(), height, kartenEintauschenListener);
 		anweisungsPanel = new AnweisungsPanel(this.getWidth(), height);
 		
 		this.add(missionsPanel);
@@ -98,7 +98,7 @@ public class InformationsPanel extends JPanel {
 		}
 	}
 
-	public void enableTauscheButton() {
-		einheitenKartenPanel.enableTauscheButton();
+	public void pruefeTauschen() {
+		einheitenKartenPanel.pruefeTauschen();
 	}
 }

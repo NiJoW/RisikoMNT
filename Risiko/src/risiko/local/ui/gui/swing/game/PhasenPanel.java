@@ -125,6 +125,7 @@ public class PhasenPanel extends JPanel {
 	}
 
 	public void setUpKartenTausch() {
+		System.out.println("Karten tauschen enrichten");
 		phaseEins.setVisible(false);
 		KartenTauschPanel tauschPanel = new KartenTauschPanel(risiko, aktuellerSpieler);
 	}
