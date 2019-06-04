@@ -67,7 +67,7 @@ public class PhasenPanel extends JPanel {
 
 
     private void intitialeEinheitenVerteilen(int spieler) {
-        System.out.println("Spieler "+spieler + " hat Farbe "+ risiko.getSpieler(spieler).getFarbe() );
+//        System.out.println("Spieler "+spieler + " hat Farbe "+ risiko.getSpieler(spieler).getFarbe() );
         int spielerAnzahl = risiko.getSpielerAnzahl();
         if(spieler<spielerAnzahl) {
             phaseEins.initialesVerteilen(spieler);
