@@ -123,6 +123,9 @@ public class PhasenPanel extends JPanel {
 
     public void setAktuellerSpieler(int spielerID) {
         aktuellerSpieler = spielerID;
+        phaseEins.setAktuellerSpieler(spielerID);
+        phaseZwei.setAktuellerSpieler(spielerID);
+        phaseDrei.setAktuellerSpieler(spielerID);        
     }
 
     public void setUpKartenTausch() {

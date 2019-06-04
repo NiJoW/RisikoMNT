@@ -372,4 +372,8 @@ public class PhaseAngriff extends JPanel {
 			}
 		}
 	}
+
+	public void setAktuellerSpieler(int spielerID) {
+		aktuellerSpieler = spielerID;
+	}
 }
