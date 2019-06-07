@@ -363,7 +363,7 @@ public class SpielLogik {
 	public boolean kannEintauschen(Spieler spieler) throws TauschenNichtMoeglichException {
 		Vector<Einheitenkarte> karten = spieler.getKarten();
 		if(karten.size() >= 3) {
-			int [] kartenAnzahl = EinheitenkartenZaehlen(karten);
+			int [] kartenAnzahl = einheitenkartenZaehlen(karten);
 			for(int i = 0; i < 3; i++) {
 				if((kannDreiGleicheTypTauschen(kartenAnzahl, i)) != null) {
 					return true;
@@ -396,7 +396,7 @@ public class SpielLogik {
 	}
 
 	
-	public int[] EinheitenkartenZaehlen(Vector<Einheitenkarte> karten) {
+	public int[] einheitenkartenZaehlen(Vector<Einheitenkarte> karten) {
 		int[] kartenAnzahl = new int[3];
 		int anzahlSoldaten = 0;
 		int anzahlReiter= 0;
@@ -446,7 +446,7 @@ public class SpielLogik {
 
 	private int typEintauschen(Spieler spieler, String typ, int num) throws NichtGenugKartenFuerAktionException {
 		Vector<Einheitenkarte> karten = spieler.getKarten();
-		int[] kartenAnzahl = EinheitenkartenZaehlen(karten);
+		int[] kartenAnzahl = einheitenkartenZaehlen(karten);
 		
 		if(kartenAnzahl[num] >= 3) {
 			int zaehler = 0;
@@ -470,7 +470,7 @@ public class SpielLogik {
 
 	private int jeEineKarteEintauschen(Spieler spieler) throws NichtGenugKartenFuerAktionException {
 		Vector<Einheitenkarte> karten = spieler.getKarten();
-		int[] kartenAnzahl = EinheitenkartenZaehlen(karten);
+		int[] kartenAnzahl = einheitenkartenZaehlen(karten);
 		
 		if(kartenAnzahl[0] >= 1 && kartenAnzahl[1] >= 1 && kartenAnzahl[2] >= 1) {
 			int sZaehler = 0;
@@ -515,6 +515,28 @@ public class SpielLogik {
 		}
 		spieler.berechneVerteilbareEinheiten(kartenTauschBonus);
 		return kartenTauschBonus;
+	}
+
+	public String kannTypTauschen(int aktuellerSpieler, int i, int[] kartenAnzahlProTyp) {
+			switch(i) {
+			case 0:
+				if(kartenAnzahlProTyp[0] >= 3)
+					return "soldat";
+				break;
+			case 1:
+				if(kartenAnzahlProTyp[1] >= 3)
+					return "reiter";
+				break;
+			case 2:
+				if(kartenAnzahlProTyp[2] >= 3)
+					return "kanone";
+				break;
+			case 3:
+				if(kartenAnzahlProTyp[0] >= 1 && kartenAnzahlProTyp[1] >= 1 && kartenAnzahlProTyp[2] >= 1)
+					return "alle";
+				break;
+			}
+			return "";
 	}
 	
 }

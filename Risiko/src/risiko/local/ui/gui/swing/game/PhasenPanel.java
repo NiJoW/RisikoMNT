@@ -33,10 +33,10 @@ public class PhasenPanel extends JPanel {
     int height = 525;
 
 
-    public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, InformationsPanel anweisungsPanel, KartenPanel kartenPanel, boolean neuesSpiel) {
+    public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, InformationsPanel informationsPanel, KartenPanel kartenPanel, boolean neuesSpiel) {
 
         this.risiko = risiko;
-        this.informationsPanel = anweisungsPanel;
+        this.informationsPanel = informationsPanel;
         this.kartenPanel = kartenPanel;
         this.phaseBeendenListener = phaseBeendenListener;
         this.neuesSpiel = neuesSpiel;
@@ -56,7 +56,7 @@ public class PhasenPanel extends JPanel {
         this.add(phaseZwei);
         phaseDrei = new PhaseEinheitenVerschieben(risiko, informationsPanel, aktuellerSpieler);
         this.add(phaseDrei);
-        phaseTauschen = new KartenTauschPanel(risiko, aktuellerSpieler, phaseEins);
+        phaseTauschen = new KartenTauschPanel(risiko, aktuellerSpieler, phaseEins, informationsPanel);
         this.add(phaseTauschen);
         this.setBorder(BorderFactory.createLineBorder(Color.black));
         if(!neuesSpiel) {
@@ -132,9 +132,10 @@ public class PhasenPanel extends JPanel {
     }
 
     public void setUpKartenTausch() {
-        System.out.println("Karten tauschen enrichten");
+        System.out.println("Karten tauschen einrichten");
         phaseEins.setVisible(false);
         phaseTauschen.setVisible(true);
+        phaseTauschen.tauscheMoeglichkeitenPruefen();
     }
 
 }

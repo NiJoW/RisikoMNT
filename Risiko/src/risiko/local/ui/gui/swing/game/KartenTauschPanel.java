@@ -22,17 +22,19 @@ public class KartenTauschPanel extends JPanel{
 	private int aktuellerSpieler;
 	GridLayout layout;
 	
-	JButton tauscheMoeglichkeit1;
-	JButton tauscheMoeglichkeit2;
-	JButton tauscheMoeglichkeit3;
-	JButton tauscheMoeglichkeit4;
+	JButton soldatBtn;
+	JButton reiterBtn;
+	JButton kanoneBtn;
+	JButton alleBtn;
 	private JButton abbrechenButton;
 	private JLabel infoLabel;
 	
 	PhaseEinheitenVerteilen phaseEins;
+	private InformationsPanel informationsPanel;
 	
 
-	public KartenTauschPanel(Risiko risiko, int aktuellerSpieler, PhaseEinheitenVerteilen phaseEins) {
+	public KartenTauschPanel(Risiko risiko, int aktuellerSpieler, PhaseEinheitenVerteilen phaseEins, InformationsPanel informationsPanel) {
+		this.informationsPanel = informationsPanel;
 		tauscheListener = new TauscheListener();
 		this.risiko = risiko;
 		this.aktuellerSpieler = aktuellerSpieler;
@@ -48,25 +50,21 @@ public class KartenTauschPanel extends JPanel{
 		JLabel titel = new JLabel("Einheitenkarten tauschen");
 		this.add(titel);
 		
-		tauscheMoeglichkeit1 = new JButton("3 Soldaten eintauschen");
-		tauscheMoeglichkeit1.setEnabled(false);
-		tauscheMoeglichkeit1.setActionCommand("s");
-		this.add(tauscheMoeglichkeit1);
+		soldatBtn = new JButton("3 Soldaten eintauschen");
+		soldatBtn.setActionCommand("s");
+		this.add(soldatBtn);
 		
-		tauscheMoeglichkeit2 = new JButton("3 Reiter eintauschen");
-		tauscheMoeglichkeit2.setEnabled(false);
-		tauscheMoeglichkeit1.setActionCommand("r");
-		this.add(tauscheMoeglichkeit2);
+		reiterBtn = new JButton("3 Reiter eintauschen");
+		reiterBtn.setActionCommand("r");
+		this.add(reiterBtn);
 		
-		tauscheMoeglichkeit3 = new JButton("3 Kanonen eintauschen");
-		tauscheMoeglichkeit3.setEnabled(false);
-		tauscheMoeglichkeit1.setActionCommand("k");
-		this.add(tauscheMoeglichkeit3);
+		kanoneBtn = new JButton("3 Kanonen eintauschen");
+		kanoneBtn.setActionCommand("k");
+		this.add(kanoneBtn);
 		
-		tauscheMoeglichkeit4 = new JButton("jeweils 1 eintauschen");
-		tauscheMoeglichkeit4.setEnabled(false);
-		tauscheMoeglichkeit1.setActionCommand("a");
-		this.add(tauscheMoeglichkeit4);
+		alleBtn = new JButton("jeweils 1 eintauschen");
+		alleBtn.setActionCommand("a");
+		this.add(alleBtn);
 		
 		JLabel leereZeile = new JLabel(" ");
 		this.add(leereZeile);
@@ -78,48 +76,63 @@ public class KartenTauschPanel extends JPanel{
 		this.add(infoLabel);
 		this.setVisible(false);
 		
-		tauscheMoeglichkeitenPruefen();
 	}
 	
-	private void tauscheMoeglichkeitenPruefen() {
-		
-		for(int i = 0; i < 2; i++) {
-			Vector <Integer> moeglichkeiten = risiko.kannDreiGleicheVonTypTauschen(aktuellerSpieler, i);
-			if(moeglichkeiten != null) {
-				enableButton(i);
+	public void tauscheMoeglichkeitenPruefen() {
+		soldatBtn.setEnabled(false);
+		reiterBtn.setEnabled(false);
+		kanoneBtn.setEnabled(false);
+		alleBtn.setEnabled(false);
+		String typName = "";
+		int [] kartenAnzahlProTyp = risiko.getKartenAnzahlProTyp(aktuellerSpieler);
+		for( int i = 0; i < 4; i++) {
+			typName = risiko.kannTypTauschen(aktuellerSpieler, i, kartenAnzahlProTyp);
+			System.out.println(typName + " Einheitenkarten!!");
+			switch(typName) {
+			case "soldat":
+				soldatBtn.setEnabled(true);
+				break;
+			case "reiter":
+				reiterBtn.setEnabled(true);
+				break;
+			case "kanone":
+				kanoneBtn.setEnabled(true);
+				break;
+			case "alle":
+				alleBtn.setEnabled(true);
+				break;
+			default:
+			
 			}
-		}
-		
-		if(risiko.jeEineEintauschen(aktuellerSpieler)) {
-			tauscheMoeglichkeit4.setEnabled(true);
 		}
 	}
 
 	private void enableButton(int typ) {
 		switch(typ) {
 		case 0:
-			tauscheMoeglichkeit1.setEnabled(true);
+			soldatBtn.setEnabled(true);
 			break;
 		case 1:
-			tauscheMoeglichkeit2.setEnabled(true);
+			reiterBtn.setEnabled(true);
 			break;
 		case 2:
-			tauscheMoeglichkeit3.setEnabled(true);
+			kanoneBtn.setEnabled(true);
 			break;
 		}
 	}
 
 	private void setUpEvents() {
-		tauscheMoeglichkeit1.addActionListener(tauscheListener);
-		tauscheMoeglichkeit2.addActionListener(tauscheListener);
-		tauscheMoeglichkeit3.addActionListener(tauscheListener);
-		tauscheMoeglichkeit4.addActionListener(tauscheListener);
+		soldatBtn.addActionListener(tauscheListener);
+		reiterBtn.addActionListener(tauscheListener);
+		kanoneBtn.addActionListener(tauscheListener);
+		alleBtn.addActionListener(tauscheListener);
 		
 		abbrechenButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				infoLabel.setText(" ");
 				KartenTauschPanel.this.setVisible(false);
 				phaseEins.setVisible(true);
+				phaseEins.updateVerteilbareEinheiten();
 			}
 		});
 
@@ -133,6 +146,9 @@ public class KartenTauschPanel extends JPanel{
 			try {
 				int tauscheBonus = risiko.einheitenKartenEintauschen(typ, aktuellerSpieler);
 				infoLabel.setText("Du hast " + tauscheBonus + " Einheiten erhalten.");
+				risiko.berechneVerteilbareEinheiten(tauscheBonus, aktuellerSpieler);
+				informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
+				tauscheMoeglichkeitenPruefen();
 			} catch (FalscheEingabeException | NichtGenugKartenFuerAktionException e1) {
 				//Bereits abgefangen
 			} 
