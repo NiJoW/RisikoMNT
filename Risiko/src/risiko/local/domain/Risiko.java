@@ -236,13 +236,13 @@ public class Risiko {
 	
 	public Vector<Integer> kannDreiGleicheVonTypTauschen(int spielerID, int stelle) {		
 		Vector<Einheitenkarte> karten = spielerVW.getSpielerListe().get(spielerID).getKarten();
-		int [] kartenAnzahl = spiellogik.EinheitenkartenZaehlen(karten);
+		int [] kartenAnzahl = spiellogik.einheitenkartenZaehlen(karten);
 		return spiellogik.kannDreiGleicheTypTauschen(kartenAnzahl, stelle);
 	}
 	
 	public boolean jeEineEintauschen(int spielerID) {
 		Vector<Einheitenkarte> karten = spielerVW.getSpielerListe().get(spielerID).getKarten();
-		int [] kartenAnzahl = spiellogik.EinheitenkartenZaehlen(karten);
+		int [] kartenAnzahl = spiellogik.einheitenkartenZaehlen(karten);
 		return spiellogik.jeEineTauschen(kartenAnzahl);
 	}
 
@@ -274,6 +274,16 @@ public class Risiko {
 	
 	public void validiereEinheiten(int anzahlEinheiten, int spielerID) throws AnzahlEinheitenFalschException {
 		spielVW.validiereAnzahlEinheiten(anzahlEinheiten, spielerID);
+	}
+
+	public String kannTypTauschen(int aktuellerSpieler, int i, int[] kartenAnzahlProTyp) {
+		return spiellogik.kannTypTauschen(aktuellerSpieler, i, kartenAnzahlProTyp);
+	}
+
+	public int[] getKartenAnzahlProTyp(int aktuellerSpieler) {
+		Spieler spieler = spielerVW.getSpieler(aktuellerSpieler);
+		Vector<Einheitenkarte> karten = spieler.getKarten();
+		return spiellogik.einheitenkartenZaehlen(karten);
 	}
 
 	

@@ -85,7 +85,7 @@ public class InformationsPanel extends JPanel {
 	}
 	
 	public void setEinheitenKartenNachricht(int aktuellerSpieler) {
-		einheitenKartenPanel.setNachricht(aktuellerSpieler, risiko);
+		einheitenKartenPanel.updateNachricht();
 	}
 
 	public void updateInfoPanel(int aktuellerSpieler) {
