@@ -48,7 +48,7 @@ public class EinheitenKartenPanel extends JPanel {
 		this.setSize(parentWidth/4,parentHeight);
 		this.setPreferredSize(new Dimension(parentWidth/4,parentHeight));
 	}
-	public void updateNachricht() {
+	public void updateNachricht(int aktuellerSpieler) {
 		int soldatCount = 0;
 		int reiterCount = 0;
 		int kanoneCount = 0;
