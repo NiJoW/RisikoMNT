@@ -44,13 +44,15 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	int gewaehlteProvinzID = -1;
 	JButton initialesVerteilenButton;
 	InitialeRundeBeendet initialeRundeBeendet;
+	KartenPanel kartenPanel;
 	
 	
 	
-	public PhaseEinheitenVerteilen(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, InitialeRundeBeendet initialeRundeBeendet) {
+	public PhaseEinheitenVerteilen(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, InitialeRundeBeendet initialeRundeBeendet, KartenPanel kartenPanel) {
 		this.risiko = risiko;
 		this.informationsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
+		this.kartenPanel =  kartenPanel;
 		this.initialeRundeBeendet = initialeRundeBeendet;
 		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
 		setUpUI();
@@ -93,7 +95,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 		this.add(anweisungsLabel1);
 		
 		c.gridy = 5;
-		JLabel anweisungsLabel2 = new JLabel("Auf welche Provinz m�chtest du setzen? ");
+		JLabel anweisungsLabel2 = new JLabel("Auf welche Provinz moechtest du setzen? ");
 		layout.setConstraints(anweisungsLabel2, c);
 		this.add(anweisungsLabel2);
 
@@ -229,6 +231,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 					risiko.setzeNeueEinheiten(gewaehlteProvinzID, einheitenWollen, aktuellerSpieler);
 					risiko.berechneVerteilbareEinheiten(-einheitenWollen, aktuellerSpieler);
 					System.out.println("Verteilbare Einheiten: " + risiko.getVerteilbareEinheiten(aktuellerSpieler));
+					kartenPanel.updateEinheitenLabel(gewaehlteProvinzID);
 					einheitenWollen = 0;
 					einheitenLabel.setText(einheitenWollen+"");
 					bestaetigenButton.setEnabled(false);
@@ -290,7 +293,6 @@ public class PhaseEinheitenVerteilen extends JPanel{
 				phaseZwei.setVisible(true);
 				informationsPanel.setEinheitenKartenNachricht(aktuellerSpieler);
 				einheitenPhaseBeenden.setEnabled(false);
-				informationsPanel.toggleTauschen(false);
 				
 			}
 
@@ -365,9 +367,5 @@ public class PhaseEinheitenVerteilen extends JPanel{
 
 	public void setAktuellerSpieler(int spielerID) {
 		aktuellerSpieler = spielerID;
-	}
-
-	public void updateVerteilbareEinheiten() {
-		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
 	}
 }

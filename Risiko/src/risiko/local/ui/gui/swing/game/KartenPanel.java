@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -24,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import risiko.local.domain.Risiko;
+import risiko.local.valueobjects.Provinz;
 
 public class KartenPanel extends JPanel {
 	
@@ -36,6 +38,8 @@ public class KartenPanel extends JPanel {
 	BufferedImage karte;
 	int width = 1024;
 	int height = 525;
+	JLayeredPane kartenLayer;
+	Vector<JLabel> einheitenLabel;
 	
 	public KartenPanel(Risiko risiko, InformationsPanel informationsPanel, int aktuellerSpielerID, int screenWidth, int screenHeight,  JLayeredPane lp) {
 		this.risiko = risiko;
@@ -52,305 +56,95 @@ public class KartenPanel extends JPanel {
 		this.setPreferredSize(new Dimension(width,height));
 		
 		JLayeredPane orginalLayerPane = orginaleLayerPane;
-		JLayeredPane kartenLayer = new JLayeredPane();
+		kartenLayer = new JLayeredPane();
 		kartenLayer.setBounds(0, 0, 1024, 525);
 		kartenLayer.setLayout(null);
 		
 		ImagePanel myImage = new ImagePanel(this);
-//		this.add(myImage);
 		
 		ImagePanelZeigen myImageZeigen = new ImagePanelZeigen(this);
 		
+		einheitenLabel = new Vector<JLabel>(); 
 		Color farbe;
 		String anzahlEinheiten;
-
-//		ImageIcon face = new ImageIcon("images/Gewonnen.png"); 
-//		JLabel alaska = new JLabel(face); //new JLabel(face);
-//		alaska.setBounds(85, 65, 10, 10);
-//		alaska.setPreferredSize(new Dimension(100,100));
-//		alaskaText.setPreferredSize(new Dimension(100,100));
-		JLabel alaskaText = new JLabel("3"); //new JLabel(face);
-		alaskaText.setLocation(86, 62);
-		alaskaText.setSize(new Dimension(10,10));
-		alaskaText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(29).getArmeeGroesse();
-		alaskaText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(29).getBesitzer().getFarbe();
-		alaskaText.setForeground(farbe);
-		alaskaText.setOpaque(true);
-		kartenLayer.add(alaskaText);
-
-		JLabel nwTerriteriumText  = new JLabel("3");
-		nwTerriteriumText.setLocation(170, 62);
-		nwTerriteriumText.setSize(new Dimension(10,10));
-		nwTerriteriumText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(33).getArmeeGroesse();
-		nwTerriteriumText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(33).getBesitzer().getFarbe();
-		nwTerriteriumText.setForeground(farbe);
-		nwTerriteriumText.setOpaque(true);
-		kartenLayer.add(nwTerriteriumText);
 		
-		JLabel groenlandText  = new JLabel("5");
-		groenlandText.setLocation(364, 37);
-		groenlandText.setSize(new Dimension(10,10));
-		groenlandText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(31).getArmeeGroesse();
-		groenlandText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(31).getBesitzer().getFarbe();
-		groenlandText.setForeground(farbe);
-		groenlandText.setOpaque(true);
-		kartenLayer.add(groenlandText);
-
-		JLabel albertaText  = new JLabel("4");
-		albertaText.setLocation(152, 100);
-		albertaText.setSize(new Dimension(10,10));
-		albertaText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(30).getArmeeGroesse();
-		albertaText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(30).getBesitzer().getFarbe();
-		albertaText.setForeground(farbe);		
-		albertaText.setOpaque(true);
-		kartenLayer.add(albertaText);
-		
-		JLabel ontarioText  = new JLabel("4");
-		ontarioText.setLocation(214, 99);
-		ontarioText.setSize(new Dimension(10,10));
-		ontarioText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(34).getArmeeGroesse();
-		ontarioText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(34).getBesitzer().getFarbe();
-		ontarioText.setForeground(farbe);		
-		ontarioText.setOpaque(true);
-		kartenLayer.add(ontarioText);
-		
-		JLabel quebeckText  = new JLabel("5");
-		quebeckText.setLocation(280, 100);
-		quebeckText.setSize(new Dimension(10,10));
-		quebeckText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(36).getArmeeGroesse();
-		quebeckText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(36).getBesitzer().getFarbe();
-		quebeckText.setForeground(farbe);
-		quebeckText.setOpaque(true);
-		kartenLayer.add(quebeckText);
-		
-		JLabel weststaatenText  = new JLabel("6");
-		weststaatenText.setLocation(134, 142);
-		weststaatenText.setSize(new Dimension(10,10));
-		weststaatenText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(37).getArmeeGroesse();
-		weststaatenText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(37).getBesitzer().getFarbe();
-		weststaatenText.setForeground(farbe);
-		weststaatenText.setOpaque(true);
-		kartenLayer.add(weststaatenText);
-
-		JLabel oststaatenText  = new JLabel("6");
-		oststaatenText.setLocation(208, 159);
-		oststaatenText.setSize(new Dimension(10,10));
-		oststaatenText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(35).getArmeeGroesse();
-		oststaatenText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(35).getBesitzer().getFarbe();
-		oststaatenText.setForeground(farbe);
-		oststaatenText.setOpaque(true);
-		kartenLayer.add(oststaatenText);
-
-		JLabel mittelAmerikaText  = new JLabel("7");
-		mittelAmerikaText.setLocation(134, 212);
-		mittelAmerikaText.setSize(new Dimension(10,10));
-		mittelAmerikaText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(32).getArmeeGroesse();
-		mittelAmerikaText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(32).getBesitzer().getFarbe();
-		mittelAmerikaText.setForeground(farbe);
-		mittelAmerikaText.setOpaque(true);
-		kartenLayer.add(mittelAmerikaText);
-		
-		JLabel venezuelaText  = new JLabel("5");
-		venezuelaText.setLocation(242, 281);
-		venezuelaText.setSize(new Dimension(10,10));
-		venezuelaText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(41).getArmeeGroesse();
-		venezuelaText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(41).getBesitzer().getFarbe();
-		venezuelaText.setForeground(farbe);
-		venezuelaText.setOpaque(true);
-		kartenLayer.add(venezuelaText);
-		
-		JLabel peruText  = new JLabel("3");
-		peruText.setLocation(254, 364);
-		peruText.setSize(new Dimension(10,10));
-		peruText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(40).getArmeeGroesse();
-		peruText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(40).getBesitzer().getFarbe();
-		peruText.setForeground(farbe);
-		peruText.setOpaque(true);
-		kartenLayer.add(peruText);
-		
-		JLabel brasilienText  = new JLabel("8");
-		brasilienText.setLocation(301, 334);
-		brasilienText.setSize(new Dimension(10,10));
-		brasilienText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(39).getArmeeGroesse();
-		brasilienText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(39).getBesitzer().getFarbe();
-		brasilienText.setForeground(farbe);
-		brasilienText.setOpaque(true);
-		kartenLayer.add(brasilienText);
-
-		
-		JLabel argentinienText  = new JLabel("6");
-		argentinienText.setLocation(270, 478);
-		argentinienText.setSize(new Dimension(10,10));
-		argentinienText.setBackground(Color.WHITE);
-		anzahlEinheiten = ""+risiko.getProvinz(38).getArmeeGroesse();
-		argentinienText.setText(anzahlEinheiten);
-		farbe = risiko.getProvinz(38).getBesitzer().getFarbe();
-		argentinienText.setForeground(farbe);
-		argentinienText.setOpaque(true);
-		kartenLayer.add(argentinienText);
-
-		
-		//-----------------
-		JLabel islandText  = new JLabel("8");
-		islandText.setLocation(414, 62);
-		islandText.setSize(new Dimension(10,10));
-		islandText.setBackground(Color.WHITE);
-		islandText.setForeground(Color.RED);
-		islandText.setOpaque(true);
-		kartenLayer.add(islandText);
-		
-		JLabel skandinavienText  = new JLabel("3");
-		skandinavienText.setLocation(482, 69);
-		skandinavienText.setSize(new Dimension(10,10));
-		skandinavienText.setBackground(Color.WHITE);
-		skandinavienText.setForeground(Color.RED);
-		skandinavienText.setOpaque(true);
-		kartenLayer.add(skandinavienText);
-
-		JLabel mittelEuropaText  = new JLabel("3");
-		mittelEuropaText.setLocation(482, 103);
-		mittelEuropaText.setSize(new Dimension(10,10));
-		mittelEuropaText.setBackground(Color.WHITE);
-		mittelEuropaText.setForeground(Color.RED);
-		mittelEuropaText.setOpaque(true);
-		kartenLayer.add(mittelEuropaText);
-		
-		JLabel suedEuropaText  = new JLabel("3");
-		suedEuropaText.setLocation(517, 131);
-		suedEuropaText.setSize(new Dimension(10,10));
-		suedEuropaText.setBackground(Color.WHITE);
-		suedEuropaText.setForeground(Color.RED);
-		suedEuropaText.setOpaque(true);
-		kartenLayer.add(suedEuropaText);
-		
-		JLabel ukraineText  = new JLabel("9");
-		ukraineText.setLocation(548, 98);
-		ukraineText.setSize(new Dimension(10,10));
-		ukraineText.setBackground(Color.WHITE);
-		ukraineText.setForeground(Color.ORANGE);
-		ukraineText.setOpaque(true);
-		kartenLayer.add(ukraineText);
-
-		JLabel grossbritanienText  = new JLabel("4");
-		grossbritanienText.setLocation(407,105);
-		grossbritanienText.setSize(new Dimension(10,10));
-		grossbritanienText.setBackground(Color.WHITE);
-		grossbritanienText.setOpaque(true);	
-		kartenLayer.add(grossbritanienText);
-		
-		JLabel westEuropaText  = new JLabel("1");
-		westEuropaText.setLocation(424, 150);
-		westEuropaText.setSize(new Dimension(10,10));
-		westEuropaText.setBackground(Color.WHITE);
-		westEuropaText.setOpaque(true);	
-		kartenLayer.add(westEuropaText);
-
 	
 		
-		//---------------
-		
-		JLabel nordwestAfrikaText  = new JLabel("0");
-		nordwestAfrikaText.setLocation(447, 224);
-		nordwestAfrikaText.setSize(new Dimension(10,10));
-		nordwestAfrikaText.setBackground(Color.WHITE);
-		nordwestAfrikaText.setOpaque(true);	
-		kartenLayer.add(nordwestAfrikaText);
-		
-		
-		JLabel aegyptenText  = new JLabel("3");
-		aegyptenText.setLocation(517, 200);
-		aegyptenText.setSize(new Dimension(10,10));
-		aegyptenText.setBackground(Color.WHITE);
-		aegyptenText.setForeground(Color.RED);
-		aegyptenText.setOpaque(true);
-		kartenLayer.add(aegyptenText);
+		addEinheitenLabel(0, 517, 200); // Aegypten
+		addEinheitenLabel(1, 517, 297); // Kongo
+		addEinheitenLabel(2, 597, 366); // Madagaskar
+		addEinheitenLabel(3, 447, 224);	// Nordwestafrika	
+		addEinheitenLabel(4, 566, 263); // Ostafrika
+		addEinheitenLabel(5, 517, 381); // Suedafrika
 
-		JLabel ostafrikaText  = new JLabel("3");
-		ostafrikaText.setLocation(566, 263);
-		ostafrikaText.setSize(new Dimension(10,10));
-		ostafrikaText.setBackground(Color.WHITE);
-		ostafrikaText.setForeground(Color.BLUE);
-		ostafrikaText.setOpaque(true);
-		kartenLayer.add(ostafrikaText);
+		// Todo: Koordinaten
+		addEinheitenLabel(6, 517, 381); // Afghanistan
+		addEinheitenLabel(7, 517, 381); // China
+		addEinheitenLabel(8, 517, 381); // Indien
+		addEinheitenLabel(9, 517, 381); // Irkutsk
+		addEinheitenLabel(10, 517, 381); // Jakutien
+		addEinheitenLabel(11, 517, 381); // Japan
+		addEinheitenLabel(12, 906, 62); // Kamtschatka
+		addEinheitenLabel(13, 517, 381); // Mittlerer Osten
+		addEinheitenLabel(14, 517, 381); // Mongolei
+		addEinheitenLabel(15, 517, 381); // Siam
+		addEinheitenLabel(16, 517, 381); // Sibirien
+		addEinheitenLabel(17, 517, 381); // Ural
 		
-		JLabel kongoText  = new JLabel("9");
-		kongoText.setLocation(517, 297);
-		kongoText.setSize(new Dimension(10,10));
-		kongoText.setBackground(Color.WHITE);
-		kongoText.setForeground(Color.RED);
-		kongoText.setOpaque(true);
-		kartenLayer.add(kongoText);
 		
-		JLabel suedAfrikaText  = new JLabel("9");
-		suedAfrikaText.setLocation(517, 381);
-		suedAfrikaText.setSize(new Dimension(10,10));
-		suedAfrikaText.setBackground(Color.WHITE);
-		suedAfrikaText.setForeground(Color.RED);
-		suedAfrikaText.setOpaque(true);
-		kartenLayer.add(suedAfrikaText);
+		addEinheitenLabel(18, 517, 381); // Indonesien
+		addEinheitenLabel(19, 517, 381); // Neuguinea
+		addEinheitenLabel(20, 912, 430); // Ost-Australien
+		addEinheitenLabel(21, 517, 381); // West-Australien
 		
-		JLabel madagaskaText  = new JLabel("3");
-		madagaskaText.setLocation(597, 366);
-		madagaskaText.setSize(new Dimension(10,10));
-		madagaskaText.setBackground(Color.WHITE);
-		madagaskaText.setForeground(Color.BLUE);
-		madagaskaText.setOpaque(true);
-		kartenLayer.add(madagaskaText);
+		addEinheitenLabel(22, 407,105); // Grossbritannien
+		addEinheitenLabel(23, 414, 62); // Island
+		addEinheitenLabel(24, 482, 103); // Mitteleuropa
+		addEinheitenLabel(25, 482, 69); // Skandinavien
+		addEinheitenLabel(26, 517, 131); // Sued-Europa
+		addEinheitenLabel(27, 548, 98); // Ukraine
+		addEinheitenLabel(28, 424, 150); // West-Europa
 		
-//----------------
-
-		JLabel kamtschatkaText  = new JLabel("9");
-		kamtschatkaText.setLocation(906, 62);
-		kamtschatkaText.setSize(new Dimension(10,10));
-		kamtschatkaText.setBackground(Color.WHITE);
-		kamtschatkaText.setForeground(Color.RED);
-		kamtschatkaText.setOpaque(true);
-		kartenLayer.add(kamtschatkaText);
-
-		JLabel ostAustralienText  = new JLabel("7");
-		ostAustralienText.setLocation(912, 430);
-		ostAustralienText.setSize(new Dimension(10,10));
-		ostAustralienText.setBackground(Color.WHITE);
-		ostAustralienText.setOpaque(true);
-		kartenLayer.add(ostAustralienText);
-
-
-	//	kartenLayer.add(alaska);
+		addEinheitenLabel(29, 86, 62); // Alaska
+		addEinheitenLabel(30, 152, 100); // Alberta
+		addEinheitenLabel(31, 364, 37); // Groenland
+		addEinheitenLabel(32, 134, 212); // Mittel-Amerika
+		addEinheitenLabel(33, 170, 62); // Nordwest-Territorium
+		addEinheitenLabel(34, 214, 99); // Ontario
+		addEinheitenLabel(35, 208, 159); // Oststaaten
+		addEinheitenLabel(36, 280, 100); // Quebeck
+		addEinheitenLabel(37, 134, 142); // Weststaaten
+		
+		addEinheitenLabel(38, 270, 478); // Argentinien
+		addEinheitenLabel(39, 301, 334); // Brasilien
+		addEinheitenLabel(40, 254, 364); // Peru
+		addEinheitenLabel(41, 242, 281); // Venezuela
+		
+		
+	
 		kartenLayer.add(myImageZeigen);
 		kartenLayer.add(myImage);
 
 		orginalLayerPane.add(kartenLayer);
 		
-		
-		this.setVisible(true);
-
+		this.setVisible(true);		
 	}
 	
+	public void addEinheitenLabel(int provinzID, int x, int y){
+		einheitenLabel.add(new JLabel());
+		einheitenLabel.get(provinzID).setLocation(x, y);
+		einheitenLabel.get(provinzID).setSize(new Dimension(10,10));
+		String anzahlEinheiten = ""+risiko.getProvinz(provinzID).getArmeeGroesse();
+		einheitenLabel.get(provinzID).setText(anzahlEinheiten);
+		einheitenLabel.get(provinzID).setBackground(Color.WHITE);
+		Color farbe = risiko.getProvinz(provinzID).getBesitzer().getFarbe();
+		einheitenLabel.get(provinzID).setForeground(farbe);
+		einheitenLabel.get(provinzID).setOpaque(true);
+		kartenLayer.add(einheitenLabel.get(provinzID));
+	}
 	
+
+
 	public void addMapAndPhasenPanel(PhasenPanel phasenPanel) {
 		this.phasenPanel = phasenPanel;
 		
@@ -372,6 +166,9 @@ public class KartenPanel extends JPanel {
 		}
 		phasenPanel.setClickedProvinz(provinzByColor);
 
+	}
+	public void updateEinheitenLabel(int index) {
+			einheitenLabel.get(index).setText(""+risiko.getProvinz(index).getArmeeGroesse());
 	}
 
 }
