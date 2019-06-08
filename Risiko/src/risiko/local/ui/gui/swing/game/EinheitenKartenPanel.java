@@ -48,7 +48,7 @@ public class EinheitenKartenPanel extends JPanel {
 		this.setSize(parentWidth/4,parentHeight);
 		this.setPreferredSize(new Dimension(parentWidth/4,parentHeight));
 	}
-	public void setNachricht(int aktuellerSpieler, Risiko risiko) {
+	public void updateNachricht() {
 		int soldatCount = 0;
 		int reiterCount = 0;
 		int kanoneCount = 0;
@@ -81,5 +81,8 @@ public class EinheitenKartenPanel extends JPanel {
 	
 	public void setAktuellerSpieler(int spielerID) {
 		this.aktuellerSpieler = spielerID;
+	}
+	public void toggleTauschen(boolean status) {
+		willTauschenButton.setEnabled(status);
 	}
 }

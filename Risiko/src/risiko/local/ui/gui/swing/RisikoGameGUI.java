@@ -48,7 +48,6 @@ import risiko.local.domain.exceptions.TauschenNichtMoeglichException;
 import risiko.local.ui.cui.RisikoClientCUI;
 import risiko.local.ui.gui.swing.game.InformationsPanel;
 import risiko.local.ui.gui.swing.game.KartenPanel;
-import risiko.local.ui.gui.swing.game.KartenPanelV1;
 import risiko.local.ui.gui.swing.game.PhasenPanel;
 
 public class RisikoGameGUI extends JFrame  { 
@@ -61,10 +60,10 @@ public class RisikoGameGUI extends JFrame  {
 	int aktuellerSpieler;
 	int phase;
 	
-	public RisikoGameGUI(Risiko risiko, int aktuellerSpieler, int phase, boolean neuesSpiel) {
+	public RisikoGameGUI(Risiko risiko, int spieler, int phaseID, boolean neuesSpiel) {
 		this.risiko = risiko;
-		this.aktuellerSpieler = aktuellerSpieler;
-		this.phase = phase;
+		this.aktuellerSpieler = spieler;
+		this.phase = phaseID;
 		initialize(neuesSpiel);
 		try {
 			run(aktuellerSpieler);
@@ -173,6 +172,8 @@ public class RisikoGameGUI extends JFrame  {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("KartenEvent clicked");
 			phasenPanel.setUpKartenTausch();
+			
+			
 		}
 	}
 

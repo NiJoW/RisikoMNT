@@ -85,7 +85,7 @@ public class InformationsPanel extends JPanel {
 	}
 	
 	public void setEinheitenKartenNachricht(int aktuellerSpieler) {
-		einheitenKartenPanel.setNachricht(aktuellerSpieler, risiko);
+		einheitenKartenPanel.updateNachricht();
 	}
 
 	public void updateInfoPanel(int aktuellerSpieler) {
@@ -100,5 +100,9 @@ public class InformationsPanel extends JPanel {
 
 	public void pruefeTauschen() {
 		einheitenKartenPanel.pruefeTauschen();
+	}
+
+	public void toggleTauschen(boolean status) {
+		einheitenKartenPanel.toggleTauschen(status);
 	}
 }

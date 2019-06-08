@@ -62,12 +62,13 @@ public class ErobereKontineteMission extends Mission {
 	
 	
 	public void setBeschreibung() {
-		beschreibung = "Erobere diese Kontinente: "+kontinent1.getName()+", "+kontinent2.getName();
+		beschreibung = "<html>Erobere diese Kontinente:<p/> "+kontinent1.getName()+", "+kontinent2.getName();
 		if(kontinent3 == -1) {
 			beschreibung += " und einen Kontinent deiner Wahl";
 		} else if(kontinent3 != 6) {
 			beschreibung += " und "+kontinentListe.get(kontinent3).getName();
 		}
+		beschreibung += "</html>";
 	}
 
 	@Override
