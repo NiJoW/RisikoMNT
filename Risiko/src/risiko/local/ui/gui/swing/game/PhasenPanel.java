@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import risiko.local.domain.Risiko;
 import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
-public class PhasenPanel extends JPanel {
+public class PhasenPanel extends JPanel implements EinheitenVeraendertListener {
 
     Risiko risiko;
     InformationsPanel informationsPanel;
@@ -50,11 +50,11 @@ public class PhasenPanel extends JPanel {
         this.setSize(width,height);
         this.setPreferredSize(new Dimension(width,height));
 
-        phaseEins = new PhaseEinheitenVerteilen(risiko, informationsPanel, aktuellerSpieler, new InitialeRundeBeendet(), kartenPanel);
+        phaseEins = new PhaseEinheitenVerteilen(risiko, informationsPanel, aktuellerSpieler, new InitialeRundeBeendet(), this);
         this.add(phaseEins);
-        phaseZwei = new PhaseAngriff(risiko, informationsPanel, aktuellerSpieler);
+        phaseZwei = new PhaseAngriff(risiko, informationsPanel, aktuellerSpieler, this);
         this.add(phaseZwei);
-        phaseDrei = new PhaseEinheitenVerschieben(risiko, informationsPanel, aktuellerSpieler);
+        phaseDrei = new PhaseEinheitenVerschieben(risiko, informationsPanel, aktuellerSpieler, this);
         this.add(phaseDrei);
         phaseTauschen = new KartenTauschPanel(risiko, aktuellerSpieler, phaseEins, informationsPanel);
         this.add(phaseTauschen);
@@ -92,7 +92,7 @@ public class PhasenPanel extends JPanel {
             intitialeEinheitenVerteilen(nextSpieler);
         }
     }
-
+    
     public void ereignisErzeugt() {
         phaseEins.setUpEvents(phaseBeendenListener, phaseZwei);
         phaseZwei.setUpEvents(phaseBeendenListener, phaseDrei);
@@ -137,5 +137,11 @@ public class PhasenPanel extends JPanel {
         phaseTauschen.setVisible(true);
         phaseTauschen.tauscheMoeglichkeitenPruefen();
     }
+
+	@Override
+	public void updateKarte(int provinzID) {
+		kartenPanel.updateEinheitenLabel(provinzID);
+		
+	}
 
 }

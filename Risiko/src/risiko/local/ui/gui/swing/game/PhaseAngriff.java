@@ -24,6 +24,8 @@ import risiko.local.valueobjects.Einheitenkarte;
 public class PhaseAngriff extends JPanel {
 	Risiko risiko;
 	InformationsPanel informationsPanel;
+	EinheitenVeraendertListener einheitenVeraendertListener;
+	
 	int aktuellerSpieler;
 	int gewaehltFromID;
 	int gewaehltToID;
@@ -50,9 +52,10 @@ public class PhaseAngriff extends JPanel {
 	JButton nachrueckenButton;
 	int einheitenMoeglich;
 
-	public PhaseAngriff(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler) {
+	public PhaseAngriff(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, EinheitenVeraendertListener einheitenVeraendertListener) {
 		this.risiko = risiko;
 		this.informationsPanel = anweisungsPanel;
+		this.einheitenVeraendertListener = einheitenVeraendertListener;
 		this.aktuellerSpieler = aktuellerSpieler;
 		setUpUI();
 	}
@@ -210,6 +213,10 @@ public class PhaseAngriff extends JPanel {
 
 				try {
 					String[][] wuerfelVergleich = risiko.angreifen(gewaehltFromID, gewaehltToID, einheitenWollen, wuerfelErgebnisse);
+
+					einheitenVeraendertListener.updateKarte(gewaehltFromID);
+					einheitenVeraendertListener.updateKarte(gewaehltToID);
+					
 					String ausgabe = "<html>";
 //					for(int i=0; i<wuerfelVergleich.length; i++) {
 //						for(int j=0; j<wuerfelVergleich[i].length; j++) {
@@ -265,6 +272,7 @@ public class PhaseAngriff extends JPanel {
 					} else {
 						ausgabe += "Der Verteidiger " + verteidiger + " hat seine Pronvinz verteidigt.";
 					}
+					
 					ausgabe += "</html>";
 					informationsPanel.setNachricht(ausgabe);
 					einheitenWollen = 0;
@@ -305,6 +313,8 @@ public class PhaseAngriff extends JPanel {
 					einheitenLabel.setText(einheitenWollen + "");
 					nachrueckenButton.setText("Bestaetigen");
 					einheitenMoeglich = risiko.getVerschiebbareEinheiten(gewaehltFromID);
+					einheitenVeraendertListener.updateKarte(gewaehltFromID);
+					einheitenVeraendertListener.updateKarte(gewaehltToID);
 				} else {
 					
 					risiko.einheitenVerschieben(gewaehltFromID, gewaehltToID, einheitenWollen);

@@ -19,7 +19,10 @@ import risiko.local.domain.exceptions.NichtProvinzDesSpielersException;
 import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.ui.gui.swing.game.PhasenPanel.InitialeRundeBeendet;
 
-public class PhaseEinheitenVerteilen extends JPanel{
+public class PhaseEinheitenVerteilen extends JPanel {
+	
+
+	
 	Risiko risiko;
 	int aktuellerSpieler;
 	
@@ -44,16 +47,16 @@ public class PhaseEinheitenVerteilen extends JPanel{
 	int gewaehlteProvinzID = -1;
 	JButton initialesVerteilenButton;
 	InitialeRundeBeendet initialeRundeBeendet;
-	KartenPanel kartenPanel;
+	EinheitenVeraendertListener einheitenVeraendertListener;
 	
 	
 	
-	public PhaseEinheitenVerteilen(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, InitialeRundeBeendet initialeRundeBeendet, KartenPanel kartenPanel) {
+	public PhaseEinheitenVerteilen(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, InitialeRundeBeendet initialeRundeBeendet, EinheitenVeraendertListener einheitenVeraendertListener) {
 		this.risiko = risiko;
 		this.informationsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
-		this.kartenPanel =  kartenPanel;
 		this.initialeRundeBeendet = initialeRundeBeendet;
+		this.einheitenVeraendertListener = einheitenVeraendertListener;
 		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
 		setUpUI();
 	}
@@ -231,7 +234,8 @@ public class PhaseEinheitenVerteilen extends JPanel{
 					risiko.setzeNeueEinheiten(gewaehlteProvinzID, einheitenWollen, aktuellerSpieler);
 					risiko.berechneVerteilbareEinheiten(-einheitenWollen, aktuellerSpieler);
 					System.out.println("Verteilbare Einheiten: " + risiko.getVerteilbareEinheiten(aktuellerSpieler));
-					kartenPanel.updateEinheitenLabel(gewaehlteProvinzID);
+					einheitenVeraendertListener.updateKarte(gewaehlteProvinzID);
+					
 					einheitenWollen = 0;
 					einheitenLabel.setText(einheitenWollen+"");
 					bestaetigenButton.setEnabled(false);
@@ -268,6 +272,7 @@ public class PhaseEinheitenVerteilen extends JPanel{
 				
 			}
 		});
+		
 		
 		initialesVerteilenButton.addActionListener(initialeRundeBeendet);
 		initialesVerteilenButton.addActionListener(new ActionListener() {
@@ -367,5 +372,9 @@ public class PhaseEinheitenVerteilen extends JPanel{
 
 	public void setAktuellerSpieler(int spielerID) {
 		aktuellerSpieler = spielerID;
+	}
+	
+	public void updateVerteilbareEinheiten() {
+		verteilbareEinheiten = risiko.getVerteilbareEinheiten(aktuellerSpieler);
 	}
 }
