@@ -169,6 +169,8 @@ public class KartenPanel extends JPanel {
 	}
 	public void updateEinheitenLabel(int index) {
 			einheitenLabel.get(index).setText(""+risiko.getProvinz(index).getArmeeGroesse());
+			Color farbe = risiko.getProvinz(index).getBesitzer().getFarbe();
+			einheitenLabel.get(index).setForeground(farbe);
 	}
 
 }

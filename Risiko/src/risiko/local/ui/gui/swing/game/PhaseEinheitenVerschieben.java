@@ -20,6 +20,7 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
 public class PhaseEinheitenVerschieben  extends JPanel {
 	Risiko risiko;
+	EinheitenVeraendertListener einheitenVeraendertListener;
 	InformationsPanel informationsPanel;	
 	int aktuellerSpieler;
 	
@@ -49,8 +50,9 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 	int toProvinzID;
 	String verschiebeProvinzName;
 	
-	PhaseEinheitenVerschieben(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler){
+	PhaseEinheitenVerschieben(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, EinheitenVeraendertListener einheitenVeraendertListener){
 		this.risiko = risiko;
+		this.einheitenVeraendertListener = einheitenVeraendertListener;
 		this.informationsPanel = anweisungsPanel;
 		this.aktuellerSpieler = aktuellerSpieler;
 				
@@ -215,6 +217,8 @@ public class PhaseEinheitenVerschieben  extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				risiko.einheitenVerschieben(fromProvinzID, toProvinzID, einheitenWollen);
+				einheitenVeraendertListener.updateKarte(fromProvinzID);
+				einheitenVeraendertListener.updateKarte(toProvinzID);
 				verschiebbareEinheiten -= einheitenWollen;
 				anweisungsLabel2.setText("<html>Von " + verschiebeProvinzName + 
 						"<p/> kannst du noch " + verschiebbareEinheiten + 
