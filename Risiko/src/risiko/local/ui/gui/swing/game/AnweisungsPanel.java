@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class AnweisungsPanel extends JPanel{
 	
-	JLabel nachricht;
+	private JLabel nachricht;
 	
 	public AnweisungsPanel(int parentWidth, int parentHeight) {
 		setUpUI(parentWidth,parentHeight);

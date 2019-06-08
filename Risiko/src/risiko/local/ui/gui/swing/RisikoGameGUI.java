@@ -14,17 +14,6 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.awt.Button;
-//import java.awt.Color;
-//import java.awt.Dimension;
-//import java.awt.Frame;
-//import java.awt.GridBagConstraints;
-//import java.awt.GridBagLayout;
-//import java.awt.Label;
-//import java.awt.Panel;
-//import java.awt.TextField;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -68,7 +57,6 @@ public class RisikoGameGUI extends JFrame  {
 		try {
 			run(aktuellerSpieler);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -102,7 +90,6 @@ public class RisikoGameGUI extends JFrame  {
 		this.pack();
 		System.out.println(kartenPanel.getSize());
 		informationsPanel.setUpUI();
-//		kartenPanel.addMap(risiko.getSpielerName(aktuellerSpieler));
 		this.setResizable(false);
 		this.setVisible(true);
 		this.pack();
@@ -110,10 +97,7 @@ public class RisikoGameGUI extends JFrame  {
 	}
 	
 	private void run(int aktuellerSpieler) throws IOException {
-		
-		//spielerRegistrierung();
-		//spielMenue();
-		//risiko.spielVorbereiten();
+	
 		for(int i = 0; i < risiko.getSpielerAnzahl(); i++) {
 			System.out.println(risiko.getSpielerName(i) + ": " + risiko.getProvinzenVonSpieler(i));
 		}
@@ -132,13 +116,6 @@ public class RisikoGameGUI extends JFrame  {
 		System.out.println(spielerID + " SetUp");
 		phasenPanel.setAktuellerSpieler(spielerID);
 		informationsPanel.setAktuellerSpieler(spielerID);
-	
-		
-				//menueNeueEinheitenPhase(o);
-				//gewinner = angreifen(o);
-				//verschiebeMenu(o);
-				//einheitenkarteVerteilen(o);
-				//risiko.resetSpielerAttribute(o);
 				
 	}
 	

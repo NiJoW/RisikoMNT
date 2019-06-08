@@ -19,36 +19,36 @@ import risiko.local.domain.exceptions.ProvinzNichtNachbarException;
 import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
 public class PhaseEinheitenVerschieben  extends JPanel {
-	Risiko risiko;
-	EinheitenVeraendertListener einheitenVeraendertListener;
-	InformationsPanel informationsPanel;	
-	int aktuellerSpieler;
+	private Risiko risiko;
+	private EinheitenVeraendertListener einheitenVeraendertListener;
+	private InformationsPanel informationsPanel;	
+	private int aktuellerSpieler;
 	
-	GridBagConstraints c;
-	JLabel phaseVerschiebenText;
-	JButton verschiebenBeenden;
+	private GridBagConstraints c;
+	private JLabel phaseVerschiebenText;
+	private JButton verschiebenBeenden;
 	
-	JLabel anweisungsLabel1;
-	JLabel anweisungsLabel2;
+	private JLabel anweisungsLabel1;
+	private JLabel anweisungsLabel2;
 	
-	JLabel vonProvinzLabel;
-	JLabel vonProvinzName;
-	JLabel nachProvinzLabel;
-	JLabel nachProvinzName;
+	private JLabel vonProvinzLabel;
+	private JLabel vonProvinzName;
+	private JLabel nachProvinzLabel;
+	private JLabel nachProvinzName;
 	
-	JButton einheitenMinus;
-	JLabel einheitenLabel;
-	JButton einheitenPlus;
-	JButton bestaetigenButton;
+	private JButton einheitenMinus;
+	private JLabel einheitenLabel;
+	private JButton einheitenPlus;
+	private JButton bestaetigenButton;
 	
-	JButton speicherSpiel;
+	private JButton speicherSpiel;
 	
-	int einheitenWollen = 0;
-	int verschiebbareEinheiten;
-	int aktiveWahl = 1;
-	int fromProvinzID;
-	int toProvinzID;
-	String verschiebeProvinzName;
+	private int einheitenWollen = 0;
+	private int verschiebbareEinheiten;
+	private int aktiveWahl = 1;
+	private int fromProvinzID;
+	private int toProvinzID;
+	private String verschiebeProvinzName;
 	
 	PhaseEinheitenVerschieben(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, EinheitenVeraendertListener einheitenVeraendertListener){
 		this.risiko = risiko;

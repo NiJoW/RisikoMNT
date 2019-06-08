@@ -20,34 +20,31 @@ import risiko.local.domain.exceptions.ProvinzIDExistiertNichtException;
 import risiko.local.ui.gui.swing.game.PhasenPanel.InitialeRundeBeendet;
 
 public class PhaseEinheitenVerteilen extends JPanel {
+	private Risiko risiko;
+	private int aktuellerSpieler;
 	
-
+	private GridBagConstraints c;
+	private GridBagLayout layout;
 	
-	Risiko risiko;
-	int aktuellerSpieler;
+	private JLabel phaseEinheitenText;
+	private JLabel anweisungsLabel1;
 	
-	GridBagConstraints c;
-	GridBagLayout layout;
+	private JLabel provinzLabel2;
 	
-	JLabel phaseEinheitenText;
-	JLabel anweisungsLabel1;
+	private JButton einheitenPlus;
+	private JLabel einheitenLabel;
+	private JButton einheitenMinus;
 	
-	JLabel provinzLabel2;
+	private JButton bestaetigenButton;
+	private JButton einheitenPhaseBeenden;
 	
-	JButton einheitenPlus;
-	JLabel einheitenLabel;
-	JButton einheitenMinus;
-	
-	JButton bestaetigenButton;
-	JButton einheitenPhaseBeenden;
-	
-	int einheitenWollen = 0;
-	int verteilbareEinheiten;
+	private int einheitenWollen = 0;
+	private int verteilbareEinheiten;
 	private InformationsPanel informationsPanel;
-	int gewaehlteProvinzID = -1;
-	JButton initialesVerteilenButton;
-	InitialeRundeBeendet initialeRundeBeendet;
-	EinheitenVeraendertListener einheitenVeraendertListener;
+	private int gewaehlteProvinzID = -1;
+	private JButton initialesVerteilenButton;
+	private InitialeRundeBeendet initialeRundeBeendet;
+	private EinheitenVeraendertListener einheitenVeraendertListener;
 	
 	
 	

@@ -17,19 +17,19 @@ import risiko.local.domain.exceptions.NichtGenugKartenFuerAktionException;
 
 public class KartenTauschPanel extends JPanel{
 	
-	TauscheListener tauscheListener;
+	private TauscheListener tauscheListener;
 	private Risiko risiko;
 	private int aktuellerSpieler;
-	GridLayout layout;
+	private GridLayout layout;
 	
-	JButton soldatBtn;
-	JButton reiterBtn;
-	JButton kanoneBtn;
-	JButton alleBtn;
+	private JButton soldatBtn;
+	private JButton reiterBtn;
+	private JButton kanoneBtn;
+	private JButton alleBtn;
 	private JButton abbrechenButton;
 	private JLabel infoLabel;
 	
-	PhaseEinheitenVerteilen phaseEins;
+	private PhaseEinheitenVerteilen phaseEins;
 	private InformationsPanel informationsPanel;
 	
 

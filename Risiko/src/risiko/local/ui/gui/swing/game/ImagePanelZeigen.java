@@ -14,29 +14,22 @@ public class ImagePanelZeigen extends JPanel{
 
 
     private BufferedImage bi;
-//    String pathToImage;
-    int imgPanelWidth = 1024;
-    int imgPanelHeigth = 525;
-    int trueWidth;
-	int trueHeight;
-	float scaleFactorX;
-	float scaleFactorY;
+    private int imgPanelWidth = 1024;
+    private  int imgPanelHeigth = 525;
+    private int trueWidth;
+    private int trueHeight;
+    private float scaleFactorX;
+    private float scaleFactorY;
 
-	KartenPanel kartenenPanel;
+    private KartenPanel kartenenPanel;
 
 
 
     public ImagePanelZeigen(KartenPanel kartenPanel) {
     	this.kartenenPanel = kartenPanel;
 
-	//PhasenPanel phasenPanel;
-
-
-   // public ImagePanel(PhasenPanel phasenPanel) {
-
        	this.setSize(imgPanelWidth,imgPanelHeigth);
 		this.setPreferredSize(new Dimension(imgPanelWidth,imgPanelHeigth));
-	//	this.phasenPanel = phasenPanel;
 
        try {
           bi = ImageIO.read(new File("images/WeltkarteBlauKreise.png"));
@@ -54,7 +47,6 @@ public class ImagePanelZeigen extends JPanel{
 
 	@Override
 	public void paint(Graphics g) {
-//        super.paintComponent(g);
         Dimension d = getSize(); //1000, 600,
         int parentWidth = this.getParent().getWidth();
         int parentHeight = this.getParent().getHeight();
