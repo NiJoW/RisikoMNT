@@ -49,7 +49,7 @@ public class PhasenPanel extends JPanel {
         this.setSize(width,height);
         this.setPreferredSize(new Dimension(width,height));
 
-        phaseEins = new PhaseEinheitenVerteilen(risiko, informationsPanel, aktuellerSpieler, new InitialeRundeBeendet());
+        phaseEins = new PhaseEinheitenVerteilen(risiko, informationsPanel, aktuellerSpieler, new InitialeRundeBeendet(), kartenPanel);
         this.add(phaseEins);
         phaseZwei = new PhaseAngriff(risiko, informationsPanel, aktuellerSpieler);
         this.add(phaseZwei);

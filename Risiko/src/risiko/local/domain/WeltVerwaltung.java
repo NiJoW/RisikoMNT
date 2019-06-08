@@ -68,7 +68,7 @@ public class WeltVerwaltung {
 		provinzListe.add(new Provinz("Ural", 17));
 		
 		provinzListe.add(new Provinz("Indonesien", 18));
-		provinzListe.add(new Provinz("Neu Guinera", 19));
+		provinzListe.add(new Provinz("Neuguinea", 19));
 		provinzListe.add(new Provinz("Ost-Australien", 20));
 		provinzListe.add(new Provinz("West-Australien", 21));
 		
