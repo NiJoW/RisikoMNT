@@ -14,23 +14,23 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
 public class PhasenPanel extends JPanel implements EinheitenVeraendertListener {
 
-    Risiko risiko;
-    InformationsPanel informationsPanel;
+	private Risiko risiko;
+	private InformationsPanel informationsPanel;
 
-    GridBagConstraints c;
-    PhaseEinheitenVerteilen phaseEins;
-    PhaseAngriff phaseZwei;
-    PhaseEinheitenVerschieben phaseDrei;
-    KartenTauschPanel phaseTauschen;
-    int aktuellerSpieler;
+	private GridBagConstraints c;
+	private PhaseEinheitenVerteilen phaseEins;
+	private PhaseAngriff phaseZwei;
+	private PhaseEinheitenVerschieben phaseDrei;
+	private KartenTauschPanel phaseTauschen;
+	private int aktuellerSpieler;
 
-    int phasenID;
-    boolean neuesSpiel;
-    PhaseBeendenListener phaseBeendenListener;
-    KartenPanel kartenPanel;
+	private int phasenID;
+	private boolean neuesSpiel;
+	private PhaseBeendenListener phaseBeendenListener;
+	private KartenPanel kartenPanel;
 
-    int width = 280;
-    int height = 525;
+	private int width = 280;
+	private int height = 525;
 
 
     public PhasenPanel(Risiko risiko, PhaseBeendenListener phaseBeendenListener, InformationsPanel informationsPanel, KartenPanel kartenPanel, boolean neuesSpiel) {

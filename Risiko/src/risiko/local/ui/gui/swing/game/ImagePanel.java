@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 public class ImagePanel extends JPanel{
 
     private BufferedImage bi;
-//    String pathToImage;
     int imgPanelWidth = 1024;
     int imgPanelHeigth = 525;
     int trueWidth;
@@ -31,14 +30,8 @@ public class ImagePanel extends JPanel{
     public ImagePanel(KartenPanel kartenPanel) {
     	this.kartenenPanel = kartenPanel;
 
-	//PhasenPanel phasenPanel;
-	
-	
-   // public ImagePanel(PhasenPanel phasenPanel) {
-
        	this.setSize(imgPanelWidth,imgPanelHeigth);
 		this.setPreferredSize(new Dimension(imgPanelWidth,imgPanelHeigth));
-	//	this.phasenPanel = phasenPanel;
 
        try {
           bi = ImageIO.read(new File("images/WeltkarteFINAL.png"));
@@ -65,14 +58,7 @@ public class ImagePanel extends JPanel{
 		g.drawImage(bi, 0, 0, parentWidth, parentHeight, this); //Observer = null -> moeglicherweise
 		
 		scaleFactorX = trueWidth / parentWidth;
-		scaleFactorY = trueHeight / parentHeight;
-		
-		
-//		System.out.println(scaleFactorX +" y: " + scaleFactorY);
-//		System.out.println(trueWidth + " " + trueHeight);
-//		System.out.println("breite "+this.getWidth() + " hoehe" + this.getHeight());
-//		System.out.println("breite "+this.getParent().getWidth() + " hoehe" + this.getParent().getHeight());
-//        g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters            
+		scaleFactorY = trueHeight / parentHeight;        
     }
     
     private MouseAdapter getMouseAdapter() {
@@ -88,30 +74,11 @@ public class ImagePanel extends JPanel{
             		int xK = (int)xKoordinate;
             		int yK = (int)yKoordinate;
             		
-//            		System.out.println("Skalierte x-Koordinate = " + xKoordinate);
-//            		System.out.println("Skalierte y-Koordinate = " + yKoordinate);
-            		
             		Color myColor = new Color(bi.getRGB(xK, yK));
-//            		System.out.println(karte.getData().getPixel(xKoordinate, yKoordinate, new int[0]));
-            		//					Robot r = new Robot();
-//					c = r.getPixelColor(e.getX(),e.getY()); 
-//					rgb = c.getRGB();
-					//System.out.println(c);
 					System.out.println("Farbwert: " + myColor.hashCode());
 					kartenenPanel.setClickedProvinz(getProvinzByColor(myColor)); 
-					//getProvinzIDByColor(rgb);
-//					System.out.println(getProvinzIDByColor(rgb));
 					System.out.println(myColor.getRGB());
 					rgb = myColor.getRGB();
-//					if(getProvinzIDByColor(rgb)!=42) {
-//						phasenPanel.setClickedProvinz(getProvinzIDByColor(rgb));
-//					}
-					
-//				} catch (AWTException e1) {
-//					e1.printStackTrace();
-//				} 
-            	
-//            	System.out.println("clicked");
             }
 
 			private int getProvinzByColor(Color myColor) {

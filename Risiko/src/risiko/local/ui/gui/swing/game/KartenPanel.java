@@ -29,17 +29,17 @@ import risiko.local.valueobjects.Provinz;
 
 public class KartenPanel extends JPanel {
 	
-	Risiko risiko;
-	InformationsPanel informationsPanel;
+	private Risiko risiko;
+	private InformationsPanel informationsPanel;
 	
-	int aktuellerSpielerID;
+	private int aktuellerSpielerID;
 	private PhasenPanel phasenPanel;
-	JLabel aktuellerSpieler;
-	BufferedImage karte;
-	int width = 1024;
-	int height = 525;
-	JLayeredPane kartenLayer;
-	Vector<JLabel> einheitenLabel;
+	private JLabel aktuellerSpieler;
+	private BufferedImage karte;
+	private int width = 1024;
+	private int height = 525;
+	private JLayeredPane kartenLayer;
+	private Vector<JLabel> einheitenLabel;
 	
 	public KartenPanel(Risiko risiko, InformationsPanel informationsPanel, int aktuellerSpielerID, int screenWidth, int screenHeight,  JLayeredPane lp) {
 		this.risiko = risiko;

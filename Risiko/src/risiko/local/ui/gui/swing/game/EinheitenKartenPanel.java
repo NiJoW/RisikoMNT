@@ -15,11 +15,11 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.KartenEintauschenListener;
 import risiko.local.valueobjects.Einheitenkarte;
 
 public class EinheitenKartenPanel extends JPanel {
-	Risiko risiko;
-	JLabel nachricht;
+	private Risiko risiko;
+	private JLabel nachricht;
 	private int aktuellerSpieler;
-	JButton willTauschenButton;
-	KartenEintauschenListener kartenEintauschenListener;
+	private JButton willTauschenButton;
+	private KartenEintauschenListener kartenEintauschenListener;
 	
 	public EinheitenKartenPanel(Risiko risiko, int aktuellerSpieler, int parentWidth, int parentHeight, KartenEintauschenListener kartenEintauschenListener) {
 		this.kartenEintauschenListener = kartenEintauschenListener;

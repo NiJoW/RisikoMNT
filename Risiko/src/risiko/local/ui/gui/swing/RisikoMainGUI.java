@@ -13,7 +13,6 @@ import risiko.local.domain.exceptions.SpielerNichtTeilDesSpielsException;
 import risiko.local.ui.gui.swing.AnmeldefensterGUI.LadeListener;
 import risiko.local.valueobjects.Spieler;
 
-//import javax.swing.*;
 
 public class RisikoMainGUI implements LadeListener{
 	private Risiko risiko;
@@ -62,7 +61,6 @@ public class RisikoMainGUI implements LadeListener{
 			for(int i = 0; i<risiko.getSpielerAnzahl(); i++) {
 				System.out.println(i + ") " + risiko.getSpielerName(i));
 			}
-//			aktuellerSpieler = 0;
 		}else {
 			neuesSpiel = false;
 			for(int i = 0; i<risiko.getSpielerAnzahl(); i++) {

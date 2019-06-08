@@ -17,25 +17,23 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 
 public class InformationsPanel extends JPanel {
 
-	Risiko risiko;
-	int phasenID = 1;
-	int aktuellerSpieler;
-	int height = 150;
+	private Risiko risiko;
+	private int phasenID = 1;
+	private int aktuellerSpieler;
+	private int height = 150;
 	
-	GridBagConstraints c;
-	GridLayout layout;
+	private GridBagConstraints c;
+	private GridLayout layout;
 	
-	MissionsPanel missionsPanel;
-	AnweisungsPanel anweisungsPanel;
-	EinheitenKartenPanel einheitenKartenPanel;
-	KartenEintauschenListener kartenEintauschenListener;
+	private MissionsPanel missionsPanel;
+	private AnweisungsPanel anweisungsPanel;
+	private EinheitenKartenPanel einheitenKartenPanel;
+	private KartenEintauschenListener kartenEintauschenListener;
 	
 	public InformationsPanel(Risiko risiko, int aktuellerSpieler, KartenEintauschenListener kartenEintauschenListener) {
 		this.risiko = risiko;
 		this.aktuellerSpieler = aktuellerSpieler;
 		this.kartenEintauschenListener = kartenEintauschenListener;
-	//	this.setVisible(true);
-		//setUpUI();
 	}
 
 	public void setUpUI() {	

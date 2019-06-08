@@ -22,35 +22,35 @@ import risiko.local.ui.gui.swing.RisikoGameGUI.PhaseBeendenListener;
 import risiko.local.valueobjects.Einheitenkarte;
 
 public class PhaseAngriff extends JPanel {
-	Risiko risiko;
-	InformationsPanel informationsPanel;
-	EinheitenVeraendertListener einheitenVeraendertListener;
+	private Risiko risiko;
+	private InformationsPanel informationsPanel;
+	private EinheitenVeraendertListener einheitenVeraendertListener;
 	
-	int aktuellerSpieler;
-	int gewaehltFromID;
-	int gewaehltToID;
-	int aktiveWahl = 1;
-
-	GridBagConstraints c;
-	JLabel phaseAngriffText;
-
-	JLabel provinzLabel1;
-	JLabel provinzLabel2;
-	JLabel vonProvinzLabel;
-	JLabel nachProvinzLabel;
+	private int aktuellerSpieler;
+	private int gewaehltFromID;
+	private int gewaehltToID;
+	private int aktiveWahl = 1;
 	
-	JButton einheitenPlus;
-	JLabel einheitenLabel;
-	JButton einheitenMinus;
+	private GridBagConstraints c;
+	private JLabel phaseAngriffText;
 
-	int einheitenWollen = 0;
-	int angriffsID = -1;
-	int verteidigerID = -1;
+	private JLabel provinzLabel1;
+	private JLabel provinzLabel2;
+	private JLabel vonProvinzLabel;
+	private JLabel nachProvinzLabel;
+	
+	private JButton einheitenPlus;
+	private JLabel einheitenLabel;
+	private JButton einheitenMinus;
 
-	JButton wuerfelButton;
-	JButton angriffBeenden;
-	JButton nachrueckenButton;
-	int einheitenMoeglich;
+	private int einheitenWollen = 0;
+	private int angriffsID = -1;
+	private int verteidigerID = -1;
+
+	private JButton wuerfelButton;
+	private JButton angriffBeenden;
+	private JButton nachrueckenButton;
+	private int einheitenMoeglich;
 
 	public PhaseAngriff(Risiko risiko, InformationsPanel anweisungsPanel, int aktuellerSpieler, EinheitenVeraendertListener einheitenVeraendertListener) {
 		this.risiko = risiko;

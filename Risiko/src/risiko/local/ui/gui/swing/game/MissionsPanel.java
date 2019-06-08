@@ -1,4 +1,3 @@
-//Kommentar
 package risiko.local.ui.gui.swing.game;
 
 import java.awt.Dimension;
@@ -10,10 +9,10 @@ import risiko.local.domain.Risiko;
 import risiko.local.valueobjects.missions.Mission;
 
 public class MissionsPanel extends JPanel{
-	JLabel nachricht;
+	private JLabel nachricht;
 	private int aktuellerSpieler;
-	Risiko risiko;
-	String mission;
+	private Risiko risiko;
+	private String mission;
 	
 	public MissionsPanel(Risiko risiko, int parentWidth, int parentHeight) {
 	this.risiko = risiko;
