@@ -207,6 +207,7 @@ public class PhaseAngriff extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				wuerfelButton.setEnabled(false);
 				System.out.println("einheitenWollen: "+einheitenWollen);
 				String verteidiger = risiko.getProvinz(gewaehltToID).getBesitzer().getName();
 				int[] wuerfelErgebnisse = risiko.wuerfeln(einheitenWollen, gewaehltToID);
